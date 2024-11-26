@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import fonts from '@/lib/fonts'
 import ThemeProvider from '@/components/providers/ThemeProvider'
+import Header from '@/components/blocks/Header'
 
 export const metadata: Metadata = {
   title: '摘果みかん / Mikann 919',
@@ -22,6 +23,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           {children}
         </ThemeProvider>
       </body>

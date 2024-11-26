@@ -1,85 +1,71 @@
-'use client'
+import { cn } from '@/lib/utils'
+import { ceil, uniqueId } from 'lodash'
+import { useCallback, type CSSProperties } from 'react'
 
-import { useEffect, useRef } from 'react'
+const ANIMATION_BLOCK_WIDTH = 500 //実測値, フォントが固定なので変更は不要なはず
+const ANIMATION_BLOCK_HEIGHT = 100
 
-export default function AnimateBackground() {
-  const containerRef = useRef<HTMLDivElement>(null)
+function AnimationBlock({
+  style,
+  className,
+}: { style?: CSSProperties; className: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-block px-4 text-5xl font-bold text-orange-300 font-rampart',
+        className
+      )}
+      style={style}
+    >
+      摘果みかん / Mikan 919
+    </span>
+  )
+}
 
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
+interface AnimateBackgroundProps {
+  width: number
+  height: number
+}
+export default function AnimateBackground({
+  width,
+  height,
+}: AnimateBackgroundProps) {
+  const rowCount = ceil((width / ANIMATION_BLOCK_WIDTH) * 2) + 1
+  const colCount = ceil((height / ANIMATION_BLOCK_HEIGHT) * 2) + 3
 
-    const handleResize = () => {
-      const rows = container.querySelectorAll('.text-row')
-      rows.forEach((row, index) => {
-        const rowElement = row as HTMLElement
-        rowElement.style.animationDuration = `${120}s`
-      })
-    }
+  const AnimationRow = ({
+    slideRight,
+    duration,
+  }: { slideRight: boolean; duration: number }) =>
+    Array.from({ length: rowCount }).map((_, i) => (
+      <AnimationBlock
+        key={uniqueId()}
+        style={{
+          animationDuration: `${duration}s`,
+        }}
+        className={slideRight ? 'animate-slide-right' : 'animate-slide-left'}
+      />
+    ))
 
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  const AnimationCol = () => (
+    <>
+      {Array.from({ length: colCount }).map((_, i) => (
+        <div className='text-row whitespace-nowrap' key={uniqueId()}>
+          <AnimationRow
+            slideRight={i % 2 === 0}
+            duration={(150 + 50 * Math.sin(i * 0.2 * Math.PI)) / 10}
+          />
+        </div>
+      ))}
+    </>
+  )
 
   return (
     <div className='absolute w-full h-screen overflow-hidden touch-none select-none bg-gradient-to-br to-orange-100 from-orange-300'>
-      <div
-        ref={containerRef}
-        className='relative inset-0 transform -rotate-12 scale-200'
-      >
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className={`text-row whitespace-nowrap ${i % 2 === 0 ? 'animate-slide-right' : 'animate-slide-left'
-              }`}
-          >
-            {Array.from({ length: 10 }).map((_, j) => (
-              <span
-                key={j}
-                className='inline-block mx-4 text-5xl font-bold text-orange-300 font-rampart'
-                style={
-                  {
-                    // WebkitTextStroke: '2px rgba(255, 140, 0, 0.7)',
-                    // textStroke: '2px rgba(255, 140, 0, 0.7)',
-                  }
-                }
-              >
-                摘果みかん / Mikan 919
-              </span>
-            ))}
-          </div>
-        ))}
+      <div className='relative inset-0 transform -rotate-12 scale-200'>
+        <AnimationCol />
       </div>
-      <div className='absolute md:bottom-0 -bottom-32 md:-translate-x-[16vh] h-[80vh] md:h-[101vh] w-screen lg:max-w-screen-lg md:max-w-screen-sm md:w-screen backdrop-blur-sm bg-background/50 skew-x-0 md:skew-x-[-15deg] md:skew-y-0 skew-y-[15deg] '></div>
-
-      <style jsx>{`
-        @keyframes slide-right {
-          0% {
-            transform: translateX(-200%);
-          }
-          100% {
-            transform: translateX(0%);
-          }
-        }
-        @keyframes slide-left {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-200%);
-          }
-        }
-        .animate-slide-right {
-          animation: slide-right linear infinite;
-        }
-        .animate-slide-left {
-          animation: slide-left linear infinite;
-        }
-        .text-row {
-          animation-duration: 2s;
-        }
-      `}</style>
+      <div className='absolute md:bottom-0 -bottom-32 md:-translate-x-[16vh] h-[80vh] md:h-[101vh] w-screen lg:max-w-screen-lg md:max-w-screen-sm md:w-screen backdrop-blur-sm bg-background/50 skew-x-0 md:skew-x-[-15deg] md:skew-y-0 skew-y-[15deg] ' />
     </div>
   )
 }
