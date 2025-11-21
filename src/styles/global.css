@@ -1,0 +1,41 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-inter);
+  }
+}
+@layer components {
+  /* 共通: メインのコンテナ */
+  .layout-container {
+    @apply max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white;
+  }
+
+  /* 共通: フルワイドセクション */
+  .section-full {
+    @apply w-full border-b-2 border-black;
+  }
+
+  /* 共通: ハードシャドウボタン (WORKSやCONTACTで使用) */
+  .btn-brutal {
+    @apply border-2 border-black bg-white px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000] transition-all;
+  }
+  .btn-brutal:hover {
+    @apply shadow-none translate-x-[2px] translate-y-[2px] bg-black text-white;
+  }
+}
+
+@theme inline {
+  --font-sans:
+    var(--font-family-inter), var(--font-family-noto-sans-jp), sans-serif;
+  --font-inter: var(--font-family-inter), sans-serif;
+  --font-noto-sans-jp: var(--font-family-noto-sans-jp), sans-serif;
+  --font-rampart-one: var(--font-family-rampart-one), sans-serif;
+}

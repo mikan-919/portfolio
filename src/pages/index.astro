@@ -1,11 +1,243 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+
+import HeroSection from "../components/HeroSection.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-	<Welcome />
+	<main>
+		<!-- ヒーローセクション -->
+		<HeroSection />
+
+		<!-- ABOUT -->
+		<section id="about" class="full-width-border">
+			<div class="content-container grid grid-cols-1 md:grid-cols-3">
+				<div
+					class="col-span-1 bg-black text-white p-8 md:p-10 flex flex-col justify-between border-b-2 md:border-b-0 md:border-r-2 border-white md:border-black"
+				>
+					<h3 class="text-4xl font-black tracking-tighter">
+						ABOUT<br />ME.
+					</h3>
+					<p class="text-sm opacity-70 mt-4">
+						情報系大学生<br />Web開発学習中
+					</p>
+				</div>
+				<div class="col-span-1 md:col-span-2 p-8 md:p-12 bg-white">
+					<p
+						class="text-lg md:text-xl font-bold leading-relaxed mb-8"
+					>
+						「動けばいい」ではなく、「読みやすく、使いやすい」コードを目指して。<br
+						/>
+						大学での研究と並行して、モダンなWeb技術を独学で習得しています。
+					</p>
+					<div class="grid grid-cols-2 gap-4">
+						<div>
+							<h4
+								class="font-black text-sm mb-2 border-b-2 border-black inline-block"
+							>
+								LANGUAGES
+							</h4>
+							<ul class="text-sm font-bold space-y-1 mt-2">
+								<li>HTML5 / CSS3</li>
+								<li>JavaScript (ES6+)</li>
+								<li>Python</li>
+								<li>PHP</li>
+							</ul>
+						</div>
+						<div>
+							<h4
+								class="font-black text-sm mb-2 border-b-2 border-black inline-block"
+							>
+								FRAMEWORKS / TOOLS
+							</h4>
+							<ul class="text-sm font-bold space-y-1 mt-2">
+								<li>React / Next.js</li>
+								<li>Tailwind CSS</li>
+								<li>Git / GitHub</li>
+								<li>Figma</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- WORKS -->
+		<section id="works" class="full-width-border">
+			<div
+				class="content-container border-b-2 border-black bg-gray-100 px-4 py-2 flex justify-between items-center"
+			>
+				<span class="font-black text-sm tracking-widest">WORKS</span>
+				<span class="text-xs font-bold">SCROLL ↓</span>
+			</div>
+
+			<div class="content-container grid grid-cols-1 md:grid-cols-2">
+				<!-- Work 1 -->
+				<article
+					class="group border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col"
+				>
+					<div
+						class="aspect-video bg-white border-b-2 border-black relative overflow-hidden"
+					>
+						<div
+							class="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:12px_12px] opacity-20"
+						>
+						</div>
+						<div
+							class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/10"
+						>
+							<span
+								class="bg-black text-white px-4 py-2 font-bold text-sm"
+								>View Detail</span
+							>
+						</div>
+					</div>
+					<div
+						class="p-6 flex-grow group-hover:bg-black group-hover:text-white transition-colors duration-200 cursor-pointer"
+					>
+						<h4 class="text-xl font-black mb-2">
+							タスク管理アプリケーション
+						</h4>
+						<p class="text-sm leading-relaxed opacity-80">
+							React / Firebase / Redux Toolkit
+						</p>
+					</div>
+				</article>
+
+				<!-- Work 2 -->
+				<article
+					class="group border-b-2 md:border-b-0 border-black flex flex-col"
+				>
+					<div
+						class="aspect-video bg-white border-b-2 border-black relative overflow-hidden"
+					>
+						<div
+							class="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:12px_12px] opacity-20"
+						>
+						</div>
+						<div
+							class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/10"
+						>
+							<span
+								class="bg-black text-white px-4 py-2 font-bold text-sm"
+								>View Detail</span
+							>
+						</div>
+					</div>
+					<div
+						class="p-6 flex-grow group-hover:bg-black group-hover:text-white transition-colors duration-200 cursor-pointer"
+					>
+						<h4 class="text-xl font-black mb-2">
+							大学サークル公式サイト
+						</h4>
+						<p class="text-sm leading-relaxed opacity-80">
+							WordPress / PHP / Sass
+						</p>
+					</div>
+				</article>
+			</div>
+			<div class="content-container">
+				<a
+					href="works.html"
+					class="block p-4 text-center font-bold bg-gray-100 hover:bg-black hover:text-white transition"
+				>
+					VIEW ALL WORKS -&gt;
+				</a>
+			</div>
+		</section>
+
+		<!-- BLOG & CONTACT -->
+		<section class="full-width-border">
+			<div class="content-container grid grid-cols-1 md:grid-cols-2">
+				<div
+					id="blog"
+					class="border-b-2 md:border-b-0 md:border-r-2 border-black"
+				>
+					<div
+						class="bg-black text-white p-4 flex justify-between items-center border-b-2 border-white md:border-black"
+					>
+						<h3 class="font-black tracking-widest">
+							LATEST ARTICLES
+						</h3>
+						<a href="blog.html" class="text-xs underline"
+							>View All -&gt;</a
+						>
+					</div>
+					<div>
+						<a
+							href="#"
+							class="group relative block p-6 border-b border-black transition"
+						>
+							<p
+								class="text-xs relative z-10 font-bold text-gray-500 mb-1"
+							>
+								2024.11.20
+							</p>
+							<h4
+								class="font-bold relative z-10 text-lg leading-tight group-hover:text-white transition"
+							>
+								Next.js App Router移行の記録
+							</h4>
+							<span class="slide-bg"></span>
+						</a>
+						<a
+							href="#"
+							class="block p-6 hover:bg-gray-100 transition"
+						>
+							<p class="text-xs font-bold text-gray-500 mb-1">
+								2024.10.15
+							</p>
+							<h4 class="font-bold text-lg leading-tight">
+								エンジニア学生が読むべき本まとめ
+							</h4>
+						</a>
+					</div>
+				</div>
+				<div
+					id="contact"
+					class="bg-gray-50 p-8 md:p-12 flex flex-col justify-center"
+				>
+					<h3 class="text-4xl font-black mb-4">CONTACT.</h3>
+					<a
+						href="mailto:hello@example.com"
+						class="block w-full border-2 border-black bg-white py-4 text-center font-bold text-lg shadow-[4px_4px_0px_0px_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] transition-all"
+					>
+						Send Email
+					</a>
+				</div>
+			</div>
+		</section>
+	</main>
 </Layout>
+
+<style is:inline>
+	.content-container {
+		max-width: 1200px;
+		margin-left: auto;
+		margin-right: auto;
+		border-left: 2px solid #000;
+		border-right: 2px solid #000;
+		background-color: #fff;
+	}
+
+	.full-width-border {
+		width: 100%;
+		border-bottom: 2px solid #000;
+	}
+
+	.slide-bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 0%;
+		background-color: #000;
+		transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+		z-index: 0;
+	}
+	.group:hover .slide-bg {
+		width: 100%;
+	}
+</style>

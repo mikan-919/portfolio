@@ -1,0 +1,31 @@
+@keyframes scroll-left {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(50%);
+  } /* 50% -> 100% に変更 */
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(50%);
+  } /* 開始位置を調整 */
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* アニメーションクラス */
+.scroll-left {
+  animation: scroll-left ease-in-out infinite;
+  /* チラつき防止のためのGPUアクセラレーション有効化 */
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.scroll-right {
+  animation: scroll-right ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
