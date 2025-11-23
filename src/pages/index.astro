@@ -1,7 +1,4 @@
 ---
-
-
-
 import HeroSection from "../components/HeroSection.astro";
 import Layout from "../layouts/Layout.astro";
 ---
@@ -21,7 +18,7 @@ import Layout from "../layouts/Layout.astro";
 						ABOUT<br />ME.
 					</h3>
 					<p class="text-sm opacity-70 mt-4">
-						情報系大学生<br />Web開発学習中
+						高校生<br />Web開発学習中
 					</p>
 				</div>
 				<div class="col-span-1 md:col-span-2 p-8 md:p-12 bg-white">
@@ -30,7 +27,7 @@ import Layout from "../layouts/Layout.astro";
 					>
 						「動けばいい」ではなく、「読みやすく、使いやすい」コードを目指して。<br
 						/>
-						大学での研究と並行して、モダンなWeb技術を独学で習得しています。
+						モダンなWeb技術やホットトピックなどを独学で習得しています。
 					</p>
 					<div class="grid grid-cols-2 gap-4">
 						<div>
@@ -41,9 +38,9 @@ import Layout from "../layouts/Layout.astro";
 							</h4>
 							<ul class="text-sm font-bold space-y-1 mt-2">
 								<li>HTML5 / CSS3</li>
-								<li>JavaScript (ES6+)</li>
+								<li>JavaScript / TypeScript (ES6+)</li>
 								<li>Python</li>
-								<li>PHP</li>
+								<li>Rust</li>
 							</ul>
 						</div>
 						<div>
@@ -54,6 +51,8 @@ import Layout from "../layouts/Layout.astro";
 							</h4>
 							<ul class="text-sm font-bold space-y-1 mt-2">
 								<li>React / Next.js</li>
+								<li>Svelte</li>
+								<li>Astro</li>
 								<li>Tailwind CSS</li>
 								<li>Git / GitHub</li>
 								<li>Figma</li>
@@ -82,7 +81,7 @@ import Layout from "../layouts/Layout.astro";
 						class="aspect-video bg-white border-b-2 border-black relative overflow-hidden"
 					>
 						<div
-							class="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:12px_12px] opacity-20"
+							class="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[12px_12px] opacity-20"
 						>
 						</div>
 						<div
@@ -95,7 +94,7 @@ import Layout from "../layouts/Layout.astro";
 						</div>
 					</div>
 					<div
-						class="p-6 flex-grow group-hover:bg-black group-hover:text-white transition-colors duration-200 cursor-pointer"
+						class="p-6 grow group-hover:bg-black group-hover:text-white transition-colors duration-200 cursor-pointer"
 					>
 						<h4 class="text-xl font-black mb-2">
 							タスク管理アプリケーション
@@ -114,7 +113,7 @@ import Layout from "../layouts/Layout.astro";
 						class="aspect-video bg-white border-b-2 border-black relative overflow-hidden"
 					>
 						<div
-							class="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:12px_12px] opacity-20"
+							class="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[12px_12px] opacity-20"
 						>
 						</div>
 						<div
@@ -127,7 +126,7 @@ import Layout from "../layouts/Layout.astro";
 						</div>
 					</div>
 					<div
-						class="p-6 flex-grow group-hover:bg-black group-hover:text-white transition-colors duration-200 cursor-pointer"
+						class="p-6 grow group-hover:bg-black group-hover:text-white transition-colors duration-200 cursor-pointer"
 					>
 						<h4 class="text-xl font-black mb-2">
 							大学サークル公式サイト
@@ -211,33 +210,3 @@ import Layout from "../layouts/Layout.astro";
 		</section>
 	</main>
 </Layout>
-
-<style is:inline>
-	.content-container {
-		max-width: 1200px;
-		margin-left: auto;
-		margin-right: auto;
-		border-left: 2px solid #000;
-		border-right: 2px solid #000;
-		background-color: #fff;
-	}
-
-	.full-width-border {
-		width: 100%;
-		border-bottom: 2px solid #000;
-	}
-
-	.slide-bg {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 0%;
-		background-color: #000;
-		transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-		z-index: 0;
-	}
-	.group:hover .slide-bg {
-		width: 100%;
-	}
-</style>

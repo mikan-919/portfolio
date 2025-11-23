@@ -13,6 +13,33 @@
   }
 }
 @layer components {
+  .content-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    background-color: #fff;
+  }
+
+  .full-width-border {
+    width: 100%;
+    border-bottom: 2px solid #000;
+  }
+
+  .slide-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: #000;
+    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 0;
+  }
+  .group:hover .slide-bg {
+    width: 100%;
+  }
   /* 共通: メインのコンテナ */
   .layout-container {
     @apply max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white;

@@ -1,4 +1,3 @@
-/** @jsxImportSource solid-js */
 import { createSignal, onCleanup, onMount } from 'solid-js'
 
 export default function InfiniteTextBackground() {
@@ -6,7 +5,6 @@ export default function InfiniteTextBackground() {
   let canvasRef: HTMLCanvasElement | undefined
 
   // ホバー状態の管理（これで色を切り替えます）
-  const [isHovered, setIsHovered] = createSignal(false)
 
   const TEXT_CONTENT = 'MIKAN-919'
   // const TEXT_CONTENT = '摘果みかん  MIKAN-919'
@@ -149,8 +147,6 @@ export default function InfiniteTextBackground() {
       href='.'
       ref={containerRef}
       class='absolute inset-0 overflow-hidden select-none flex items-center justify-center bg-gray-50 group grayscale-100 hover:grayscale-0 transition-all duration-300'
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Canvas本体 */}
       <canvas
@@ -159,8 +155,8 @@ export default function InfiniteTextBackground() {
       />
 
       {/* すりガラスレイヤー */}
-      <div class='absolute inset-y-0 left-0 w-1/2 bg-white/50 group-hover:bg-white/25 backdrop-blur-sm group-hover:backdrop-blur-xs transition-all duration-300 z-10 pointer-events-none' />
-      <div class='absolute inset-y-0 right-0 w-1/2 bg-white/75 backdrop-blur-md group-hover:bg-white/50 group-hover:backdrop-blur-sm transition-all duration-300 border-l-2 border-black z-10 pointer-events-none' />
+      <div class='absolute inset-y-0 right-0 w-1/2 bg-white/50 group-hover:bg-white/25 backdrop-blur-sm group-hover:backdrop-blur-xs transition-all duration-300  border-l-2 border-black z-10 pointer-events-none' />
+      <div class='absolute inset-y-0 left-0 w-1/2 bg-white/75 backdrop-blur-md group-hover:bg-white/50 group-hover:backdrop-blur-sm transition-all duration-300 z-10 pointer-events-none' />
 
       {/* Update Box */}
       <div class='absolute inset-0 flex items-center justify-center z-20 pointer-events-none'>
