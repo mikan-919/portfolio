@@ -1,0 +1,104 @@
+<section id="about" class="w-full border-b-2 border-black">
+    <div
+        class="max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white grid grid-cols-1 md:grid-cols-3"
+    >
+        <!-- 左：タイトルカラム -->
+        <div
+            class="col-span-1 bg-black text-white p-8 md:p-10 flex flex-col justify-between border-b-2 md:border-b-0 md:border-r-2 border-white md:border-black"
+        >
+            <div>
+                <h3 class="text-4xl font-black tracking-tighter">
+                    ABOUT<br />ME.
+                </h3>
+                <p class="text-sm opacity-70 mt-4 font-mono">
+                    High School Student<br />
+                    Based in Japan
+                </p>
+            </div>
+            <!-- Aboutへのリンク + (TODO)なにか大きめのアニメーション(3D?)要素を付ける -->
+            <div class="ml-auto">
+                <a
+                    class="px-3 py-1 relative group inline-block text-sm font-bold text-center overflow-hidden border border-transparent hover:border-white transition-colors duration-300"
+                    href="#"
+                >
+                    <span
+                        class="relative z-10 mix-blend-difference tracking-widest"
+                        >MORE →</span
+                    >
+                    <span class="slide-bg bg-white"></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 右：本文 & スキル -->
+        <div
+            class="col-span-1 md:col-span-2 p-8 md:p-12 bg-white flex flex-col justify-center"
+        >
+            <!-- 自己紹介テキスト -->
+            <div class="mb-10">
+                <h4 class="text-xl font-extrabold mb-4">
+                    Web技術に興味がある高校生です。
+                </h4>
+                <p class="leading-relaxed font-light text-base opacity-60">
+                    学校の勉強の傍ら、趣味でプログラミングを学習しています。<br
+                    />
+                    まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
+                    />
+                    最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
+                </p>
+            </div>
+
+            <!-- スキル・興味リスト -->
+            <div
+                class="grid grid-cols-2 gap-8 border-t-2 border-black/25 border-dotted pt-8"
+            >
+                <div class="overflow-hidden">
+                    <h5
+                        class="text-center mb-4 border-b-2 tracking-wider border-black inline-flex pr-2 items-baseline space-x-1"
+                    >
+                        <span class="font-black text-sm text-nowrap"
+                            >LEARNING<span class="hidden md:inline"> /</span>
+                        </span><span
+                            class="text-xs text-black/50 hidden md:inline font-bold tracking-tight hover:text-orange-400/75 transition-colors duration-300 hover:delay-0 delay-300 text-nowrap text-ellipsis"
+                        >
+                            学習中・触ったことがある
+                        </span>
+                    </h5>
+                    <ul
+                        class='text-[0.8125rem] font-bold space-y-2 list-["-_"] list-inside'
+                    >
+                        <li>HTML / CSS</li>
+                        <li>JavaScript / TypeScript</li>
+                        <li>SolidJS / React</li>
+                        <li>Astro</li>
+                        <li>Tailwind CSS</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5
+                        class="text-center mb-4 border-b-2 tracking-wider border-black inline-flex pr-2 items-baseline space-x-1"
+                    >
+                        <span class="font-black text-sm text-nowrap"
+                            >INTERESTS<span class="hidden md:inline"> /</span>
+                        </span><span
+                            class="text-xs text-black/50 font-bold tracking-normal hidden md:inline hover:text-orange-400/75 transition-colors duration-300 hover:delay-0 delay-300 overflow-hidden text-nowrap text-ellipsis"
+                        >
+                            興味・好きなこと
+                        </span>
+                    </h5>
+
+                    <ul
+                        class='text-[0.8125rem] font-bold space-y-2 list-["-_"] list-inside'
+                    >
+                        <li>Web Design</li>
+                        <li>UI/UX</li>
+                        <li>Gadgets</li>
+                        <li>Gaming</li>
+                        <li>Music</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
