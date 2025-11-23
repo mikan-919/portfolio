@@ -1,0 +1,74 @@
+---
+interface Props {
+    title: string;
+    tags: string[];
+    description: string;
+    image?: string; // 画像は任意（なければパターン表示）
+    href?: string;
+}
+
+const { title, tags, description, image, href = "#" } = Astro.props;
+---
+
+<a
+    href={href}
+    class="group block h-full border-b-2 border-black md:border-b-0 md:border-x relative overflow-hidden bg-white transition-colors duration-500"
+>
+    <!-- 画像エリア (アスペクト比 16:9) -->
+    <div
+        class="aspect-video w-full border-b-2 border-black relative overflow-hidden bg-gray-100"
+    >
+        {
+            image ? (
+                <img
+                    src={image}
+                    alt={title}
+                    class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                />
+            ) : (
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] transition-all duration-500 group-hover:scale-105" />
+            )
+        }
+
+        <!-- ホバー時に出る「View Project」ラベル -->
+        <div
+            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
+        >
+            <span
+                class="bg-white text-black px-4 py-2 font-bold text-xs border-2 border-black shadow-[4px_4px_0px_0px_#000]"
+            >
+                VIEW PROJECT -&gt;
+            </span>
+        </div>
+    </div>
+
+    <!-- テキストエリア -->
+    <div class="group relative p-6 flex flex-col h-[calc(100%-56.25%)]">
+        <!-- タイトル -->
+        <h3 class="text-xl font-black mb-3 leading-tight">
+            {title}
+        </h3>
+
+        <!-- タグ -->
+        <div class="flex flex-wrap gap-2 mb-4">
+            {
+                tags.map((tag) => (
+                    <span class="text-[10px] font-bold border border-black px-2 py-1 bg-white text-black ">
+                        {tag}
+                    </span>
+                ))
+            }
+        </div>
+
+        <!-- 説明文 -->
+        <p class="text-xs font-medium opacity-70 leading-relaxed line-clamp-3">
+            {description}
+        </p>
+
+        <!-- 矢印（下揃え） -->
+        <div class="mt-auto pt-4 text-right">
+            <span class="font-bold text-xl">-&gt;</span>
+        </div>
+        <span class="slide-bg-top bg-white mix-blend-difference"></span>
+    </div>
+</a>

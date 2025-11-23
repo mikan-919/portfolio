@@ -1,0 +1,65 @@
+---
+import WorkCard from "../WorkCard.astro";
+
+// 表示するデータ（本来はCMSや別ファイルから取得してもOK）
+const works = [
+    {
+        title: "Task Manager App",
+        tags: ["React", "Firebase", "Tailwind"],
+        description:
+            "直感的な操作性を重視したタスク管理アプリ。ドラッグ&ドロップでの整理機能と、ダークモード切り替えを実装しました。",
+        // image: "/images/work1.png" // 画像がある場合はパスを指定
+    },
+    {
+        title: "University Circle Site",
+        tags: ["Astro", "MicroCMS"],
+        description:
+            "所属サークルの新歓用ウェブサイト。パフォーマンスを重視してAstroを採用し、Lighthouseで満点を達成。",
+    },
+    {
+        title: "Personal Portfolio v1",
+        tags: ["HTML/CSS", "Vanilla JS"],
+        description:
+            "最初に作成したポートフォリオサイト。グリッドレイアウトの基礎とレスポンシブデザインを学びました。",
+    },
+];
+---
+
+<section id="works" class="w-full border-b-2 border-black">
+    <!-- セクションヘッダー -->
+    <div
+        class="max-w-[1200px] mx-auto border-x-2 bg-gray-100 px-4 py-2 flex justify-between items-center border-b-2"
+    >
+        <h2 class="font-black text-sm tracking-[0.2em]">SELECTED WORKS</h2>
+        <span class="text-xs font-bold font-mono opacity-60">01 - 03</span>
+    </div>
+
+    <!-- グリッドレイアウト -->
+    <div
+        class="max-w-[1200px] mx-auto border-x border-black bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+    >
+        {works.map((work) => <WorkCard {...work} />)}
+    </div>
+
+    <!-- View All ボタンエリア -->
+    <div
+        class="max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white p-4 md:p-0"
+    >
+        <a
+            href="/works"
+            class="group relative block w-full bg-gray-50 transition-colors duration-300 py-6 text-center group border-t-2 md:border-t-2 border-black"
+        >
+            <span
+                class="font-black tracking-widest text-sm inline-flex items-center gap-2 group"
+            >
+                VIEW ALL WORKS
+                <span class="group-hover:translate-x-1 transition-transform"
+                    >-&gt;</span
+                >
+            </span>
+            <span
+                class="slide-bg duration-1000 delay-75 hover:delay-0 bg-white mix-blend-difference"
+            ></span>
+        </a>
+    </div>
+</section>

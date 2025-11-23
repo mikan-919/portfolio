@@ -40,6 +40,19 @@
   .group:hover .slide-bg {
     width: 100%;
   }
+  .slide-bg-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0%;
+    width: 100%;
+    background-color: #000;
+    transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 0;
+  }
+  .group:hover .slide-bg-top {
+    height: 100%;
+  }
   /* 共通: メインのコンテナ */
   .layout-container {
     @apply max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white;
