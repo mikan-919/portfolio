@@ -1,24 +1,21 @@
 ---
+import { getCollection } from "astro:content";
 import FeaturedProject from "../components/works/FeaturedProject.astro";
 import GitHubCTA from "../components/works/GithubCTA.astro";
 import WorksArchive from "../components/works/WorksArchive.astro";
 import Layout from "../layouts/Layout.astro";
 
-// 代表作のデータ
-const featured = {
-    title: "Task Manager App",
-    description:
-        "個人開発で作成した、React製のタスク管理ツール。Redux Toolkitを用いた状態管理と、Firebaseによるリアルタイム同期を実装。ドラッグ&ドロップでのタスク整理機能にこだわりました。",
-    tags: ["React", "TypeScript", "Firebase"],
-    demoUrl: "#",
-    repoUrl: "#",
-};
+const allWorks = await getCollection("works");
+const sortedWorks = allWorks.sort(
+    (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+const featured = sortedWorks[0];
 ---
 
 <Layout title="Portfoliooo | Works">
     <main>
-        <FeaturedProject {...featured} />
-        <WorksArchive />
+        <FeaturedProject id={featured.id} {...featured.data} />
+        <WorksArchive works={sortedWorks} />
         <GitHubCTA />
     </main>
 </Layout>

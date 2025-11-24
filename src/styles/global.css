@@ -59,9 +59,9 @@
 
   /* 共通: ハードシャドウボタン (WORKSやCONTACTで使用) */
   .btn-brutal {
-    @apply border-2 border-black bg-white px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000] transition-all;
+    @apply border-2 border-black bg-white px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000] transition-all select-none;
   }
-  .btn-brutal:active:not(:disabled) {
+  .btn-brutal:active:not(:disabled):not([aria-disabled="true"]) {
     @apply shadow-none translate-x-[2px] translate-y-[2px];
   }
 }

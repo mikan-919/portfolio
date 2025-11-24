@@ -1,45 +1,13 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import WorkCard from "../WorkCard.astro";
 
-// プロジェクトデータ (本来は別ファイルやCMSから取得)
-const projects = [
-    {
-        title: "Portfolio v1",
-        category: "Website",
-        tags: ["HTML", "CSS"],
-        description: "最初のポートフォリオサイト。",
-    },
-    {
-        title: "Portfolio v1",
-        category: "Website1",
-        tags: ["HTML", "CSS"],
-        description: "最初のポートフォリオサイト。",
-    },
-    {
-        title: "Portfolio v1",
-        category: "Website2",
-        tags: ["HTML", "CSS"],
-        description: "最初のポートフォリオサイト。",
-    },
-    {
-        title: "Portfolio v1",
-        category: "Website3",
-        tags: ["HTML", "CSS"],
-        description: "最初のポートフォリオサイト。",
-        isComingSoon: true,
-    },
-    {
-        title: "Portfolio v1",
-        category: "Website",
-        tags: ["HTML", "CSS"],
-        description: "最初のポートフォリオサイト。",
-        isComingSoon: true,
-    },
-    // ...データ追加
+type Props = { works: CollectionEntry<"works">[] };
+const { works } = Astro.props;
+const categories = [
+    "All",
+    ...new Set(works.map((p) => p.data.category.toUpperCase())),
 ];
-
-// 重複なしのカテゴリリストを作成
-const categories = ["All", ...new Set(projects.map((p) => p.category))];
 ---
 
 <section class="full-width-border">
@@ -62,7 +30,7 @@ const categories = ["All", ...new Set(projects.map((p) => p.category))];
                     </h1>
                 </div>
                 <div class="text-right hidden md:block">
-                    <p class="font-black text-4xl">{projects.length}</p>
+                    <p class="font-black text-4xl">{works.length}</p>
                     <p class="text-xs font-bold text-gray-500">
                         TOTAL PROJECTS
                     </p>
@@ -94,13 +62,13 @@ const categories = ["All", ...new Set(projects.map((p) => p.category))];
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0.5 gap-y-0.75 bg-black"
         >
             {
-                projects.map((project) => (
+                works.map((work) => (
                     // data-category属性を付与して、JSでフィルタリングできるようにする
                     <div
                         class="work-item bg-white h-full"
-                        data-category={project.category}
+                        data-category={work.data.category}
                     >
-                        <WorkCard {...project} />
+                        <WorkCard {...work.data} id={work.id} />
                     </div>
                 ))
             }
@@ -139,7 +107,10 @@ const categories = ["All", ...new Set(projects.map((p) => p.category))];
                 let visibleCount = 0;
                 items.forEach((item) => {
                     const category = item.getAttribute("data-category");
-                    if (filter === "All" || category === filter) {
+                    if (
+                        filter === "All" ||
+                        category === filter?.toLowerCase()
+                    ) {
                         (item as HTMLElement).style.display = "block";
                         visibleCount++;
                     } else {

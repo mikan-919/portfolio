@@ -1,27 +1,22 @@
 ---
-interface Props {
-    title: string;
-    tags: string[];
-    description: string;
-    category?: string;
-    isComingSoon?: boolean;
-    image?: string; // 画像は任意（なければパターン表示）
-    href?: string;
-}
+import type { WorksCollectionSchemaType } from "../content/config";
 
+type Props = {
+    id: string;
+} & WorksCollectionSchemaType;
 const {
     title,
     category,
     tags,
     description,
     image,
-    href = "#",
+    link,
     isComingSoon = false,
+    id,
 } = Astro.props;
 ---
 
-<a
-    href={isComingSoon ? "#" : href}
+<div
     class="group block h-full relative overflow-hidden bg-white transition-colors duration-300"
 >
     <!-- 画像エリア (アスペクト比 16:9) -->
@@ -41,7 +36,8 @@ const {
         }
 
         <!-- ホバー時に出る「View Project」ラベル -->
-        <div
+        <a
+            href={isComingSoon ? undefined : "/works/" + id}
             class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
         >
             <span
@@ -49,37 +45,39 @@ const {
             >
                 {isComingSoon ? "COMING SOON" : "VIEW PROJECT ->"}
             </span>
-        </div>
+        </a>
     </div>
 
     <!-- テキストエリア -->
-    <div class="group relative p-6 flex flex-col h-[calc(100%-56.25%)]">
-        <!-- タイトル -->
+    <a
+        href={isComingSoon ? undefined : "/works/" + id}
+        class="group relative p-6 flex flex-col h-[calc(100%-56.25%)]"
+    >
         <h3 class="text-xl font-black mb-4 leading-none border-l-6 pl-2">
             {title}<br />
             <span
-                class="text-xs tracking-widest uppercase font-medium leading-0"
+                class="text-xs text-gray-500 tracking-widest uppercase font-medium leading-0"
                 >{category}</span
             >
         </h3>
 
         <!-- 説明文 -->
         <p
-            class="text-sm font-medium text-gray-700 leading-relaxed line-clamp-3"
+            class="text-sm font-medium text-gray-700 leading-relaxed line-clamp-2"
         >
             {description}
         </p>
 
-        <!-- 矢印（下揃え） -->
         <div class="mt-auto pb-4 flex justify-between">
-            <!-- タグ -->
             <div class="flex flex-wrap gap-2 mb-4">
                 {
-                    tags.map((tag) => (
-                        <span class="text-[10px] font-medium bg-white text-gray-700">
-                            #{tag}
-                        </span>
-                    ))
+                    tags
+                        .slice(0, 3)
+                        .map((tag) => (
+                            <span class="text-[10px] font-medium bg-white text-gray-700">
+                                #{tag}
+                            </span>
+                        ))
                 }
             </div>
             <span
@@ -90,5 +88,5 @@ const {
             >
         </div>
         <span class="slide-bg-t bg-white mix-blend-difference"></span>
-    </div>
-</a>
+    </a>
+</div>
