@@ -1,0 +1,94 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+    id: string;
+} & CollectionEntry<"works">["data"];
+const {
+    title,
+    category,
+    tags,
+    description,
+    image,
+    link,
+    isComingSoon = false,
+    id,
+}: Props = Astro.props;
+---
+
+<div
+    class="group block h-full relative overflow-hidden bg-white transition-colors duration-300"
+>
+    <!-- 画像エリア (アスペクト比 16:9) -->
+    <div
+        class="aspect-video w-full border-b-2 border-black relative overflow-hidden bg-gray-100"
+    >
+        {
+            image ? (
+                <Image
+                    src={image}
+                    alt={title}
+                    class="w-full h-full object-cover transition-all transform-gpu duration-600 scale-100 group-hover:scale-110 blur-[2px]"
+                />
+            ) : (
+                <div class="absolute inset-0 origin-center scale-100 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[16px_16px] transition-all duration-600 group-hover:scale-110" />
+            )
+        }
+
+        <!-- ホバー時に出る「View Project」ラベル -->
+        <a
+            href={isComingSoon ? undefined : "/works/" + id}
+            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
+        >
+            <span
+                aria-disabled={isComingSoon}
+                class={`${isComingSoon ? "opacity-75 cursor-not-allowed" : ""} btn-brutal px-4 py-2 text-xs select-none`}
+            >
+                {isComingSoon ? "COMING SOON" : "VIEW PROJECT ->"}
+            </span>
+        </a>
+    </div>
+
+    <!-- テキストエリア -->
+    <a
+        href={isComingSoon ? undefined : "/works/" + id}
+        class="group relative p-6 flex flex-col h-fit justify-between"
+    >
+        <h3 class="text-xl font-black mb-4 leading-none border-l-6 pl-2">
+            {title}<br />
+            <span
+                class="text-xs text-gray-500 tracking-widest uppercase font-medium leading-0"
+                >{category}</span
+            >
+        </h3>
+
+        <!-- 説明文 -->
+        <p
+            class="text-sm font-medium text-gray-700 leading-relaxed line-clamp-2"
+        >
+            {description}
+        </p>
+
+        <div class="mt-6 flex justify-between">
+            <div class="flex flex-wrap gap-2">
+                {
+                    tags
+                        .slice(0, 3)
+                        .map((tag) => (
+                            <span class="text-[10px] font-medium bg-white text-gray-700">
+                                #{tag}
+                            </span>
+                        ))
+                }
+            </div>
+            <span
+                class={isComingSoon
+                    ? "text-transparent"
+                    : "inline-block font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"}
+                >-&gt;</span
+            >
+        </div>
+        <span class="slide-bg-t bg-white mix-blend-difference"></span>
+    </a>
+</div>

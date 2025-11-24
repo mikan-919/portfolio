@@ -1,0 +1,37 @@
+---
+import "../styles/global.css";
+import { Font } from "astro:assets";
+import Header from "../components/Header.astro";
+
+type Props = {
+	title?: string;
+};
+const { title }: Props = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title || "Portfoliooo"}</title>
+		<Font
+			cssVariable="--font-family-inter"
+			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
+		/>
+		<Font
+			cssVariable="--font-family-noto-sans-jp"
+			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
+		/>
+		<Font
+			cssVariable="--font-family-rampart-one"
+			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
+		/>
+	</head>
+	<body class="font-sans">
+		<Header />
+		<slot />
+	</body>
+</html>

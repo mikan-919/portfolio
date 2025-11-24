@@ -1,0 +1,109 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+    id: string;
+} & CollectionEntry<"works">["data"];
+
+const { title, description, tags, image, isComingSoon, id, link, github } =
+    Astro.props;
+---
+
+<section class="full-width-border">
+    <div class="content-container">
+        <!-- ヘッダー帯 -->
+        <div
+            class="bg-black text-white px-4 py-2 flex justify-between items-center border-b-2 border-black md:border-b-2"
+        >
+            <h2 class="font-black tracking-widest text-sm">FEATURED PROJECT</h2>
+            <span class="text-xs font-bold text-orange-400">★ HIGHLIGHT</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+            <!-- 左：画像エリア -->
+            <div
+                class="aspect-video w-full relative group overflow-hidden bg-gray-100"
+            >
+                {
+                    image ? (
+                        <Image
+                            src={image}
+                            alt={title}
+                            class="w-full h-full object-cover transition-all transform-gpu duration-600 scale-100 group-hover:scale-110 blur-[2px]"
+                        />
+                    ) : (
+                        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[16px_16px] transition-all duration-300 group-hover:scale-105" />
+                    )
+                }
+
+                <!-- ホバー時に出る「View Project」ラベル -->
+                <a
+                    href={isComingSoon ? undefined : "/works/" + id}
+                    class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
+                >
+                    <span
+                        aria-disabled={isComingSoon}
+                        class={`${isComingSoon ? "opacity-75 cursor-not-allowed" : ""} btn-brutal px-4 py-2 text-xs select-none`}
+                    >
+                        {isComingSoon ? "COMING SOON" : "VIEW PROJECT ->"}
+                    </span>
+                </a>
+            </div>
+
+            <!-- 右：詳細エリア -->
+            <div class="p-8 lg:p-12 flex flex-col justify-center">
+                <div class="mb-6">
+                    <h3
+                        class="text-3xl md:text-4xl font-black mb-4 leading-tight"
+                    >
+                        {title}
+                    </h3>
+                    <p
+                        class="font-medium text-sm md:text-base opacity-80 leading-relaxed"
+                    >
+                        {description}
+                    </p>
+                </div>
+
+                <!-- Tech Stack -->
+                <div class="mb-8">
+                    <p
+                        class="text-xs font-bold border-b-2 border-black inline-block mb-3"
+                    >
+                        TECH STACK
+                    </p>
+                    <ul
+                        class="flex flex-wrap gap-2 font-mono text-xs font-bold"
+                    >
+                        {
+                            tags.map((tag) => (
+                                <li class="px-2 py-1 bg-gray-100 border border-black">
+                                    {tag}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+
+                <!-- Links -->
+                <div class="flex gap-4 mt-auto">
+                    <a
+                        aria-disabled={isComingSoon || !link}
+                        href={isComingSoon ? undefined : link}
+                        class={`${link ? "" : "opacity-50 cursor-not-allowed"} flex-1 text-center aria-disabled:pointer-events-none btn-brutal`}
+                    >
+                        Visit
+                    </a>
+                    <a
+                        aria-disabled={isComingSoon || !github}
+                        href={isComingSoon ? undefined : github}
+                        class={`${github ? "" : "opacity-50 cursor-not-allowed"} flex-1 text-center aria-disabled:pointer-events-none btn-brutal`}
+                    >
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
