@@ -1,5 +1,7 @@
 ---
 import AboutSection from "../components/sections/AboutSection.astro";
+import BlogContactSection from "../components/sections/BlogContactSection.astro";
+import Footer from "../components/sections/Footer.astro";
 import HeroSection from "../components/sections/HeroSection.astro";
 import WorksSection from "../components/sections/WorksSection.astro";
 import Layout from "../layouts/Layout.astro";
@@ -7,73 +9,10 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout>
 	<main>
-		<!-- ヒーローセクション -->
 		<HeroSection />
 		<AboutSection />
-		<!-- ABOUT -->
 		<WorksSection />
-		<!-- WORKS -->
-
-		<!-- BLOG & CONTACT -->
-		<section class="full-width-border">
-			<div class="content-container grid grid-cols-1 md:grid-cols-2">
-				<div
-					id="blog"
-					class="border-b-2 md:border-b-0 md:border-r-2 border-black"
-				>
-					<div
-						class="bg-black text-white p-4 flex justify-between items-center border-b-2 border-white md:border-black"
-					>
-						<h3 class="font-black tracking-widest">
-							LATEST ARTICLES
-						</h3>
-						<a href="blog.html" class="text-xs underline"
-							>View All -&gt;</a
-						>
-					</div>
-					<div>
-						<a
-							href="#"
-							class="group relative block p-6 border-b border-black transition"
-						>
-							<p
-								class="text-xs relative z-10 font-bold text-gray-500 mb-1"
-							>
-								2024.11.20
-							</p>
-							<h4
-								class="font-bold relative z-10 text-lg leading-tight group-hover:text-white transition"
-							>
-								Next.js App Router移行の記録
-							</h4>
-							<span class="slide-bg"></span>
-						</a>
-						<a
-							href="#"
-							class="block p-6 hover:bg-gray-100 transition"
-						>
-							<p class="text-xs font-bold text-gray-500 mb-1">
-								2024.10.15
-							</p>
-							<h4 class="font-bold text-lg leading-tight">
-								エンジニア学生が読むべき本まとめ
-							</h4>
-						</a>
-					</div>
-				</div>
-				<div
-					id="contact"
-					class="bg-gray-50 p-8 md:p-12 flex flex-col justify-center"
-				>
-					<h3 class="text-4xl font-black mb-4">CONTACT.</h3>
-					<a
-						href="mailto:hello@example.com"
-						class="block w-full border-2 border-black bg-white py-4 text-center font-bold text-lg shadow-[4px_4px_0px_0px_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] transition-all"
-					>
-						Send Email
-					</a>
-				</div>
-			</div>
-		</section>
+		<BlogContactSection />
+		<Footer />
 	</main>
 </Layout>

@@ -1,0 +1,95 @@
+---
+import {Github, X} from "simple-icons-astro"
+
+// ブログ記事のダミーデータ（後でCMSと連携する箇所）
+const articles = [
+  {
+    date: "2024.11.20",
+    category: "Next.js",
+    title: "Next.js App Router移行の記録と、つまずいたポイント",
+    href: "#"
+  },
+  {
+    date: "2024.10.15",
+    category: "Books",
+    title: "エンジニア学生が読むべき本まとめ",
+    href: "#"
+  },
+  {
+    date: "2024.09.01",
+    category: "Event",
+    title: "夏休みのハッカソンに参加してきました",
+    href: "#"
+  },
+  {
+    date: "2024.08.15",
+    category: "Books",
+    title: "エンジニア学生が読むべき本まとめ",
+    href: "#"
+  }
+];
+---
+
+<section class="w-full border-b-2 border-black">
+  <div class="max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white grid grid-cols-1 md:grid-cols-2">
+    
+    <!-- 左カラム：BLOG -->
+    <div class="border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col">
+      <!-- ヘッダー帯 -->
+      <div class="bg-black text-white p-4 flex justify-between items-center border-b-2 border-black">
+        <h3 class="font-black tracking-widest text-sm">LATEST ARTICLES</h3>
+        <a href="/blog" class="group relative text-xs font-bold py-1 px-2 border border-transparent hover:border-white overflow-hidden block transition-colors">
+          <span>ARCHIVES </span><span class="group-hover:translate-x-0.5 translate-x-0 transition-transform duration-300 inline-block">-&gt;</span>
+          <span class="slide-bg-l bg-white mix-blend-difference duration-600"></span>
+        </a>
+      </div>
+
+      <!-- 記事リスト -->
+      <div class="grow bg-white">
+        {articles.map((article) => (
+          <a href={article.href} class="group block relative border-b-2 border-black  overflow-hidden">
+            <!-- 背景スライドアニメーション -->
+            
+            <div class="relative p-6 transition-colors duration-300">
+              <div class="flex items-center gap-3 mb-2 text-xs font-bold opacity-60 ">
+                <span class="font-mono">{article.date}</span>
+                <span class="border border-current px-2 py-0.5">{article.category}</span>
+              </div>
+              <h4 class="text-lg font-bold leading-tight group-hover:translate-x-2 translate-x-0 transition-transform duration-300">
+                {article.title}
+              </h4>
+            </div>
+            <span class="slide-bg-l bg-white mix-blend-difference duration-600"></span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- 右カラム：CONTACT -->
+    <div class="bg-gray-50 p-8 md:p-16 flex flex-col justify-center items-center text-center">
+      <h3 class="text-4xl md:text-5xl font-black mb-6 tracking-tighter">
+        LET'S TALK.
+      </h3>
+      <p class="text-sm font-bold opacity-70 mb-8 max-w-xs leading-relaxed">
+          現在プログラミングを学習中です。<br>
+          技術的なアドバイスや情報交換など、<br>
+          お気軽にメッセージいただけると嬉しいです。
+      </p>
+      
+      <button
+      disabled
+        class="disabled:opacity-50 group relative block w-full max-w-xs bg-white border-2 border-black disabled:border-gray-500 not-disabled:active:border-orange-600 py-4 font-bold text-lg btn-brutal"
+      >
+        <span>フォームは現在準備中 (._.)</span>
+        <span class="not-disabled:slide-bg-l  bg-white mix-blend-difference duration-300"></span>
+      </button>  
+
+      <!-- SNSリンク -->
+      <div class="mt-8 flex gap-6 text-sm font-bold">
+        <a href="https://github.com/mikan-919" target="_blank"><Github class="size-6"/></a>
+        <a href="https://twitter.com/mikan_919_main" target="_blank"><X class="size-6"/></a>
+      </div>
+    </div>
+
+  </div>
+</section>

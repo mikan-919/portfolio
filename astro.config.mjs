@@ -1,5 +1,6 @@
 // @ts-check
 
+import cloudflare from '@astrojs/cloudflare'
 import solidJs from '@astrojs/solid-js'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, fontProviders } from 'astro/config'
@@ -35,6 +36,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-
+  output: 'static',
   integrations: [solidJs()],
+  adapter: cloudflare({ imageService: 'compile' }),
 })
