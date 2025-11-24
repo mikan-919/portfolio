@@ -1,0 +1,36 @@
+---
+import { ChevronUp } from "@lucide/astro";
+---
+
+<footer class="full-width-border border-b-0">
+    <div class="content-container flex justify-between">
+        <!-- 左側：コピーライト -->
+        <div class="mb-4 md:mb-0 px-4 py-2">
+            <p
+                class="text-xs font-bold tracking-widest opacity-80 leading-none"
+            >
+                &copy; {new Date().getFullYear()} MIKAN 919.
+            </p>
+            <p class="text-[10px] font-mono opacity-50 mt-0.5 leading-none">
+                DESIGNED & BUILT WITH <a
+                    class="text-violet-900 hover:text-violet-600 transition-colors duration-300"
+                    href="https://astro.build/"
+                    target="_blank">ASTRO</a
+                >
+            </p>
+        </div>
+
+        <!-- 右側：トップへ戻る -->
+        <a
+            href="#hero"
+            class="group flex items-center relative gap-2 text-xs font-bold px-4 py-2"
+            aria-label="Back to Top"
+        >
+            <span>BACK TO TOP</span>
+            <ChevronUp
+                class="w-5 h-5 inline-block group-hover:-translate-y-1 transition-transform duration-300"
+            />
+            <span class="slide-bg-b bg-white mix-blend-difference"></span>
+        </a>
+    </div>
+</footer>

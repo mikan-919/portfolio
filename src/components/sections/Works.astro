@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from "astro:content";
+import WorkCard from "../WorkCard.astro";
+
+interface Props {
+    works: CollectionEntry<"works">[];
+}
+
+const { works }: Props = Astro.props;
+---
+
+<section id="works" class="full-width-border">
+    <div class="content-container">
+        <!-- セクションヘッダー -->
+        <div class="px-4 py-2 flex justify-between items-center border-b-2">
+            <h2 class="font-black text-sm tracking-[0.2em]">SELECTED WORKS</h2>
+            <span class="text-xs font-bold font-mono opacity-60">01 - 03</span>
+        </div>
+
+        <!-- グリッドレイアウト -->
+        <div
+            class="bg-black gap-0.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        >
+            {works.map((work) => <WorkCard {...work.data} id={work.id} />)}
+        </div>
+
+        <!-- View All ボタンエリア -->
+        <div class="bg-white p-4 md:p-0">
+            <a
+                href="/works"
+                class="group relative block w-full bg-gray-50 transition-colors duration-300 py-6 text-center group border-t-2 md:border-t-2 border-black"
+            >
+                <span
+                    class="font-black tracking-widest text-sm inline-flex items-center gap-2 group"
+                >
+                    VIEW ALL WORKS
+                    <span class="group-hover:translate-x-1 transition-transform"
+                        >-&gt;</span
+                    >
+                </span>
+                <span
+                    class="slide-bg-l duration-600 bg-white mix-blend-difference"
+                ></span>
+            </a>
+        </div>
+    </div>
+</section>
