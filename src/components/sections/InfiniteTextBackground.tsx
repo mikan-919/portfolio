@@ -1,20 +1,15 @@
-import { createSignal, onCleanup, onMount } from 'solid-js'
+import { onCleanup, onMount } from 'solid-js'
 
 export default function InfiniteTextBackground() {
   let containerRef: HTMLAnchorElement | undefined
   let canvasRef: HTMLCanvasElement | undefined
 
-  // ホバー状態の管理（これで色を切り替えます）
-
   const TEXT_CONTENT = 'MIKAN-919'
-  // const TEXT_CONTENT = '摘果みかん  MIKAN-919'
   const FONT_SIZE = 96
   const PADDING_X = FONT_SIZE // 文字間の余白
   const ROW_HEIGHT = FONT_SIZE
   const ANGLE_DEG = -30 // 全体の傾き
 
-  // 色定義 (Tailwindの gray-400 と orange-500)
-  const COLOR_DEFAULT = '#9ca3af'
   const COLOR_HOVER = '#f97316'
 
   onMount(() => {
@@ -30,10 +25,8 @@ export default function InfiniteTextBackground() {
     let animationFrameId: number
     let time = 39000
 
-    // 画面サイズに合わせてCanvasサイズを調整
     const resize = () => {
       if (!containerRef || !canvasRef) return
-      // 傾ける分、画面サイズより大きく描画領域を確保する
       const width = containerRef.offsetWidth
       const height = containerRef.offsetHeight
 

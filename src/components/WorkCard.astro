@@ -3,16 +3,26 @@ interface Props {
     title: string;
     tags: string[];
     description: string;
+    category?: string;
+    isComingSoon?: boolean;
     image?: string; // 画像は任意（なければパターン表示）
     href?: string;
 }
 
-const { title, tags, description, image, href = "#" } = Astro.props;
+const {
+    title,
+    category,
+    tags,
+    description,
+    image,
+    href = "#",
+    isComingSoon = false,
+} = Astro.props;
 ---
 
 <a
-    href={href}
-    class="group block h-full border-b-2 border-black md:border-b-0 md:border-x relative overflow-hidden bg-white transition-colors duration-500"
+    href={isComingSoon ? "#" : href}
+    class="group block h-full relative overflow-hidden bg-white transition-colors duration-300"
 >
     <!-- 画像エリア (アスペクト比 16:9) -->
     <div
@@ -23,10 +33,10 @@ const { title, tags, description, image, href = "#" } = Astro.props;
                 <img
                     src={image}
                     alt={title}
-                    class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                    class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
                 />
             ) : (
-                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] transition-all duration-500 group-hover:scale-105" />
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] transition-all duration-300 group-hover:scale-105" />
             )
         }
 
@@ -37,7 +47,7 @@ const { title, tags, description, image, href = "#" } = Astro.props;
             <span
                 class="bg-white text-black px-4 py-2 font-bold text-xs border-2 border-black shadow-[4px_4px_0px_0px_#000]"
             >
-                VIEW PROJECT -&gt;
+                {isComingSoon ? "COMING SOON" : "VIEW PROJECT ->"}
             </span>
         </div>
     </div>
@@ -45,29 +55,39 @@ const { title, tags, description, image, href = "#" } = Astro.props;
     <!-- テキストエリア -->
     <div class="group relative p-6 flex flex-col h-[calc(100%-56.25%)]">
         <!-- タイトル -->
-        <h3 class="text-xl font-black mb-3 leading-tight">
-            {title}
+        <h3 class="text-xl font-black mb-4 leading-none border-l-6 pl-2">
+            {title}<br />
+            <span
+                class="text-xs tracking-widest uppercase font-medium leading-0"
+                >{category}</span
+            >
         </h3>
 
-        <!-- タグ -->
-        <div class="flex flex-wrap gap-2 mb-4">
-            {
-                tags.map((tag) => (
-                    <span class="text-[10px] font-bold border border-black px-2 py-1 bg-white text-black ">
-                        {tag}
-                    </span>
-                ))
-            }
-        </div>
-
         <!-- 説明文 -->
-        <p class="text-xs font-medium opacity-70 leading-relaxed line-clamp-3">
+        <p
+            class="text-sm font-medium text-gray-700 leading-relaxed line-clamp-3"
+        >
             {description}
         </p>
 
         <!-- 矢印（下揃え） -->
-        <div class="mt-auto pt-4 text-right">
-            <span class="font-bold text-xl">-&gt;</span>
+        <div class="mt-auto pb-4 flex justify-between">
+            <!-- タグ -->
+            <div class="flex flex-wrap gap-2 mb-4">
+                {
+                    tags.map((tag) => (
+                        <span class="text-[10px] font-medium bg-white text-gray-700">
+                            #{tag}
+                        </span>
+                    ))
+                }
+            </div>
+            <span
+                class={isComingSoon
+                    ? "text-transparent"
+                    : "inline-block font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"}
+                >-&gt;</span
+            >
         </div>
         <span class="slide-bg-t bg-white mix-blend-difference"></span>
     </div>
