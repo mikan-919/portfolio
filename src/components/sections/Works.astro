@@ -1,28 +1,12 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import WorkCard from "../WorkCard.astro";
 
-// 表示するデータ（本来はCMSや別ファイルから取得してもOK）
-const works = [
-    {
-        title: "Task Manager App",
-        tags: ["React", "Firebase", "Tailwind"],
-        description:
-            "直感的な操作性を重視したタスク管理アプリ。ドラッグ&ドロップでの整理機能と、ダークモード切り替えを実装しました。",
-        // image: "/images/work1.png" // 画像がある場合はパスを指定
-    },
-    {
-        title: "University Circle Site",
-        tags: ["Astro", "MicroCMS"],
-        description:
-            "所属サークルの新歓用ウェブサイト。パフォーマンスを重視してAstroを採用し、Lighthouseで満点を達成。",
-    },
-    {
-        title: "Personal Portfolio v1",
-        tags: ["HTML/CSS", "Vanilla JS"],
-        description:
-            "最初に作成したポートフォリオサイト。グリッドレイアウトの基礎とレスポンシブデザインを学びました。",
-    },
-];
+interface Props {
+    works: CollectionEntry<"works">[];
+}
+
+const { works }: Props = Astro.props;
 ---
 
 <section id="works" class="full-width-border">
@@ -37,7 +21,7 @@ const works = [
         <div
             class="bg-black gap-0.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         >
-            {works.map((work) => <WorkCard {...work} />)}
+            {works.map((work) => <WorkCard {...work.data} id={work.id} />)}
         </div>
 
         <!-- View All ボタンエリア -->
