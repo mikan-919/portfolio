@@ -1,9 +1,10 @@
 ---
-import type { WorksCollectionSchemaType } from "../content/config";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
 
 type Props = {
     id: string;
-} & WorksCollectionSchemaType;
+} & CollectionEntry<"works">["data"];
 const {
     title,
     category,
@@ -25,13 +26,13 @@ const {
     >
         {
             image ? (
-                <img
+                <Image
                     src={image}
                     alt={title}
-                    class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
+                    class="w-full h-full object-cover transition-all transform-gpu duration-600 scale-100 group-hover:scale-110 blur-[2px]"
                 />
             ) : (
-                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] transition-all duration-300 group-hover:scale-105" />
+                <div class="absolute inset-0 origin-center scale-100 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[16px_16px] transition-all duration-600 group-hover:scale-110" />
             )
         }
 
@@ -41,7 +42,8 @@ const {
             class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
         >
             <span
-                class="bg-white text-black px-4 py-2 font-bold text-xs border-2 border-black shadow-[4px_4px_0px_0px_#000]"
+                aria-disabled={isComingSoon}
+                class={`${isComingSoon ? "opacity-75 cursor-not-allowed" : ""} btn-brutal px-4 py-2 text-xs select-none`}
             >
                 {isComingSoon ? "COMING SOON" : "VIEW PROJECT ->"}
             </span>
@@ -51,7 +53,7 @@ const {
     <!-- テキストエリア -->
     <a
         href={isComingSoon ? undefined : "/works/" + id}
-        class="group relative p-6 flex flex-col h-[calc(100%-56.25%)]"
+        class="group relative p-6 flex flex-col h-fit justify-between"
     >
         <h3 class="text-xl font-black mb-4 leading-none border-l-6 pl-2">
             {title}<br />
@@ -68,8 +70,8 @@ const {
             {description}
         </p>
 
-        <div class="mt-auto pb-4 flex justify-between">
-            <div class="flex flex-wrap gap-2 mb-4">
+        <div class="mt-6 flex justify-between">
+            <div class="flex flex-wrap gap-2">
                 {
                     tags
                         .slice(0, 3)

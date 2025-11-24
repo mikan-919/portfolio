@@ -1,46 +1,67 @@
-# Astro Starter Kit: Basics
+# Portfolio
 
-```sh
-bun create astro@latest -- --template basics
+モダンなWeb技術を使用して構築された、パフォーマンスとデザインに焦点を当てた私のポートフォリオサイトです。
+
+## 技術スタック
+
+- **フレームワーク:** [Astro](https://astro.build/)
+- **UIライブラリ:** [SolidJS](https://www.solidjs.com/)
+- **スタイリング:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **デプロイ:** [Cloudflare Pages](https://pages.cloudflare.com/)
+- **ツール:**
+  - [Biome](https://biomejs.dev/) (フォーマッター & リンター)
+  - [Husky](https://typicode.github.io/husky/) (Git hooks)
+  - [Commitlint](https://commitlint.js.org/) (コミットメッセージのリンター)
+
+
+
+## 開発
+
+開発サーバーを起動します:
+
+```bash
+bun run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### ビルド
 
-## 🚀 Project Structure
+本番用にプロジェクトをビルドします:
 
-Inside of your Astro project, you'll see the following folders and files:
+```bash
+bun run build
+```
+
+### プレビュー
+
+ビルドされたサイトをローカルでプレビューします:
+
+```bash
+bun run preview
+```
+
+## スクリプト
+
+| スクリプト | 説明 |
+| :--- | :--- |
+| `dev` | Astro開発サーバーを起動します。 |
+| `build` | 本番用にサイトをビルドします。 |
+| `preview` | ビルドされたサイトをプレビューします。 |
+| `fmt` | Biomeを使用してコードのチェックとフォーマットを行います。 |
+| `prepare` | Huskyのgit hooksをセットアップします。 |
+
+## プロジェクト構造
 
 ```text
 /
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── public/       # 静的アセット
+├── src/
+│   ├── assets/   # アセット
+│   ├── components/ # コンポーネント
+│   ├── content/  # コンテンツコレクション
+│   ├── layouts/  # レイアウト
+│   ├── pages/    # ページ
+│   └── styles/   # グローバルスタイル
+├── astro.config.mjs # Astro設定
+├── package.json  # プロジェクトの依存関係とスクリプト
+└── ...
 ```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
