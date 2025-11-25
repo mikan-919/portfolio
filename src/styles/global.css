@@ -68,8 +68,9 @@
 
 @theme inline {
   --font-sans:
-    var(--font-family-inter), var(--font-family-noto-sans-jp), sans-serif;
+    var(--font-family-figtree), var(--font-family-noto-sans-jp), sans-serif;
   --font-inter: var(--font-family-inter), sans-serif;
   --font-noto-sans-jp: var(--font-family-noto-sans-jp), sans-serif;
   --font-rampart-one: var(--font-family-rampart-one), sans-serif;
+  --font-figtree: var(--font-family-figtree), sans-serif;
 }

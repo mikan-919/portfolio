@@ -12,14 +12,14 @@ const { works }: Props = Astro.props;
 <section id="works" class="full-width-border">
     <div class="content-container">
         <!-- セクションヘッダー -->
-        <div class="px-4 py-2 flex justify-between items-center border-b-2">
+        <div class="flex justify-between items-center px-4 py-2 border-b-2">
             <h2 class="font-black text-sm tracking-[0.2em]">SELECTED WORKS</h2>
-            <span class="text-xs font-bold font-mono opacity-60">01 - 03</span>
+            <span class="opacity-60 font-mono font-bold text-xs">01 - 03</span>
         </div>
 
         <!-- グリッドレイアウト -->
         <div
-            class="bg-black gap-0.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            class="gap-0.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-black"
         >
             {works.map((work) => <WorkCard {...work.data} id={work.id} />)}
         </div>
@@ -28,18 +28,18 @@ const { works }: Props = Astro.props;
         <div class="bg-white p-4 md:p-0">
             <a
                 href="/works"
-                class="group relative block w-full bg-gray-50 transition-colors duration-300 py-6 text-center group border-t-2 md:border-t-2 border-black"
+                class="group group block relative bg-gray-50 py-6 border-2 border-black md:border-0 md:border-t-2 w-full text-center transition-colors duration-300"
             >
                 <span
-                    class="font-black tracking-widest text-sm inline-flex items-center gap-2 group"
+                    class="group inline-flex items-center gap-2 font-black text-sm tracking-widest"
                 >
                     VIEW ALL WORKS
-                    <span class="group-hover:translate-x-1 transition-transform"
+                    <span class="transition-transform group-hover:translate-x-1"
                         >-&gt;</span
                     >
                 </span>
                 <span
-                    class="slide-bg-l duration-600 bg-white mix-blend-difference"
+                    class="bg-white slide-bg-l duration-600 mix-blend-difference"
                 ></span>
             </a>
         </div>

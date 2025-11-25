@@ -3,36 +3,42 @@ import InfiniteTextBackground from "./InfiniteTextBackground.tsx";
 ---
 
 <section class="full-width-border" id="hero">
-	<div class="content-container grid grid-cols-1 md:grid-cols-2">
+	<div class="grid grid-cols-1 md:grid-cols-2 content-container">
 		<!-- 左：テキスト -->
 		<div
-			class="p-8 md:p-16 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black bg-white relative z-20 overflow-hidden"
+			class="z-20 relative flex flex-col justify-between bg-white p-8 md:p-16 border-black md:border-r-2 border-b-2 md:border-b-0 overflow-hidden"
 		>
-			<p class="text-xs font-bold tracking-[0.3em] text-gray-500 mb-4">
-				STUDENT / WEB DEV
-			</p>
-			<h2
-				class="text-5xl md:text-7xl font-black leading-none text-nowrap"
-			>
-				LOGIC<br />& DESIGN.<br />
-			</h2>
-			<span
-				class="select-none bg-linear-to-r font-black text-3xl from-orange-600/0 to-orange-400/0 hover:from-orange-600 hover:to-orange-400 transition-colors duration-1000 text-transparent bg-clip-text inline-block leading-none mb-6"
-				>MORE SIMPLE <span class="text-base">(・ω・)</span></span
-			>
-			<p
-				class="text-sm md:text-base font-bold leading-loose max-w-sm md:max-w-md font-sans"
-			>
-				コードを書くのが好きな高校生。<br />
-				まだ勉強中の身ですが、技術でモノを作る楽しさを探求しています。
-			</p>
+			<div class="my-auto">
+				<p
+					class="mb-4 font-figtree font-bold text-gray-500 text-xs tracking-[0.3em]"
+				>
+					STUDENT / WEB DEV
+				</p>
+				<h2
+					class="font-figtree font-black text-5xl md:text-6xl text-nowrap leading-none tracking-tight"
+				>
+					LOGIC<br />& DESIGN.<br />
+				</h2><span
+					class="inline-block bg-clip-text bg-linear-to-r from-orange-600/0 hover:from-orange-600 to-orange-400/0 hover:to-orange-400 font-black text-transparent text-3xl leading-none transition-colors duration-1000 select-none"
+					>MORE SIMPLE <span class="text-base">(・ω・)</span></span
+				>
+				<p
+					class="max-w-sm md:max-w-lg font-sans font-bold text-sm md:text-base leading-relaxed"
+				>
+					ここは、<code>mikan-919</code>のポートフォリオ。<br />
+					大したものはないと思いますが、ゆっくりしていってください。
+				</p>
+			</div>
+			<div class="flex flex-col justify-center bg-white">
+				<!-- 自己紹介テキスト -->
+			</div>
 		</div>
 
 		<!-- 右：アニメーション背景エリア -->
 		<div
-			class="relative overflow-hidden border-2 border-t-0 border-b-0 border-r-0 border-l-0 md:border-l-0 border-black group bg-gray-50 aspect-video md:aspect-square"
+			class="group relative bg-gray-50 border-2 border-black border-t-0 border-r-0 border-b-0 border-l-0 md:border-l-0 aspect-video md:aspect-square overflow-hidden"
 		>
-			<InfiniteTextBackground client:load />
+			<InfiniteTextBackground client:only="solid-js" />
 		</div>
 	</div>
 </section>

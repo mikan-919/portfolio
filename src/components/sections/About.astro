@@ -1,71 +1,54 @@
-<section id="about" class="w-full border-b-2 border-black">
-    <div
-        class="max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white grid grid-cols-1 md:grid-cols-3"
-    >
-        <!-- 左：タイトルカラム -->
+<section id="about" class="full-width-border">
+    <div class="relative p-8 pb-6 overflow-hidden content-container">
+        <!-- <span
+            class="top-2 -left-8 absolute opacity-10 font-figtree font-black text-9xl leading-0 tracking-widest select-none"
+            >ABOUT ME</span
+        > -->
+
         <div
-            class="col-span-1 bg-black text-white p-8 md:p-10 flex flex-col justify-between border-b-2 md:border-b-0 md:border-r-2 border-white md:border-black"
+            class="z-10 flex md:flex-row flex-col justify-between space-x-12 space-y-4 border-white md:border-black border-b-2 md:border-b-0"
         >
-            <div>
-                <h3 class="text-4xl font-black tracking-tighter">
-                    ABOUT<br />ME.
-                </h3>
-                <p class="text-sm opacity-70 mt-4 font-mono">
-                    High School Student<br />
-                    Based in Japan
-                </p>
-            </div>
-            <!-- Aboutへのリンク + (TODO)なにか大きめのアニメーション(3D?)要素を付ける -->
-            <div class="ml-auto">
-                <a
-                    class="px-3 py-1 relative group inline-block text-sm font-bold text-center overflow-hidden border border-transparent hover:border-white transition-colors duration-300"
-                    href="#"
+            <div class="pl-4 border-orange-500 border-l-32 w-fit">
+                <h3
+                    class="relative font-black text-6xl md:text-8xl text-nowrap leading-none tracking-tighter"
                 >
-                    <span
-                        class="relative z-10 mix-blend-difference tracking-widest"
-                        >MORE →</span
-                    >
-                    <span class="slide-bg-l bg-white"></span>
-                </a>
+                    Mikan 919
+                </h3>
+                <div class="flex justify-between space-x-4">
+                    <p class="opacity-70 mt-2 font-mono text-sm">
+                        High Schodol Student<br />
+                        Based in Japan<br />
+                        Web Development, AI
+                    </p>
+                </div>
             </div>
+            <p class="opacity-90 my-auto font-medium text-base leading-relaxed">
+                学校の勉強の傍ら、趣味でプログラミングを学習しています。<br />
+                まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
+                />
+                最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
+            </p>
         </div>
-
-        <!-- 右：本文 & スキル -->
+        <!-- スキル・興味リスト -->
         <div
-            class="col-span-1 md:col-span-2 p-8 md:p-12 bg-white flex flex-col justify-center"
+            class="z-10 flex justify-around pt-4 border-black/25 border-t-2 border-dotted"
         >
-            <!-- 自己紹介テキスト -->
-            <div class="mb-10">
-                <h4 class="text-xl font-extrabold mb-4">
-                    Web技術に興味がある高校生です。
-                </h4>
-                <p class="leading-relaxed font-light text-base opacity-60">
-                    学校の勉強の傍ら、趣味でプログラミングを学習しています。<br
-                    />
-                    まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
-                    />
-                    最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
-                </p>
-            </div>
-
-            <!-- スキル・興味リスト -->
-            <div
-                class="grid grid-cols-2 gap-8 border-t-2 border-black/25 border-dotted pt-8"
-            >
+            <div class="gap-8 grid grid-cols-2 sm:grid-cols-3">
                 <div class="overflow-hidden">
                     <h5
-                        class="text-center mb-4 border-b-2 tracking-wider border-black inline-flex pr-2 items-baseline space-x-1"
+                        class="inline-flex items-baseline space-x-1 mb-4 pr-2 border-black border-b-2 text-center tracking-wider"
                     >
-                        <span class="font-black text-sm text-nowrap"
+                        <span
+                            class="font-figtree font-black text-lg text-nowrap"
                             >LEARNING<span class="hidden md:inline"> /</span>
                         </span><span
-                            class="text-xs text-black/50 hidden md:inline font-bold tracking-tight hover:text-orange-400/75 transition-colors duration-300 hover:delay-0 delay-300 text-nowrap text-ellipsis"
+                            class="hidden md:inline font-bold text-black/50 hover:text-orange-400/75 text-sm text-ellipsis text-nowrap tracking-tight transition-colors duration-300 delay-300 hover:delay-0 select-none"
                         >
                             学習中・触ったことがある
                         </span>
                     </h5>
                     <ul
-                        class='text-[0.8125rem] font-bold space-y-2 list-["-_"] list-inside'
+                        class='space-y-1 font-bold text-base list-["-_"] list-inside'
                     >
                         <li>HTML / CSS</li>
                         <li>JavaScript / TypeScript</li>
@@ -75,21 +58,21 @@
                     </ul>
                 </div>
 
-                <div>
+                <div class="overflow-hidden">
                     <h5
-                        class="text-center mb-4 border-b-2 tracking-wider border-black inline-flex pr-2 items-baseline space-x-1"
+                        class="inline-flex items-baseline space-x-1 mb-4 pr-2 border-black border-b-2 text-center tracking-wider"
                     >
-                        <span class="font-black text-sm text-nowrap"
+                        <span class="font-black text-lg text-nowrap"
                             >INTERESTS<span class="hidden md:inline"> /</span>
                         </span><span
-                            class="text-xs text-black/50 font-bold tracking-normal hidden md:inline hover:text-orange-400/75 transition-colors duration-300 hover:delay-0 delay-300 overflow-hidden text-nowrap text-ellipsis"
+                            class="hidden md:inline font-bold text-black/50 hover:text-orange-400/75 text-sm text-ellipsis text-nowrap tracking-tight transition-colors duration-300 delay-300 hover:delay-0 select-none"
                         >
                             興味・好きなこと
                         </span>
                     </h5>
 
                     <ul
-                        class='text-[0.8125rem] font-bold space-y-2 list-["-_"] list-inside'
+                        class='space-y-1 font-bold text-base list-["-_"] list-inside'
                     >
                         <li>Web Design</li>
                         <li>UI/UX</li>
@@ -98,7 +81,67 @@
                         <li>Music</li>
                     </ul>
                 </div>
+                <div class="hidden sm:block overflow-hidden">
+                    <h5
+                        class="inline-flex items-baseline space-x-1 mb-4 border-black border-b-2 text-center tracking-wider"
+                    >
+                        <span class="font-black text-lg text-nowrap"
+                            >NOW PLAYING<span class="hidden md:inline"> /</span>
+                        </span><span
+                            class="hidden md:inline font-bold text-black/50 hover:text-orange-400/75 text-sm text-ellipsis text-nowrap tracking-tight transition-colors duration-300 delay-300 hover:delay-0 select-none"
+                        >
+                            最近の趣味
+                        </span>
+                    </h5>
+
+                    <div class="space-y-4">
+                        <!-- 音楽 -->
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="flex justify-center items-center bg-black w-8 h-8 aspect-square text-white text-xs"
+                            >
+                                ♪
+                            </div>
+                            <div>
+                                <p class="opacity-50 font-bold text-xs">
+                                    MUSIC
+                                </p>
+                                <p class="font-bold text-sm">
+                                    Bling-Bang-Bang-Born
+                                </p>
+                                <p class="opacity-70 font-medium text-xs">
+                                    Creepy Nuts
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- ゲーム -->
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="flex justify-center items-center bg-black w-8 h-8 aspect-square text-white text-xs"
+                            >
+                                🎮
+                            </div>
+                            <div>
+                                <p class="opacity-50 font-bold text-xs">GAME</p>
+                                <p class="font-bold text-sm">VALORANT</p>
+                                <p class="opacity-70 font-medium text-xs">
+                                    Rank: Silver 2
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="flex justify-center">
+            <a
+                class="group inline-block relative bg-black mx-auto mt-4 px-3 py-1 border border-transparent hover:border-black overflow-hidden font-bold text-base text-center transition-colors duration-300"
+                href="#"
+            >
+                <span class="text-white tracking-widest">MORE →</span>
+                <span class="bg-white slide-bg-l mix-blend-difference"></span>
+            </a>
         </div>
     </div>
 </section>

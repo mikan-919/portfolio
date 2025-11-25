@@ -139,23 +139,23 @@ export default function InfiniteTextBackground() {
     <a
       href='.'
       ref={containerRef}
-      class='absolute inset-0 overflow-hidden select-none flex items-center justify-center bg-gray-50 group grayscale-100 hover:grayscale-0 transition-all duration-300'
+      class='group absolute inset-0 flex justify-center items-center bg-gray-50 grayscale-100 hover:grayscale-0 overflow-hidden transition-all duration-300 select-none'
     >
       {/* Canvas本体 */}
       <canvas
         ref={canvasRef}
-        class='absolute inset-0 w-full h-full block'
+        class='block absolute inset-0 w-full h-full'
       />
 
       {/* すりガラスレイヤー */}
-      <div class='absolute inset-y-0 right-0 w-1/2 bg-white/50 group-hover:bg-white/25 backdrop-blur-sm group-hover:backdrop-blur-xs transition-all duration-300  border-l-2 border-black z-10 pointer-events-none' />
-      <div class='absolute inset-y-0 left-0 w-1/2 bg-white/75 backdrop-blur-md group-hover:bg-white/50 group-hover:backdrop-blur-sm transition-all duration-300 z-10 pointer-events-none' />
+      <div class='right-0 z-10 absolute inset-y-0 bg-white/50 group-hover:bg-white/25 backdrop-blur-sm group-hover:backdrop-blur-xs w-1/2 transition-all duration-300 pointer-events-none' />
+      <div class='left-0 z-10 absolute inset-y-0 bg-white/75 group-hover:bg-white/50 backdrop-blur-md group-hover:backdrop-blur-sm w-1/2 transition-all duration-300 pointer-events-none' />
 
       {/* Update Box */}
-      <div class='absolute inset-0 flex items-center justify-center z-20 pointer-events-none'>
-        <div class='relative text-center border-2 border-black bg-white p-6 shadow-[6px_6px_0px_0px_#000] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 pointer-events-auto'>
-          <p class='text-xs font-bold mb-1'>LATEST UPDATE</p>
-          <p class='text-3xl font-black tracking-tighter'>2024.11.21</p>
+      <div class='z-20 absolute inset-0 flex justify-center items-center pointer-events-none'>
+        <div class='relative bg-white shadow-[6px_6px_0px_0px_#000] p-6 border-2 border-black text-center transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 duration-300 pointer-events-auto'>
+          <p class='mb-1 font-bold text-xs'>LATEST UPDATE</p>
+          <p class='font-black text-3xl tracking-tighter'>2024.11.21</p>
         </div>
       </div>
     </a>
