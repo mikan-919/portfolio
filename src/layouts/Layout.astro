@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
-import { Font } from "astro:assets";
 import Header from "../components/Header.astro";
+import Fonts from "./Fonts.astro";
 
 type Props = {
 	title?: string;
@@ -17,22 +17,7 @@ const { title }: Props = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title || "Portfoliooo"}</title>
-		<Font
-			cssVariable="--font-family-inter"
-			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
-		/>
-		<Font
-			cssVariable="--font-family-noto-sans-jp"
-			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
-		/>
-		<Font
-			cssVariable="--font-family-rampart-one"
-			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
-		/>
-		<Font
-			cssVariable="--font-family-figtree"
-			preload={[{ subset: "latin", style: "normal" }, { weight: "900" }]}
-		/>
+		<Fonts />
 	</head>
 	<body class="font-sans">
 		<Header />

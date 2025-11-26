@@ -1,0 +1,87 @@
+---
+import styles from "./InfoGrid.module.css";
+
+interface SectionHeader {
+    title: string;
+    subtitle: string;
+}
+
+interface ListSection extends SectionHeader {
+    items: string[];
+}
+
+interface ActivityItem {
+    icon: string;
+    category: string;
+    title: string;
+    detail: string;
+}
+
+interface ActivitySection extends SectionHeader {
+    items: ActivityItem[];
+}
+
+export interface Props {
+    learning: ListSection;
+    interests: ListSection;
+    nowPlaying: ActivitySection;
+}
+
+const { learning, interests, nowPlaying } = Astro.props;
+---
+
+<div class={styles.grid}>
+    <div class={styles.column}>
+        <h5 class={styles.header}>
+            <span class={styles.headerTitle}>
+                {learning.title}<span class={styles.headerSlash}> /</span>
+            </span>
+            <span class={styles.headerSubtitle}>
+                {learning.subtitle}
+            </span>
+        </h5>
+        <ul class={styles.list}>
+            {learning.items.map((item) => <li>{item}</li>)}
+        </ul>
+    </div>
+
+    <div class={styles.column}>
+        <h5 class={styles.header}>
+            <span class={styles.headerTitle}>
+                {interests.title}<span class={styles.headerSlash}> /</span>
+            </span>
+            <span class={styles.headerSubtitle}>
+                {interests.subtitle}
+            </span>
+        </h5>
+        <ul class={styles.list}>
+            {interests.items.map((item) => <li>{item}</li>)}
+        </ul>
+    </div>
+
+    <div class={styles.columnHiddenSm}>
+        <h5 class={styles.header}>
+            <span class={styles.headerTitle}>
+                {nowPlaying.title}<span class={styles.headerSlash}> /</span>
+            </span>
+            <span class={styles.headerSubtitle}>
+                {nowPlaying.subtitle}
+            </span>
+        </h5>
+
+        <ul class={styles.list}>
+            {
+                nowPlaying.items.map((item) => (
+                    <li class={styles.activityItem}>
+                        <div class={styles.iconBox}>{item.icon}</div>
+                        <div>
+                            <p class={styles.metaCategory}>{item.category}</p>
+                            <p class={styles.metaTitle}>{item.title}</p>
+                            <p class={styles.metaDetail}>{item.detail}</p>
+                        </div>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</div>

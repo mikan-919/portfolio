@@ -1,147 +1,95 @@
+---
+import InfoGrid from "./InfoGrid.astro";
+
+const learningData = {
+    title: "LEARNING",
+    subtitle: "学習中・触ったことがある",
+    items: [
+        "HTML / CSS",
+        "JavaScript / TypeScript",
+        "SolidJS / React",
+        "Astro",
+        "Tailwind CSS",
+    ],
+};
+
+const interestsData = {
+    title: "INTERESTS",
+    subtitle: "興味・好きなこと",
+    items: ["Web Design", "UI/UX", "Gadgets", "Gaming", "Music"],
+};
+
+const nowPlayingData = {
+    title: "NOW PLAYING",
+    subtitle: "最近の趣味",
+    items: [
+        {
+            icon: "♪",
+            category: "MUSIC",
+            title: "Bling-Bang-Bang-Born",
+            detail: "Creepy Nuts",
+        },
+        {
+            icon: "🎮",
+            category: "GAME",
+            title: "VALORANT",
+            detail: "Rank: Silver 2",
+        },
+    ],
+};
+---
+
 <section id="about" class="full-width-border">
-    <div class="relative p-8 pb-6 overflow-hidden content-container">
-        <!-- <span
-            class="top-2 -left-8 absolute opacity-10 font-figtree font-black text-9xl leading-0 tracking-widest select-none"
-            >ABOUT ME</span
-        > -->
-
+    <div
+        class="overflow-hidden grid grid-cols-1 md:grid-cols-[3fr_4fr] content-container"
+    >
         <div
-            class="z-10 flex md:flex-row flex-col justify-between space-x-12 space-y-4 border-white md:border-black border-b-2 md:border-b-0"
+            class="z-10 p-8 bg-black text-white overflow-hidden justify-between flex flex-col items-end md:m-6"
         >
-            <div class="pl-4 border-orange-500 border-l-32 w-fit">
-                <h3
-                    class="relative font-black text-6xl md:text-8xl text-nowrap leading-none tracking-tighter"
+            <div class="flex flex-col">
+                <div
+                    class="flex flex-col lg:flex-row lg:items-center mx-2 border-b-2 border-white pb-2 overflow-hidden"
                 >
-                    Mikan 919
-                </h3>
-                <div class="flex justify-between space-x-4">
-                    <p class="opacity-70 mt-2 font-mono text-sm">
-                        High Schodol Student<br />
-                        Based in Japan<br />
-                        Web Development, AI
-                    </p>
-                </div>
-            </div>
-            <p class="opacity-90 my-auto font-medium text-base leading-relaxed">
-                学校の勉強の傍ら、趣味でプログラミングを学習しています。<br />
-                まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
-                />
-                最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
-            </p>
-        </div>
-        <!-- スキル・興味リスト -->
-        <div
-            class="z-10 flex justify-around pt-4 border-black/25 border-t-2 border-dotted"
-        >
-            <div class="gap-8 grid grid-cols-2 sm:grid-cols-3">
-                <div class="overflow-hidden">
-                    <h5
-                        class="inline-flex items-baseline space-x-1 mb-4 pr-2 border-black border-b-2 text-center tracking-wider"
+                    <h3
+                        class="font-extrabold text-4xl md:text-5xl text-nowrap leading-none tracking-tighter"
                     >
-                        <span
-                            class="font-figtree font-black text-lg text-nowrap"
-                            >LEARNING<span class="hidden md:inline"> /</span>
-                        </span><span
-                            class="hidden md:inline font-bold text-black/50 hover:text-orange-400/75 text-sm text-ellipsis text-nowrap tracking-tight transition-colors duration-300 delay-300 hover:delay-0 select-none"
-                        >
-                            学習中・触ったことがある
-                        </span>
-                    </h5>
-                    <ul
-                        class='space-y-1 font-bold text-base list-["-_"] list-inside'
+                        ABOUT ME
+                    </h3>
+                    <div
+                        class="flex flex-col justify-between h-9 text-xs leading-none text-ellipsis text-nowrap font-mono opacity-90 lg:ml-4"
                     >
-                        <li>HTML / CSS</li>
-                        <li>JavaScript / TypeScript</li>
-                        <li>SolidJS / React</li>
-                        <li>Astro</li>
-                        <li>Tailwind CSS</li>
-                    </ul>
-                </div>
-
-                <div class="overflow-hidden">
-                    <h5
-                        class="inline-flex items-baseline space-x-1 mb-4 pr-2 border-black border-b-2 text-center tracking-wider"
-                    >
-                        <span class="font-black text-lg text-nowrap"
-                            >INTERESTS<span class="hidden md:inline"> /</span>
-                        </span><span
-                            class="hidden md:inline font-bold text-black/50 hover:text-orange-400/75 text-sm text-ellipsis text-nowrap tracking-tight transition-colors duration-300 delay-300 hover:delay-0 select-none"
-                        >
-                            興味・好きなこと
-                        </span>
-                    </h5>
-
-                    <ul
-                        class='space-y-1 font-bold text-base list-["-_"] list-inside'
-                    >
-                        <li>Web Design</li>
-                        <li>UI/UX</li>
-                        <li>Gadgets</li>
-                        <li>Gaming</li>
-                        <li>Music</li>
-                    </ul>
-                </div>
-                <div class="hidden sm:block overflow-hidden">
-                    <h5
-                        class="inline-flex items-baseline space-x-1 mb-4 border-black border-b-2 text-center tracking-wider"
-                    >
-                        <span class="font-black text-lg text-nowrap"
-                            >NOW PLAYING<span class="hidden md:inline"> /</span>
-                        </span><span
-                            class="hidden md:inline font-bold text-black/50 hover:text-orange-400/75 text-sm text-ellipsis text-nowrap tracking-tight transition-colors duration-300 delay-300 hover:delay-0 select-none"
-                        >
-                            最近の趣味
-                        </span>
-                    </h5>
-
-                    <div class="space-y-4">
-                        <!-- 音楽 -->
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="flex justify-center items-center bg-black w-8 h-8 aspect-square text-white text-xs"
-                            >
-                                ♪
-                            </div>
-                            <div>
-                                <p class="opacity-50 font-bold text-xs">
-                                    MUSIC
-                                </p>
-                                <p class="font-bold text-sm">
-                                    Bling-Bang-Bang-Born
-                                </p>
-                                <p class="opacity-70 font-medium text-xs">
-                                    Creepy Nuts
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- ゲーム -->
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="flex justify-center items-center bg-black w-8 h-8 aspect-square text-white text-xs"
-                            >
-                                🎮
-                            </div>
-                            <div>
-                                <p class="opacity-50 font-bold text-xs">GAME</p>
-                                <p class="font-bold text-sm">VALORANT</p>
-                                <p class="opacity-70 font-medium text-xs">
-                                    Rank: Silver 2
-                                </p>
-                            </div>
-                        </div>
+                        <span>High School Student</span>
+                        <span>Based in Japan</span>
+                        <span>Web Development</span>
                     </div>
                 </div>
+                <p
+                    class="opacity-80 my-auto font-sm text-base leading-relaxed p-4"
+                >
+                    学校の勉強の傍ら、趣味でプログラミングを学習しています。<br
+                    />
+                    まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
+                    />
+                    最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
+                </p>
             </div>
         </div>
-        <div class="flex justify-center">
-            <a
-                class="group inline-block relative bg-black mx-auto mt-4 px-3 py-1 border border-transparent hover:border-black overflow-hidden font-bold text-base text-center transition-colors duration-300"
-                href="#"
-            >
-                <span class="text-white tracking-widest">MORE →</span>
-                <span class="bg-white slide-bg-l mix-blend-difference"></span>
-            </a>
+        <div class="flex flex-col justify-between py-6 pr-6">
+            <InfoGrid
+                learning={learningData}
+                interests={interestsData}
+                nowPlaying={nowPlayingData}
+            />
+            <div class="ml-auto">
+                <a
+                    class="group inline-block text-nowrap relative bg-white px-3 py-1 border border-black hover:border-white overflow-hidden font-bold text-base text-center transition-colors duration-300"
+                    href="#"
+                >
+                    <span class="text-black tracking-widest">MORE →</span>
+                    <span class="bg-white slide-bg-l mix-blend-difference"
+                    ></span>
+                </a>
+            </div>
         </div>
     </div>
 </section>

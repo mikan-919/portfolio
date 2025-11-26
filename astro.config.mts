@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, fontProviders } from 'astro/config'
 
 // https://astro.build/config
-export default defineConfig({
+const config = defineConfig({
   experimental: {
     fonts: [
       {
@@ -37,13 +37,21 @@ export default defineConfig({
         weights: ['300 900'],
         display: 'swap',
       },
+      {
+        provider: fontProviders.google(),
+        name: 'JetBrains Mono',
+        cssVariable: '--font-family-jetbrains-mono',
+        weights: ['100 800'],
+        display: 'swap',
+      },
     ],
   },
 
   vite: {
     plugins: [tailwindcss()],
   },
-  output: 'static',
+  output: 'server',
   integrations: [solidJs()],
-  adapter: cloudflare({ imageService: 'cloudflare' }),
+  // adapter: cloudflare({ imageService: 'cloudflare' }),
 })
+export default config
