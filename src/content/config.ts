@@ -1,6 +1,6 @@
 // src/content/config.ts
 import { defineCollection, z } from 'astro:content'
-import { file, glob } from 'astro/loaders'
+import { glob } from 'astro/loaders'
 
 // Worksコレクションの定義
 
@@ -20,7 +20,21 @@ const worksCollection = defineCollection({
     }),
 })
 
+const articlesCollection = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/articles' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      summary: z.string().optional(),
+      tags: z.array(z.string()),
+      image: image().optional(),
+      publishDate: z.date(),
+    }),
+})
+
 // エクスポート（ここで名前を決める）
 export const collections = {
   works: worksCollection,
+  articles: articlesCollection,
 }
