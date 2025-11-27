@@ -42,18 +42,24 @@ const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
 </nav>
 
 <script>
+    const observerOptions = {
+        root: null,
+        // 重要: 判定ラインの調整
+        // "-100px": 画面上部から100px下（ヘッダー分）を無視
+        // "-60%": 画面の下半分は「まだ読んでない」とみなして無視
+        // 結果: 画面の上部30%〜40%くらいのエリアに入った瞬間反応する
+        rootMargin: "-100px 0px -60% 0px",
+        threshold: 0,
+    };
     // スクロール連動ロジック
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute("id");
-                    updateActiveLink(id!);
-                }
-            });
-        },
-        { rootMargin: "-100px 0px -60% 0px" },
-    ); // 画面の中央より少し上に来たら反応
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute("id");
+                updateActiveLink(id!);
+            }
+        });
+    }, observerOptions); // 画面の中央より少し上に来たら反応
 
     // 記事内のH2, H3を監視
     document.querySelectorAll("h2, h3").forEach((section) => {

@@ -52,6 +52,6 @@ const config = defineConfig({
   },
   output: 'server',
   integrations: [solidJs()],
-  adapter: cloudflare({ imageService: 'cloudflare' }),
+  adapter: cloudflare({ imageService: 'passthrough' }),
 })
 export default config

@@ -1,33 +1,14 @@
 ---
-import {Github, X} from "simple-icons-astro"
+import type { CollectionEntry } from "astro:content";
+import Github from 'simple-icons-astro/Github'
+import X from 'simple-icons-astro/X'
 
-// ブログ記事のダミーデータ（後でCMSと連携する箇所）
-const articles = [
-  {
-    date: "2024.11.20",
-    category: "Next.js",
-    title: "Next.js App Router移行の記録と、つまずいたポイント",
-    href: "#"
-  },
-  {
-    date: "2024.10.15",
-    category: "Books",
-    title: "エンジニア学生が読むべき本まとめ",
-    href: "#"
-  },
-  {
-    date: "2024.09.01",
-    category: "Event",
-    title: "夏休みのハッカソンに参加してきました",
-    href: "#"
-  },
-  {
-    date: "2024.08.15",
-    category: "Books",
-    title: "エンジニア学生が読むべき本まとめ",
-    href: "#"
-  }
-];
+// import {Github, X} from "simple-icons-astro"
+
+type Props = {
+ articles:CollectionEntry<'articles'>[]
+}
+const {articles} = Astro.props;
 ---
 
 <section class="full-width-border">
@@ -47,16 +28,16 @@ const articles = [
       <!-- 記事リスト -->
       <div class="grow bg-white">
         {articles.map((article) => (
-          <a href={article.href} class="group block relative border-b-2 border-black last:border-b-0  overflow-hidden">
+          <a href={`/blog/${article.id}`} class="group block relative border-b-2 border-black last:border-b-0  overflow-hidden">
             <!-- 背景スライドアニメーション -->
             
             <div class="relative p-6 transition-colors duration-300">
               <div class="flex items-center gap-3 mb-2 text-xs font-bold opacity-60 ">
-                <span class="font-mono">{article.date}</span>
-                <span class="border border-current px-2 py-0.5">{article.category}</span>
+                <span class="font-mono">{article.data.publishDate}</span>
+                <span class="border border-current px-2 py-0.5">{article.data.tags[0]}</span>
               </div>
               <h4 class="text-lg font-bold leading-tight group-hover:translate-x-2 translate-x-0 transition-transform duration-300">
-                {article.title}
+                {article.data.title}
               </h4>
             </div>
             <span class="slide-bg-l bg-white mix-blend-difference duration-600"></span>

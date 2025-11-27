@@ -1,14 +1,22 @@
 ---
 import { getCollection } from "astro:content";
+import Footer from "../components/Footer.astro";
 import About from "../components/sections/About.astro";
 import BlogContact from "../components/sections/BlogContact.astro";
-import Footer from "../components/sections/Footer.astro";
 import Hero from "../components/sections/Hero.astro";
 import Works from "../components/sections/Works.astro";
 import Layout from "../layouts/Layout.astro";
 
 const allWorks = await getCollection("works");
 const sortedWorks = allWorks
+	.sort(
+		(a, b) =>
+			new Date(b.data.publishDate).getTime() -
+			new Date(a.data.publishDate).getTime(),
+	)
+	.slice(0, 3);
+const allArticles = await getCollection("articles");
+const sortedArticles = allArticles
 	.sort(
 		(a, b) =>
 			new Date(b.data.publishDate).getTime() -
@@ -22,7 +30,7 @@ const sortedWorks = allWorks
 		<Hero />
 		<About />
 		<Works works={sortedWorks} />
-		<BlogContact />
+		<BlogContact articles={sortedArticles} />
 		<Footer />
 	</main>
 </Layout>

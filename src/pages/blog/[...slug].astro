@@ -1,18 +1,29 @@
 ---
 import { Image } from "astro:assets";
-import { getEntry, render } from "astro:content";
+import { getCollection, render } from "astro:content";
 import TableOfContents from "../../components/blog/TableOfContents.astro";
+import Footer from "../../components/Footer.astro";
 import Layout from "../../layouts/Layout.astro";
 
 const { slug } = Astro.params;
-if (!slug) {
-    return Astro.redirect("/blog");
+const allPosts = await getCollection("articles");
+
+// 2. 日付順にソート（新しい順）
+const sortedPosts = allPosts.sort(
+    (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+
+// 3. 現在の記事のインデックス（何番目か）を探す
+const currentIndex = sortedPosts.findIndex((post) => post.id === slug);
+
+// 記事が見つからなければ404へ
+if (currentIndex === -1) {
+    throw new Error("Not Found");
 }
-const entry = await getEntry("articles", slug);
-if (!entry) {
-    return Astro.redirect("/blog");
-}
+const entry = sortedPosts[currentIndex];
 const { Content, headings } = await render(entry);
+const nextPost = sortedPosts[currentIndex + 1]; // 過去の記事へ
+const prevPost = sortedPosts[currentIndex - 1]; // 新しい記事へ
 
 const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -77,7 +88,7 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                     </div>
                     <div class="border-l-4 border-black pl-4 leading-none">
                         <p class="text-sm md:text-base opacity-90 font-light">
-                            {entry.data?.summary}
+                            {entry.data?.summary || "No summary :("}
                         </p>
                     </div>
                 </div>
@@ -90,9 +101,12 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                     <div class="flex gap-2">
                         {
                             entry.data.tags.map((tag) => (
-                                <span class="bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                                <a
+                                    href={`/blog?tag=${tag}`}
+                                    class="bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-colors border border-black"
+                                >
                                     #{tag}
-                                </span>
+                                </a>
                             ))
                         }
                     </div>
@@ -102,7 +116,7 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
         <!-- Content -->
         <div class="full-width-border">
             <div
-                class="content-container grid grid-cols-1 lg:grid-cols-[250px_1fr]"
+                class="content-container grid grid-cols-1 lg:grid-cols-[1fr_4fr] min-h-[calc(100vh-652px)]"
             >
                 <!-- 左側：目次 (PCのみ表示) -->
                 <aside
@@ -111,9 +125,10 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                     <TableOfContents headings={headings} />
                 </aside>
                 <div
-                    class="p-8 md:py-8 md:px-16 prose prose-neutral max-w-none
-            prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-black
+                    class="p-8 md:py-16 md:px-32 prose prose-neutral max-w-none
+            prose-headings:font-semibold prose-headings:tracking-tighter prose-headings:text-black
             prose-p:text-black/80 prose-p:font-medium
+            prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-h5:text-lg prose-h6:text-base
             prose-a:text-black prose-a:underline prose-a:decoration-2 prose-a:underline-offset-4 hover:prose-a:bg-black hover:prose-a:text-white prose-a:transition-colors
             prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:not-italic
             prose-img:border-2 prose-img:border-black"
@@ -122,14 +137,72 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                 </div>
             </div>
         </div>
-        <!-- Back Link -->
-        <div class="max-w-4xl mx-auto px-6 pb-24">
-            <a
-                href="/blog"
-                class="inline-flex items-center gap-2 font-bold hover:underline"
-            >
-                <span>&larr;</span> BACK TO BLOG
-            </a>
+        <div class="full-width-border">
+            <div class="content-container grid grid-cols-[2fr_6fr_2fr]">
+                {
+                    prevPost ? (
+                        <a
+                            href={`/blog/${prevPost.id}`}
+                            class="group relative flex flex-col justify-center p-8 border-r-2 border-black "
+                        >
+                            <span class="text-xs font-mono opacity-60 mb-2 group-hover:opacity-100">
+                                &lt; NEWER
+                            </span>
+                            <span class="font-bold text-sm md:text-base leading-tight line-clamp-2">
+                                {prevPost.data.title}
+                            </span>
+                            <span class="slide-bg-r bg-white mix-blend-difference" />
+                        </a>
+                    ) : (
+                        <div class="flex flex-col justify-center p-8 border-r-2 border-black select-none">
+                            <span class="text-xs font-mono mb-2 opacity-25">
+                                &lt; NEWER
+                            </span>
+                            <span class="font-bold text-sm md:text-base leading-tight opacity-25">
+                                No newer posts
+                            </span>
+                        </div>
+                    )
+                }
+                <div
+                    class="flex items-center justify-center border-r-2 border-black transition-colors group"
+                >
+                    <a
+                        href="/blog"
+                        class="group relative font-black font-mono text-xl md:text-2xl tracking-widest w-full h-full flex items-center justify-center"
+                    >
+                        BACK TO BLOG
+                        <span class="slide-bg-t bg-white mix-blend-difference"
+                        ></span>
+                    </a>
+                </div>
+                {
+                    nextPost ? (
+                        <a
+                            href={`/blog/${nextPost.id}`}
+                            class="group relative flex flex-col justify-center items-end text-right p-8"
+                        >
+                            <span class="text-xs font-mono opacity-60 mb-2 group-hover:opacity-100">
+                                OLDER &gt;
+                            </span>
+                            <span class="font-bold text-sm md:text-base leading-tight line-clamp-2">
+                                {nextPost.data.title}
+                            </span>
+                            <span class="slide-bg-l bg-white mix-blend-difference" />
+                        </a>
+                    ) : (
+                        <div class="flex flex-col justify-center items-end text-right p-8 select-none">
+                            <span class="text-xs font-mono mb-2 opacity-25">
+                                OLDER &gt;
+                            </span>
+                            <span class="font-bold text-sm md:text-base leading-tight opacity-25">
+                                No older posts
+                            </span>
+                        </div>
+                    )
+                }
+            </div>
         </div>
     </main>
+    <Footer />
 </Layout>

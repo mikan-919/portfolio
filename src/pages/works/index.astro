@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import FeaturedProject from "../../components/works/FeaturedProject.astro";
 import GitHubCTA from "../../components/works/GithubCTA.astro";
-import WorksArchive from "../../components/works/WorksArchive.astro";
+import WorkFilter from "../../components/works/WorkFilter.astro";
+import WorksTitle from "../../components/works/WorksTitle.astro";
 import Layout from "../../layouts/Layout.astro";
 
 const allWorks = await getCollection("works");
@@ -14,8 +14,8 @@ const featured = sortedWorks[0];
 
 <Layout title="Portfoliooo | Works">
     <main>
-        <FeaturedProject id={featured.id} {...featured.data} />
-        <WorksArchive works={sortedWorks} />
+        <WorksTitle featured={featured} />
+        <WorkFilter works={sortedWorks} length={sortedWorks.length} />
         <GitHubCTA />
     </main>
 </Layout>

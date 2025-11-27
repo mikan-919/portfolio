@@ -59,7 +59,7 @@ const uniqueTags = ["All", ...new Set(allTags)];
 
         <!-- Grid List -->
         <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0.5 gap-y-0.75 bg-black"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0.5 gap-y-0.75 bg-white"
         >
             {
                 articles.map((article) => (
@@ -90,38 +90,69 @@ const uniqueTags = ["All", ...new Set(allTags)];
         const items = document.querySelectorAll(".article-item");
         const noResults = document.getElementById("no-results");
 
+        function filterArticles(tag: string) {
+            // Update buttons
+            buttons.forEach((btn) => {
+                const btnTag = btn.getAttribute("data-filter");
+                if (btnTag === tag) {
+                    btn.classList.remove("bg-white", "text-black");
+                    btn.classList.add("bg-black", "text-white");
+                } else {
+                    btn.classList.remove("bg-black", "text-white");
+                    btn.classList.add("bg-white", "text-black");
+                }
+            });
+
+            // Filter items
+            let visibleCount = 0;
+            items.forEach((item) => {
+                const itemTags = JSON.parse(
+                    item.getAttribute("data-tags") || "[]",
+                );
+                if (tag === "All" || itemTags.includes(tag)) {
+                    (item as HTMLElement).style.display = "block";
+                    visibleCount++;
+                } else {
+                    (item as HTMLElement).style.display = "none";
+                }
+            });
+
+            // No results
+            if (noResults) {
+                noResults.style.display = visibleCount === 0 ? "block" : "none";
+            }
+        }
+
+        // Click handlers
         buttons.forEach((btn) => {
             btn.addEventListener("click", () => {
-                const filter = btn.getAttribute("data-filter");
+                const tag = btn.getAttribute("data-filter");
+                if (tag) {
+                    filterArticles(tag);
 
-                // Toggle button styles
-                buttons.forEach((b) => {
-                    b.classList.remove("bg-black", "text-white");
-                    b.classList.add("bg-white", "text-black");
-                });
-                btn.classList.remove("bg-white", "text-black");
-                btn.classList.add("bg-black", "text-white");
-
-                // Show/Hide items
-                let visibleCount = 0;
-                items.forEach((item) => {
-                    const tags = JSON.parse(
-                        item.getAttribute("data-tags") || "[]",
-                    );
-                    if (filter === "All" || tags.includes(filter)) {
-                        (item as HTMLElement).style.display = "block";
-                        visibleCount++;
+                    // Update URL
+                    const url = new URL(window.location.href);
+                    if (tag === "All") {
+                        url.searchParams.delete("tag");
                     } else {
-                        (item as HTMLElement).style.display = "none";
+                        url.searchParams.set("tag", tag);
                     }
-                });
-
-                // Show no results message
-                if (noResults) {
-                    noResults.style.display =
-                        visibleCount === 0 ? "block" : "none";
+                    window.history.pushState({}, "", url);
                 }
             });
         });
+
+        // Initial load from URL
+        const params = new URLSearchParams(window.location.search);
+        const initialTag = params.get("tag");
+        if (initialTag) {
+            // Check if tag is valid (exists in buttons)
+            const isValidTag = Array.from(buttons).some(
+                (b) => b.getAttribute("data-filter") === initialTag,
+            );
+            if (isValidTag) {
+                filterArticles(initialTag);
+            }
+        }
     });
 </script>

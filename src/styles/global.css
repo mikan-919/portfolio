@@ -14,7 +14,8 @@
   }
 }
 @utility slide-bg {
-  @apply absolute z-0 bg-black transition-[width,height] duration-300 ease-out;
+  @apply absolute z-0 bg-black transition-[width,height] duration-300;
+  transition-timing-function: cubic-bezier(0.5, 0.25, 0, 1);
   .group:hover & {
     @apply w-full h-full;
   }
