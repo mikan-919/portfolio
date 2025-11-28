@@ -1,0 +1,33 @@
+---
+type Props = {
+    tags: string[];
+};
+
+const { tags } = Astro.props;
+---
+
+<div class="p-8 border-b-2 border-black bg-gray-100">
+    <div class="flex justify-between items-end">
+        <div>
+            <div class="p-4 md:px-8 pb-2">
+                <h2 class="text-5xl tracking-tighter font-black leading-none">
+                    ALL ARTICLES
+                </h2>
+            </div>
+            <div class="flex flex-wrap gap-2 px-8 pb-4" id="filter-container">
+                {
+                    tags.map((tag) => (
+                        <button
+                            data-filter={tag}
+                            class={`filter-btn relative group border-2 border-black px-4 py-2 font-bold cursor-pointer text-sm transition-all duration-200 
+              ${tag === "All" ? "bg-black text-white" : "bg-white text-black"}`}
+                        >
+                            <span>#{tag}</span>
+                            <span class="slide-bg-b bg-white mix-blend-difference" />
+                        </button>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</div>

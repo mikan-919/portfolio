@@ -1,0 +1,78 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Section from "../Section.astro";
+import FeaturedProject from "./FeaturedProject.astro";
+import WorksFilter from "./WorksFilter.astro";
+import WorksHeader from "./WorksHeader.astro";
+import WorksList from "./WorksList.astro";
+
+type Props = {
+    works: CollectionEntry<"works">[];
+};
+
+const { works } = Astro.props;
+
+// Extract all categories for filtering
+const categories = [
+    "All",
+    ...new Set(works.map((p) => p.data.category.toUpperCase())),
+];
+
+// Separate featured project (first one)
+const featured = works[0];
+---
+
+<Section>
+    <WorksHeader works={works} />
+</Section>
+
+<Section>
+    {featured && <FeaturedProject id={featured.id} {...featured.data} />}
+</Section>
+
+<Section isGrow>
+    <WorksFilter categories={categories} />
+    <WorksList works={works} />
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".filter-btn");
+            const items = document.querySelectorAll(".work-item");
+            const noResults = document.getElementById("no-results");
+
+            buttons.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const filter = btn.getAttribute("data-filter");
+
+                    // ボタンのスタイル切り替え
+                    buttons.forEach((b) => {
+                        b.classList.remove("bg-black", "text-white");
+                        b.classList.add("bg-white", "text-black");
+                    });
+                    btn.classList.remove("bg-white", "text-black");
+                    btn.classList.add("bg-black", "text-white");
+
+                    // アイテムの表示/非表示
+                    let visibleCount = 0;
+                    items.forEach((item) => {
+                        const category = item.getAttribute("data-category");
+                        if (
+                            filter === "All" ||
+                            category === filter?.toLowerCase()
+                        ) {
+                            (item as HTMLElement).style.display = "block";
+                            visibleCount++;
+                        } else {
+                            (item as HTMLElement).style.display = "none";
+                        }
+                    });
+
+                    // 該当なし表示
+                    if (noResults) {
+                        noResults.style.display =
+                            visibleCount === 0 ? "block" : "none";
+                    }
+                });
+            });
+        });
+    </script>
+</Section>

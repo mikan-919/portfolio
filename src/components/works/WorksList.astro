@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from "astro:content";
+import WorkCard from "../WorkCard.astro";
+
+type Props = {
+    works: CollectionEntry<"works">[];
+};
+
+const { works } = Astro.props;
+---
+
+<div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-0.5 gap-y-0.75">
+    {
+        works.map((work) => (
+            // data-category属性を付与して、JSでフィルタリングできるようにする
+            <div
+                class="work-item bg-white h-full"
+                data-category={work.data.category}
+            >
+                <WorkCard {...work.data} id={work.id} />
+            </div>
+        ))
+    }
+</div>
+<!-- 該当なしメッセージ -->
+<div id="no-results" class="hidden p-12 text-center font-bold text-gray-500">
+    NO PROJECTS FOUND IN THIS CATEGORY.
+</div>

@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import Fonts from "./Fonts.astro";
 
@@ -12,6 +14,7 @@ const { title }: Props = Astro.props;
 <!doctype html>
 <html lang="en">
 	<head>
+		<ClientRouter />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -20,7 +23,10 @@ const { title }: Props = Astro.props;
 		<Fonts />
 	</head>
 	<body class="font-sans" id="root">
-		<Header />
-		<slot />
+		<main class="min-h-screen flex flex-col">
+			<Header />
+			<slot />
+			<Footer />
+		</main>
 	</body>
 </html>

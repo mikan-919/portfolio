@@ -1,0 +1,12 @@
+---
+type Props = {
+    isGrow?: boolean;
+};
+const { isGrow }: Props = Astro.props;
+---
+
+<section class={`full-width-border flex flex-col ${isGrow ? "grow" : ""}`}>
+    <div class={`content-container ${isGrow ? "grow" : ""}`}>
+        <slot />
+    </div>
+</section>
