@@ -1,5 +1,27 @@
 ---
+import { getCollection } from "astro:content";
 import InfiniteTextBackground from "./InfiniteTextBackground.tsx";
+
+const works = await getCollection("works");
+const articles = await getCollection("articles");
+
+const allUpdates = [
+	...works
+		.filter((work) => !work.data.isComingSoon)
+		.map((work) => ({
+			date: work.data.publishDate,
+			link: `/works/${work.id}`,
+		})),
+	...articles.map((article) => ({
+		date: article.data.publishDate,
+		link: `/blog/${article.id}`,
+	})),
+].sort((a, b) => b.date.valueOf() - a.date.valueOf());
+
+const latestUpdate = allUpdates[0];
+const formattedDate = latestUpdate
+	? `${latestUpdate.date.getFullYear()}.${(latestUpdate.date.getMonth() + 1).toString().padStart(2, "0")}.${latestUpdate.date.getDate().toString().padStart(2, "0")}`
+	: "----.--.--";
 ---
 
 <section class="full-width-border" id="hero">
@@ -33,9 +55,36 @@ import InfiniteTextBackground from "./InfiniteTextBackground.tsx";
 
 		<!-- 右：アニメーション背景エリア -->
 		<div
-			class="group relative bg-gray-50 border-2 border-black border-t-0 border-r-0 border-b-0 border-l-0 md:border-l-0 aspect-video md:aspect-video overflow-hidden"
+			class="group relative bg-gray-100 border-2 border-black border-t-0 border-r-0 border-b-0 border-l-0 md:border-l-0 aspect-video md:aspect-video overflow-hidden"
 		>
+			<a
+				href="."
+				class="group absolute inset-0 flex justify-center items-center bg-gray-100 grayscale-100 hover:grayscale-0 overflow-hidden transition-all duration-300 select-none"
+			></a>
 			<InfiniteTextBackground client:load />
+
+			<div
+				class="right-0 z-10 absolute inset-y-0 bg-white/50 group-hover:bg-white/25 backdrop-blur-sm group-hover:backdrop-blur-xs w-1/2 transition-all duration-300 pointer-events-none"
+			>
+			</div>
+			<div
+				class="left-0 z-10 absolute inset-y-0 bg-white/75 group-hover:bg-white/50 backdrop-blur-md group-hover:backdrop-blur-sm w-1/2 transition-all duration-300 pointer-events-none"
+			>
+			</div>
+
+			<div
+				class="z-20 absolute inset-0 flex justify-center items-center pointer-events-none"
+			>
+				<a
+					href={latestUpdate?.link || "#"}
+					class="block relative bg-white shadow-[6px_6px_0px_0px_#000] p-6 border-2 border-black text-center transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 duration-300 pointer-events-auto hover:bg-gray-50"
+				>
+					<p class="mb-1 font-bold text-xs">LATEST UPDATE</p>
+					<p class="font-black text-3xl tracking-tighter">
+						{formattedDate}
+					</p>
+				</a>
+			</div>
 		</div>
 	</div>
 </section>
