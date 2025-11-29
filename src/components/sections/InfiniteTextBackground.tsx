@@ -1,7 +1,6 @@
 import { onCleanup, onMount } from 'solid-js'
 
 export default function InfiniteTextBackground() {
-  let containerRef: HTMLAnchorElement | undefined
   let canvasRef: HTMLCanvasElement | undefined
 
   const TEXT_CONTENT = 'MIKAN-919'
@@ -13,7 +12,7 @@ export default function InfiniteTextBackground() {
   const COLOR_HOVER = '#f97316'
 
   onMount(() => {
-    if (!canvasRef || !containerRef) return
+    if (!canvasRef) return
 
     const ctx = canvasRef.getContext('2d')
     if (!ctx) return
@@ -26,10 +25,10 @@ export default function InfiniteTextBackground() {
     let time = 39000
 
     const resize = () => {
-      if (!containerRef || !canvasRef) return
-      const width = containerRef.offsetWidth
-      const height = containerRef.offsetHeight
+      if (!canvasRef) return
 
+      const width = Number.parseFloat(computedStyle.width)
+      const height = Number.parseFloat(computedStyle.height)
       // Retinaディスプレイ対応（解像度を2倍に）
       const dpr = window.devicePixelRatio || 1
       canvasRef.width = width * dpr
@@ -45,15 +44,12 @@ export default function InfiniteTextBackground() {
 
     // 描画ループ
     const render = () => {
-      if (!containerRef || !canvasRef || !ctx) return
-
-      const width = containerRef.offsetWidth
-      const height = containerRef.offsetHeight
+      if (!canvasRef || !ctx) return
 
       // キャンバスをクリア
-      ctx.clearRect(0, 0, width, height)
+      ctx.clearRect(0, 0, canvasRef.width, canvasRef.height)
       ctx.fillStyle = '#f9fafb'
-      ctx.fillRect(0, 0, width, height)
+      ctx.fillRect(0, 0, canvasRef.width, canvasRef.height)
 
       // フォント設定
       ctx.font = `900 ${FONT_SIZE}px ${canvasFont}`
@@ -71,17 +67,17 @@ export default function InfiniteTextBackground() {
       ctx.save()
 
       // 中心を軸に回転
-      ctx.translate(width / 2, height / 2)
+      ctx.translate(canvasRef.width / 2, canvasRef.height / 2)
       ctx.rotate((ANGLE_DEG * Math.PI) / 180)
-      ctx.translate(-width / 2, -height / 2)
+      ctx.translate(-canvasRef.width / 2, -canvasRef.height / 2)
 
       // 画面を埋めるのに必要な行数・列数（回転分を考慮して広めに計算）
       // 画面サイズよりかなり広く描画しないと、回転した時に端が見切れる
       const extraMargin = 400
       const startY = -extraMargin
-      const endY = height + extraMargin
+      const endY = canvasRef.height + extraMargin
       const startX = -extraMargin
-      const endX = width + extraMargin
+      const endX = canvasRef.width + extraMargin
 
       const rowCount = Math.ceil((endY - startY) / ROW_HEIGHT)
 
@@ -136,28 +132,9 @@ export default function InfiniteTextBackground() {
   })
 
   return (
-    <a
-      href='.'
-      ref={containerRef}
-      class='group absolute inset-0 flex justify-center items-center bg-gray-50 grayscale-100 hover:grayscale-0 overflow-hidden transition-all duration-300 select-none'
-    >
-      {/* Canvas本体 */}
-      <canvas
-        ref={canvasRef}
-        class='block absolute inset-0 w-full h-full'
-      />
-
-      {/* すりガラスレイヤー */}
-      <div class='right-0 z-10 absolute inset-y-0 bg-white/50 group-hover:bg-white/25 backdrop-blur-sm group-hover:backdrop-blur-xs w-1/2 transition-all duration-300 pointer-events-none' />
-      <div class='left-0 z-10 absolute inset-y-0 bg-white/75 group-hover:bg-white/50 backdrop-blur-md group-hover:backdrop-blur-sm w-1/2 transition-all duration-300 pointer-events-none' />
-
-      {/* Update Box */}
-      <div class='z-20 absolute inset-0 flex justify-center items-center pointer-events-none'>
-        <div class='relative bg-white shadow-[6px_6px_0px_0px_#000] p-6 border-2 border-black text-center transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 duration-300 pointer-events-auto'>
-          <p class='mb-1 font-bold text-xs'>LATEST UPDATE</p>
-          <p class='font-black text-3xl tracking-tighter'>2024.11.21</p>
-        </div>
-      </div>
-    </a>
+    <canvas
+      ref={canvasRef}
+      class='block absolute inset-0 w-full h-full'
+    />
   )
 }
