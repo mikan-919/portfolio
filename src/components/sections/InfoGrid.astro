@@ -25,12 +25,13 @@ export interface Props {
     learning: ListSection;
     interests: ListSection;
     nowPlaying: ActivitySection;
+    row?: boolean;
 }
 
-const { learning, interests, nowPlaying } = Astro.props;
+const { learning, interests, nowPlaying, row } = Astro.props;
 ---
 
-<div class={styles.grid}>
+<div class={row ? styles.row : styles.grid}>
     <div class={styles.column}>
         <h5 class={styles.header}>
             <span class={styles.headerTitle}>
@@ -59,29 +60,34 @@ const { learning, interests, nowPlaying } = Astro.props;
         </ul>
     </div>
 
-    <div class={styles.columnHiddenSm}>
-        <h5 class={styles.header}>
-            <span class={styles.headerTitle}>
-                {nowPlaying.title}<span class={styles.headerSlash}> /</span>
-            </span>
-            <span class={styles.headerSubtitle}>
-                {nowPlaying.subtitle}
-            </span>
-        </h5>
+    {
+        row && (
+            <div class={styles.columnHiddenSm}>
+                <h5 class={styles.header}>
+                    <span class={styles.headerTitle}>
+                        {nowPlaying.title}
+                        <span class={styles.headerSlash}> /</span>
+                    </span>
+                    <span class={styles.headerSubtitle}>
+                        {nowPlaying.subtitle}
+                    </span>
+                </h5>
 
-        <ul class={styles.list}>
-            {
-                nowPlaying.items.map((item) => (
-                    <li class={styles.activityItem}>
-                        <div class={styles.iconBox}>{item.icon}</div>
-                        <div>
-                            <p class={styles.metaCategory}>{item.category}</p>
-                            <p class={styles.metaTitle}>{item.title}</p>
-                            <p class={styles.metaDetail}>{item.detail}</p>
-                        </div>
-                    </li>
-                ))
-            }
-        </ul>
-    </div>
+                <ul class={styles.list}>
+                    {nowPlaying.items.map((item) => (
+                        <li class={styles.activityItem}>
+                            <div class={styles.iconBox}>{item.icon}</div>
+                            <div>
+                                <p class={styles.metaCategory}>
+                                    {item.category}
+                                </p>
+                                <p class={styles.metaTitle}>{item.title}</p>
+                                <p class={styles.metaDetail}>{item.detail}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
 </div>

@@ -1,7 +1,11 @@
 @reference "../../styles/global.css";
 
 .grid {
-  @apply flex w-full justify-evenly lg:justify-start gap-0 sm:gap-8 md:gap-6 lg:pl-8 md:pt-23.5 lg:pt-14.5 items-baseline grow;
+  @apply flex w-full justify-evenly lg:justify-start gap-0 sm:gap-8 md:gap-6 lg:pl-8 md:pt-24 lg:pt-15.5 items-baseline grow;
+}
+
+.row {
+  @apply flex flex-col gap-6;
 }
 
 /* 各カラムのラッパー */

@@ -1,4 +1,5 @@
 ---
+import Section from "../components/Section.astro";
 import ContributionGraph from "../components/sections/ContributionGraph.astro";
 import InfoGrid from "../components/sections/InfoGrid.astro";
 import Layout from "../layouts/Layout.astro";
@@ -136,158 +137,151 @@ if (GITHUB_TOKEN) {
 ---
 
 <Layout title="Portfoliooo | About">
-    <div class="full-width-border">
-        <main class="content-container min-h-screen flex flex-col">
-            <!-- Top Section: Intro & Info -->
+    <Section>
+        <!-- Top Section: Intro & Info -->
+        <div
+            class="grid grid-cols-1 md:grid-cols-[5fr_2fr] border-b-2 border-black"
+        >
             <div
-                class="grid grid-cols-1 md:grid-cols-[3fr_4fr] border-b-2 border-black"
+                class="p-8 md:p-12 bg-white text-black flex flex-col justify-between min-h-[50vh] md:min-h-auto border-b-2 md:border-b-0 md:border-r-2 border-black"
             >
-                <div
-                    class="p-8 md:p-12 bg-black text-white flex flex-col justify-between min-h-[50vh] md:min-h-auto border-b-2 md:border-b-0 md:border-r-2 border-black"
-                >
-                    <div class="flex flex-col gap-8">
-                        <div>
-                            <h1
-                                class="font-extrabold text-6xl md:text-7xl tracking-tighter leading-none mb-4"
-                            >
-                                ABOUT<br />ME
-                            </h1>
-                            <div
-                                class="flex flex-col font-mono text-sm opacity-80"
-                            >
-                                <span>High School Student</span>
-                                <span>Based in Japan</span>
-                                <span>Web Development</span>
-                            </div>
-                        </div>
-
-                        <p
-                            class="text-lg leading-relaxed opacity-90 font-medium"
+                <div class="flex flex-col gap-4">
+                    <div class="border-l-16 pl-4">
+                        <h1
+                            class="font-extrabold text-6xl md:text-9xl tracking-tighter leading-none"
                         >
-                            学校の勉強の傍ら、趣味でプログラミングを学習しています。<br
-                            />
-                            まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
-                            />
-                            最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
-                        </p>
-                    </div>
-
-                    <div class="mt-12">
-                        <div class="w-full h-[2px] bg-white/30 mb-6"></div>
-                        <p class="font-mono text-xs opacity-60">
-                            LAST UPDATED: 2024.11.28
-                        </p>
-                    </div>
-                </div>
-
-                <div class="p-8 md:p-12 flex flex-col justify-center">
-                    <InfoGrid
-                        learning={learningData}
-                        interests={interestsData}
-                        nowPlaying={nowPlayingData}
-                    />
-                </div>
-            </div>
-
-            <!-- Middle Section: GitHub & Values -->
-            <div
-                class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-black"
-            >
-                <div
-                    class="p-8 md:p-12 border-b-2 md:border-b-0 md:border-r-2 border-black bg-gray-50"
-                >
-                    <div class="flex items-baseline justify-between mb-6">
-                        <h3 class="font-black text-3xl tracking-tighter">
-                            GITHUB ACTIVITY
-                        </h3>
-                        <div class="text-right">
-                            <span class="block text-4xl font-black"
-                                >{contributionCount}</span
-                            >
-                            <span class="text-xs font-bold opacity-60"
-                                >CONTRIBUTIONS (LAST YEAR)</span
-                            >
+                            ABOUT ME
+                        </h1>
+                        <div class="flex flex-col font-mono text-sm opacity-80">
+                            <span>High School Student</span>
+                            <span>Based in Japan</span>
+                            <span>Web Development</span>
                         </div>
                     </div>
-                    <p class="mb-6 text-sm font-bold opacity-70">
-                        日々の学習の記録や、開発の進捗はGitHubで見ることができます。
-                    </p>
-                    <div
-                        class="w-full overflow-hidden border-2 border-black bg-white p-4 shadow-[4px_4px_0px_0px_#000]"
+                    <p
+                        class="text-base leading-relaxed opacity-90 font-medium p-4"
                     >
-                        <ContributionGraph weeks={weeks} />
-                    </div>
-                    <div class="mt-6 text-right">
-                        <a
-                            href={`https://github.com/${username}`}
-                            target="_blank"
-                            class="inline-block text-sm font-mono underline hover:no-underline"
-                        >
-                            @{username} on GitHub →
-                        </a>
-                    </div>
+                        学校の勉強の傍ら、趣味でプログラミングを学習しています。
+                        <br />
+                        まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。
+                        <br />
+                        最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
+                        <br />
+                        趣味でプログラミングとは言うけど、正直他に得意分野がないので将来はエンジニアになることを目指しています。
+                        <br />
+                    </p>
                 </div>
-                <div class="p-8 md:p-12 flex flex-col justify-center">
-                    <h3 class="font-black text-3xl mb-6 tracking-tighter">
-                        VALUES
-                    </h3>
-                    <div class="space-y-6">
-                        <div>
-                            <h4 class="font-bold text-xl mb-2">
-                                ⚡️ Simplicity
-                            </h4>
-                            <p class="text-sm leading-relaxed opacity-80">
-                                複雑なものをシンプルに保つことを心がけています。コードもデザインも、必要最小限の要素で最大の効果を発揮することを目指しています。
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-xl mb-2">
-                                🎨 Attention to Detail
-                            </h4>
-                            <p class="text-sm leading-relaxed opacity-80">
-                                細部へのこだわりが全体の質を高めると信じています。ピクセル単位の調整や、マイクロインタラクションを大切にしています。
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-xl mb-2">
-                                🌱 Continuous Learning
-                            </h4>
-                            <p class="text-sm leading-relaxed opacity-80">
-                                技術は常に進化しています。新しいツールやフレームワークを恐れずに試し、常に学び続ける姿勢を持ち続けます。
-                            </p>
-                        </div>
-                    </div>
+
+                <div class="mt-12">
+                    <div class="w-full h-[2px] bg-white/30 mb-6"></div>
+                    <p class="font-mono text-xs opacity-60">
+                        LAST UPDATED: 2024.11.28
+                    </p>
                 </div>
             </div>
 
-            <!-- Bottom Section: Timeline -->
-            <div class="p-8 md:p-12 bg-black text-white">
-                <h3
-                    class="font-black text-3xl mb-12 tracking-tighter text-center"
-                >
-                    TIMELINE
-                </h3>
+            <div class="p-8 md:p-12 flex flex-col justify-center">
+                <InfoGrid
+                    learning={learningData}
+                    interests={interestsData}
+                    nowPlaying={nowPlayingData}
+                    row
+                />
+            </div>
+        </div>
+
+        <!-- Middle Section: GitHub & Values -->
+        <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-black">
+            <div
+                class="p-8 md:p-12 border-b-2 md:border-b-0 md:border-r-2 border-black bg-gray-50"
+            >
+                <div class="flex items-baseline justify-between mb-6">
+                    <h3 class="font-black text-3xl tracking-tighter">
+                        GITHUB ACTIVITY
+                    </h3>
+                    <div class="text-right">
+                        <span class="block text-4xl font-black"
+                            >{contributionCount}</span
+                        >
+                        <span class="text-xs font-bold opacity-60"
+                            >CONTRIBUTIONS (LAST YEAR)</span
+                        >
+                    </div>
+                </div>
+                <p class="mb-6 text-sm font-bold opacity-70">
+                    日々の学習の記録や、開発の進捗はGitHubで見ることができます。
+                </p>
                 <div
-                    class="max-w-3xl mx-auto border-l-2 border-white/30 pl-8 md:pl-12 py-4 space-y-12"
+                    class="w-full overflow-hidden border-2 border-black bg-white p-4 shadow-[4px_4px_0px_0px_#000]"
                 >
-                    {
-                        timelineData.map((item) => (
-                            <div class="relative">
-                                <div class="absolute -left-[41px] md:-left-[57px] top-1 w-5 h-5 bg-black border-2 border-white rounded-full" />
-                                <span class="font-mono text-sm text-white/60 mb-1 block">
-                                    {item.year}
-                                </span>
-                                <h4 class="font-bold text-xl md:text-2xl mb-2">
-                                    {item.title}
-                                </h4>
-                                <p class="text-white/80 leading-relaxed text-sm md:text-base">
-                                    {item.desc}
-                                </p>
-                            </div>
-                        ))
-                    }
+                    <ContributionGraph weeks={weeks} />
+                </div>
+                <div class="mt-6 text-right">
+                    <a
+                        href={`https://github.com/${username}`}
+                        target="_blank"
+                        class="inline-block text-sm font-mono underline hover:no-underline"
+                    >
+                        @{username} on GitHub →
+                    </a>
                 </div>
             </div>
-        </main>
-    </div>
+            <div class="p-8 md:p-12 flex flex-col justify-center">
+                <h3 class="font-black text-3xl mb-6 tracking-tighter">
+                    VALUES
+                </h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">⚡️ Simplicity</h4>
+                        <p class="text-sm leading-relaxed opacity-80">
+                            複雑なものをシンプルに保つことを心がけています。コードもデザインも、必要最小限の要素で最大の効果を発揮することを目指しています。
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">
+                            🎨 Attention to Detail
+                        </h4>
+                        <p class="text-sm leading-relaxed opacity-80">
+                            細部へのこだわりが全体の質を高めると信じています。ピクセル単位の調整や、マイクロインタラクションを大切にしています。
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">
+                            🌱 Continuous Learning
+                        </h4>
+                        <p class="text-sm leading-relaxed opacity-80">
+                            技術は常に進化しています。新しいツールやフレームワークを恐れずに試し、常に学び続ける姿勢を持ち続けます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section: Timeline -->
+        <div class="p-8 md:p-12 bg-black text-white">
+            <h3 class="font-black text-3xl mb-12 tracking-tighter text-center">
+                TIMELINE
+            </h3>
+            <div
+                class="max-w-3xl mx-auto border-l-2 border-white/30 pl-8 md:pl-12 py-4 space-y-12"
+            >
+                {
+                    timelineData.map((item) => (
+                        <div class="relative">
+                            <div class="absolute -left-[41px] md:-left-[57px] top-1 w-5 h-5 bg-black border-2 border-white rounded-full" />
+                            <span class="font-mono text-sm text-white/60 mb-1 block">
+                                {item.year}
+                            </span>
+                            <h4 class="font-bold text-xl md:text-2xl mb-2">
+                                {item.title}
+                            </h4>
+                            <p class="text-white/80 leading-relaxed text-sm md:text-base">
+                                {item.desc}
+                            </p>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </Section>
 </Layout>

@@ -30,11 +30,11 @@ function getColor(count: number) {
 // - Tablet (~600px container): ~560px available → ~46 weeks
 // - Desktop (~800px+ container): ~750px+ available → ~62 weeks
 // We'll use a conservative value that works well across all sizes
-const maxWeeksToShow = 30; // Shows approximately 7 months of data
+const maxWeeksToShow = 41; // Shows approximately 7 months of data
 const displayWeeks = weeks ? weeks.slice(-maxWeeksToShow) : undefined;
 ---
 
-<div class="w-full">
+<div class="w-full flex justify-center">
     {
         displayWeeks ? (
             <div class="flex gap-[2px] justify-end">
