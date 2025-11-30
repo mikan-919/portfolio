@@ -1,0 +1,95 @@
+---
+import InfoGrid from "../components/sections/InfoGrid.astro";
+import Layout from "../layouts/Layout.astro";
+
+const learningData = {
+    title: "LEARNING",
+    subtitle: "学習中・触ったことがある",
+    items: [
+        "HTML / CSS",
+        "JavaScript / TypeScript",
+        "SolidJS / React",
+        "Astro",
+        "Tailwind CSS",
+    ],
+};
+
+const interestsData = {
+    title: "INTERESTS",
+    subtitle: "興味・好きなこと",
+    items: ["Web Design", "UI/UX", "Gadgets", "Gaming", "Music"],
+};
+
+const nowPlayingData = {
+    title: "NOW PLAYING",
+    subtitle: "最近の趣味",
+    items: [
+        {
+            icon: "♪",
+            category: "MUSIC",
+            title: "Bling-Bang-Bang-Born",
+            detail: "Creepy Nuts",
+        },
+        {
+            icon: "🎮",
+            category: "GAME",
+            title: "VALORANT",
+            detail: "Rank: Silver 2",
+        },
+    ],
+};
+---
+
+<Layout title="Portfoliooo | About">
+    <div class="full-width-border">
+        <main class="content-container min-h-screen">
+            <div class="grid grid-cols-1 md:grid-cols-[3fr_4fr]">
+                <div
+                    class="p-8 md:p-12 bg-black text-white flex flex-col justify-between min-h-[50vh] md:min-h-auto"
+                >
+                    <div class="flex flex-col gap-8">
+                        <div>
+                            <h1
+                                class="font-extrabold text-6xl md:text-7xl tracking-tighter leading-none mb-4"
+                            >
+                                ABOUT<br />ME
+                            </h1>
+                            <div
+                                class="flex flex-col font-mono text-sm opacity-80"
+                            >
+                                <span>High School Student</span>
+                                <span>Based in Japan</span>
+                                <span>Web Development</span>
+                            </div>
+                        </div>
+
+                        <p
+                            class="text-lg leading-relaxed opacity-90 font-medium"
+                        >
+                            学校の勉強の傍ら、趣味でプログラミングを学習しています。<br
+                            />
+                            まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
+                            />
+                            最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
+                        </p>
+                    </div>
+
+                    <div class="mt-12">
+                        <div class="w-full h-[2px] bg-white/30 mb-6"></div>
+                        <p class="font-mono text-xs opacity-60">
+                            LAST UPDATED: 2024.11.28
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-12 flex flex-col justify-center">
+                    <InfoGrid
+                        learning={learningData}
+                        interests={interestsData}
+                        nowPlaying={nowPlayingData}
+                    />
+                </div>
+            </div>
+        </main>
+    </div>
+</Layout>
