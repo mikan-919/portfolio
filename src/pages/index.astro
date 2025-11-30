@@ -13,7 +13,7 @@ const sortedWorks = allWorks
 			new Date(b.data.publishDate).getTime() -
 			new Date(a.data.publishDate).getTime(),
 	)
-	.slice(0, 3);
+	.slice(0, 5);
 const allArticles = await getCollection("articles");
 const sortedArticles = allArticles
 	.sort(
@@ -21,7 +21,7 @@ const sortedArticles = allArticles
 			new Date(b.data.publishDate).getTime() -
 			new Date(a.data.publishDate).getTime(),
 	)
-	.slice(0, 3);
+	.slice(0, 4);
 ---
 
 <Layout>

@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ChevronRight from "@lucide/astro/icons/chevron-right";
 import Github from 'simple-icons-astro/Github'
 import X from 'simple-icons-astro/X'
 
@@ -19,9 +20,12 @@ const {articles} = Astro.props;
       <!-- ヘッダー帯 -->
       <div class="bg-black text-white p-4 flex justify-between items-center border-b-2 border-black">
         <h3 class="font-black tracking-widest text-sm">LATEST ARTICLES</h3>
-        <a href="/blog" class="group relative text-xs font-bold py-1 px-2 border border-transparent hover:border-white overflow-hidden block transition-colors">
-          <span>ARCHIVES </span><span class="group-hover:translate-x-0.5 translate-x-0 transition-transform duration-300 inline-block">-&gt;</span>
-          <span class="slide-bg-l bg-white mix-blend-difference duration-600"></span>
+        <a href="/blog" class="group relative flex items-center gap-1 text-xs font-bold py-1 px-2 border border-transparent hover:border-white overflow-hidden transition-colors">
+          <span>ARCHIVES</span>
+          <ChevronRight
+            class="size-4 stroke-3 transition-transform duration-300 -translate-x-0.5 group-hover:translate-x-0.5"
+          />
+          <span class="slide-bg-l bg-white mix-blend-difference duration-300"></span>
         </a>
       </div>
 
@@ -40,7 +44,7 @@ const {articles} = Astro.props;
                 {article.data.title}
               </h4>
             </div>
-            <span class="slide-bg-l bg-white mix-blend-difference duration-600"></span>
+            <span class="slide-bg-l bg-white mix-blend-difference duration-300"></span>
           </a>
         ))}
       </div>

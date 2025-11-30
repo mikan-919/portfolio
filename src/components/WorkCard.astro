@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import ChevronRight from "@lucide/astro/icons/chevron-right";
 
 type Props = {
     id: string;
@@ -45,7 +46,7 @@ const {
                 aria-disabled={isComingSoon}
                 class={`${isComingSoon ? "opacity-75 cursor-not-allowed" : ""} btn-brutal px-4 py-2 text-xs select-none`}
             >
-                {isComingSoon ? "COMING SOON" : "VIEW PROJECT ->"}
+                {isComingSoon ? "COMING SOON" : "VIEW PROJECT >"}
             </span>
         </a>
     </div>
@@ -82,12 +83,11 @@ const {
                         ))
                 }
             </div>
-            <span
+            <ChevronRight
                 class={isComingSoon
                     ? "text-transparent"
-                    : "inline-block font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"}
-                >-&gt;</span
-            >
+                    : "inline-block size-5 font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"}
+            />
         </div>
         <span class="slide-bg-t bg-white mix-blend-difference"></span>
     </a>

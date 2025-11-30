@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ChevronRight from "@lucide/astro/icons/chevron-right";
 import WorkCard from "../WorkCard.astro";
 
 interface Props {
@@ -34,12 +35,12 @@ const { works }: Props = Astro.props;
                     class="group inline-flex items-center gap-2 font-black text-sm tracking-widest"
                 >
                     VIEW ALL WORKS
-                    <span class="transition-transform group-hover:translate-x-1"
-                        >-&gt;</span
-                    >
+                    <ChevronRight
+                        class="size-5 transition-transform group-hover:translate-x-1"
+                    />
                 </span>
                 <span
-                    class="bg-white slide-bg-l duration-600 mix-blend-difference"
+                    class="bg-white slide-bg-l duration-300 mix-blend-difference"
                 ></span>
             </a>
         </div>

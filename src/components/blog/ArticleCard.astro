@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import ChevronRight from "@lucide/astro/icons/chevron-right";
 
 type Props = {
     slug: string;
@@ -40,7 +41,7 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
             class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
         >
             <span class="btn-brutal px-4 py-2 text-xs select-none">
-                READ ARTICLE -&gt;
+                READ ARTICLE
             </span>
         </a>
     </div>
@@ -80,10 +81,9 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
                         ))
                 }
             </div>
-            <span
-                class="inline-block font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"
-                >-&gt;</span
-            >
+            <ChevronRight
+                class="inline-block size-5 font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"
+            />
         </div>
         <span class="slide-bg-t bg-white mix-blend-difference"></span>
     </a>
