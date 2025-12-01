@@ -8,3 +8,5 @@ trigger: always_on
 - Use functional patterns where possible
 - Use const by default
 
+## File System
+- Astro routing must be specified as “pageName/index.astro”, not “pageName.astro”.
