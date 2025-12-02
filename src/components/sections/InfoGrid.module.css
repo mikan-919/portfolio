@@ -10,7 +10,7 @@
 
 /* 各カラムのラッパー */
 .column {
-  @apply overflow-hidden;
+  @apply overflow-visible;
 }
 
 /* 3つ目のカラム（スマホで隠す用） */
@@ -20,7 +20,7 @@
 
 /* 見出し周り */
 .header {
-  @apply inline-flex items-baseline space-x-1 mb-3 border-black border-b-2 text-center tracking-wider w-full;
+  @apply inline-flex items-baseline space-x-1 mb-3 border-black border-b-2 text-center tracking-wider w-full relative;
 }
 
 .headerTitle {
@@ -37,7 +37,7 @@
 
 /* リスト（Learning / Interests） */
 .list {
-  @apply space-y-1 font-bold text-base list-inside list-['-_'];
+  @apply space-y-1 font-medium font-figtree text-base list-inside list-['-_'];
 }
 
 /* Now Playing エリア */
@@ -51,11 +51,11 @@
 }
 
 .metaCategory {
-  @apply opacity-50 font-bold text-xs;
+  @apply opacity-50 font-medium text-xs;
 }
 
 .metaTitle {
-  @apply font-bold text-sm;
+  @apply font-medium text-sm;
 }
 
 .metaDetail {

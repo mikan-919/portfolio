@@ -137,23 +137,23 @@ if (GITHUB_TOKEN) {
 ---
 
 <Layout title="Portfoliooo | About">
-    <Section class="flex">
+    <Section class="flex bg-orange-600">
         <div
-            class="p-6 shrink-0 flex-1 flex items-center justify-center bg-black text-white text-2xl
+            class="p-6 shrink-0 flex-1 flex items-center justify-center bg-white text-white text-2xl
               [clip-path:polygon(0_0,100%_0,80%_100%,0_100%)]"
         >
             <h1
-                class="font-extrabold text-6xl lg:text-8xl tracking-tighter leading-none text-nowrap"
+                class="font-figtree font-extrabold text-6xl text-orange-600 lg:text-8xl text-center tracking-tighter leading-none text-nowrap"
             >
                 ABOUT ME
             </h1>
         </div>
         <div
-            class="p-6 shrink-0 flex-1 flex items-center justify-center [clip-path:polygon(20%_0,100%_0,100%_100%,0_100%)]
+            class="p-6 shrink-0 flex-1 flex bg-orange-600 items-center justify-center [clip-path:polygon(20%_0,100%_0,100%_100%,0_100%)]
               -ml-[11%]"
         >
             <h1
-                class="font-extrabold w-full text-6xl lg:text-8xl text-end text-nowrap overflow-hidden tracking-tighter leading-none pr-1"
+                class="font-figtree font-extrabold w-full text-white text-6xl lg:text-8xl text-center text-nowrap overflow-hidden tracking-tighter leading-none pr-1"
             >
                 MIKAN-919
             </h1>
@@ -179,7 +179,7 @@ if (GITHUB_TOKEN) {
                         >
                     </div>
                     <p
-                        class="text-base leading-relaxed opacity-90 font-medium p-4"
+                        class="text-base leading-relaxed opacity-90 font-noto-sans-jp p-4"
                     >
                         学校の勉強の傍ら、趣味でプログラミングを学習している学生。
                         <br />
@@ -204,7 +204,6 @@ if (GITHUB_TOKEN) {
                 <InfoGrid
                     learning={learningData}
                     interests={interestsData}
-                    nowPlaying={nowPlayingData}
                     row
                 />
             </div>

@@ -1,22 +1,20 @@
 ---
-// src/components/blog/TableOfContents.astro
+// ... (上のHTML部分は変更なしでOK) ...
 interface Props {
     headings: { depth: number; slug: string; text: string }[];
 }
 
 const { headings } = Astro.props;
-
-// H2とH3だけ表示する（H1はタイトルなので除外）
 const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
 ---
 
+<!-- HTML部分はそのまま -->
 <nav class="toc-container sticky top-24 self-start hidden lg:block p-8 pr-0">
     <p class="font-black font-mono text-xs mb-4 tracking-widest opacity-50">
         TIMELINE
     </p>
 
     <ul class="relative border-l-2 border-gray-200 space-y-4">
-        <!-- アクティブな現在地を示す黒いバー（JSで動かす） -->
         <div
             id="toc-indicator"
             class="absolute left-[-2px] top-0 w-[2px] h-0 bg-black transition-all duration-300 ease-out"
@@ -42,33 +40,33 @@ const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
 </nav>
 
 <script>
-    const observerOptions = {
-        root: null,
-        // 重要: 判定ラインの調整
-        // "-100px": 画面上部から100px下（ヘッダー分）を無視
-        // "-60%": 画面の下半分は「まだ読んでない」とみなして無視
-        // 結果: 画面の上部30%〜40%くらいのエリアに入った瞬間反応する
-        rootMargin: "-100px 0px -60% 0px",
-        threshold: 0,
-    };
-    // スクロール連動ロジック
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute("id");
-                updateActiveLink(id!);
-            }
+    // 関数として切り出して、再利用可能にする
+    const initTOC = () => {
+        const observerOptions = {
+            root: null,
+            rootMargin: "-100px 0px -60% 0px",
+            threshold: 0,
+        };
+
+        // 監視ロジック
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute("id");
+                    if (id) updateActiveLink(id);
+                }
+            });
+        }, observerOptions);
+
+        // 記事内のH2, H3を監視
+        // 注意: 記事本文以外のH2などを拾わないよう、.prose クラスなどで範囲を絞るのが推奨です
+        document.querySelectorAll(".prose h2, .prose h3").forEach((section) => {
+            observer.observe(section);
         });
-    }, observerOptions); // 画面の中央より少し上に来たら反応
+    };
 
-    // 記事内のH2, H3を監視
-    document.querySelectorAll("h2, h3").forEach((section) => {
-        observer.observe(section);
-    });
-
+    // アクティブリンクの更新ロジック
     function updateActiveLink(id: string) {
-        if (!id) return;
-
         // 全てのリンクをリセット
         document.querySelectorAll(".toc-item a").forEach((link) => {
             link.classList.remove("text-black", "scale-105");
@@ -87,9 +85,16 @@ const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
             const indicator = document.getElementById("toc-indicator");
             const listItem = activeLink.closest("li");
             if (indicator && listItem) {
-                indicator.style.top = `${listItem.offsetTop}px`;
-                indicator.style.height = `${listItem.offsetHeight}px`;
+                // 型アサーションやnullチェックを入れて安全に
+                if (listItem instanceof HTMLElement) {
+                    indicator.style.top = `${listItem.offsetTop}px`;
+                    indicator.style.height = `${listItem.offsetHeight}px`;
+                }
             }
         }
     }
+
+    // 【重要】astro:page-load イベントで実行する
+    // これにより、初回ロード時とViewTransitionによる遷移時の両方で実行されます
+    document.addEventListener("astro:page-load", initTOC);
 </script>

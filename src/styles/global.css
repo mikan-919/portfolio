@@ -16,8 +16,7 @@
   }
 }
 @theme inline {
-  --font-sans:
-    var(--font-family-figtree), var(--font-family-noto-sans-jp), sans-serif;
+  --font-sans: var(--font-family-noto-sans-jp), sans-serif;
   --font-mono: var(--font-family-jetbrains-mono), monospace;
   --font-inter: var(--font-family-inter), sans-serif;
   --font-noto-sans-jp: var(--font-family-noto-sans-jp), sans-serif;
