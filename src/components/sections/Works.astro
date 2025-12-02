@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import ChevronRight from "@lucide/astro/icons/chevron-right";
+import Section from "@/components/ui/Section.astro";
 import WorkCard from "../WorkCard.astro";
 
 interface Props {
@@ -10,39 +11,36 @@ interface Props {
 const { works }: Props = Astro.props;
 ---
 
-<section id="works" class="full-width-border">
-    <div class="content-container">
-        <!-- セクションヘッダー -->
-        <div
-            class="bg-gray-100 flex justify-between items-center px-4 py-2 border-b-2"
-        >
-            <h2 class="font-black text-sm tracking-[0.2em]">SELECTED WORKS</h2>
-            <span class="opacity-60 font-mono font-bold text-xs">01 - 05</span>
-        </div>
-
-        <!-- グリッドレイアウト -->
-        <div class="gap-0.5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            {works.map((work) => <WorkCard {...work.data} id={work.id} />)}
-        </div>
-
-        <!-- View All ボタンエリア -->
-        <div class="bg-white p-4 md:p-0">
-            <a
-                href="/works"
-                class="group group block relative py-6 border-2 border-black md:border-0 md:border-t-2 w-full text-center"
-            >
-                <span
-                    class="group inline-flex items-center gap-2 font-black text-sm tracking-widest"
-                >
-                    VIEW ALL WORKS
-                    <ChevronRight
-                        class="size-5 transition-transform group-hover:translate-x-1"
-                    />
-                </span>
-                <span
-                    class="bg-white slide-bg-l duration-300 mix-blend-difference"
-                ></span>
-            </a>
-        </div>
+<Section id="works">
+    <!-- セクションヘッダー -->
+    <div
+        class="bg-gray-100 flex justify-between items-center px-4 py-2 border-b-2"
+    >
+        <h2 class="font-black text-sm tracking-[0.2em]">SELECTED WORKS</h2>
+        <span class="opacity-60 font-mono font-bold text-xs">01 - 05</span>
     </div>
-</section>
+
+    <!-- グリッドレイアウト -->
+    <div class="gap-0.5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {works.map((work) => <WorkCard {...work.data} id={work.id} />)}
+    </div>
+
+    <!-- View All ボタンエリア -->
+    <div class="bg-white p-4 md:p-0">
+        <a
+            href="/works"
+            class="group group block relative py-6 border-2 border-black md:border-0 md:border-t-2 w-full text-center"
+        >
+            <span
+                class="group inline-flex items-center gap-2 font-black text-sm tracking-widest"
+            >
+                VIEW ALL WORKS
+                <ChevronRight
+                    class="size-5 transition-transform group-hover:translate-x-1"
+                />
+            </span>
+            <span class="bg-white slide-bg-l duration-300 mix-blend-difference"
+            ></span>
+        </a>
+    </div>
+</Section>

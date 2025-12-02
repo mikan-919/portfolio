@@ -1,10 +1,10 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import Section from "../Section.astro";
-import BlogFilter from "./BlogFilter.astro";
-import BlogHeader from "./BlogHeader.astro";
-import BlogList from "./BlogList.astro";
-import FeaturedArticle from "./FeaturedArticle.astro";
+import BlogFilter from "@/components/blog/BlogFilter.astro";
+import BlogHeader from "@/components/blog/BlogHeader.astro";
+import BlogList from "@/components/blog/BlogList.astro";
+import FeaturedArticle from "@/components/blog/FeaturedArticle.astro";
+import Section from "@/components/ui/Section.astro";
 
 type Props = { articles: CollectionEntry<"articles">[] };
 const { articles } = Astro.props;

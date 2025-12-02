@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import ChevronRight from "@lucide/astro/icons/chevron-right";
 import Github from 'simple-icons-astro/Github'
 import X from 'simple-icons-astro/X'
+import Section from "@/components/ui/Section.astro";
 
 // import {Github, X} from "simple-icons-astro"
 
@@ -12,8 +13,7 @@ type Props = {
 const {articles} = Astro.props;
 ---
 
-<section class="full-width-border">
-  <div class="max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white grid grid-cols-1 md:grid-cols-2">
+<Section class=" grid grid-cols-1 md:grid-cols-2">
     
     <!-- 左カラム：BLOG -->
     <div class="border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col">
@@ -37,7 +37,7 @@ const {articles} = Astro.props;
             
             <div class="relative p-6 transition-colors duration-300">
               <div class="flex items-center gap-3 mb-2 text-xs font-bold opacity-60 ">
-                <span class="font-mono">{article.data.publishDate}</span>
+                <span class="font-mono">{article.data.publishDate.toLocaleString(new Intl.Locale("ja-JP"), { dateStyle: "short" })}</span>
                 <span class="border border-current px-2 py-0.5">{article.data.tags[0]}</span>
               </div>
               <h4 class="text-lg font-bold leading-tight group-hover:translate-x-2 translate-x-0 transition-transform duration-300">
@@ -75,6 +75,4 @@ const {articles} = Astro.props;
         <a href="https://twitter.com/mikan_919_main" target="_blank"><X class="size-6"/></a>
       </div>
     </div>
-
-  </div>
-</section>
+</Section>

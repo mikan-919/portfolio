@@ -1,10 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-import About from "../components/sections/About.astro";
-import BlogContact from "../components/sections/BlogContact.astro";
-import Hero from "../components/sections/Hero.astro";
-import Works from "../components/sections/Works.astro";
-import Layout from "../layouts/Layout.astro";
+import About from "@/components/sections/About.astro";
+import BlogContact from "@/components/sections/BlogContact.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Works from "@/components/sections/Works.astro";
+import Layout from "@/layouts/Layout.astro";
 
 const allWorks = await getCollection("works");
 const sortedWorks = allWorks

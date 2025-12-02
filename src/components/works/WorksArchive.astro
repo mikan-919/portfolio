@@ -1,10 +1,10 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import Section from "../Section.astro";
-import FeaturedProject from "./FeaturedProject.astro";
-import WorksFilter from "./WorksFilter.astro";
-import WorksHeader from "./WorksHeader.astro";
-import WorksList from "./WorksList.astro";
+import Section from "@/components/ui/Section.astro";
+import FeaturedProject from "@/components/works/FeaturedProject.astro";
+import WorksFilter from "@/components/works/WorksFilter.astro";
+import WorksHeader from "@/components/works/WorksHeader.astro";
+import WorksList from "@/components/works/WorksList.astro";
 
 type Props = {
     works: CollectionEntry<"works">[];

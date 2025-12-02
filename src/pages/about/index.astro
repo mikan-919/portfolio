@@ -1,8 +1,8 @@
 ---
-import Section from "../../components/Section.astro";
-import ContributionGraph from "../../components/sections/ContributionGraph.astro";
-import InfoGrid from "../../components/sections/InfoGrid.astro";
-import Layout from "../../layouts/Layout.astro";
+import ContributionGraph from "@/components/sections/ContributionGraph.astro";
+import InfoGrid from "@/components/sections/InfoGrid.astro";
+import Section from "@/components/ui/Section.astro";
+import Layout from "@/layouts/Layout.astro";
 
 const learningData = {
     title: "LEARNING",
@@ -137,37 +137,57 @@ if (GITHUB_TOKEN) {
 ---
 
 <Layout title="Portfoliooo | About">
+    <Section class="flex">
+        <div
+            class="p-6 shrink-0 flex-1 flex items-center justify-center bg-black text-white text-2xl
+              [clip-path:polygon(0_0,100%_0,80%_100%,0_100%)]"
+        >
+            <h1
+                class="font-extrabold text-6xl lg:text-8xl tracking-tighter leading-none text-nowrap"
+            >
+                ABOUT ME
+            </h1>
+        </div>
+        <div
+            class="p-6 shrink-0 flex-1 flex items-center justify-center [clip-path:polygon(20%_0,100%_0,100%_100%,0_100%)]
+              -ml-[11%]"
+        >
+            <h1
+                class="font-extrabold w-full text-6xl lg:text-8xl text-end text-nowrap overflow-hidden tracking-tighter leading-none pr-1"
+            >
+                MIKAN-919
+            </h1>
+        </div>
+    </Section>
     <Section>
         <!-- Top Section: Intro & Info -->
         <div
             class="grid grid-cols-1 md:grid-cols-[5fr_2fr] border-b-2 border-black"
         >
             <div
-                class="p-8 md:p-12 bg-white text-black flex flex-col justify-between min-h-[50vh] md:min-h-auto border-b-2 md:border-b-0 md:border-r-2 border-black"
+                class="p-6 bg-white text-black flex flex-col justify-between min-h-[50vh] overflow-hidden md:min-h-auto border-b-2 md:border-b-0 md:border-r-2 border-black"
             >
                 <div class="flex flex-col gap-4">
                     <div class="border-l-16 pl-4">
                         <h1
-                            class="font-extrabold text-6xl md:text-9xl tracking-tighter leading-none"
+                            class="font-extrabold font-noto-sans-jp text-nowrap text-6xl md:text-6xl tracking-tighter leading-tight"
                         >
-                            ABOUT ME
+                            摘果みかん
                         </h1>
-                        <div class="flex flex-col font-mono text-sm opacity-80">
-                            <span>High School Student</span>
-                            <span>Based in Japan</span>
-                            <span>Web Development</span>
-                        </div>
+                        <span class="font-mono font-medium text-sm opacity-80"
+                            >ID: mikan-919</span
+                        >
                     </div>
                     <p
                         class="text-base leading-relaxed opacity-90 font-medium p-4"
                     >
-                        学校の勉強の傍ら、趣味でプログラミングを学習しています。
+                        学校の勉強の傍ら、趣味でプログラミングを学習している学生。
                         <br />
-                        まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。
+                        まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好き。
                         <br />
-                        最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
+                        最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成している。
                         <br />
-                        趣味でプログラミングとは言うけど、正直他に得意分野がないので将来はエンジニアになることを目指しています。
+                        趣味でプログラミングとは言っているが、正直他に得意分野がないので将来はエンジニアになることを目指している。
                         <br />
                     </p>
                 </div>
@@ -180,7 +200,7 @@ if (GITHUB_TOKEN) {
                 </div>
             </div>
 
-            <div class="p-8 md:p-12 flex flex-col justify-center">
+            <div class="p-8 shrink-0 md:p-12 flex flex-col justify-center">
                 <InfoGrid
                     learning={learningData}
                     interests={interestsData}

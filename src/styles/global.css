@@ -26,13 +26,18 @@
   --font-jetbrains-mono: var(--font-family-jetbrains-mono), monospace;
 }
 
+/* これらのユーティリティーはSectionコンポーネントで使用されているので、特殊な要件がない限り<Section/>を利用してください。 */
 @utility full-width-border {
   @apply w-full border-b-2 border-black;
 }
 @utility content-container {
-  @apply max-w-[1200px] w-full mx-auto md:border-l-2 md:border-r-2 border-black bg-white;
+  @apply lg:max-w-5xl md:max-w-3xl sm:max-w-[40rem] w-full mx-auto md:border-l-2 md:border-r-2 border-black bg-white;
 }
-
+@utility text-stroke-* {
+  -webkit-text-stroke-width: calc(--value(integer) * 1px);
+  -webkit-text-stroke-color: --value(--color-*);
+  -webkit-text-stroke-color: --value([*]);
+}
 @layer components {
   /* 共通: ハードシャドウボタン (WORKSやCONTACTで使用) */
   .btn-brutal {

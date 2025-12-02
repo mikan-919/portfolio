@@ -19,15 +19,16 @@ export default function InfiniteTextBackground() {
   // --- 定数設定 ---
   const TEXT_CONTENT = 'MIKAN-919'
   const FONT_SIZE = 96
-  const PADDING_X = FONT_SIZE
-  const ROW_HEIGHT = FONT_SIZE
+  const PADDING_X = FONT_SIZE / 2
+  const ROW_HEIGHT = FONT_SIZE - 25
   const ANGLE_DEG = -30
-  const COLOR_HOVER = '#f97316'
+  const TEXT_COLOR = '#068ce9'
 
   // --- アニメーションパラメータ ---
   const PHASE_OFFSET_PER_ROW = 0.3 // 1行あたりのパルス時刻のズレ (秒)
-  const BASE_SPEED = 25 // 線形スクロールのベース速度 (px/秒)
-  const PULSE_AMPLITUDE = 1500 // パルスによる最大速度 (px/秒)
+  const BASE_SPEED = 60 // 線形スクロールのベース速度 (px/秒)
+  const BASE_SPEED_OFFSET_PER_ROW = -6 // 1行あたりの線形スクロールのベース速度のズレ (px/秒)
+  const PULSE_AMPLITUDE = 1700 // パルスによる最大速度 (px/秒)
   const PULSE_PERIOD = 5 // パルス加速の繰り返し周期 (秒)
   const PULSE_SHARPNESS = 32 // パルスの鋭さ
 
@@ -38,7 +39,7 @@ export default function InfiniteTextBackground() {
     if (!ctx) return
     const computedStyle = getComputedStyle(canvasRef)
 
-    const canvasFont = computedStyle.getPropertyValue('--font-rampart-one')
+    const canvasFont = computedStyle.getPropertyValue('--font-figtree')
 
     let animationFrameId: number
     let startTime: number | null = null
@@ -73,11 +74,11 @@ export default function InfiniteTextBackground() {
 
       // キャンバス準備
       ctx.clearRect(0, 0, canvasRef.width, canvasRef.height)
-      ctx.fillStyle = '#f9fafb'
+      ctx.fillStyle = '#000'
       ctx.fillRect(0, 0, canvasRef.width, canvasRef.height)
       ctx.font = `900 ${FONT_SIZE}px ${canvasFont}`
       ctx.textBaseline = 'middle'
-      ctx.fillStyle = COLOR_HOVER
+      ctx.fillStyle = TEXT_COLOR
 
       const textMetrics = ctx.measureText(TEXT_CONTENT)
       const textWidth = textMetrics.width + PADDING_X
@@ -88,17 +89,15 @@ export default function InfiniteTextBackground() {
       ctx.rotate((ANGLE_DEG * Math.PI) / 180)
       ctx.translate(-canvasRef.width / 2, -canvasRef.height / 2)
 
-      const startY = -FONT_SIZE * 3
+      const startY = canvasRef.height / 2 + FONT_SIZE
       const endY = canvasRef.height + FONT_SIZE * 3
-      const startX = -textWidth
+      const startX = -textWidth * 2
       const endX = canvasRef.width + textWidth
 
       const rowCount = Math.ceil((endY - startY) / ROW_HEIGHT)
-
       if (rowScrollPositions.length !== rowCount) {
         rowScrollPositions = Array(rowCount).fill(0)
       }
-
       // 行ごとの描画
       for (let i = 0; i < rowCount; i++) {
         const y = startY + i * ROW_HEIGHT
@@ -108,7 +107,7 @@ export default function InfiniteTextBackground() {
         const currentSpeed = sinPowerPulseSpeed(rowTotalTime, PULSE_AMPLITUDE, PULSE_PERIOD, PULSE_SHARPNESS)
 
         // 線形移動とパルス移動を計算し、累積
-        const linearMoveForThisFrame = BASE_SPEED * deltaTime
+        const linearMoveForThisFrame = (BASE_SPEED + i * BASE_SPEED_OFFSET_PER_ROW) * deltaTime
         const pulseMoveForThisFrame = currentSpeed * deltaTime
         rowScrollPositions[i] += linearMoveForThisFrame + pulseMoveForThisFrame
 
@@ -125,9 +124,7 @@ export default function InfiniteTextBackground() {
         // 描画ループ
         let drawX = startX + drawOffset
         while (drawX < endX) {
-          if (i === 4) console.log(drawX)
           ctx.fillText(TEXT_CONTENT, drawX, y)
-          // ctx.fillText(TEXT_CONTENT, 0, 0)
           drawX += textWidth
         }
       }
@@ -154,7 +151,7 @@ export default function InfiniteTextBackground() {
   return (
     <canvas
       ref={canvasRef}
-      class='block absolute inset-0 w-full h-full'
+      class='block absolute z-10 mix-blend-difference inset-0 w-full h-full saturate-0 blur-xs duration-600 group-hover:saturate-100 transition-all transform-gpu'
     />
   )
 }

@@ -1,91 +1,50 @@
 ---
-import Section from "../Section.astro";
-import InfoGrid from "./InfoGrid.astro";
-
-const learningData = {
-    title: "LEARNING",
-    subtitle: "学習中・触ったことがある",
-    items: [
-        "HTML / CSS",
-        "JavaScript / TypeScript",
-        "SolidJS / React",
-        "Astro",
-        "Tailwind CSS",
-    ],
-};
-
-const interestsData = {
-    title: "INTERESTS",
-    subtitle: "興味・好きなこと",
-    items: ["Web Design", "UI/UX", "Gadgets", "Gaming", "Music"],
-};
-
-const nowPlayingData = {
-    title: "NOW PLAYING",
-    subtitle: "最近の趣味",
-    items: [
-        {
-            icon: "♪",
-            category: "MUSIC",
-            title: "Bling-Bang-Bang-Born",
-            detail: "Creepy Nuts",
-        },
-        {
-            icon: "🎮",
-            category: "GAME",
-            title: "VALORANT",
-            detail: "Rank: Silver 2",
-        },
-    ],
-};
+import Section from "@/components/ui/Section.astro";
 ---
 
 <Section
     id="about"
-    class="overflow-hidden grid grid-cols-1 md:grid-cols-[500px_1fr]"
+    class="overflow-hidden grid grid-cols-1 h-62 md:grid-cols-[400px_1fr]"
 >
     <div
-        class="shrink-0 z-10 p-8 bg-black text-white overflow-hidden justify-between flex flex-col items-end md:m-6"
+        class="shrink-0 z-10 p-6 bg-black text-white overflow-hidden flex flex-col justify-between"
     >
-        <div class="flex flex-col">
-            <div
-                class="flex flex-col lg:flex-row lg:items-center mx-2 border-b-2 border-white pb-2 overflow-hidden"
-            >
+        <div>
+            <div class="border-b-2 border-white pb-1 mb-2 overflow-hidden">
                 <h3
                     class="font-extrabold text-4xl md:text-5xl text-nowrap leading-none tracking-tighter"
                 >
                     ABOUT ME
                 </h3>
-                <div
-                    class="flex flex-col justify-between h-9 text-xs leading-none text-ellipsis text-nowrap font-mono opacity-90 lg:ml-4"
-                >
-                    <span>High School Student</span>
-                    <span>Based in Japan</span>
-                    <span>Web Development</span>
-                </div>
             </div>
-            <p class="opacity-80 my-auto font-sm text-base leading-relaxed p-4">
+            <ul
+                class='block h-9 text-sm leading-none text-ellipsis text-nowrap list-["-_"] list-inside font-mono opacity-90'
+            >
+                <li>High School Student</li>
+                <li>Based in Japan</li>
+                <li>Web Development</li>
+                <li>Learning TypeScript, Python, and more</li>
+                <li>Learning English</li>
+            </ul>
+        </div>
+        <a
+            class="group ml-auto inline-block text-nowrap px-3 py-1 border border-black hover:border-white overflow-hidden font-bold text-base text-center transition-colors duration-300"
+            href="/about"
+        >
+            <span class="tracking-widest">MORE →</span>
+            <span class="bg-white slide-bg-l mix-blend-difference"></span>
+        </a>
+    </div>
+    <div class="flex flex-col justify-center p-6">
+        <div>
+            <p
+                class="opacity-80 my-auto font-medium text-base leading-relaxed p-4"
+            >
                 学校の勉強の傍ら、趣味でプログラミングを学習しています。<br />
                 まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
                 />
                 最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
             </p>
-        </div>
-    </div>
-    <div class="flex flex-col justify-between py-6 pr-6">
-        <InfoGrid
-            learning={learningData}
-            interests={interestsData}
-            nowPlaying={nowPlayingData}
-        />
-        <div class="ml-auto">
-            <a
-                class="group inline-block text-nowrap bg-white px-3 py-1 border-2 border-black hover:border-white overflow-hidden font-bold text-base text-center transition-colors duration-300"
-                href="/about"
-            >
-                <span class="tracking-widest">MORE →</span>
-                <span class="bg-white slide-bg-l mix-blend-difference"></span>
-            </a>
         </div>
     </div>
 </Section>
