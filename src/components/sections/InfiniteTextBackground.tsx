@@ -151,7 +151,7 @@ export default function InfiniteTextBackground() {
   return (
     <canvas
       ref={canvasRef}
-      class='block absolute z-10 mix-blend-difference inset-0 w-full h-full saturate-0 blur-xs duration-600 group-hover:saturate-100 transition-all transform-gpu'
+      class='block absolute z-10 mix-blend-difference inset-0 w-full h-full saturate-0 hover:blur-xs blur-[0] ease-linear hover:duration-300 duration-600 group-hover:saturate-100 transition-all transform-gpu'
     />
   )
 }

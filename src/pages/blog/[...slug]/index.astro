@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import TableOfContents from "@/components/blog/TableOfContents.astro";
+import TableOfContents from "@/components/blog/TableOfContents.tsx";
 import Section from "@/components/ui/Section.astro";
 import Layout from "@/layouts/Layout.astro";
 
@@ -120,7 +120,7 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
         >
             <!-- 左側：目次 (PCのみ表示) -->
             <aside class="border-r-2 border-black bg-gray-100 hidden lg:block">
-                <TableOfContents headings={headings} />
+                <TableOfContents client:idle headings={headings} />
             </aside>
             <div
                 class="p-8 md:py-16 md:px-32 prose prose-neutral max-w-none

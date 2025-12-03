@@ -5,6 +5,7 @@ import ChevronRight from "@lucide/astro/icons/chevron-right";
 
 type Props = {
     id: string;
+    tight?: boolean;
 } & CollectionEntry<"works">["data"];
 const {
     title,
@@ -12,19 +13,17 @@ const {
     tags,
     description,
     image,
-    link,
     isComingSoon = false,
     id,
+    tight,
 }: Props = Astro.props;
 ---
 
 <div
-    class="group flex h-full relative overflow-hidden flex-col bg-white transition-colors duration-300 outline-2 outline-border"
+    class="group flex relative h-48 overflow-hidden [&>*:nth-child(odd)]:flex-row-reverse [&>*:nth-child(even)]:flex-row bg-white transition-colors duration-300 outline-2 outline-black"
 >
     <!-- 画像エリア (アスペクト比 16:9) -->
-    <div
-        class="aspect-video w-full border-b-2 border-black relative overflow-hidden bg-gray-100"
-    >
+    <div class="aspect-video shrink-0 relative overflow-hidden bg-gray-100">
         {
             image ? (
                 <Image
@@ -46,49 +45,59 @@ const {
                 aria-disabled={isComingSoon}
                 class={`${isComingSoon ? "opacity-75 cursor-not-allowed" : ""} btn-brutal px-4 py-2 text-xs select-none`}
             >
-                {isComingSoon ? "COMING SOON" : "VIEW PROJECT >"}
+                {isComingSoon ? "COMING SOON" : "VIEW PROJECT"}
             </span>
         </a>
     </div>
 
     <!-- テキストエリア -->
-    <a
-        href={isComingSoon ? undefined : "/works/" + id}
-        class="group relative p-6 flex flex-col grow justify-between"
+    <div
+        class="grow w-full border-black [&>*:nth-child(odd)]:border-l-2 [&>*:nth-child(even)]:border-r-2"
     >
-        <h3 class="text-xl font-black mb-4 leading-none border-l-6 pl-2">
-            {title}<br />
-            <span
-                class="text-xs text-gray-500 tracking-widest uppercase font-medium leading-0"
-                >{category}</span
-            >
-        </h3>
-
-        <!-- 説明文 -->
-        <p
-            class="text-sm font-medium text-gray-700 leading-relaxed line-clamp-2"
+        <a
+            href={isComingSoon ? undefined : "/works/" + id}
+            class="flex flex-col group relative p-6 h-full justify-between"
         >
-            {description}
-        </p>
+            <div>
+                <h3
+                    class="text-xl font-black mb-4 leading-none text-nowrap border-l-6 pl-2"
+                >
+                    {title}<br />
+                    <span
+                        class="text-xs text-gray-500 tracking-widest uppercase font-medium leading-0"
+                        >{category}</span
+                    >
+                </h3>
 
-        <div class="mt-6 flex justify-between">
-            <div class="flex flex-wrap gap-2">
+                <!-- 説明文 -->
                 {
-                    tags
-                        .slice(0, 3)
-                        .map((tag) => (
-                            <span class="text-[10px] font-medium bg-white text-gray-700">
-                                #{tag}
-                            </span>
-                        ))
+                    !tight && (
+                        <p class="text-sm font-medium text-gray-700 leading-relaxed text-ellipsis line-clamp-2">
+                            {description}
+                        </p>
+                    )
                 }
             </div>
-            <ChevronRight
-                class={isComingSoon
-                    ? "text-transparent"
-                    : "inline-block size-5 font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"}
-            />
-        </div>
-        <span class="slide-bg-t bg-white mix-blend-difference"></span>
-    </a>
+
+            <div class="mt-6 flex justify-between">
+                <div class="flex flex-wrap gap-2">
+                    {
+                        tags
+                            .slice(0, 3)
+                            .map((tag) => (
+                                <span class="text-[10px] font-medium bg-white text-gray-700">
+                                    #{tag}
+                                </span>
+                            ))
+                    }
+                </div>
+                <ChevronRight
+                    class={isComingSoon
+                        ? "text-transparent"
+                        : "inline-block size-5 font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"}
+                />
+            </div>
+            <span class="slide-bg-l bg-white mix-blend-difference"></span>
+        </a>
+    </div>
 </div>
