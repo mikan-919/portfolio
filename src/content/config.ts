@@ -1,8 +1,9 @@
 import { defineCollection, reference, z } from 'astro:content'
-import { glob } from 'astro/loaders'
+import { file, glob } from 'astro/loaders'
 
+// TechStackコレクションの定義
 const techStackCollection = defineCollection({
-  loader: glob({ pattern: '*.mdx', base: './src/content/tech-stack' }),
+  loader: glob({ pattern: 'tech-stack/*.md', base: './src/content' }),
   schema: () =>
     z.object({
       displayName: z.string(),
@@ -16,7 +17,7 @@ const techStackCollection = defineCollection({
 
 // Worksコレクションの定義
 const worksCollection = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/works' }),
+  loader: glob({ pattern: 'works/*.md', base: './src/content' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -34,8 +35,9 @@ const worksCollection = defineCollection({
     }),
 })
 
+// Articlesコレクションの定義
 const articlesCollection = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/articles' }),
+  loader: glob({ pattern: 'articles/*.md', base: './src/content' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),

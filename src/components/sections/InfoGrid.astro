@@ -1,39 +1,16 @@
 ---
 import BookOpenText from "@lucide/astro/icons/book-open-text";
 import Telescope from "@lucide/astro/icons/telescope";
+import myInfo from "../../content/data/my-info.json";
 import styles from "./InfoGrid.module.css";
 
-interface SectionHeader {
-    title: string;
-    subtitle: string;
-}
 
-interface ListSection extends SectionHeader {
-    items: string[];
-}
 
-interface ActivityItem {
-    icon: string;
-    category: string;
-    title: string;
-    detail: string;
-}
-
-interface ActivitySection extends SectionHeader {
-    items: ActivityItem[];
-}
-
-export interface Props {
-    learning: ListSection;
-    interests: ListSection;
-    nowPlaying: ActivitySection;
-    row?: boolean;
-}
-
-const { learning, interests, nowPlaying, row } = Astro.props;
+const learning = myInfo.learning;
+const interests = myInfo.interests;
 ---
 
-<div class={row ? styles.row : styles.grid}>
+<div class={styles.row}>
     <div class={styles.column}>
         <h5 class={styles.header}>
             <span class={styles.headerTitle}>
@@ -67,35 +44,5 @@ const { learning, interests, nowPlaying, row } = Astro.props;
             {interests.items.map((item) => <li>{item}</li>)}
         </ul>
     </div>
-    <!-- 
-    {
-        row && (
-            <div class={styles.columnHiddenSm}>
-                <h5 class={styles.header}>
-                    <span class={styles.headerTitle}>
-                        {nowPlaying.title}
-                        <span class={styles.headerSlash}> /</span>
-                    </span>
-                    <span class={styles.headerSubtitle}>
-                        {nowPlaying.subtitle}
-                    </span>
-                </h5>
-
-                <ul class={styles.list}>
-                    {nowPlaying.items.map((item) => (
-                        <li class={styles.activityItem}>
-                            <div class={styles.iconBox}>{item.icon}</div>
-                            <div>
-                                <p class={styles.metaCategory}>
-                                    {item.category}
-                                </p>
-                                <p class={styles.metaTitle}>{item.title}</p>
-                                <p class={styles.metaDetail}>{item.detail}</p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        )
-    } -->
+   
 </div>

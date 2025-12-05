@@ -4,42 +4,6 @@ import InfoGrid from "@/components/sections/InfoGrid.astro";
 import Section from "@/components/ui/Section.astro";
 import Layout from "@/layouts/Layout.astro";
 
-const learningData = {
-    title: "LEARNING",
-    subtitle: "学習中・触ったことがある",
-    items: [
-        "HTML / CSS",
-        "JavaScript / TypeScript",
-        "SolidJS / React",
-        "Astro",
-        "Tailwind CSS",
-    ],
-};
-
-const interestsData = {
-    title: "INTERESTS",
-    subtitle: "興味・好きなこと",
-    items: ["Web Design", "UI/UX", "Gadgets", "Gaming", "Music"],
-};
-
-const nowPlayingData = {
-    title: "NOW PLAYING",
-    subtitle: "最近の趣味",
-    items: [
-        {
-            icon: "♪",
-            category: "MUSIC",
-            title: "Bling-Bang-Bang-Born",
-            detail: "Creepy Nuts",
-        },
-        {
-            icon: "🎮",
-            category: "GAME",
-            title: "VALORANT",
-            detail: "Rank: Silver 2",
-        },
-    ],
-};
 
 const timelineData = [
     {
@@ -201,11 +165,7 @@ if (GITHUB_TOKEN) {
             </div>
 
             <div class="p-8 shrink-0 md:p-12 flex flex-col justify-center">
-                <InfoGrid
-                    learning={learningData}
-                    interests={interestsData}
-                    row
-                />
+                <InfoGrid />
             </div>
         </div>
 

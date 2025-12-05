@@ -3,9 +3,11 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"],
   "compilerOptions": {
-    "jsx": "preserve",
+    // "module": "esnext",
+    // "moduleResolution": "bundler",
     "jsxImportSource": "solid-js",
     "allowJs": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

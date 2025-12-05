@@ -1,4 +1,3 @@
-/** @jsxImportSource solid-js */
 import { createSignal, For, onCleanup, onMount } from 'solid-js'
 
 interface Heading {
