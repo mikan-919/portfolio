@@ -1,16 +1,28 @@
 ---
+
+
+
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import TableOfContents from "@/components/blog/TableOfContents.tsx";
 import Section from "@/components/ui/Section.astro";
+import SlideButton from "@/components/ui/SlideButton.astro";
 import Layout from "@/layouts/Layout.astro";
+import Tags from "@/components/ui/Tags.astro";
+
+export async function getStaticPaths() {
+    const articles = await getCollection("articles");
+    return articles.map((entry) => ({
+        params: { slug: entry.id },
+    }));
+}
 
 const { slug } = Astro.params;
 const allPosts = await getCollection("articles");
 
 // 2. 日付順にソート（新しい順）
 const sortedPosts = allPosts.sort(
-    (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
 // 3. 現在の記事のインデックス（何番目か）を探す
@@ -25,17 +37,15 @@ const { Content, headings } = await render(entry);
 const nextPost = sortedPosts[currentIndex + 1]; // 過去の記事へ
 const prevPost = sortedPosts[currentIndex - 1]; // 新しい記事へ
 
-const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+const formattedDate = entry.data.date.toLocaleDateString(new Intl.Locale("ja-JP"), {
+  dateStyle:"short"
 });
 ---
 
 <Layout title={`Portfoliooo | ${entry.data.title}`}>
     <!-- Header Image & Title -->
-    <div class="full-width-border" transition:name="blog-header">
-        <div class="content-container relative h-128">
+    <Section class="relative h-128">
+
             {
                 entry.data.image ? (
                     <Image
@@ -72,14 +82,12 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="full-width-border">
-        <div class="content-container grid grid-cols-[7fr_3fr]">
+    </Section>
+    <Section class=" grid grid-cols-[7fr_3fr]">
             <div class="flex gap-4 p-8 md:py-8 md:px-16">
                 <div class="flex flex-col items-end">
                     <h6
-                        class="font-black font-mono text-4xl leading-none tracking-tight uppercase"
+                        class="font-black font-figtree text-4xl leading-none tracking-tight uppercase"
                     >
                         Summary
                     </h6>
@@ -93,31 +101,15 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
             </div>
             <div class="border-l-2 border-black p-8 md:py-8 md:px-8 h-full">
                 <h6
-                    class="font-black font-mono text-4xl tracking-tight uppercase"
+                    class="font-black font-figtree text-4xl tracking-tight uppercase"
                 >
                     Tags
                 </h6>
-                <div class="flex gap-2">
-                    {
-                        entry.data.tags.map((tag) => (
-                            <a
-                                href={`/blog?tag=${tag}`}
-                                class="relative group bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-wider"
-                            >
-                                #{tag}
-                                <span class="slide-bg-b bg-white mix-blend-difference" />
-                            </a>
-                        ))
-                    }
-                </div>
+               <Tags tags={entry.data.tags} link={(tag) => `/blog?tag=${tag}`} />
             </div>
-        </div>
-    </div>
+    </Section>
     <!-- Content -->
-    <div class="full-width-border">
-        <div
-            class="content-container grid grid-cols-1 lg:grid-cols-[1fr_4fr] min-h-[calc(100vh-652px)]"
-        >
+    <Section class="grid grid-cols-1 lg:grid-cols-[1fr_4fr] min-h-[calc(100vh-652px)]">
             <!-- 左側：目次 (PCのみ表示) -->
             <aside class="border-r-2 border-black bg-gray-100 hidden lg:block">
                 <TableOfContents client:idle headings={headings} />
@@ -133,12 +125,12 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
             >
                 <Content />
             </div>
-        </div>
-    </div>
+    </Section>
     <Section isGrow class="grid grid-cols-[2fr_6fr_2fr]">
         {
             prevPost ? (
-                <a
+                <SlideButton
+                    direction="right"
                     href={`/blog/${prevPost.id}`}
                     class="group relative flex flex-col justify-center p-8 border-r-2 border-black "
                 >
@@ -148,8 +140,7 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                     <span class="font-bold text-sm md:text-base leading-tight line-clamp-2">
                         {prevPost.data.title}
                     </span>
-                    <span class="slide-bg-r bg-white mix-blend-difference" />
-                </a>
+                </SlideButton>
             ) : (
                 <div class="flex flex-col justify-center p-8 border-r-2 border-black select-none">
                     <span class="text-xs font-mono mb-2 opacity-25">
@@ -164,28 +155,28 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
         <div
             class="flex items-center justify-center border-r-2 border-black transition-colors group"
         >
-            <a
+            <SlideButton
+                direction="top"
                 href="/blog"
                 class="group relative font-black font-mono text-xl md:text-2xl tracking-widest w-full h-full flex items-center justify-center"
             >
                 BACK TO BLOG
-                <span class="slide-bg-t bg-white mix-blend-difference"></span>
-            </a>
+            </SlideButton>
         </div>
         {
             nextPost ? (
-                <a
-                    href={`/blog/${nextPost.id}`}
+                <SlideButton
+                direction="left"
+                href={`/blog/${nextPost.id}`}
                     class="group relative flex flex-col justify-center items-end text-right p-8"
                 >
-                    <span class="text-xs font-mono opacity-60 mb-2 group-hover:opacity-100">
+                    <span class="text-xs font-mono opacity-60 mb-2">
                         OLDER &gt;
                     </span>
                     <span class="font-bold text-sm md:text-base leading-tight line-clamp-2">
                         {nextPost.data.title}
                     </span>
-                    <span class="slide-bg-l bg-white mix-blend-difference" />
-                </a>
+                </SlideButton>
             ) : (
                 <div class="flex flex-col justify-center items-end text-right p-8 select-none">
                     <span class="text-xs font-mono mb-2 opacity-25">

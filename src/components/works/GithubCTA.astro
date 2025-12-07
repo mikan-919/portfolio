@@ -1,27 +1,28 @@
 ---
-import Github from "simple-icons-astro/Github";
----
 
-<section class="full-width-border">
-    <div
-        class="max-w-[1200px] mx-auto border-l-2 bg-gray-100 border-r-2 border-black p-12 md:p-20 text-center"
-    >
-        <h3 class="text-2xl font-black mb-6">MORE PROJECTS?</h3>
+
+
+import Github from "simple-icons-astro/Github";
+import Section from "@/components/ui/Section.astro";
+import SlideButton from "../ui/SlideButton.astro";
+---
+<Section class="bg-gray-100 mx-auto p-16 flex flex-col items-center text-center">
+        <h3 class="text-3xl font-black font-figtree mb-6">MORE PROJECTS?</h3>
         <p
             class="font-bold text-sm opacity-70 mb-8 max-w-lg mx-auto leading-relaxed"
         >
             ここには掲載していない小さな実験や、学習の過程のコードはGitHubで公開しています。
         </p>
 
-        <a
+        <SlideButton
+            direction="top"
             href="https://github.com/mikan-919"
             target="_blank"
-            class="relative group inline-flex items-center gap-3 btn-brutal"
+            class="inline-flex items-center gap-3 btn-brutal"
         >
             <!-- GitHub Icon (SVG) -->
             <Github />
             <span>Visit GitHub Profile</span>
-            <span class="slide-bg-l bg-white mix-blend-difference"></span>
-        </a>
-    </div>
-</section>
+        </SlideButton>
+
+</Section>

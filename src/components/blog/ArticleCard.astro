@@ -1,15 +1,19 @@
 ---
+
+
+
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import ChevronRight from "@lucide/astro/icons/chevron-right";
+import SlideButton from "@/components/ui/SlideButton.astro";
 
 type Props = {
     slug: string;
 } & CollectionEntry<"articles">["data"];
 
-const { title, summary, tags, image, publishDate, slug }: Props = Astro.props;
+const { title, summary, tags, image, date, slug }: Props = Astro.props;
 
-const formattedDate = publishDate.toLocaleDateString("en-US", {
+const formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -47,9 +51,10 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
     </div>
 
     <!-- Text Area -->
-    <a
+    <SlideButton
+        direction="top"
         href={"/blog/" + slug}
-        class="group relative p-6 flex flex-col grow justify-between"
+        class="p-6 flex flex-col grow justify-between"
     >
         <div>
             <div class="flex justify-between items-start mb-2">
@@ -63,7 +68,7 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
 
             <!-- Summary -->
             <p
-                class="text-sm font-medium text-gray-700 leading-relaxed line-clamp-3"
+                class="text-sm font-medium text-gray-700 leading-relaxed line-clamp-3 h-18"
             >
                 {summary}
             </p>
@@ -84,7 +89,5 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
             <ChevronRight
                 class="inline-block size-5 font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"
             />
-        </div>
-        <span class="slide-bg-t bg-white mix-blend-difference"></span>
-    </a>
+        </div></SlideButton>
 </div>

@@ -1,8 +1,12 @@
 ---
+
+
+
 import type { CollectionEntry } from "astro:content";
 import ChevronRight from "@lucide/astro/icons/chevron-right";
 import Section from "@/components/ui/Section.astro";
-import WorkCard from "../WorkCard.astro";
+import SlideButton from "@/components/ui/SlideButton.astro";
+import WorkCard from "@/components/WorkCard.astro";
 
 interface Props {
     works: CollectionEntry<"works">[];
@@ -27,7 +31,8 @@ const { works }: Props = Astro.props;
 
     <!-- View All ボタンエリア -->
     <div class="bg-white p-4 md:p-0">
-        <a
+        <SlideButton
+            direction="left"
             href="/works"
             class="group group block relative py-6 border-2 border-black md:border-0 md:border-t-2 w-full text-center"
         >
@@ -39,8 +44,7 @@ const { works }: Props = Astro.props;
                     class="size-5 transition-transform group-hover:translate-x-1"
                 />
             </span>
-            <span class="bg-white slide-bg-l duration-300 mix-blend-difference"
-            ></span>
-        </a>
+         
+        </SlideButton>
     </div>
 </Section>

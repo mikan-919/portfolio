@@ -1,28 +1,10 @@
 ---
-import { getCollection } from "astro:content";
-import InfiniteTextBackground from "@/components/sections/InfiniteTextBackground";
+
+
+
+import InfiniteTextBackground from "@/components/sections/root/InfiniteTextBackground";
 import Section from "@/components/ui/Section.astro";
 
-const works = await getCollection("works");
-const articles = await getCollection("articles");
-
-const allUpdates = [
-	...works
-		.filter((work) => !work.data.isComingSoon)
-		.map((work) => ({
-			date: work.data.publishDate,
-			link: `/works/${work.id}`,
-		})),
-	...articles.map((article) => ({
-		date: article.data.publishDate,
-		link: `/blog/${article.id}`,
-	})),
-].sort((a, b) => b.date.valueOf() - a.date.valueOf());
-
-const latestUpdate = allUpdates[0];
-const formattedDate = latestUpdate
-	? `${latestUpdate.date.getFullYear()}.${(latestUpdate.date.getMonth() + 1).toString().padStart(2, "0")}.${latestUpdate.date.getDate().toString().padStart(2, "0")}`
-	: "----.--.--";
 ---
 
 <Section
@@ -41,7 +23,7 @@ const formattedDate = latestUpdate
 		<h2 class="italic font-black text-black text-nowrap tracking-tight">
 			<span class="text-4xl md:text-5xl lg:text-9xl">
 				<span class="">MIKAN</span>
-				<span class="text-neutral-800">919's</span>
+				<span class="text-black">919's</span>
 			</span>
 			<br />
 		</h2>

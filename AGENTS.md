@@ -11,7 +11,6 @@ In this project,
 In this project,
 - using `astro` as the framework
 - using `astro-icon` as the icon component
-- using `astro-icon` as the icon component
 
 ## Code style
 - TypeScript strict mode

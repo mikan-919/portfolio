@@ -15,6 +15,7 @@ const config = defineConfig({
         cssVariable: '--font-family-rampart-one',
         weights: [400],
         display: 'swap',
+        fallbacks: [],
       },
       {
         provider: fontProviders.google(),
@@ -22,6 +23,7 @@ const config = defineConfig({
         cssVariable: '--font-family-noto-sans-jp',
         weights: ['100 900'],
         display: 'swap',
+        fallbacks: [],
       },
       {
         provider: fontProviders.google(),
@@ -29,6 +31,7 @@ const config = defineConfig({
         cssVariable: '--font-family-inter',
         weights: ['100 900'],
         display: 'swap',
+        fallbacks: [],
       },
       {
         provider: fontProviders.google(),
@@ -36,13 +39,19 @@ const config = defineConfig({
         cssVariable: '--font-family-figtree',
         weights: ['300 900'],
         display: 'swap',
+        fallbacks: [],
       },
       {
-        provider: fontProviders.google(),
-        name: 'JetBrains Mono',
-        cssVariable: '--font-family-jetbrains-mono',
-        weights: ['100 800'],
-        display: 'swap',
+        provider: 'local',
+        name: 'UDEV Gothic',
+        cssVariable: '--font-family-udev-gothic',
+        variants: [
+          { src: ['src/assets/fonts/UDEVGothicHSLG-Bold.woff2'], weight: 700, style: 'normal' },
+          { src: ['src/assets/fonts/UDEVGothicHSLG-BoldItalic.woff2'], weight: 700, style: 'italic' },
+          { src: ['src/assets/fonts/UDEVGothicHSLG-Regular.woff2'], weight: 400, style: 'normal' },
+          { src: ['src/assets/fonts/UDEVGothicHSLG-Italic.woff2'], weight: 400, style: 'italic' },
+        ],
+        fallbacks: [],
       },
     ],
   },
@@ -50,7 +59,7 @@ const config = defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  output: 'server',
+  output: 'static',
   integrations: [solidJs()],
   adapter: cloudflare({ imageService: 'passthrough' }),
 })

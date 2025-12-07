@@ -14,7 +14,8 @@ tags:
     - "Design"
 image: "../../assets/images/works/portfolio-v1.png"
 github: "https://github.com/mikan-919/portfolio"
-publishDate: 2024-11-25
+link: "http://tekka-mikan.pages.dev"
+date: 2024-11-25
 isComingSoon: false
 ---
 

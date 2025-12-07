@@ -10,7 +10,7 @@ import { onCleanup, onMount } from 'solid-js'
 function sinPowerPulseSpeed(t: number, A: number, P: number, N: number): number {
   const normalizedTime = (Math.PI / P) * t
   const pulseValue = Math.abs(Math.sin(normalizedTime))
-  return A * Math.pow(pulseValue, N)
+  return A * pulseValue ** N
 }
 
 export default function InfiniteTextBackground() {
@@ -30,6 +30,7 @@ export default function InfiniteTextBackground() {
   const BASE_SPEED_OFFSET_PER_ROW = -6 // 1行あたりの線形スクロールのベース速度のズレ (px/秒)
   const PULSE_AMPLITUDE = 1700 // パルスによる最大速度 (px/秒)
   const PULSE_PERIOD = 5 // パルス加速の繰り返し周期 (秒)
+  // const PULSE_SHARPNESS = 2 // パルスの鋭さ
   const PULSE_SHARPNESS = 32 // パルスの鋭さ
 
   onMount(() => {
@@ -73,9 +74,11 @@ export default function InfiniteTextBackground() {
       const deltaTime = lastTime === 0 ? 0 : (currentTime - lastTime) / 1000
 
       // キャンバス準備
-      ctx.clearRect(0, 0, canvasRef.width, canvasRef.height)
+      // ctx.clearRect(0, 0, canvasRef.width, canvasRef.height)
       ctx.fillStyle = '#000'
+      ctx.globalAlpha = 0.6
       ctx.fillRect(0, 0, canvasRef.width, canvasRef.height)
+      ctx.globalAlpha = 1
       ctx.font = `900 ${FONT_SIZE}px ${canvasFont}`
       ctx.textBaseline = 'middle'
       ctx.fillStyle = TEXT_COLOR
@@ -151,7 +154,7 @@ export default function InfiniteTextBackground() {
   return (
     <canvas
       ref={canvasRef}
-      class='block absolute z-10 mix-blend-difference inset-0 w-full h-full saturate-0 hover:blur-xs blur-[0] ease-linear hover:duration-300 duration-600 group-hover:saturate-100 transition-all transform-gpu'
+      class='block absolute z-10 mix-blend-difference inset-0 w-full h-full'
     />
   )
 }

@@ -1,7 +1,11 @@
 ---
+
+
+
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import ChevronRight from "@lucide/astro/icons/chevron-right";
+import SlideButton from "@/components/ui/SlideButton.astro";
 
 type Props = {
     id: string;
@@ -54,9 +58,10 @@ const {
     <div
         class="grow w-full border-black [&>*:nth-child(odd)]:border-l-2 [&>*:nth-child(even)]:border-r-2"
     >
-        <a
+      <SlideButton
+      direction="left"
             href={isComingSoon ? undefined : "/works/" + id}
-            class="flex flex-col group relative p-6 h-full justify-between"
+            class="flex flex-col p-6 h-full justify-between"
         >
             <div>
                 <h3
@@ -97,7 +102,6 @@ const {
                         : "inline-block size-5 font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"}
                 />
             </div>
-            <span class="slide-bg-l bg-white mix-blend-difference"></span>
-        </a>
+        </SlideButton>
     </div>
 </div>

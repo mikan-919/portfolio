@@ -1,4 +1,9 @@
 ---
+
+
+
+import SlideButton from '@/components/ui/SlideButton.astro';
+
 type Props = {
     categories: string[];
 };
@@ -17,14 +22,14 @@ const { categories } = Astro.props;
             <div class="flex flex-wrap gap-2 pt-2" id="filter-container">
                 {
                     categories.map((cat) => (
-                        <button
+                        <SlideButton
+                        direction="bottom"
                             data-filter={cat}
                             class={`filter-btn relative group border-2 border-black px-4 py-2 font-bold cursor-pointer text-sm transition-all duration-200 
               ${cat === "All" ? "bg-black text-white" : "bg-white text-black"}`}
                         >
                             <span>{cat}</span>
-                            <span class="slide-bg-b bg-white mix-blend-difference" />
-                        </button>
+                        </SlideButton>
                     ))
                 }
             </div>

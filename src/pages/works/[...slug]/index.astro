@@ -1,9 +1,15 @@
 ---
+
+
+
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import Github from "simple-icons-astro/Github";
 import Section from "@/components/ui/Section.astro";
+import SlideButton from "@/components/ui/SlideButton.astro";
 import Layout from "@/layouts/Layout.astro";
+import ExternalLink from "@lucide/astro/icons/external-link";
+import Tags from "@/components/ui/Tags.astro";
 export const prerender = true;
 export async function getStaticPaths() {
     const works = await getCollection("works");
@@ -22,13 +28,13 @@ const { Content } = await render(entry);
 
 // Sort by date (newest first)
 const sortedWorks = allWorks.sort(
-    (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 const currentIndex = sortedWorks.findIndex((work) => work.id === entry.id);
 const nextWork = sortedWorks[currentIndex + 1];
 const prevWork = sortedWorks[currentIndex - 1];
 
-const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
+const formattedDate = entry.data.date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
 });
@@ -84,23 +90,25 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
     </Section>
 
     <!-- Info Grid -->
-    <div class="full-width-border">
-        <div
-            class="content-container grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x-2 divide-black"
-        >
+    <Section class="grid grid-cols-1 md:grid-cols-[3fr_2fr_6fr] divide-y md:divide-y-0 md:divide-x-2 divide-black ">
+
             <!-- Role -->
-            <div class="p-8 flex flex-col gap-2">
-                <h6 class="font-black font-mono text-sm uppercase opacity-50">
-                    Role
+            <div class="p-8 md:py-6 md:px-8 h-full w-full *:nth-2:pl-2 space-y-2">
+                <h6
+                    class="font-black font-figtree text-nowrap text-3xl tracking-tight uppercase"
+                >
+                  Project Type
                 </h6>
-                <p class="font-bold text-lg leading-tight">
-                    {entry.data.role || "Creator"}
+                <p class="font-bold text-base leading-tight">
+                    {entry.data.role || "No Type Assigned"}
                 </p>
             </div>
 
             <!-- Links -->
-            <div class="p-8 flex flex-col gap-2">
-                <h6 class="font-black font-mono text-sm uppercase opacity-50">
+            <div class=" p-8 md:py-6 md:px-8 h-full w-full *:nth-2:pl-2 space-y-2">
+                <h6
+                    class="font-black font-figtree text-nowrap text-3xl tracking-tight uppercase"
+                >
                     Links
                 </h6>
                 <div class="flex flex-col gap-1">
@@ -110,27 +118,10 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                                 href={entry.data.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="font-bold text-lg hover:underline decoration-2 underline-offset-2 flex items-center gap-2"
+                                class="font- text-base font-figtree uppercase hover:underline decoration-2 underline-offset-2 flex items-center gap-2"
                             >
                                 Visit Site
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-external-link"
-                                >
-                                    <>
-                                        <path d="M15 3h6v6" />
-                                        <path d="M10 14 21 3" />
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                    </>
-                                </svg>
+                                <ExternalLink class="size-4 stroke-black" />
                             </a>
                         ) : (
                             <span class="opacity-50 font-mono text-sm">-</span>
@@ -142,10 +133,10 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                                 href={entry.data.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="font-bold text-lg hover:underline decoration-2 underline-offset-2 flex items-center gap-2"
+                                class="font- text-base font-figtree uppercase hover:underline decoration-2 underline-offset-2 flex items-center gap-2"
                             >
                                 GitHub
-                                <Github />
+                                <Github class="size-4" />
                             </a>
                         )
                     }
@@ -153,22 +144,16 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
             </div>
 
             <!-- Tech Stack -->
-            <div class="md:col-span-2 p-8 flex flex-col gap-2">
-                <h6 class="font-black font-mono text-sm uppercase opacity-50">
+            <div class="p-8 md:py-6 md:px-8 h-full w-full *:nth-2:pl-2 space-y-2">
+                <h6
+                    class="font-black font-figtree text-nowrap text-3xl tracking-tight uppercase"
+                >
                     Tech Stack
                 </h6>
-                <div class="flex flex-wrap gap-2">
-                    {
-                        entry.data.tags.map((tag) => (
-                            <span class="border border-black px-2 py-1 text-xs font-bold uppercase bg-gray-50">
-                                {tag}
-                            </span>
-                        ))
-                    }
-                </div>
+                <Tags tags={entry.data.tags} link={(tag) => `/works?tag=${tag}`} />
+
             </div>
-        </div>
-    </div>
+    </Section>
 
     <!-- Content -->
     <div class="full-width-border">
@@ -224,9 +209,10 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
     <Section isGrow class="grid grid-cols-[2fr_6fr_2fr]">
         {
             prevWork ? (
-                <a
+                <SlideButton
+                    direction="left"
                     href={`/works/${prevWork.id}`}
-                    class="group relative flex flex-col justify-center p-8 border-r-2 border-black "
+                    class="flex flex-col justify-center p-8 border-r-2 border-black "
                 >
                     <span class="text-xs font-mono opacity-60 mb-2 group-hover:opacity-100">
                         &lt; NEWER
@@ -234,8 +220,7 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                     <span class="font-bold text-sm md:text-base leading-tight line-clamp-2">
                         {prevWork.data.title}
                     </span>
-                    <span class="slide-bg-r bg-white mix-blend-difference" />
-                </a>
+                </SlideButton>
             ) : (
                 <div class="flex flex-col justify-center p-8 border-r-2 border-black select-none">
                     <span class="text-xs font-mono mb-2 opacity-25">
@@ -250,19 +235,20 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
         <div
             class="flex items-center justify-center border-r-2 border-black transition-colors group"
         >
-            <a
+            <SlideButton
+                direction="top"
                 href="/blog"
-                class="group relative font-black font-mono text-xl md:text-2xl tracking-widest w-full h-full flex items-center justify-center"
+                class="font-black font-mono text-xl md:text-2xl tracking-widest w-full h-full flex items-center justify-center"
             >
                 BACK TO BLOG
-                <span class="slide-bg-t bg-white mix-blend-difference"></span>
-            </a>
+            </SlideButton>
         </div>
         {
             nextWork ? (
-                <a
+                <SlideButton
+                    direction="right"
                     href={`/works/${nextWork.id}`}
-                    class="group relative flex flex-col justify-center items-end text-right p-8"
+                    class="flex flex-col justify-center items-end text-right p-8"
                 >
                     <span class="text-xs font-mono opacity-60 mb-2 group-hover:opacity-100">
                         OLDER &gt;
@@ -270,8 +256,7 @@ const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {
                     <span class="font-bold text-sm md:text-base leading-tight line-clamp-2">
                         {nextWork.data.title}
                     </span>
-                    <span class="slide-bg-l bg-white mix-blend-difference" />
-                </a>
+                </SlideButton>
             ) : (
                 <div class="flex flex-col justify-center items-end text-right p-8 select-none">
                     <span class="text-xs font-mono mb-2 opacity-25">

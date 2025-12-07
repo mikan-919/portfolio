@@ -1,4 +1,7 @@
 ---
+
+
+
 import type { CollectionEntry } from "astro:content";
 
 type Props = {
@@ -12,12 +15,12 @@ const totalWorks = works.length;
 
 // Calculate average works per year (as works are usually less frequent than blogs)
 const sortedWorks = [...works].sort(
-    (a, b) => a.data.publishDate.valueOf() - b.data.publishDate.valueOf(),
+    (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
 );
 
 let worksPerYear = 0;
 if (sortedWorks.length > 0) {
-    const firstDate = sortedWorks[0].data.publishDate;
+    const firstDate = sortedWorks[0].data.date;
     const lastDate = new Date();
 
     const yearsDiff =
@@ -34,11 +37,11 @@ if (sortedWorks.length > 0) {
         class="flex flex-col md:flex-row justify-between items-start md:items-end mt-8 gap-4"
     >
         <div>
-            <p class="text-xs font-bold tracking-[0.3em] text-gray-500 mb-2">
+            <p class="text-xs font-bold tracking-[0.3em] text-gray-500 mb-2 font-mono">
                 PROJECT ARCHIVE
             </p>
             <h1
-                class="text-6xl md:text-8xl font-black itaric tracking-tighter leading-none"
+                class="text-6xl md:text-8xl font-black itaric tracking-tighter leading-none font-figtree"
             >
                 WORKS.
             </h1>

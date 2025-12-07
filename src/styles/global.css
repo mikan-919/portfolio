@@ -2,7 +2,6 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
-@import "./slide-bg.css";
 @plugin "@tailwindcss/typography";
 @layer base {
   html,
@@ -13,16 +12,18 @@
     scroll-behavior: smooth;
     scroll-padding-top: 74px;
     transition-timing-function: cubic-bezier(0.5, 0.25, 0, 1);
+    transition-duration: 300ms;
   }
 }
 @theme inline {
-  --font-sans: var(--font-family-noto-sans-jp), sans-serif;
-  --font-mono: var(--font-family-jetbrains-mono), monospace;
+  --font-sans:
+    var(--font-family-inter), var(--font-family-noto-sans-jp), sans-serif;
+  --font-mono: var(--font-udev-gothic), monospace;
   --font-inter: var(--font-family-inter), sans-serif;
   --font-noto-sans-jp: var(--font-family-noto-sans-jp), sans-serif;
   --font-rampart-one: var(--font-family-rampart-one), sans-serif;
   --font-figtree: var(--font-family-figtree), sans-serif;
-  --font-jetbrains-mono: var(--font-family-jetbrains-mono), monospace;
+  --font-udev-gothic: var(--font-family-udev-gothic), sans-serif;
 }
 
 /* これらのユーティリティーはSectionコンポーネントで使用されているので、特殊な要件がない限り<Section/>を利用してください。 */

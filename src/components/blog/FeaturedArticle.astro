@@ -1,4 +1,7 @@
 ---
+
+
+
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
@@ -6,13 +9,9 @@ type Props = {
     slug: string;
 } & CollectionEntry<"articles">["data"];
 
-const { title, summary, tags, image, publishDate, slug } = Astro.props;
+const { title, summary, tags, image, date, slug } = Astro.props;
 
-const formattedDate = publishDate.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-});
+const formattedDate = date.toLocaleDateString(new Intl.Locale("ja-JP",), { dateStyle: "short" });
 ---
 
 <!-- ヘッダー帯 -->
@@ -23,7 +22,7 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
 
 <div class="grid grid-cols-1 lg:grid-cols-2">
     <!-- 左：画像エリア -->
-    <div class="aspect-video w-full relative group overflow-hidden bg-gray-100">
+    <div class="aspect-video shrink-0 relative group overflow-hidden bg-gray-100">
         {
             image ? (
                 <Image
@@ -48,14 +47,14 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
     </div>
 
     <!-- 右：詳細エリア -->
-    <div class="p-8 lg:p-12 flex flex-col justify-center">
-        <div class="mb-6">
+    <div class="px-8 py-12 flex flex-col justify-between flex-1">
+        <div>
             <div class="flex justify-between items-start mb-2">
                 <span class="text-xs font-mono text-gray-500"
                     >{formattedDate}</span
                 >
             </div>
-            <h3 class="text-3xl md:text-4xl font-black mb-4 leading-tight">
+            <h3 class="text-3xl md:text-3xl font-black mb-4 leading-tight">
                 {title}
             </h3>
             <p
@@ -66,28 +65,21 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
         </div>
 
         <!-- Tags -->
-        <div class="mb-8">
+        <div >
             <p
-                class="text-xs font-bold border-b-2 border-black inline-block mb-3"
+                class="text-xs font-bold border-b-2 border-black inline-block mb-3 font-figtree"
             >
                 TAGS
             </p>
-            <ul class="flex flex-wrap gap-2 font-mono text-xs font-bold">
+            <ul class="flex flex-wrap gap-2 font-mono text-xs">
                 {
                     tags.map((tag) => (
-                        <li class="px-2 py-1 bg-gray-100 border border-black">
+                        <li class="px-2 py-1 text-gray-700">
                             #{tag}
                         </li>
                     ))
                 }
             </ul>
-        </div>
-
-        <!-- Links -->
-        <div class="flex gap-4 mt-auto">
-            <a href={"/blog/" + slug} class="flex-1 text-center btn-brutal">
-                READ ARTICLE
-            </a>
         </div>
     </div>
 </div>

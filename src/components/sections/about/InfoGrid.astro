@@ -1,7 +1,10 @@
 ---
+
+
+
 import BookOpenText from "@lucide/astro/icons/book-open-text";
 import Telescope from "@lucide/astro/icons/telescope";
-import myInfo from "../../content/data/my-info.json";
+import myInfo from "@/content/data/my-info.json";
 import styles from "./InfoGrid.module.css";
 
 
@@ -44,5 +47,5 @@ const interests = myInfo.interests;
             {interests.items.map((item) => <li>{item}</li>)}
         </ul>
     </div>
-   
+
 </div>
