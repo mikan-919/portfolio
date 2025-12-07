@@ -1,0 +1,78 @@
+---
+
+
+
+import { getCollection } from "astro:content";
+import SlideButton from "@/components/ui/SlideButton.astro";
+import  { GITHUB_USERNAME } from "@/lib/constants";
+import ContributionGraph from "./ContributionGraph";
+
+const githubStatus = await getCollection('githubStatus').catch(e=>console.log(e));
+const totalContributions = githubStatus?.[0].data.totalContributions
+const weeks=githubStatus?.[0].data.weeks
+---
+<div class="flex flex-col justify-start border-r-2 border-black relative">
+
+  <!-- 上部：タイトル（縦ドット線をグラデフェードに） -->
+  <div class="relative px-2 md:px-8 border-dotted border-b-2 border-black">
+    <div class="relative h-full flex py-12 pb-8 flex-col justify-start p-6">
+      <!-- 左縦ドット線 -->
+      <div class="absolute top-0 left-0 w-[2px] h-full"
+           style="background-image: repeating-linear-gradient(to bottom, black 0 2px, transparent 2px 4px);
+                  mask-image: linear-gradient(to top, black 0%, transparent 40%);"></div>
+      <!-- 右縦ドット線 -->
+      <div class="absolute top-0 right-0 w-[2px] h-full"
+           style="background-image: repeating-linear-gradient(to bottom, black 0 2px, transparent 2px 4px);
+                  mask-image: linear-gradient(to top, black 0%, transparent 40%);"></div>
+
+      <div class="flex items-baseline justify-between mb-4">
+        <div>
+          <h3 class="font-black font-figtree text-4xl tracking-tighter">
+            GITHUB ACTIVITY
+          </h3>
+          <span class="text-xs font-bold opacity-60 -mt-1 font-figtree block">
+            CONTRIBUTIONS@{new Date().getFullYear()}
+          </span>
+        </div>
+        <span class="block text-4xl font-extrabold text-orange-600 opacity-90 font-figtree">
+          {totalContributions}
+        </span>
+      </div>
+      <p class="text-xs font-bold opacity-50">
+        日々の学習の記録や、開発の進捗はGitHubで見ることができます。
+      </p>
+    </div>
+  </div>
+
+  <!-- 中間：グラフ（縦線は通常の点線でOK） -->
+  <div class="px-2 md:px-8 border-dotted border-b-2 border-black">
+    <div class="border-dotted border-x-2 border-black p-4">
+      <ContributionGraph client:load {weeks} />
+      <div></div>
+    </div>
+  </div>
+
+  <!-- 下部：リンク（縦ドット線をグラデフェードに） -->
+  <div class="relative px-2 md:px-8  border-dotted">
+    <div class="relative h-full p-2 pb-12">
+      <!-- 左縦ドット線（下からフェード） -->
+      <div class="absolute bottom-0 left-0 w-[2px] h-full"
+           style="background-image: repeating-linear-gradient(to bottom, black 0 2px, transparent 2px 4px);
+                  mask-image: linear-gradient(to bottom, black 0%, transparent 70%);"></div>
+      <!-- 右縦ドット線（下からフェード） -->
+      <div class="absolute bottom-0 right-0 w-[2px] h-full"
+           style="background-image: repeating-linear-gradient(to bottom, black 0 2px, transparent 2px 4px);
+                  mask-image: linear-gradient(to bottom, black 0%, transparent 70%);"></div>
+
+      <SlideButton
+        direction="left"
+        href={`https://github.com/${GITHUB_USERNAME}`}
+        target="_blank"
+        class="  px-2 py-1 hover:border-black border border-transparent transition-colors duration-300 inline-block text-sm font-mono "
+      >
+        @{GITHUB_USERNAME} on GitHub →
+      </SlideButton>
+    </div>
+  </div>
+
+</div>

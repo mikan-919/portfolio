@@ -1,0 +1,56 @@
+---
+
+
+
+import Section from "@/components/ui/Section.astro";
+import SlideButton from "@/components/ui/SlideButton.astro";
+---
+
+<Section
+    id="about"
+    class="overflow-hidden grid grid-cols-1 h-62 md:grid-cols-[400px_1fr]"
+>
+    <div
+        class="shrink-0 z-10 p-6 bg-black text-white overflow-hidden flex flex-col justify-between"
+    >
+        <div
+            class="font-figtree border-b-2 border-white pb-1 mb-2 overflow-hidden"
+        >
+            <h3
+                class="font-extrabold text-4xl md:text-5xl text-nowrap leading-none tracking-tighter"
+            >
+                ABOUT ME
+            </h3>
+        </div>
+        <ul
+            class='block text-sm leading-none text-ellipsis text-nowrap list-["-_"] list-inside font-mono opacity-90'
+        >
+            <li>High School Student</li>
+            <li>Based in Japan</li>
+            <li>Web Development</li>
+            <li>Learning TypeScript, Python, and more</li>
+            <li>Learning English</li>
+        </ul>
+        <div class="flex justify-end">
+            <SlideButton
+                direction="left"
+                href="/about"
+                class=" font-figtree ml-auto block text-nowrap px-3 py-1 border border-black hover:border-white overflow-hidden font-bold text-base text-center transition-colors duration-300"
+            >
+                <span class="tracking-widest">MORE →</span>
+            </SlideButton>
+        </div>
+    </div>
+    <div class="flex flex-col justify-center p-6">
+        <div>
+            <p
+                class="opacity-80 my-auto font-medium text-base leading-relaxed p-4"
+            >
+                学校の勉強の傍ら、趣味でプログラミングを学習しています。<br />
+                まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好きです。<br
+                />
+                最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成しました。
+            </p>
+        </div>
+    </div>
+</Section>

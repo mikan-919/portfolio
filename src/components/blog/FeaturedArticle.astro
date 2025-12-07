@@ -1,0 +1,85 @@
+---
+
+
+
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+    slug: string;
+} & CollectionEntry<"articles">["data"];
+
+const { title, summary, tags, image, date, slug } = Astro.props;
+
+const formattedDate = date.toLocaleDateString(new Intl.Locale("ja-JP",), { dateStyle: "short" });
+---
+
+<!-- ヘッダー帯 -->
+<div class="bg-black text-white px-4 py-2 flex justify-between items-center">
+    <h2 class="font-black tracking-widest text-sm">LATEST ARTICLE</h2>
+    <span class="text-xs font-bold text-orange-400">★ NEW</span>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2">
+    <!-- 左：画像エリア -->
+    <div class="aspect-video shrink-0 relative group overflow-hidden bg-gray-100">
+        {
+            image ? (
+                <Image
+                    src={image}
+                    alt={title}
+                    class="w-full h-full object-cover transition-all transform-gpu duration-600 scale-100 group-hover:scale-110 blur-[2px]"
+                />
+            ) : (
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[16px_16px] transition-all duration-300 group-hover:scale-105" />
+            )
+        }
+
+        <!-- ホバー時に出る「Read Article」ラベル -->
+        <a
+            href={"/blog/" + slug}
+            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
+        >
+            <span class="btn-brutal px-4 py-2 text-xs select-none">
+                READ ARTICLE
+            </span>
+        </a>
+    </div>
+
+    <!-- 右：詳細エリア -->
+    <div class="px-8 py-12 flex flex-col justify-between flex-1">
+        <div>
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-xs font-mono text-gray-500"
+                    >{formattedDate}</span
+                >
+            </div>
+            <h3 class="text-3xl md:text-3xl font-black mb-4 leading-tight">
+                {title}
+            </h3>
+            <p
+                class="font-medium text-sm md:text-base opacity-80 leading-relaxed"
+            >
+                {summary}
+            </p>
+        </div>
+
+        <!-- Tags -->
+        <div >
+            <p
+                class="text-xs font-bold border-b-2 border-black inline-block mb-3 font-figtree"
+            >
+                TAGS
+            </p>
+            <ul class="flex flex-wrap gap-2 font-mono text-xs">
+                {
+                    tags.map((tag) => (
+                        <li class="px-2 py-1 text-gray-700">
+                            #{tag}
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+</div>

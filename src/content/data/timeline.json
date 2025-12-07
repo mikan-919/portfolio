@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "date": "2025-12-01",
+    "title": "Portfolio Renewal",
+    "desc": "AstroとTailwind CSSを使用してポートフォリオをリニューアル。"
+  },
+  {
+    "id": "2",
+    "date": "2023-XX-XX",
+    "title": "Web Development",
+    "desc": "本格的にWeb開発の学習を開始。Reactやモダンなフレームワークに触れる。"
+  },
+  {
+    "id": "3",
+    "date": "2021-XX-XX",
+    "title": "Hello World",
+    "desc": "プログラミングに興味を持ち、HTML/CSSの基礎を学び始める。"
+  }
+]

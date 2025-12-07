@@ -2,7 +2,7 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
-
+@plugin "@tailwindcss/typography";
 @layer base {
   html,
   body {
@@ -10,53 +10,35 @@
     width: 100%;
     height: 100%;
     scroll-behavior: smooth;
+    scroll-padding-top: 74px;
+    transition-timing-function: cubic-bezier(0.5, 0.25, 0, 1);
+    transition-duration: 300ms;
   }
 }
-@utility slide-bg {
-  @apply absolute z-0 bg-black transition-[width,height] duration-300 ease-out;
-  .group:hover & {
-    @apply w-full h-full;
-  }
+@theme inline {
+  --font-sans:
+    var(--font-family-inter), var(--font-family-noto-sans-jp), sans-serif;
+  --font-mono: var(--font-udev-gothic), monospace;
+  --font-inter: var(--font-family-inter), sans-serif;
+  --font-noto-sans-jp: var(--font-family-noto-sans-jp), sans-serif;
+  --font-rampart-one: var(--font-family-rampart-one), sans-serif;
+  --font-figtree: var(--font-family-figtree), sans-serif;
+  --font-udev-gothic: var(--font-family-udev-gothic), sans-serif;
 }
 
+/* これらのユーティリティーはSectionコンポーネントで使用されているので、特殊な要件がない限り<Section/>を利用してください。 */
+@utility full-width-border {
+  @apply w-full border-b-2 border-black;
+}
+@utility content-container {
+  @apply lg:max-w-5xl md:max-w-3xl sm:max-w-[40rem] w-full mx-auto md:border-l-2 md:border-r-2 border-black bg-white;
+}
+@utility text-stroke-* {
+  -webkit-text-stroke-width: calc(--value(integer) * 1px);
+  -webkit-text-stroke-color: --value(--color-*);
+  -webkit-text-stroke-color: --value([*]);
+}
 @layer components {
-  .content-container {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    border-left: 2px solid #000;
-    border-right: 2px solid #000;
-    background-color: #fff;
-  }
-
-  .full-width-border {
-    width: 100%;
-    border-bottom: 2px solid #000;
-  }
-
-  .slide-bg-l {
-    @apply top-0 left-0 h-full w-0 slide-bg;
-  }
-  .slide-bg-r {
-    @apply top-0 right-0 h-full w-0 slide-bg;
-  }
-  .slide-bg-t {
-    @apply top-0 left-0 w-full h-0 slide-bg;
-  }
-  .slide-bg-b {
-    @apply bottom-0 left-0 w-full h-0 slide-bg;
-  }
-
-  /* 共通: メインのコンテナ */
-  .layout-container {
-    @apply max-w-[1200px] mx-auto border-l-2 border-r-2 border-black bg-white;
-  }
-
-  /* 共通: フルワイドセクション */
-  .section-full {
-    @apply w-full border-b-2 border-black;
-  }
-
   /* 共通: ハードシャドウボタン (WORKSやCONTACTで使用) */
   .btn-brutal {
     @apply border-2 border-black bg-white px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000] transition-all select-none;
@@ -64,12 +46,4 @@
   .btn-brutal:active:not(:disabled):not([aria-disabled="true"]) {
     @apply shadow-none translate-x-[2px] translate-y-[2px];
   }
-}
-
-@theme inline {
-  --font-sans:
-    var(--font-family-inter), var(--font-family-noto-sans-jp), sans-serif;
-  --font-inter: var(--font-family-inter), sans-serif;
-  --font-noto-sans-jp: var(--font-family-noto-sans-jp), sans-serif;
-  --font-rampart-one: var(--font-family-rampart-one), sans-serif;
 }

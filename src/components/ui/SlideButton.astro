@@ -1,0 +1,108 @@
+---
+
+
+
+import type { HTMLAttributes } from 'astro/types';
+
+
+// FancyLink.astro（2025年最終形態：Tailwind完全排除・純CSS + asChild + 4方向対応）
+type Direction = "left" | "right" | "top" | "bottom";
+
+type Props= {
+  asButton?: false;
+  direction?: Direction;
+  class?: string;
+}&HTMLAttributes<"a">|{
+  asButton: true;
+  direction?: Direction;
+  class?: string;
+  type?: "button" | "submit" | "reset";
+}&HTMLAttributes<"button">;
+
+const {
+  asButton,
+  direction = "left" as Direction,
+  class: className = "",type,
+  ...rest
+} = Astro.props;
+---
+
+{asButton ? (
+  <button
+    {...rest}
+    {type}
+    class={`fancy-link fancy-link--${direction} ${className}`}
+  >
+    <slot/>
+  </button>
+) : (
+  <a
+    {...rest}
+    class={`fancy-link fancy-link--${direction} ${className}`}
+  >
+    <slot/>
+  </a>
+)}
+
+<style is:global>
+  /* ベーススタイル */
+  .fancy-link {
+    @apply relative overflow-hidden;
+  }
+
+
+
+  /* エフェクト用の ::before（::afterだとz-indexで負けることがあるのでbefore推奨） */
+  .fancy-link::before {
+    content: "";
+    position: absolute;
+    background: white;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    transition-property: width, height;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+  }
+
+  /* 4方向対応 */
+  .fancy-link--left::before {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+  }
+  .fancy-link--left:hover::before {
+    width: 100%;
+  }
+
+  .fancy-link--right::before {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 0;
+  }
+  .fancy-link--right:hover::before {
+    width: 100%;
+  }
+
+  .fancy-link--top::before {
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 0;
+  }
+  .fancy-link--top:hover::before {
+    height: 100%;
+  }
+
+  .fancy-link--bottom::before {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0;
+  }
+  .fancy-link--bottom:hover::before {
+    height: 100%;
+  }
+</style>

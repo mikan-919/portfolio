@@ -1,0 +1,38 @@
+---
+
+
+
+import SlideButton from '@/components/ui/SlideButton.astro';
+
+type Props = {
+    categories: string[];
+};
+
+const { categories } = Astro.props;
+---
+
+<div class="px-8 py-6 md:px-12 md:py-8 border-b-2 border-black bg-gray-100">
+    <div class="flex justify-between items-end">
+        <div>
+            <div class="pb-5">
+                <h2 class="text-5xl tracking-tighter font-black leading-none">
+                    ALL PROJECTS
+                </h2>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2" id="filter-container">
+                {
+                    categories.map((cat) => (
+                        <SlideButton
+                        direction="bottom"
+                            data-filter={cat}
+                            class={`filter-btn relative group border-2 border-black px-4 py-2 font-bold cursor-pointer text-sm transition-all duration-200 
+              ${cat === "All" ? "bg-black text-white" : "bg-white text-black"}`}
+                        >
+                            <span>{cat}</span>
+                        </SlideButton>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</div>

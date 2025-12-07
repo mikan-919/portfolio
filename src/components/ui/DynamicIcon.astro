@@ -1,0 +1,46 @@
+---
+
+
+
+import * as SimpleIcons from "simple-icons";
+
+interface Props {
+    name: string; // "React", "Next.js" などの文字列
+    class?: string; // 追加のクラス
+}
+
+const { name, class: className } = Astro.props;
+
+// アイコンを探すロジック
+// 1. タイトルが一致するか？ (例: "React" === "React")
+// 2. スラッグが一致するか？ (例: "next.js" -> "nextdotjs" みたいな正規化後の名前)
+const icon = Object.values(SimpleIcons).find((icon) => {
+    const normalize = (str: string) =>
+        str.toLowerCase().replace(/[^a-z0-9]/g, "");
+    return (
+        icon.title === name ||
+        icon.slug === name.toLowerCase() ||
+        normalize(icon.title) === normalize(name)
+    );
+});
+
+// アイコンが見つからなかった場合のフォールバック（頭文字を表示するなど）
+const path = icon ? icon.path : "";
+---
+
+{
+    icon ? (
+        /* アイコンが見つかった場合：SVGを描画 */
+        <svg
+            viewBox="0 0 24 24"
+            class:list={["w-5 h-5 fill-current", className]}
+            role="img"
+            aria-label={name}
+        >
+            <path d={path} />
+        </svg>
+    ) : (
+        /* アイコンがない場合：テキストで表示（または何も表示しない） */
+        <span class="text-xs font-bold border border-current px-1">{name}</span>
+    )
+}

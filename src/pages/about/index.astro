@@ -1,0 +1,96 @@
+---
+
+
+
+import Github from "@/components/sections/about/Github.astro"
+import InfoGrid from "@/components/sections/about/InfoGrid.astro";
+import TimeLine from "@/components/sections/about/TimeLine.astro";
+import Values from "@/components/sections/about/Values.astro"
+import Section from "@/components/ui/Section.astro";
+import Layout from "@/layouts/Layout.astro";
+
+
+
+---
+
+<Layout title="Portfoliooo | About">
+    <Section class="flex bg-orange-600">
+        <div
+            class="p-6 shrink-0 flex-1 flex items-center justify-center bg-white text-white text-2xl
+              [clip-path:polygon(0_0,100%_0,80%_100%,0_100%)]"
+        >
+            <h1
+                class="font-figtree font-extrabold text-6xl text-orange-600 lg:text-8xl text-center tracking-tighter leading-none text-nowrap"
+            >
+                ABOUT ME
+            </h1>
+        </div>
+        <div
+            class="p-6 shrink-0 flex-1 flex bg-orange-600 items-center justify-center [clip-path:polygon(20%_0,100%_0,100%_100%,0_100%)]
+              -ml-[11%]"
+        >
+            <h1
+                class="font-figtree font-extrabold w-full text-white text-6xl lg:text-8xl text-center text-nowrap overflow-hidden tracking-tighter leading-none pr-1"
+            >
+                MIKAN-919
+            </h1>
+        </div>
+    </Section>
+    <Section>
+        <!-- Top Section: Intro & Info -->
+        <div
+            class="grid grid-cols-1 md:grid-cols-[5fr_2fr] border-b-2 border-black"
+        >
+            <div
+                class="p-6 bg-white text-black flex flex-col justify-between min-h-[50vh] overflow-hidden md:min-h-auto border-b-2 md:border-b-0 md:border-r-2 border-black"
+            >
+                <div class="flex flex-col gap-4">
+                    <div class="border-l-16 pl-4">
+                        <h1
+                            class="font-extrabold font-noto-sans-jp text-nowrap text-6xl md:text-6xl tracking-tighter leading-tight"
+                        >
+                            摘果みかん
+                        </h1>
+                        <span class="font-mono font-medium text-sm opacity-80"
+                            >ID: mikan-919</span
+                        >
+                    </div>
+                    <p
+                        class="text-base leading-relaxed opacity-90 font-noto-sans-jp p-4"
+                    >
+                        学校の勉強の傍ら、趣味でプログラミングを学習している学生。
+                        <br />
+                        まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好き。
+                        <br />
+                        最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成している。
+                        <br />
+                        趣味でプログラミングとは言っているが、正直他に得意分野がないので将来はエンジニアになることを目指している。
+                        <br />
+                    </p>
+                </div>
+
+                <div class="mt-12">
+                    <div class="w-full h-[2px] bg-white/30 mb-6"></div>
+                    <p class="font-mono text-xs opacity-60">
+                        LAST UPDATED: 2024.11.28
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-8 shrink-0 md:p-12 flex flex-col justify-center">
+                <InfoGrid />
+            </div>
+        </div>
+
+        <!-- Middle Section: GitHub & Values -->
+        <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-black">
+          <Github/>
+         <Values/>
+        </div>
+
+        <!-- Bottom Section: Timeline -->
+        <div class="p-8 md:p-12 bg-black text-white">
+          <TimeLine/>
+        </div>
+    </Section>
+</Layout>

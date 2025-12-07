@@ -1,0 +1,61 @@
+---
+
+
+
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+    works: CollectionEntry<"works">[];
+};
+
+const { works } = Astro.props;
+
+// Calculate stats
+const totalWorks = works.length;
+
+// Calculate average works per year (as works are usually less frequent than blogs)
+const sortedWorks = [...works].sort(
+    (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+);
+
+let worksPerYear = 0;
+if (sortedWorks.length > 0) {
+    const firstDate = sortedWorks[0].data.date;
+    const lastDate = new Date();
+
+    const yearsDiff =
+        lastDate.getFullYear() -
+        firstDate.getFullYear() +
+        (lastDate.getMonth() - firstDate.getMonth()) / 12;
+
+    worksPerYear = yearsDiff > 0 ? totalWorks / yearsDiff : totalWorks;
+}
+---
+
+<div class="p-8 md:p-12 bg-gray-100">
+    <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-end mt-8 gap-4"
+    >
+        <div>
+            <p class="text-xs font-bold tracking-[0.3em] text-gray-500 mb-2 font-mono">
+                PROJECT ARCHIVE
+            </p>
+            <h1
+                class="text-6xl md:text-8xl font-black itaric tracking-tighter leading-none font-figtree"
+            >
+                WORKS.
+            </h1>
+        </div>
+
+        <div class="hidden md:flex gap-8 md:gap-12 text-right">
+            <div>
+                <p class="font-black text-4xl">{totalWorks}</p>
+                <p class="text-xs font-bold text-gray-500">TOTAL PROJECTS</p>
+            </div>
+            <div>
+                <p class="font-black text-4xl">{worksPerYear.toFixed(1)}</p>
+                <p class="text-xs font-bold text-gray-500">PROJECTS / YEAR</p>
+            </div>
+        </div>
+    </div>
+</div>

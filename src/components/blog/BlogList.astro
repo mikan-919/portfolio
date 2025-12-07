@@ -1,0 +1,32 @@
+---
+
+
+
+import type { CollectionEntry } from "astro:content";
+import ArticleCard from "./ArticleCard.astro";
+
+type Props = {
+    articles: CollectionEntry<"articles">[];
+};
+
+const { articles } = Astro.props;
+---
+
+<div
+    class="grid grid-cols-1 h-full md:grid-cols-2 lg:grid-cols-3 gap-0.5 bg-white"
+>
+    {
+        articles.map((article) => (
+            <div
+                class="article-item bg-white h-full"
+                data-tags={JSON.stringify(article.data.tags)}
+            >
+                <ArticleCard {...article.data} slug={article.id} />
+            </div>
+        ))
+    }
+</div>
+
+<div id="no-results" class="hidden p-12 text-center font-bold text-gray-500 font-figtree">
+    NO ARTICLES FOUND WITH THIS TAG.
+</div>

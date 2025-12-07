@@ -1,0 +1,21 @@
+---
+
+
+
+import { getCollection } from "astro:content";
+import GitHubCTA from "@/components/works/GithubCTA.astro";
+import WorksArchive from "@/components/works/WorksArchive.astro";
+import Layout from "@/layouts/Layout.astro";
+
+const allWorks = await getCollection("works");
+const sortedWorks = allWorks.sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout title="Portfoliooo | Works">
+    <main>
+        <WorksArchive works={sortedWorks} />
+        <GitHubCTA />
+    </main>
+</Layout>
