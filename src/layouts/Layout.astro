@@ -1,7 +1,12 @@
 ---
+
+
+
 import "../styles/global.css";
-import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import Fonts from "./Fonts.astro";
 
 type Props = {
 	title?: string;
@@ -12,26 +17,19 @@ const { title }: Props = Astro.props;
 <!doctype html>
 <html lang="en">
 	<head>
+		<ClientRouter />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title || "Portfoliooo"}</title>
-		<Font
-			cssVariable="--font-family-inter"
-			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
-		/>
-		<Font
-			cssVariable="--font-family-noto-sans-jp"
-			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
-		/>
-		<Font
-			cssVariable="--font-family-rampart-one"
-			preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
-		/>
+		<Fonts />
 	</head>
-	<body class="font-sans">
-		<Header />
-		<slot />
+	<body class="font-sans" id="root">
+		<main class="min-h-screen flex flex-col">
+			<Header />
+			<slot />
+			<Footer />
+		</main>
 	</body>
 </html>

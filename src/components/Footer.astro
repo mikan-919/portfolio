@@ -1,5 +1,9 @@
 ---
-import { ChevronUp } from "@lucide/astro";
+
+
+
+import ChevronUp from "@lucide/astro/icons/chevron-up";
+import SlideButton from "@/components/ui/SlideButton.astro";
 ---
 
 <footer class="full-width-border border-b-0">
@@ -21,16 +25,16 @@ import { ChevronUp } from "@lucide/astro";
         </div>
 
         <!-- 右側：トップへ戻る -->
-        <a
-            href="#hero"
-            class="group flex items-center relative gap-2 text-xs font-bold px-4 py-2"
+        <SlideButton
+            direction="bottom"
+            href="#root"
+            class="flex items-center justify-center gap-2 text-xs font-bold px-4 py-2"
             aria-label="Back to Top"
         >
-            <span>BACK TO TOP</span>
+            <span class="inline-block">BACK TO TOP</span>
             <ChevronUp
                 class="w-5 h-5 inline-block group-hover:-translate-y-1 transition-transform duration-300"
             />
-            <span class="slide-bg-b bg-white mix-blend-difference"></span>
-        </a>
+        </SlideButton>
     </div>
 </footer>

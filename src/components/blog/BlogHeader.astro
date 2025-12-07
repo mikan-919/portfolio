@@ -1,0 +1,65 @@
+---
+
+
+
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+    articles: CollectionEntry<"articles">[];
+};
+
+const { articles } = Astro.props;
+
+// Calculate stats
+const totalArticles = articles.length;
+
+// Calculate average articles per month
+const sortedArticles = [...articles].sort(
+    (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+);
+
+let articlesPerMonth = 0;
+if (sortedArticles.length > 0) {
+    const firstDate = sortedArticles[0].data.date;
+    const lastDate = new Date(); // Use current date for "up to now" or last article date? Usually current date makes sense for "active" blog.
+    // Or use last article date if the blog is archived. Let's use current date to show activity rate over time.
+    // Actually, if there are large gaps, simple average might be misleading.
+    // But "Articles per month" usually means average.
+
+    const monthsDiff =
+        (lastDate.getFullYear() - firstDate.getFullYear()) * 12 +
+        (lastDate.getMonth() - firstDate.getMonth()) +
+        1; // +1 to include the starting month
+
+    articlesPerMonth =
+        monthsDiff > 0 ? totalArticles / monthsDiff : totalArticles;
+}
+---
+
+<div class="p-8 md:p-12 bg-gray-100">
+    <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-end mt-8 gap-4"
+    >
+        <div>
+            <p class="text-xs font-bold font-mono tracking-[0.3em] text-gray-500 mb-2">
+                BLOG ARCHIVE
+            </p>
+            <h1
+                class="text-6xl  font-figtree md:text-8xl font-black itaric tracking-tighter leading-none"
+            >
+                BLOG.
+            </h1>
+        </div>
+
+        <div class="hidden md:flex gap-8 md:gap-12 text-right">
+            <div>
+                <p class="font-black text-4xl">{totalArticles}</p>
+                <p class="text-xs font-bold text-gray-500">TOTAL ARTICLES</p>
+            </div>
+            <div>
+                <p class="font-black text-4xl">{articlesPerMonth.toFixed(1)}</p>
+                <p class="text-xs font-bold text-gray-500">ARTICLES / MONTH</p>
+            </div>
+        </div>
+    </div>
+</div>

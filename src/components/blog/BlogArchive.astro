@@ -1,0 +1,111 @@
+---
+
+
+
+import type { CollectionEntry } from "astro:content";
+import BlogFilter from "@/components/blog/BlogFilter.astro";
+import BlogHeader from "@/components/blog/BlogHeader.astro";
+import BlogList from "@/components/blog/BlogList.astro";
+import FeaturedArticle from "@/components/blog/FeaturedArticle.astro";
+import Section from "@/components/ui/Section.astro";
+
+type Props = { articles: CollectionEntry<"articles">[] };
+const { articles }:Props = Astro.props;
+
+// Extract all tags for filtering
+const allTags = articles.flatMap((article) => article.data.tags);
+const uniqueTags = ["All", ...new Set(allTags)];
+
+// Separate latest article
+const latestArticle = articles[0];
+---
+
+<Section>
+    <BlogHeader articles={articles} />
+</Section>
+
+<Section>
+    {
+        latestArticle && (
+            <FeaturedArticle {...latestArticle.data} slug={latestArticle.id} />
+        )
+    }
+</Section>
+
+<Section isGrow>
+    <BlogFilter tags={uniqueTags} />
+    <BlogList articles={articles} />
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".filter-btn");
+            const items = document.querySelectorAll(".article-item");
+            const noResults = document.getElementById("no-results");
+
+            function filterArticles(tag: string) {
+                // Update buttons
+                buttons.forEach((btn) => {
+                    const btnTag = btn.getAttribute("data-filter");
+                    if (btnTag === tag) {
+                        btn.classList.remove("bg-white", "text-black");
+                        btn.classList.add("bg-black", "text-white");
+                    } else {
+                        btn.classList.remove("bg-black", "text-white");
+                        btn.classList.add("bg-white", "text-black");
+                    }
+                });
+
+                // Filter items
+                let visibleCount = 0;
+                items.forEach((item) => {
+                    const itemTags = JSON.parse(
+                        item.getAttribute("data-tags") || "[]",
+                    );
+                    if (tag === "All" || itemTags.includes(tag)) {
+                        (item as HTMLElement).style.display = "block";
+                        visibleCount++;
+                    } else {
+                        (item as HTMLElement).style.display = "none";
+                    }
+                });
+
+                // No results
+                if (noResults) {
+                    noResults.style.display =
+                        visibleCount === 0 ? "block" : "none";
+                }
+            }
+
+            // Click handlers
+            buttons.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const tag = btn.getAttribute("data-filter");
+                    if (tag) {
+                        filterArticles(tag);
+
+                        // Update URL
+                        const url = new URL(window.location.href);
+                        if (tag === "All") {
+                            url.searchParams.delete("tag");
+                        } else {
+                            url.searchParams.set("tag", tag);
+                        }
+                        window.history.pushState({}, "", url);
+                    }
+                });
+            });
+
+            // Initial load from URL
+            const params = new URLSearchParams(window.location.search);
+            const initialTag = params.get("tag");
+            if (initialTag) {
+                // Check if tag is valid (exists in buttons)
+                const isValidTag = Array.from(buttons).some(
+                    (b) => b.getAttribute("data-filter") === initialTag,
+                );
+                if (isValidTag) {
+                    filterArticles(initialTag);
+                }
+            }
+        });
+    </script>
+</Section>

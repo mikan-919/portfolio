@@ -1,0 +1,75 @@
+---
+
+
+
+import type { CollectionEntry } from "astro:content";
+import ChevronRight from "@lucide/astro/icons/chevron-right";
+import Github from 'simple-icons-astro/Github'
+import X from 'simple-icons-astro/X'
+import Section from "@/components/ui/Section.astro";
+import SlideButton from "@/components/ui/SlideButton.astro";
+
+type Props = {
+ articles:CollectionEntry<'articles'>[]
+}
+const {articles} = Astro.props;
+---
+
+<Section class=" grid grid-cols-1 md:grid-cols-2">
+
+    <!-- 左カラム：BLOG -->
+    <div class="border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col">
+      <!-- ヘッダー帯 -->
+      <div class="bg-black text-white p-4 flex justify-between items-center border-b-2 border-black">
+        <h3 class="font-black tracking-widest text-sm">LATEST ARTICLES</h3>
+         <SlideButton href="/blog" direction="left" class="group relative hover:border-white border border-transparent overflow-hidden transition-colors flex items-center gap-1 text-xs px-2 py-1">
+  <!-- 1. テキスト: 変更なし -->
+  <span class="text-xs font-medium">ARCHIVES</span>
+
+  <!-- 2. アイコン: サイズ調整と位置の微調整 -->
+  <ChevronRight
+    class="size-3.5 stroke-[1.75] mt-px transition-transform duration-300 -translate-x-0.5 group-hover:translate-x-0.5"
+  />
+
+         </SlideButton>
+      </div>
+
+      <!-- 記事リスト -->
+      <div class="grow bg-white">
+        {articles.map((article) => (
+          <SlideButton href={`/blog/${article.id}`} class=" block  border-b-2 border-black last:border-b-0  overflow-hidden">
+            <!-- 背景スライドアニメーション -->
+            <div class="relative px-6 py-4 transition-colors duration-300">
+              <div class="flex items-baseline gap-3 mb-2 text-xs font-bold opacity-60 ">
+                <span class="font-mono">{article.data.date.toLocaleString(new Intl.Locale("ja-JP"), { dateStyle: "short" })}</span>
+                <span class="border border-current px-2 py-0.5 flex items-center uppercase">{article.data.tags[0]}</span>
+              </div>
+              <h4 class="text-lg font-bold leading-tight group-hover:translate-x-2 translate-x-0 transition-transform duration-300">
+                {article.data.title}
+              </h4>
+            </div>
+          </SlideButton>
+        ))}
+      </div>
+    </div>
+
+    <!-- 右カラム：CONTACT -->
+    <div class="bg-gray-100 p-8 md:p-16 flex flex-col justify-center items-center text-center">
+      <h3 class="text-4xl md:text-5xl font-black mb-6 tracking-tighter">
+        LET'S TALK.
+      </h3>
+      <p class="text-sm font-bold opacity-70 mb-8 max-w-xs leading-relaxed">
+          現在プログラミングを学習中です。<br>
+          技術的なアドバイスや情報交換など、<br>
+          お気軽にメッセージいただけると嬉しいです。
+      </p>
+
+
+      <div class="font-figtree text-sm font-light">\ SNS LINK /</div>
+      <!-- SNSリンク -->
+      <div class="mt-4 flex gap-6 text-sm font-bold">
+        <a href="https://github.com/mikan-919" target="_blank"><Github class="size-6"/></a>
+        <a href="https://twitter.com/mikan_919_main" target="_blank"><X class="size-6"/></a>
+      </div>
+    </div>
+</Section>

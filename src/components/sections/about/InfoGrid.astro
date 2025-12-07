@@ -1,0 +1,51 @@
+---
+
+
+
+import BookOpenText from "@lucide/astro/icons/book-open-text";
+import Telescope from "@lucide/astro/icons/telescope";
+import myInfo from "@/content/data/my-info.json";
+import styles from "./InfoGrid.module.css";
+
+
+
+const learning = myInfo.learning;
+const interests = myInfo.interests;
+---
+
+<div class={styles.row}>
+    <div class={styles.column}>
+        <h5 class={styles.header}>
+            <span class={styles.headerTitle}>
+                <BookOpenText
+                    class="absolute left-0 bottom-0 translate-y-1/3 -translate-x-2/3 size-16 opacity-15"
+                />
+                {learning.title}<span class={styles.headerSlash}> /</span>
+            </span>
+            <span class={styles.headerSubtitle}>
+                {learning.subtitle}
+            </span>
+        </h5>
+        <ul class={styles.list}>
+            {learning.items.map((item) => <li>{item}</li>)}
+        </ul>
+    </div>
+
+    <div class={styles.column}>
+        <h5 class={styles.header}>
+            <span class={styles.headerTitle}>
+                <Telescope
+                    class="absolute left-0 bottom-0 translate-y-1/3 -translate-x-2/3 size-16 opacity-15"
+                />
+                {interests.title}<span class={styles.headerSlash}> /</span>
+            </span>
+            <span class={styles.headerSubtitle}>
+                {interests.subtitle}
+            </span>
+        </h5>
+        <ul class={styles.list}>
+            {interests.items.map((item) => <li>{item}</li>)}
+        </ul>
+    </div>
+
+</div>

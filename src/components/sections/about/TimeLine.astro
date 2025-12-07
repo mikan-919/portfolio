@@ -1,0 +1,41 @@
+---
+
+
+
+import { getCollection } from "astro:content"
+
+const
+timelineData = await getCollection("timeline")
+timelineData.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime())
+---
+<h3 class="font-black font-figtree text-5xl mb-12 tracking-tighter text-center">
+         TIMELINE
+</h3>
+<div class="pl-48"><div
+    class="border-l-4 border-neutral-400 pl-8 md:pl-6 py-4 space-y-12"
+>
+    {
+        timelineData.map((item, index) => (
+            <div  class={`relative group ${
+                   index === timelineData.length - 1
+                     ? "after:absolute after:-left-6 after:-bottom-4 after:-translate-x-[calc(50%+2px)] after:w-3 after:h-3 after:bg-neutral-400 after:rounded-full "
+                     : index===0?"before:absolute before:-left-6 before:-top-4 before:-translate-x-[calc(50%+2px)] before:w-3 before:h-3 before:bg-neutral-400 before:rounded-full":""
+                 }`}>
+              <div class="absolute -translate-x-full top-1 group-hover:-left-13 -left-12 transition-all">
+                <span class="font-mono text-sm text-white/60 group-hover:text-white transition-colors">
+                  {item.data.date}
+
+                </span>
+              </div>
+              <div class="absolute top-2.5 -left-6 size-4  outline-neutral-400 group-hover:outline-white transition-colors bg-black outline-2 -translate-x-[calc(50%+2px)] rounded-full" >
+              </div>
+                <h4 class="font-bold text-xl md:text-2xl font-figtree" >
+                    {item.data.title}
+                </h4>
+                <p class="text-white/80 leading-relaxed text-sm md:text-base">
+                    {item.data.desc}
+                </p>
+            </div>
+        ))
+    }
+</div></div>

@@ -1,0 +1,18 @@
+{
+  "learning": {
+    "title": "LEARNING",
+    "subtitle": "学習中・触ったことがある",
+    "items": [
+      "HTML / CSS",
+      "JavaScript / TypeScript",
+      "SolidJS / React",
+      "Astro",
+      "Tailwind CSS"
+    ]
+  },
+  "interests": {
+    "title": "INTERESTS",
+    "subtitle": "興味・好きなこと",
+    "items": ["Web Design", "UI/UX", "Gadgets", "Gaming", "Music"]
+  }
+}

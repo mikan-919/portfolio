@@ -1,0 +1,46 @@
+---
+
+
+
+import InfiniteTextBackground from "@/components/sections/root/InfiniteTextBackground";
+import Section from "@/components/ui/Section.astro";
+
+---
+
+<Section
+	id="hero"
+	class="font-figtree aspect-video flex flex-col p-8 justify-between relative overflow-hidden group"
+>
+	<!-- 左：テキスト -->
+	<InfiniteTextBackground client:load />
+	<div></div>
+	<div>
+		<p
+			class="leading-[0.1] mb-2 font-mono font-bold text-gray-500 text-xs tracking-[0.3em]"
+		>
+			STUDENT / WEB DEV
+		</p>
+		<h2 class="italic font-black text-black text-nowrap tracking-tight">
+			<span class="text-4xl md:text-5xl lg:text-9xl">
+				<span class="">MIKAN</span>
+				<span class="text-black">919's</span>
+			</span>
+			<br />
+		</h2>
+		<span
+			class="italic font-black text-2xl text-black/50 md:text-3xl lg:text-5xl leading-[0.5]"
+			>PORTFOLIO<span
+				class="inline-block bg-clip-text bg-linear-to-r from-orange-600/0 hover:from-orange-600 to-orange-400/0 hover:to-orange-400 font-black text-transparent text-sm md:text-lg lg:text-xl leading-none transition-colors duration-1000 select-none pl-1"
+				>MORE SIMPLE <span class="text-xs">(・ω・)</span></span
+			></span
+		>
+	</div>
+	<p
+		class="z-20 max-w-sm md:max-w-lg font-sans font-bold text-xs md:text-sm leading-relaxed bg-white/50 backdrop-blur-md p-2 border-2 border-black"
+	>
+		ここは、<code>mikan-919</code>のポートフォリオ。<br />
+		大したものはないと思いますが、ゆっくりしていってください。
+	</p>
+
+	<!-- 右：アニメーション背景エリア -->
+</Section>
