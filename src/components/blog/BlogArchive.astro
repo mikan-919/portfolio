@@ -1,5 +1,9 @@
 ---
+ 
 
+
+
+ 
 
 
 import type { CollectionEntry } from "astro:content";
@@ -8,8 +12,9 @@ import BlogHeader from "@/components/blog/BlogHeader.astro";
 import BlogList from "@/components/blog/BlogList.astro";
 import FeaturedArticle from "@/components/blog/FeaturedArticle.astro";
 import Section from "@/components/ui/Section.astro";
+import type { ArticlesListProps } from "@/types/collections";
 
-type Props = { articles: CollectionEntry<"articles">[] };
+type Props = ArticlesListProps
 const { articles }:Props = Astro.props;
 
 // Extract all tags for filtering

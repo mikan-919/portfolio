@@ -1,22 +1,22 @@
 ---
+ 
 
+
+
+ 
 
 
 import type { CollectionEntry } from "astro:content";
+import { sortByDateAscending } from "@/lib/collectionUtils";
+import type { ArticlesListProps } from "@/types/collections";
 
-type Props = {
-    articles: CollectionEntry<"articles">[];
-};
+type Props = ArticlesListProps;
 
 const { articles } = Astro.props;
 
-// Calculate stats
-const totalArticles = articles.length;
+const totalArticles = articles.length
 
-// Calculate average articles per month
-const sortedArticles = [...articles].sort(
-    (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
-);
+const sortedArticles = sortByDateAscending(articles)
 
 let articlesPerMonth = 0;
 if (sortedArticles.length > 0) {

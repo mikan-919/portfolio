@@ -1,22 +1,22 @@
 ---
+ 
 
+
+
+ 
 
 
 import type { CollectionEntry } from "astro:content";
+import { sortByDateAscending } from "@/lib/collectionUtils";
+import type { WorksListProps } from "@/types/collections";
 
-type Props = {
-    works: CollectionEntry<"works">[];
-};
+type Props = WorksListProps;
 
 const { works } = Astro.props;
 
-// Calculate stats
-const totalWorks = works.length;
+const totalWorks = works.length
 
-// Calculate average works per year (as works are usually less frequent than blogs)
-const sortedWorks = [...works].sort(
-    (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
-);
+const sortedWorks = sortByDateAscending(works)
 
 let worksPerYear = 0;
 if (sortedWorks.length > 0) {

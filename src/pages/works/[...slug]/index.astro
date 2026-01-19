@@ -1,5 +1,5 @@
 ---
-
+ 
 
 
 import { Image } from "astro:assets";
@@ -10,6 +10,8 @@ import SlideButton from "@/components/ui/SlideButton.astro";
 import Layout from "@/layouts/Layout.astro";
 import ExternalLink from "@lucide/astro/icons/external-link";
 import Tags from "@/components/ui/Tags.astro";
+import { sortByDateDescending } from "@/lib/collectionUtils";
+import { formatMonthYear } from "@/lib/dateUtils";
 export const prerender = true;
 export async function getStaticPaths() {
     const works = await getCollection("works");
@@ -26,18 +28,12 @@ if (!entry) {
 }
 const { Content } = await render(entry);
 
-// Sort by date (newest first)
-const sortedWorks = allWorks.sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const sortedWorks = sortByDateDescending(allWorks)
 const currentIndex = sortedWorks.findIndex((work) => work.id === entry.id);
 const nextWork = sortedWorks[currentIndex + 1];
 const prevWork = sortedWorks[currentIndex - 1];
 
-const formattedDate = entry.data.date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-});
+const formattedDate = formatMonthYear(entry.data.date)
 ---
 
 <Layout title={`Portfoliooo | ${entry.data.title}`}>

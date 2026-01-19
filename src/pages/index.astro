@@ -1,5 +1,5 @@
 ---
-
+ 
 
 
 import { getCollection } from "astro:content";
@@ -8,23 +8,12 @@ import BlogContact from "@/components/sections/root/BlogContact.astro";
 import Hero from "@/components/sections/root/Hero.astro";
 import Works from "@/components/sections/root/Works.astro";
 import Layout from "@/layouts/Layout.astro";
+import { sortByDateDescending } from "@/lib/collectionUtils";
 
 const allWorks = await getCollection("works");
-const sortedWorks = allWorks
-	.sort(
-		(a, b) =>
-			new Date(b.data.date).getTime() -
-			new Date(a.data.date).getTime(),
-	)
-	.slice(0, 5);
+const sortedWorks = sortByDateDescending(allWorks).slice(0, 5);
 const allArticles = await getCollection("articles");
-const sortedArticles = allArticles
-	.sort(
-		(a, b) =>
-			new Date(b.data.date).getTime() -
-			new Date(a.data.date).getTime(),
-	)
-	.slice(0, 4);
+const sortedArticles = sortByDateDescending(allArticles).slice(0, 4);
 ---
 
 <Layout>

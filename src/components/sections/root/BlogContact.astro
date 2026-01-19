@@ -1,5 +1,9 @@
 ---
+ 
 
+
+
+ 
 
 
 import type { CollectionEntry } from "astro:content";
@@ -8,10 +12,10 @@ import Github from 'simple-icons-astro/Github'
 import X from 'simple-icons-astro/X'
 import Section from "@/components/ui/Section.astro";
 import SlideButton from "@/components/ui/SlideButton.astro";
+import { formatShortDateJP } from "@/lib/dateUtils";
+import type { ArticlesListProps } from "@/types/collections";
 
-type Props = {
- articles:CollectionEntry<'articles'>[]
-}
+type Props = ArticlesListProps
 const {articles} = Astro.props;
 ---
 
@@ -41,7 +45,7 @@ const {articles} = Astro.props;
             <!-- 背景スライドアニメーション -->
             <div class="relative px-6 py-4 transition-colors duration-300">
               <div class="flex items-baseline gap-3 mb-2 text-xs font-bold opacity-60 ">
-                <span class="font-mono">{article.data.date.toLocaleString(new Intl.Locale("ja-JP"), { dateStyle: "short" })}</span>
+                <span class="font-mono">{formatShortDateJP(article.data.date)}</span>
                 <span class="border border-current px-2 py-0.5 flex items-center uppercase">{article.data.tags[0]}</span>
               </div>
               <h4 class="text-lg font-bold leading-tight group-hover:translate-x-2 translate-x-0 transition-transform duration-300">

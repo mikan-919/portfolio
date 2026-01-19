@@ -2,14 +2,18 @@
 
 
 
+
+
+
+
 import { getCollection } from "astro:content";
 import SlideButton from "@/components/ui/SlideButton.astro";
 import  { GITHUB_USERNAME } from "@/lib/constants";
 import ContributionGraph from "./ContributionGraph";
 
 const githubStatus = await getCollection('githubStatus').catch(e=>console.log(e));
-const totalContributions = githubStatus?.[0].data.totalContributions
-const weeks=githubStatus?.[0].data.weeks
+const totalContributions = githubStatus?.[0]?.data.totalContributions ?? 0
+const weeks = githubStatus?.[0]?.data.weeks
 ---
 <div class="flex flex-col justify-start border-r-2 border-black relative">
 

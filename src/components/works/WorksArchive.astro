@@ -1,5 +1,9 @@
 ---
+ 
 
+
+
+ 
 
 
 import type { CollectionEntry } from "astro:content";
@@ -8,10 +12,9 @@ import FeaturedProject from "@/components/works/FeaturedProject.astro";
 import WorksFilter from "@/components/works/WorksFilter.astro";
 import WorksHeader from "@/components/works/WorksHeader.astro";
 import WorksList from "@/components/works/WorksList.astro";
+import type { WorksListProps } from "@/types/collections";
 
-type Props = {
-    works: CollectionEntry<"works">[];
-};
+type Props = WorksListProps;
 
 const { works } = Astro.props;
 

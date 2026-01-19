@@ -1,15 +1,17 @@
 ---
 
+
+
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { formatShortDateJP } from "@/lib/dateUtils";
+import type { WorksCardProps } from "@/types/cards";
 
-type Props = {
-    id: string;
-} & CollectionEntry<"works">["data"];
+type Props = Omit<WorksCardProps, 'tags' | 'category' | 'tight'>
 
-const { title, description, image, isComingSoon, id, link, github,date } =
+const { title, description, image, isComingSoon, id, link, github, date } =
     Astro.props;
-const formattedDate = date.toLocaleDateString(new Intl.Locale("ja-JP"), { dateStyle: "short" });
+const formattedDate = formatShortDateJP(date || new Date())
 ---
 
 <!-- ヘッダー帯 -->

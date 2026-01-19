@@ -1,13 +1,13 @@
 import { createResizeObserver } from '@solid-primitives/resize-observer'
 import { createSignal, Show } from 'solid-js'
 
+interface Week {
+  contributionDays: Day[]
+}
+
 interface Day {
   date: string
   contributionCount: number
-}
-
-interface Week {
-  contributionDays: Day[]
 }
 
 interface Props {

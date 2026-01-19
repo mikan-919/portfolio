@@ -1,5 +1,9 @@
 ---
+ 
 
+
+
+ 
 
 
 import type { CollectionEntry } from "astro:content";
@@ -7,10 +11,9 @@ import ChevronRight from "@lucide/astro/icons/chevron-right";
 import Section from "@/components/ui/Section.astro";
 import SlideButton from "@/components/ui/SlideButton.astro";
 import WorkCard from "@/components/WorkCard.astro";
+import type { WorksListProps } from "@/types/collections";
 
-interface Props {
-    works: CollectionEntry<"works">[];
-}
+type Props = WorksListProps
 
 const { works }: Props = Astro.props;
 ---
