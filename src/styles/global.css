@@ -46,4 +46,13 @@
   .btn-brutal:active:not(:disabled):not([aria-disabled="true"]) {
     @apply shadow-none translate-x-[2px] translate-y-[2px];
   }
+  .image-hover-effect {
+    @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-110 blur-[2px];
+  }
+  .image-placeholder {
+    @apply absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[16px_16px];
+  }
+  .hover-button-overlay {
+    @apply absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px];
+  }
 }

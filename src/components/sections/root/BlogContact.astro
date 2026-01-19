@@ -1,15 +1,14 @@
 ---
- 
+  
 
 
 
- 
+  
 
 
 import type { CollectionEntry } from "astro:content";
 import ChevronRight from "@lucide/astro/icons/chevron-right";
-import Github from 'simple-icons-astro/Github'
-import X from 'simple-icons-astro/X'
+import DynamicIcon from "@/components/ui/DynamicIcon.astro";
 import Section from "@/components/ui/Section.astro";
 import SlideButton from "@/components/ui/SlideButton.astro";
 import { formatShortDateJP } from "@/lib/dateUtils";
@@ -72,8 +71,8 @@ const {articles} = Astro.props;
       <div class="font-figtree text-sm font-light">\ SNS LINK /</div>
       <!-- SNSリンク -->
       <div class="mt-4 flex gap-6 text-sm font-bold">
-        <a href="https://github.com/mikan-919" target="_blank"><Github class="size-6"/></a>
-        <a href="https://twitter.com/mikan_919_main" target="_blank"><X class="size-6"/></a>
+        <a href="https://github.com/mikan-919" target="_blank"><DynamicIcon name="GitHub" class="size-6"/></a>
+        <a href="https://twitter.com/mikan_919_main" target="_blank"><DynamicIcon name="X" class="size-6"/></a>
       </div>
     </div>
 </Section>

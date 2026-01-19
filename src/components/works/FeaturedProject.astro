@@ -2,6 +2,10 @@
 
 
 
+
+
+
+
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { formatShortDateJP } from "@/lib/dateUtils";
@@ -28,17 +32,17 @@ const formattedDate = formatShortDateJP(date || new Date())
                 <Image
                     src={image}
                     alt={title}
-                    class="w-full h-full object-cover transition-all transform-gpu duration-600 scale-100 group-hover:scale-110 blur-[2px]"
+                    class="image-hover-effect"
                 />
             ) : (
-                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[16px_16px] transition-all duration-300 group-hover:scale-105" />
+                <div class="image-placeholder" />
             )
         }
 
         <!-- ホバー時に出る「View Project」ラベル -->
         <a
             href={isComingSoon ? undefined : "/works/" + id}
-            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
+            class="hover-button-overlay"
         >
             <span
                 aria-disabled={isComingSoon}
