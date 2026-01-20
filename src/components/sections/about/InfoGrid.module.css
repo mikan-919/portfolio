@@ -1,0 +1,63 @@
+@reference "@/styles/global.css";
+
+.grid {
+  @apply flex w-full justify-evenly lg:justify-start gap-0 sm:gap-8 md:gap-6 lg:pl-8 md:pt-24 lg:pt-15.5 items-baseline grow;
+}
+
+.row {
+  @apply flex flex-col gap-6;
+}
+
+/* 各カラムのラッパー */
+.column {
+  @apply overflow-visible;
+}
+
+/* 3つ目のカラム（スマホで隠す用） */
+.columnHiddenSm {
+  @apply hidden sm:block overflow-hidden;
+}
+
+/* 見出し周り */
+.header {
+  @apply inline-flex items-baseline space-x-1 mb-3 border-black border-b-2 text-center tracking-wider w-full relative;
+}
+
+.headerTitle {
+  @apply font-black text-lg text-nowrap font-figtree;
+}
+
+.headerSlash {
+  @apply hidden lg:inline;
+}
+
+.headerSubtitle {
+  @apply hidden lg:inline font-bold text-black/50 hover:text-orange-400/75 text-sm text-ellipsis text-nowrap tracking-tight transition-colors duration-300 delay-300 hover:delay-0 select-none;
+}
+
+/* リスト（Learning / Interests） */
+.list {
+  @apply space-y-1 font-medium font-figtree text-base list-inside list-['-_'];
+}
+
+/* Now Playing エリア */
+
+.activityItem {
+  @apply flex items-start gap-2;
+}
+
+.iconBox {
+  @apply flex justify-center items-center bg-black w-8 h-8 aspect-square text-black text-xs;
+}
+
+.metaCategory {
+  @apply opacity-50 font-medium text-xs;
+}
+
+.metaTitle {
+  @apply font-medium text-sm;
+}
+
+.metaDetail {
+  @apply opacity-70 font-medium text-xs;
+}
