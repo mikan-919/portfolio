@@ -1,5 +1,9 @@
 ---
+ 
 
+
+
+ 
 
 
 import { Image } from "astro:assets";
@@ -7,8 +11,10 @@ import { getCollection, render } from "astro:content";
 import TableOfContents from "@/components/blog/TableOfContents.tsx";
 import Section from "@/components/ui/Section.astro";
 import SlideButton from "@/components/ui/SlideButton.astro";
-import Layout from "@/layouts/Layout.astro";
 import Tags from "@/components/ui/Tags.astro";
+import Layout from "@/layouts/Layout.astro";
+import { sortByDateDescending } from "@/lib/collectionUtils";
+import { formatShortDateJP } from "@/lib/dateUtils";
 
 export async function getStaticPaths() {
     const articles = await getCollection("articles");
@@ -20,26 +26,19 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const allPosts = await getCollection("articles");
 
-// 2. 日付順にソート（新しい順）
-const sortedPosts = allPosts.sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const sortedPosts = sortByDateDescending(allPosts)
 
-// 3. 現在の記事のインデックス（何番目か）を探す
 const currentIndex = sortedPosts.findIndex((post) => post.id === slug);
 
-// 記事が見つからなければ404へ
 if (currentIndex === -1) {
     throw new Error("Not Found");
 }
 const entry = sortedPosts[currentIndex];
 const { Content, headings } = await render(entry);
-const nextPost = sortedPosts[currentIndex + 1]; // 過去の記事へ
-const prevPost = sortedPosts[currentIndex - 1]; // 新しい記事へ
+const nextPost = sortedPosts[currentIndex + 1];
+const prevPost = sortedPosts[currentIndex - 1];
 
-const formattedDate = entry.data.date.toLocaleDateString(new Intl.Locale("ja-JP"), {
-  dateStyle:"short"
-});
+const formattedDate = formatShortDateJP(entry.data.date)
 ---
 
 <Layout title={`Portfoliooo | ${entry.data.title}`}>

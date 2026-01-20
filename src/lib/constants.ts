@@ -1,1 +1,26 @@
 export const GITHUB_USERNAME = 'mikan-919'
+
+export const CSS = {
+  BG_GRAY_100: 'bg-gray-100',
+  BG_WHITE_50: 'bg-white/50',
+  BG_BLACK_30: 'bg-black/30',
+  BG_BLACK_40: 'bg-black/40',
+  BORDER_2_BORDER_BLACK: 'border-2 border-black',
+  BORDER_L_4_BORDER_BLACK: 'border-l-4 border-black',
+  BORDER_L_6_BORDER_BLACK: 'border-l-6 border-black',
+  BTN_BRUTAL: 'btn-brutal',
+  ASPECT_VIDEO: 'aspect-video',
+  TEXT_10PX: 'text-[10px]',
+  TRACKING_TIGHT: 'tracking-tight',
+  TRACKING_WIDEST: 'tracking-widest',
+  TRACKING_0_3EM: 'tracking-[0.3em]',
+  TRACKING_WIDER: 'tracking-wider',
+  LEADING_TIGHT: 'leading-tight',
+  LEADING_NONE: 'leading-none',
+  GRID_COLS_5FR_2FR: 'grid-cols-[5fr_2fr]',
+  GRID_COLS_7FR_3FR: 'grid-cols-[7fr_3fr]',
+  GRID_COLS_1FR_4FR: 'grid-cols-[1fr_4fr]',
+  GRID_COLS_2FR_6FR_2FR: 'grid-cols-[2fr_6fr_2fr]',
+  GRID_COLS_3FR_2FR_6FR: 'grid-cols-[3fr_2fr_6fr]',
+  GRID_COLS_3FR_1FR: 'grid-cols-[3fr_1fr]',
+} as const

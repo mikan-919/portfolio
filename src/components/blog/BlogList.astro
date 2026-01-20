@@ -1,13 +1,72 @@
 ---
+ 
 
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
 
 
 import type { CollectionEntry } from "astro:content";
+import type { ArticlesListProps } from "@/types/collections";
 import ArticleCard from "./ArticleCard.astro";
 
-type Props = {
-    articles: CollectionEntry<"articles">[];
-};
+type Props = ArticlesListProps;
 
 const { articles } = Astro.props;
 ---

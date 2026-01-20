@@ -1,23 +1,79 @@
 ---
+ 
 
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
 
 
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import ChevronRight from "@lucide/astro/icons/chevron-right";
 import SlideButton from "@/components/ui/SlideButton.astro";
+import { formatFullDate } from "@/lib/dateUtils";
+import type { ArticleCardProps } from "@/types/cards";
 
-type Props = {
-    slug: string;
-} & CollectionEntry<"articles">["data"];
+type Props = ArticleCardProps
 
 const { title, summary, tags, image, date, slug }: Props = Astro.props;
 
-const formattedDate = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-});
+const formattedDate = formatFullDate(date)
 ---
 
 <div
@@ -32,17 +88,17 @@ const formattedDate = date.toLocaleDateString("en-US", {
                 <Image
                     src={image}
                     alt={title}
-                    class="w-full h-full object-cover transition-all transform-gpu duration-600 scale-100 group-hover:scale-110 blur-[2px]"
+                    class="image-hover-effect"
                 />
             ) : (
-                <div class="absolute inset-0 origin-center scale-100 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[16px_16px] transition-all duration-600 group-hover:scale-110" />
+                <div class="image-placeholder" />
             )
         }
 
         <!-- Hover Label -->
         <a
             href={"/blog/" + slug}
-            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]"
+            class="hover-button-overlay"
         >
             <span class="btn-brutal px-4 py-2 text-xs select-none">
                 READ ARTICLE
