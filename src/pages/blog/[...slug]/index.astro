@@ -2,13 +2,17 @@
  
 
 
+
+ 
+
+
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import TableOfContents from "@/components/blog/TableOfContents.tsx";
 import Section from "@/components/ui/Section.astro";
 import SlideButton from "@/components/ui/SlideButton.astro";
-import Layout from "@/layouts/Layout.astro";
 import Tags from "@/components/ui/Tags.astro";
+import Layout from "@/layouts/Layout.astro";
 import { sortByDateDescending } from "@/lib/collectionUtils";
 import { formatShortDateJP } from "@/lib/dateUtils";
 

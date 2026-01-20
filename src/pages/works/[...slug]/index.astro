@@ -2,14 +2,18 @@
  
 
 
+
+ 
+
+
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
+import ExternalLink from "@lucide/astro/icons/external-link";
 import Github from "simple-icons-astro/Github";
 import Section from "@/components/ui/Section.astro";
 import SlideButton from "@/components/ui/SlideButton.astro";
-import Layout from "@/layouts/Layout.astro";
-import ExternalLink from "@lucide/astro/icons/external-link";
 import Tags from "@/components/ui/Tags.astro";
+import Layout from "@/layouts/Layout.astro";
 import { sortByDateDescending } from "@/lib/collectionUtils";
 import { formatMonthYear } from "@/lib/dateUtils";
 export const prerender = true;
