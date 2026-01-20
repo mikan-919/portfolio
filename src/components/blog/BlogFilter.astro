@@ -23,7 +23,7 @@ type Props = {
 const { tags } = Astro.props;
 ---
 
-<div class="p-8 border-b-2 border-black bg-gray-100">
+<div class="section-header">
     <div class="flex justify-between items-end">
         <div>
             <div class="p-4 md:px-8 pb-2">
@@ -34,8 +34,12 @@ const { tags } = Astro.props;
             <div class="flex flex-wrap gap-2 px-8 pb-4" id="filter-container">
                 {
                     tags.map((tag) => (
-                    <SlideButton asButton data-filter={tag} direction="bottom" class={`filter-btn border-2 border-black px-4 py-2 font-bold cursor-pointer text-sm transition-all duration-300
-          ${tag === "All" ? "bg-black text-white" : "bg-white text-black"}`}>
+                    <SlideButton
+                        asButton
+                        data-filter={tag}
+                        direction="bottom"
+                        class={`filter-btn ${tag === "All" ? "bg-black text-white" : "bg-white text-black"}`}
+                    >
                             <span>#{tag}</span>
                     </SlideButton>
                     ))
