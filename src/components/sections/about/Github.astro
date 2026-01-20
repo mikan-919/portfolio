@@ -2,14 +2,42 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { getCollection } from "astro:content";
 import SlideButton from "@/components/ui/SlideButton.astro";
 import  { GITHUB_USERNAME } from "@/lib/constants";
 import ContributionGraph from "./ContributionGraph";
 
 const githubStatus = await getCollection('githubStatus').catch(e=>console.log(e));
-const totalContributions = githubStatus?.[0].data.totalContributions
-const weeks=githubStatus?.[0].data.weeks
+const totalContributions = githubStatus?.[0]?.data.totalContributions ?? 0
+const weeks = githubStatus?.[0]?.data.weeks
 ---
 <div class="flex flex-col justify-start border-r-2 border-black relative">
 
@@ -47,7 +75,7 @@ const weeks=githubStatus?.[0].data.weeks
   <!-- 中間：グラフ（縦線は通常の点線でOK） -->
   <div class="px-2 md:px-8 border-dotted border-b-2 border-black">
     <div class="border-dotted border-x-2 border-black p-4">
-      <ContributionGraph client:load {weeks} />
+       <ContributionGraph client:visible {weeks} />
       <div></div>
     </div>
   </div>

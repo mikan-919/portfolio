@@ -1,5 +1,6 @@
 import { defineCollection, reference, z } from 'astro:content'
 import { file, glob } from 'astro/loaders'
+import type { GitHubApiResponse } from '@/types/github'
 
 // TechStackコレクションの定義
 const techStackCollection = defineCollection({
@@ -96,7 +97,7 @@ const githubStatusCollection = defineCollection({
         return []
       }
 
-      const json = (await response.json()) as any
+      const json = (await response.json()) as GitHubApiResponse
       const calendar = json.data?.user?.contributionsCollection?.contributionCalendar
 
       if (!calendar) {

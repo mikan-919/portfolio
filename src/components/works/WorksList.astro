@@ -1,13 +1,72 @@
 ---
+ 
 
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
 
 
 import type { CollectionEntry } from "astro:content";
+import type { WorksListProps } from "@/types/collections";
 import WorkCard from "../WorkCard.astro";
 
-type Props = {
-    works: CollectionEntry<"works">[];
-};
+type Props = WorksListProps;
 
 const { works } = Astro.props;
 ---
