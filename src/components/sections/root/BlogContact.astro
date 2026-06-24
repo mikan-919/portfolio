@@ -42,7 +42,7 @@ const rest = shown.slice(1)
             <span class="bg-lp-accent-subtle text-lp-accent-strong font-mono text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full w-fit">
               {featured.data.tags[0]}
             </span>
-            <h3 class="font-new text-2xl leading-snug tracking-tight text-lp-text m-0">
+            <h3 class="font-new text-2xl font-medium leading-snug tracking-tight text-lp-text m-0">
               {featured.data.title}
             </h3>
             <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">{featured.data.description}</p>
@@ -60,7 +60,7 @@ const rest = shown.slice(1)
               <span class="bg-lp-accent-subtle text-lp-accent-strong font-mono text-[11px] uppercase tracking-wider px-2 py-0.5 rounded-full w-fit">
                 {article.data.tags[0]}
               </span>
-              <h4 class="font-sans text-sm font-semibold text-lp-text leading-snug m-0">{article.data.title}</h4>
+              <h4 class="font-sans text-sm text-lp-text leading-snug m-0">{article.data.title}</h4>
               <span class="font-mono text-[11px] text-lp-muted">{formatShortDateJP(article.data.date)}</span>
             </a>
           ))}
