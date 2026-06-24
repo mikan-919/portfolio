@@ -35,10 +35,10 @@
 
 @theme inline {
   --font-sans:
-    var(--font-family-inter), var(--font-family-noto-sans-jp), sans-serif;
+    var(--font-family-inter), var(--font-family-zen-kaku-gothic-antique), sans-serif;
   --font-mono: var(--font-udev-gothic), monospace;
   --font-inter: var(--font-family-inter), sans-serif;
-  --font-noto-sans-jp: var(--font-family-noto-sans-jp), sans-serif;
+  --font-zen-kaku-gothic-antique: var(--font-family-zen-kaku-gothic-antique), sans-serif;
   --font-rampart-one: var(--font-family-rampart-one), sans-serif;
   --font-figtree: var(--font-family-figtree), sans-serif;
   --font-udev-gothic: var(--font-family-udev-gothic), sans-serif;

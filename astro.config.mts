@@ -19,9 +19,9 @@ const config = defineConfig({
       },
       {
         provider: fontProviders.google(),
-        name: 'Noto Sans JP',
-        cssVariable: '--font-family-noto-sans-jp',
-        weights: ['100 900'],
+        name: 'Zen Kaku Gothic Antique',
+        cssVariable: '--font-family-zen-kaku-gothic-antique',
+        weights: [300, 400, 500, 700, 900],
         display: 'swap',
         fallbacks: [],
       },
