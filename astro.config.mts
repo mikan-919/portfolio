@@ -19,8 +19,8 @@ const config = defineConfig({
       },
       {
         provider: fontProviders.google(),
-        name: 'Zen Kaku Gothic Antique',
-        cssVariable: '--font-family-zen-kaku-gothic-antique',
+        name: 'Zen Kaku Gothic New',
+        cssVariable: '--font-family-new',
         weights: [300, 400, 500, 700, 900],
         display: 'swap',
         fallbacks: [],
