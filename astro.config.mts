@@ -50,16 +50,18 @@ const config = defineConfig({
         fallbacks: [],
       },
       {
-        provider: 'local',
+        provider: fontProviders.local(),
         name: 'UDEV Gothic',
         cssVariable: '--font-family-udev-gothic',
-        variants: [
-          { src: ['src/assets/fonts/UDEVGothicHSLG-Bold.woff2'], weight: 700, style: 'normal' },
-          { src: ['src/assets/fonts/UDEVGothicHSLG-BoldItalic.woff2'], weight: 700, style: 'italic' },
-          { src: ['src/assets/fonts/UDEVGothicHSLG-Regular.woff2'], weight: 400, style: 'normal' },
-          { src: ['src/assets/fonts/UDEVGothicHSLG-Italic.woff2'], weight: 400, style: 'italic' },
-        ],
         fallbacks: [],
+        options: {
+          variants: [
+            { src: ['./src/assets/fonts/UDEVGothicHSLG-Bold.woff2'], weight: 700, style: 'normal' },
+            { src: ['./src/assets/fonts/UDEVGothicHSLG-BoldItalic.woff2'], weight: 700, style: 'italic' },
+            { src: ['./src/assets/fonts/UDEVGothicHSLG-Regular.woff2'], weight: 400, style: 'normal' },
+            { src: ['./src/assets/fonts/UDEVGothicHSLG-Italic.woff2'], weight: 400, style: 'italic' },
+          ],
+        },
       },
     ],
   },
