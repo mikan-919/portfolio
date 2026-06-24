@@ -1,68 +1,53 @@
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import ChevronUp from "@lucide/astro/icons/chevron-up";
-import SlideButton from "@/components/ui/SlideButton.astro";
 ---
 
-<footer class="full-width-border border-b-0">
-    <div class="content-container flex justify-between">
-        <!-- 左側：コピーライト -->
-        <div class="mb-4 md:mb-0 px-4 py-2">
-            <p
-                class="text-xs font-bold tracking-widest opacity-80 leading-none"
-            >
-                &copy; {new Date().getFullYear()} MIKAN 919.
-            </p>
-            <p class="text-[10px] font-mono opacity-50 mt-0.5 leading-none">
-                DESIGNED & BUILT WITH <a
-                    class="text-violet-900 hover:text-violet-600 transition-colors duration-300"
-                    href="https://astro.build/"
-                    target="_blank">ASTRO</a
-                >
-            </p>
-        </div>
-
-        <!-- 右側：トップへ戻る -->
-        <SlideButton
-            direction="bottom"
-            href="#root"
-            class="flex items-center justify-center gap-2 text-xs font-bold px-4 py-2"
-            aria-label="Back to Top"
+<footer class="w-full bg-lp-dark">
+  <div class="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-[7.5rem] py-[80px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <!-- left -->
+      <div>
+        <p class="font-mono text-[11px] text-lp-accent uppercase tracking-widest mb-4">Contact</p>
+        <h2 class="font-display text-5xl leading-tight text-lp-dark-text mb-4">say hello.</h2>
+        <p class="font-mono text-sm text-lp-dark-muted">github.com/mikan-919</p>
+      </div>
+      <!-- right -->
+      <div class="flex flex-col gap-3">
+        <a
+          href="https://twitter.com/mikan_919_main"
+          target="_blank"
+          class="w-full text-center bg-lp-accent text-lp-accent-on font-sans font-semibold text-sm py-3 px-6 rounded hover:opacity-90 transition-opacity"
         >
-            <span class="inline-block">BACK TO TOP</span>
-            <ChevronUp
-                class="w-5 h-5 inline-block group-hover:-translate-y-1 transition-transform duration-300"
-            />
-        </SlideButton>
+          メールを送る
+        </a>
+        <div class="flex gap-2">
+          <a
+            href="https://github.com/mikan-919"
+            target="_blank"
+            class="flex-1 text-center border border-lp-border text-lp-dark-text font-sans text-sm py-2.5 px-4 rounded hover:bg-lp-dark-muted/10 transition-colors"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://twitter.com/mikan_919_main"
+            target="_blank"
+            class="flex-1 text-center border border-lp-border text-lp-dark-text font-sans text-sm py-2.5 px-4 rounded hover:bg-lp-dark-muted/10 transition-colors"
+          >
+            X / Twitter
+          </a>
+          <a
+            href="https://zenn.dev"
+            target="_blank"
+            class="flex-1 text-center border border-lp-border text-lp-dark-text font-sans text-sm py-2.5 px-4 rounded hover:bg-lp-dark-muted/10 transition-colors"
+          >
+            Zenn
+          </a>
+        </div>
+      </div>
     </div>
+    <div class="mt-16 pt-6 border-t border-white/10">
+      <p class="font-mono text-xs text-lp-dark-muted">
+        &copy; {new Date().getFullYear()} mikan-919. Built with <a href="https://astro.build/" target="_blank" class="text-lp-accent hover:underline">Astro</a>.
+      </p>
+    </div>
+  </div>
 </footer>

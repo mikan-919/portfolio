@@ -1,75 +1,22 @@
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import SlideButton from '@/components/ui/SlideButton.astro';
-
 ---
 
-<header
-    class="font-figtree full-width-border bg-white/90 backdrop-blur-2xl sticky top-0 z-50"
->
-    <div
-        class="content-container bg-transparent h-16 flex items-center justify-between px-6 md:px-8"
-    >
-        <a href="/">
-            <h1 class="text-xl md:text-2xl font-black tracking-tighter">
-                MIKAN.PORTFOLIO
-            </h1>
-        </a>
-        <nav class="flex items-center space-x-4 md:space-x-8 font-bold text-sm *:inline-block *:px-3 *:py-1 *:overflow-hidden *:border *:border-transparent *:hover:border-black *:transition-colors">
-            <SlideButton
-            direction="left"
-                href="/about"
- *:           >
-                <span
-                    >ABOUT</span
-                >
-            </SlideButton>
-            <SlideButton
-            direction="left"
-                href="/works"
-            >
-                <span
-                    >WORKS</span
-                >
-            </SlideButton>
-            <SlideButton
-            direction="left"
-                href="/blog"
-            >
-                <span
-                    >BLOG</span
-                >
-            </SlideButton>
-        </nav>
-    </div>
+<header class="w-full bg-lp-surface border-b border-lp-border-subtle sticky top-0 z-50">
+  <div class="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-[7.5rem] h-16 flex items-center justify-between">
+    <a href="/" class="font-display text-xl tracking-tight text-lp-text leading-none">
+      mikan<span class="text-lp-accent">-919</span>
+    </a>
+    <nav class="flex items-center gap-8">
+      <a href="/works" class="text-sm text-lp-muted hover:text-lp-text transition-colors font-sans">Works</a>
+      <a href="/blog"  class="text-sm text-lp-muted hover:text-lp-text transition-colors font-sans">Blog</a>
+      <a href="/about" class="text-sm text-lp-muted hover:text-lp-text transition-colors font-sans">About</a>
+      <a
+        href="https://twitter.com/mikan_919_main"
+        target="_blank"
+        class="text-sm border border-lp-border text-lp-text px-3 py-1.5 rounded hover:bg-lp-surface-sunken transition-colors font-sans"
+      >
+        Contact
+      </a>
+    </nav>
+  </div>
 </header>

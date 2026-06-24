@@ -15,6 +15,24 @@
     transition-duration: 300ms;
   }
 }
+:root {
+  --color-lp-bg:             hsl(36, 46%, 95%);
+  --color-lp-surface:        hsl(0, 0%, 100%);
+  --color-lp-surface-sunken: hsl(34, 40%, 92%);
+  --color-lp-border:         hsl(30, 26%, 79%);
+  --color-lp-border-subtle:  hsl(32, 34%, 88%);
+  --color-lp-text:           hsl(24, 20%, 11%);
+  --color-lp-muted:          hsl(27, 12%, 49%);
+  --color-lp-subtle:         hsl(28, 17%, 64%);
+  --color-lp-accent:         hsl(98, 52%, 52%);
+  --color-lp-accent-on:      hsl(22, 22%, 7%);
+  --color-lp-accent-subtle:  hsl(98, 60%, 96%);
+  --color-lp-accent-strong:  hsl(101, 56%, 32%);
+  --color-lp-dark:           hsl(22, 22%, 7%);
+  --color-lp-dark-text:      hsl(38, 52%, 98%);
+  --color-lp-dark-muted:     hsl(27, 12%, 49%);
+}
+
 @theme inline {
   --font-sans:
     var(--font-family-inter), var(--font-family-noto-sans-jp), sans-serif;
@@ -24,6 +42,23 @@
   --font-rampart-one: var(--font-family-rampart-one), sans-serif;
   --font-figtree: var(--font-family-figtree), sans-serif;
   --font-udev-gothic: var(--font-family-udev-gothic), sans-serif;
+  --font-display: var(--font-family-archivo-black), "Arial Black", sans-serif;
+
+  --color-lp-bg:             var(--color-lp-bg);
+  --color-lp-surface:        var(--color-lp-surface);
+  --color-lp-surface-sunken: var(--color-lp-surface-sunken);
+  --color-lp-border:         var(--color-lp-border);
+  --color-lp-border-subtle:  var(--color-lp-border-subtle);
+  --color-lp-text:           var(--color-lp-text);
+  --color-lp-muted:          var(--color-lp-muted);
+  --color-lp-subtle:         var(--color-lp-subtle);
+  --color-lp-accent:         var(--color-lp-accent);
+  --color-lp-accent-on:      var(--color-lp-accent-on);
+  --color-lp-accent-subtle:  var(--color-lp-accent-subtle);
+  --color-lp-accent-strong:  var(--color-lp-accent-strong);
+  --color-lp-dark:           var(--color-lp-dark);
+  --color-lp-dark-text:      var(--color-lp-dark-text);
+  --color-lp-dark-muted:     var(--color-lp-dark-muted);
 }
 
 /* これらのユーティリティーはSectionコンポーネントで使用されているので、特殊な要件がない限り<Section/>を利用してください。 */
