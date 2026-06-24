@@ -1,71 +1,6 @@
 ---
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-import type { CollectionEntry } from "astro:content";
 import { sortByDateAscending } from "@/lib/collectionUtils";
 import type { WorksListProps } from "@/types/collections";
-import { CSS } from "@/lib/constants";
 
 type Props = WorksListProps;
 
@@ -90,28 +25,25 @@ if (sortedWorks.length > 0) {
 ---
 
 <div class="section-header">
-    <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-end mt-8 gap-4"
-    >
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-            <p class={`text-xs font-bold text-gray-500 mb-2 font-mono ${CSS.TRACKING_0_3EM}`}>
+            <p class="font-mono text-xs text-lp-muted uppercase tracking-[0.06em] mb-2">
                 PROJECT ARCHIVE
             </p>
-            <h1
-                class="text-6xl md:text-8xl font-black itaric tracking-tighter leading-none font-figtree"
-            >
+            <h1 class="font-display text-6xl md:text-8xl leading-none tracking-tight text-lp-text">
                 WORKS.
             </h1>
         </div>
 
-        <div class="hidden md:flex gap-8 md:gap-12 text-right">
+        <div class="hidden md:flex gap-12 text-right">
             <div>
-                <p class="font-black text-4xl">{totalWorks}</p>
-                <p class="text-xs font-bold text-gray-500">TOTAL PROJECTS</p>
+                <p class="font-display text-[40px] leading-none text-lp-text">{totalWorks}</p>
+                <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em] mt-1">TOTAL PROJECTS</p>
             </div>
+            <div class="w-px bg-lp-border-subtle"></div>
             <div>
-                <p class="font-black text-4xl">{worksPerYear.toFixed(1)}</p>
-                <p class="text-xs font-bold text-gray-500">PROJECTS / YEAR</p>
+                <p class="font-display text-[40px] leading-none text-lp-text">{worksPerYear.toFixed(1)}</p>
+                <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em] mt-1">PROJECTS / YEAR</p>
             </div>
         </div>
     </div>

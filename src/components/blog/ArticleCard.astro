@@ -1,71 +1,5 @@
 ---
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
-import ChevronRight from "@lucide/astro/icons/chevron-right";
-import SlideButton from "@/components/ui/SlideButton.astro";
 import { formatFullDate } from "@/lib/dateUtils";
 import type { ArticleCardProps } from "@/types/cards";
 
@@ -76,74 +10,40 @@ const { title, summary, tags, image, date, slug }: Props = Astro.props;
 const formattedDate = formatFullDate(date)
 ---
 
-<div
-    class="group flex h-full relative outline-black outline-2 overflow-hidden flex-col bg-white transition-colors duration-300"
+<a
+    href={"/blog/" + slug}
+    class="group flex flex-col bg-lp-surface border border-lp-border-subtle rounded overflow-hidden hover:border-lp-border transition-colors h-full"
 >
-    <!-- Image Area (Aspect Ratio 16:9) -->
-    <div
-        class="aspect-video w-full border-b-2 border-black relative overflow-hidden bg-gray-100"
-    >
+    <div class="aspect-video relative overflow-hidden bg-lp-surface-sunken">
         {
             image ? (
                 <Image
                     src={image}
                     alt={title}
-                    class="image-hover-effect"
+                    class="image-hover-effect w-full h-full object-cover"
                 />
             ) : (
                 <div class="image-placeholder" />
             )
         }
-
-        <!-- Hover Label -->
-        <a
-            href={"/blog/" + slug}
-            class="hover-button-overlay"
-        >
-            <span class="btn-brutal px-4 py-2 text-xs select-none">
-                READ ARTICLE
-            </span>
-        </a>
     </div>
 
-    <!-- Text Area -->
-    <SlideButton
-        direction="top"
-        href={"/blog/" + slug}
-        class="p-6 flex flex-col grow justify-between"
-    >
-        <div>
-            <div class="flex justify-between items-start mb-2">
-                <span class="text-xs font-mono text-gray-500"
-                    >{formattedDate}</span
-                >
-            </div>
-            <h3 class="text-xl font-black mb-4 leading-none border-l-6 pl-2">
-                {title}
-            </h3>
-
-            <!-- Summary -->
-            <p
-                class="text-sm font-medium text-gray-700 leading-relaxed line-clamp-3 h-18"
-            >
-                {summary}
-            </p>
+    <div class="p-6 flex flex-col gap-2 flex-1">
+        <span class="font-mono text-[10px] text-lp-muted">{formattedDate}</span>
+        <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">
+            {title}
+        </h3>
+        <p class="text-sm text-lp-muted leading-relaxed line-clamp-3 flex-1">
+            {summary}
+        </p>
+        <div class="flex flex-wrap gap-1.5 mt-2">
+            {
+                tags.slice(0, 3).map((tag) => (
+                    <span class="bg-lp-surface-sunken border border-lp-border-subtle rounded px-2 py-0.5 text-[10px] text-lp-text font-sans">
+                        #{tag}
+                    </span>
+                ))
+            }
         </div>
-
-        <div class="mt-6 flex justify-between items-end">
-            <div class="flex flex-wrap gap-2">
-                {
-                    tags
-                        .slice(0, 3)
-                        .map((tag) => (
-                            <span class="text-[10px] font-medium bg-white text-gray-700">
-                                #{tag}
-                            </span>
-                        ))
-                }
-            </div>
-            <ChevronRight
-                class="inline-block size-5 font-bold text-xl group-hover:translate-x-2 transition-transform translate-x-0 duration-300"
-            />
-        </div></SlideButton>
-</div>
+    </div>
+</a>

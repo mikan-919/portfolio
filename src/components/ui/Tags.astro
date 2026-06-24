@@ -1,29 +1,19 @@
 ---
-
-
-
-
-
-
-
-import SlideButton from "@/components/ui/SlideButton.astro";
-
 type Props = {
     tags: string[];
     link:(tag:string)=>string;
 };
 const {tags,link}:Props=Astro.props
 ---
-<div class="flex gap-2">
-     {
+<div class="flex flex-wrap gap-2">
+    {
         tags.map((tag) => (
-             <SlideButton
-                 direction="bottom"
-                 href={link(tag)}
-                 class="flex justify-center items-start bg-white text-black px-3 py-2 text-xs font-bold uppercase tracking-wider"
-             >
-                 #{tag}
-             </SlideButton>
-         ))
-     }
- </div>
+            <a
+                href={link(tag)}
+                class="bg-lp-surface-sunken border border-lp-border-subtle rounded px-3 py-1.5 text-xs text-lp-text font-sans hover:border-lp-border transition-colors"
+            >
+                #{tag}
+            </a>
+        ))
+    }
+</div>

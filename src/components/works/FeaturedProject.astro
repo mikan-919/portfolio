@@ -1,37 +1,5 @@
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
 import { formatShortDateJP } from "@/lib/dateUtils";
 import type { WorksCardProps } from "@/types/cards";
 
@@ -42,74 +10,65 @@ const { title, description, image, isComingSoon, id, link, github, date } =
 const formattedDate = formatShortDateJP(date || new Date())
 ---
 
-<!-- ヘッダー帯 -->
-<div class="bg-black text-white px-4 py-2 flex justify-between items-center">
-    <h2 class="font-black tracking-widest text-sm font-figtree">FEATURED PROJECT</h2>
-    <span class="text-xs font-bold text-orange-400">★ HIGHLIGHT</span>
-</div>
-
-<div class="grid grid-cols-1 lg:grid-cols-2">
-    <!-- 左：画像エリア -->
-    <div class="aspect-video w-full relative group overflow-hidden bg-gray-100">
-        {
-            image ? (
-                <Image
-                    src={image}
-                    alt={title}
-                    class="image-hover-effect"
-                />
-            ) : (
-                <div class="image-placeholder" />
-            )
-        }
-
-        <!-- ホバー時に出る「View Project」ラベル -->
-        <a
-            href={isComingSoon ? undefined : "/works/" + id}
-            class="hover-button-overlay"
-        >
-            <span
-                aria-disabled={isComingSoon}
-                class={`${isComingSoon ? "opacity-75 cursor-not-allowed" : ""} btn-brutal px-4 py-2 text-xs select-none`}
-            >
-                {isComingSoon ? "COMING SOON" : "VIEW PROJECT"}
-            </span>
-        </a>
+<div class="bg-lp-accent-subtle border border-lp-border-subtle rounded overflow-hidden">
+    <div class="px-6 py-3 border-b border-lp-border-subtle flex justify-between items-center">
+        <span class="font-mono text-xs text-lp-accent-strong uppercase tracking-widest">Featured Project</span>
+        <span class="font-mono text-xs text-lp-muted">{formattedDate}</span>
     </div>
 
-    <!-- 右：詳細エリア -->
-    <div class="px-8 py-12 flex flex-col justify-between flex-1">
-      <div>
-          <div class="flex justify-between items-start mb-2">
-              <span class="text-xs font-mono text-gray-500"
-                  >{formattedDate}</span
-              >
-          </div>
-          <h3 class="text-3xl md:text-3xl font-black mb-4 leading-tight">
-              {title}
-          </h3>
-          <p
-              class="font-medium text-sm md:text-base opacity-80 leading-relaxed"
-          >
-              {description}
-          </p>
-      </div>
-        <!-- Links -->
-        <div class="flex gap-4 mt-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2">
+        <!-- 左：画像エリア -->
+        <div class="aspect-video w-full relative group overflow-hidden bg-lp-surface-sunken">
+            {
+                image ? (
+                    <Image
+                        src={image}
+                        alt={title}
+                        class="image-hover-effect w-full h-full object-cover"
+                    />
+                ) : (
+                    <div class="image-placeholder" />
+                )
+            }
             <a
-                aria-disabled={isComingSoon || !link}
-                href={isComingSoon ? undefined : link}
-                class={`${link ? "" : "opacity-50 cursor-not-allowed"} flex-1 text-center aria-disabled:pointer-events-none btn-brutal`}
+                href={isComingSoon ? undefined : "/works/" + id}
+                class="hover-button-overlay"
             >
-                Visit
+                <span
+                    aria-disabled={isComingSoon}
+                    class={`${isComingSoon ? "opacity-75 cursor-not-allowed" : ""} btn-brutal`}
+                >
+                    {isComingSoon ? "Coming Soon" : "View Project"}
+                </span>
             </a>
-            <a
-                aria-disabled={isComingSoon || !github}
-                href={isComingSoon ? undefined : github}
-                class={`${github ? "" : "opacity-50 cursor-not-allowed"} flex-1 text-center aria-disabled:pointer-events-none btn-brutal`}
-            >
-                GitHub
-            </a>
+        </div>
+
+        <!-- 右：詳細エリア -->
+        <div class="px-8 py-10 flex flex-col justify-between">
+            <div>
+                <h3 class="font-display text-3xl leading-tight tracking-tight text-lp-text mb-3">
+                    {title}
+                </h3>
+                <p class="text-sm text-lp-muted leading-relaxed">
+                    {description}
+                </p>
+            </div>
+            <div class="flex gap-3 mt-8">
+                <a
+                    aria-disabled={isComingSoon || !link}
+                    href={isComingSoon ? undefined : link}
+                    class={`${link ? "" : "opacity-40 pointer-events-none"} flex-1 text-center bg-lp-accent text-lp-accent-on font-sans font-semibold text-sm px-4 py-2.5 rounded hover:opacity-90 transition-opacity`}
+                >
+                    Visit
+                </a>
+                <a
+                    aria-disabled={isComingSoon || !github}
+                    href={isComingSoon ? undefined : github}
+                    class={`${github ? "" : "opacity-40 pointer-events-none"} flex-1 text-center border border-lp-border text-lp-text font-sans text-sm px-4 py-2.5 rounded hover:bg-lp-surface-sunken transition-colors`}
+                >
+                    GitHub
+                </a>
+            </div>
         </div>
     </div>
 </div>

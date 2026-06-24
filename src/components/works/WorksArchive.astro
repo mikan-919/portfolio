@@ -40,7 +40,7 @@ const featured = works[0];
     <WorksHeader works={works} />
 </Section>
 
-<Section>
+<Section class="px-8 md:px-16 lg:px-[7.5rem] py-8">
     {featured && <FeaturedProject id={featured.id} {...featured.data} />}
 </Section>
 
@@ -59,11 +59,11 @@ const featured = works[0];
 
                     // ボタンのスタイル切り替え
                     buttons.forEach((b) => {
-                        b.classList.remove("bg-black", "text-white");
-                        b.classList.add("bg-white", "text-black");
+                        b.classList.remove("bg-lp-accent", "text-lp-accent-on", "border-transparent");
+                        b.classList.add("bg-lp-surface", "text-lp-text");
                     });
-                    btn.classList.remove("bg-white", "text-black");
-                    btn.classList.add("bg-black", "text-white");
+                    btn.classList.remove("bg-lp-surface", "text-lp-text");
+                    btn.classList.add("bg-lp-accent", "text-lp-accent-on", "border-transparent");
 
                     // アイテムの表示/非表示
                     let visibleCount = 0;

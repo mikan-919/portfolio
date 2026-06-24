@@ -1,21 +1,4 @@
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import SlideButton from '@/components/ui/SlideButton.astro';
-
 type Props = {
     categories: string[];
 };
@@ -26,22 +9,18 @@ const { categories } = Astro.props;
 <div class="filter-container">
     <div class="flex justify-between items-end">
         <div>
-            <div class="pb-5">
-                <h2 class="text-5xl tracking-tighter font-black leading-none">
-                    ALL PROJECTS
-                </h2>
-            </div>
-            <div class="flex flex-wrap gap-2 pt-2" id="filter-container">
+            <h2 class="font-display text-4xl leading-none tracking-tight text-lp-text mb-5">
+                ALL PROJECTS
+            </h2>
+            <div class="flex flex-wrap gap-2" id="filter-container">
                 {
                     categories.map((cat) => (
-                        <SlideButton
-                            asButton
-                            direction="bottom"
+                        <button
                             data-filter={cat}
-                            class={`filter-btn relative group ${cat === "All" ? "bg-black text-white" : "bg-white text-black"}`}
+                            class={`filter-btn ${cat === 'All' ? 'bg-lp-accent text-lp-accent-on border-transparent' : ''}`}
                         >
-                            <span>{cat}</span>
-                        </SlideButton>
+                            {cat}
+                        </button>
                     ))
                 }
             </div>

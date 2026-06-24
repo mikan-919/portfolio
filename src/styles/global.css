@@ -63,10 +63,10 @@
 
 /* これらのユーティリティーはSectionコンポーネントで使用されているので、特殊な要件がない限り<Section/>を利用してください。 */
 @utility full-width-border {
-  @apply w-full border-b-2 border-black;
+  @apply w-full border-b border-lp-border;
 }
 @utility content-container {
-  @apply lg:max-w-5xl md:max-w-3xl sm:max-w-[40rem] w-full mx-auto md:border-l-2 md:border-r-2 border-black bg-white;
+  @apply max-w-[1200px] w-full mx-auto;
 }
 @utility text-stroke-* {
   -webkit-text-stroke-width: calc(--value(integer) * 1px);
@@ -74,29 +74,25 @@
   -webkit-text-stroke-color: --value([*]);
 }
 @layer components {
-  /* 共通: ハードシャドウボタン (WORKSやCONTACTで使用) */
   .btn-brutal {
-    @apply border-2 border-black bg-white px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000] transition-all select-none;
-  }
-  .btn-brutal:active:not(:disabled):not([aria-disabled="true"]) {
-    @apply shadow-none translate-x-[2px] translate-y-[2px];
+    @apply border border-lp-border bg-lp-surface text-lp-text px-6 py-3 font-sans font-semibold text-sm rounded select-none transition-colors hover:bg-lp-surface-sunken;
   }
   .image-hover-effect {
-    @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-110 blur-[2px];
+    @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-105;
   }
   .image-placeholder {
-    @apply absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] bg-size-[16px_16px];
+    @apply absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-lp-text)_1px,transparent_1px)] bg-size-[16px_16px];
   }
   .hover-button-overlay {
     @apply absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px];
   }
   .section-header {
-    @apply p-8 md:p-12 bg-gray-100;
+    @apply px-8 md:px-16 lg:px-[7.5rem] py-12;
   }
   .filter-container {
-    @apply px-8 py-6 md:px-12 md:py-8 border-b-2 border-black bg-gray-100;
+    @apply px-8 md:px-16 lg:px-[7.5rem] py-8 border-b border-lp-border;
   }
   .filter-btn {
-    @apply border-2 border-black px-4 py-2 font-bold cursor-pointer text-sm transition-all duration-200 select-none;
+    @apply border border-lp-border bg-lp-surface text-lp-text px-4 py-2 text-sm font-sans cursor-pointer select-none rounded transition-colors hover:bg-lp-surface-sunken;
   }
 }

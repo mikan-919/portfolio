@@ -1,88 +1,21 @@
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import Github from "simple-icons-astro/Github";
-import Section from "@/components/ui/Section.astro";
-import SlideButton from "../ui/SlideButton.astro";
 ---
-<Section class="bg-gray-100 mx-auto p-16 flex flex-col items-center text-center">
-        <h3 class="text-3xl font-black font-figtree mb-6">MORE PROJECTS?</h3>
-        <p
-            class="font-bold text-sm opacity-70 mb-8 max-w-lg mx-auto leading-relaxed"
-        >
+
+<div class="w-full border-t border-lp-border">
+    <div class="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-[7.5rem] py-16 flex flex-col items-center text-center">
+        <p class="font-mono text-xs text-lp-muted uppercase tracking-widest mb-3">More work</p>
+        <h3 class="font-display text-3xl leading-tight tracking-tight text-lp-text mb-4">More Projects?</h3>
+        <p class="text-sm text-lp-muted leading-relaxed mb-8 max-w-md">
             ここには掲載していない小さな実験や、学習の過程のコードはGitHubで公開しています。
         </p>
-
-        <SlideButton
-            direction="top"
+        <a
             href="https://github.com/mikan-919"
             target="_blank"
-            class="inline-flex items-center gap-3 btn-brutal"
+            class="inline-flex items-center gap-2.5 bg-lp-accent text-lp-accent-on font-sans font-semibold text-sm px-6 py-2.5 rounded hover:opacity-90 transition-opacity"
         >
-            <!-- GitHub Icon (SVG) -->
-            <Github />
-            <span>Visit GitHub Profile</span>
-        </SlideButton>
-
-</Section>
+            <Github class="size-4" />
+            Visit GitHub Profile
+        </a>
+    </div>
+</div>

@@ -37,7 +37,7 @@ const latestArticle = articles[0];
     <BlogHeader articles={articles} />
 </Section>
 
-<Section>
+<Section class="px-8 md:px-16 lg:px-[7.5rem] py-8">
     {
         latestArticle && (
             <FeaturedArticle {...latestArticle.data} slug={latestArticle.id} />
@@ -59,11 +59,11 @@ const latestArticle = articles[0];
                 buttons.forEach((btn) => {
                     const btnTag = btn.getAttribute("data-filter");
                     if (btnTag === tag) {
-                        btn.classList.remove("bg-white", "text-black");
-                        btn.classList.add("bg-black", "text-white");
+                        btn.classList.remove("bg-lp-surface", "text-lp-text");
+                        btn.classList.add("bg-lp-accent", "text-lp-accent-on", "border-transparent");
                     } else {
-                        btn.classList.remove("bg-black", "text-white");
-                        btn.classList.add("bg-white", "text-black");
+                        btn.classList.remove("bg-lp-accent", "text-lp-accent-on", "border-transparent");
+                        btn.classList.add("bg-lp-surface", "text-lp-text");
                     }
                 });
 
