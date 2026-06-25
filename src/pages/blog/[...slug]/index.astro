@@ -122,11 +122,9 @@ const formattedDate = formatShortDateJP(entry.data.date)
                         <span class="text-sm text-lp-text font-medium">No newer posts</span>
                     </div>
                 )}
-                <div class="flex items-center justify-center py-8">
-                    <a href="/blog" class="font-mono text-xs text-lp-muted hover:text-lp-text transition-colors uppercase tracking-widest">
-                        Back to Blog
-                    </a>
-                </div>
+                <a href="/blog" class="flex items-center justify-center py-8 hover:bg-lp-surface-sunken transition-colors font-mono text-xs text-lp-muted hover:text-lp-text uppercase tracking-widest">
+                    Back to Blog
+                </a>
                 {nextPost ? (
                     <a href={`/blog/${nextPost.id}`} class="flex flex-col justify-center items-end text-right py-8 pl-8 hover:bg-lp-surface-sunken transition-colors">
                         <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">Older &gt;</span>
