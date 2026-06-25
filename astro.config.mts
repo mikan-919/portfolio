@@ -66,6 +66,9 @@ const config = defineConfig({
     ],
   },
 
+  // ponytail: クラウドビルドでのフォント再DL失敗を防ぐため、ビルドキャッシュを
+  // node_modules 外に移してリポジトリへ同梱する。フォント構成を変えたら .astro-cache/fonts を再生成してコミット。
+  cacheDir: './.astro-cache',
   vite: {
     plugins: [tailwindcss()],
   },
