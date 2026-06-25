@@ -42,7 +42,7 @@
   --font-rampart-one: var(--font-family-rampart-one), sans-serif;
   --font-figtree: var(--font-family-figtree), sans-serif;
   --font-udev-gothic: var(--font-family-udev-gothic), sans-serif;
-  --font-display: var(--font-family-archivo-black), "Arial Black", sans-serif;
+  --font-display: var(--font-family-archivo-black), var(--font-family-new), "Arial Black", sans-serif;
 
   --color-lp-bg:             var(--color-lp-bg);
   --color-lp-surface:        var(--color-lp-surface);
