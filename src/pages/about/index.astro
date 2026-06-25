@@ -4,6 +4,8 @@ import InfoGrid from "@/components/sections/about/InfoGrid.astro";
 import TimeLine from "@/components/sections/about/TimeLine.astro";
 import Values from "@/components/sections/about/Values.astro"
 import Layout from "@/layouts/Layout.astro";
+import myInfo from '@/content/data/my-info.json'
+const { profile } = myInfo
 ---
 
 <Layout title="Portfoliooo | About" description="摘果みかんのプロフィール・学習中の技術・GitHub Activity。">
@@ -24,16 +26,11 @@ import Layout from "@/layouts/Layout.astro";
             <div class="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-12">
                 <div class="flex flex-col gap-6">
                     <div>
-                        <h2 class="font-display text-4xl leading-tight tracking-tight text-lp-text">摘果みかん</h2>
-                        <p class="font-mono text-xs text-lp-muted mt-1">@mikan-919</p>
+                        <h2 class="font-display text-4xl leading-tight tracking-tight text-lp-text">{profile.name}</h2>
+                        <p class="font-mono text-xs text-lp-muted mt-1">{profile.handle}</p>
                     </div>
-                    <p class="text-sm text-lp-muted leading-relaxed">
-                        学校の勉強の傍ら、趣味でプログラミングを学習している学生。<br />
-                        まだ始めたばかりですが、コードを書いて動くものを作るプロセスが好き。<br />
-                        最近は、モダンなフロントエンド技術（Astro, SolidJSなど）に関心があり、このポートフォリオもその実験の場として作成している。<br />
-                        趣味でプログラミングとは言っているが、正直他に得意分野がないので将来はエンジニアになることを目指している。
-                    </p>
-                    <p class="font-mono text-[11px] text-lp-subtle">LAST UPDATED: 2024.11.28</p>
+                    <p class="text-sm text-lp-muted leading-relaxed" set:html={profile.bio.replace(/\n/g, '<br />')} />
+                    <p class="font-mono text-[11px] text-lp-subtle">LAST UPDATED: {profile.lastUpdated}</p>
                 </div>
                 <div>
                     <InfoGrid />
