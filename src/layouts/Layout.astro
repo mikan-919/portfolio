@@ -44,6 +44,7 @@ const {
 		<meta name="twitter:title" content={title || 'Portfoliooo'} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL(ogImage, Astro.site ?? Astro.url).href} />
+		<link rel="alternate" type="application/rss+xml" title="mikan-919 Blog RSS" href="/blog/rss.xml" />
 		<Fonts />
 	</head>
 	<body class="font-sans bg-lp-bg" id="root">
