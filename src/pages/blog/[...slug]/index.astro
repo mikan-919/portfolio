@@ -109,8 +109,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
 
     <!-- Navigation -->
     <div class="w-full border-b border-lp-border">
-        <div class="max-w-[1200px] mx-auto">
-            <div class="grid grid-cols-3 divide-x divide-lp-border">
+        <div class="grid grid-cols-3 divide-x divide-lp-border">
                 {prevPost ? (
                     <a href={`/blog/${prevPost.id}`} class="flex flex-col justify-center py-8 pr-8 pl-8 md:pl-16 lg:pl-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
                         <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">&lt; Newer</span>
@@ -136,7 +135,6 @@ const formattedDate = formatShortDateJP(entry.data.date)
                         <span class="text-sm text-lp-text font-medium">No older posts</span>
                     </div>
                 )}
-            </div>
         </div>
     </div>
 </Layout>
