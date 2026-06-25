@@ -13,9 +13,15 @@ import Header from "../components/Header.astro";
 import Fonts from "./Fonts.astro";
 
 type Props = {
-	title?: string;
-};
-const { title }: Props = Astro.props;
+	title?: string
+	description?: string
+	ogImage?: string
+}
+const {
+	title,
+	description = '学生エンジニア・摘果みかんのポートフォリオ。Web開発の制作実績とブログを掲載。',
+	ogImage = '/og-default.png',
+}: Props = Astro.props
 ---
 
 <!doctype html>
@@ -26,7 +32,18 @@ const { title }: Props = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title || "Portfoliooo"}</title>
+		<title>{title || 'Portfoliooo'}</title>
+		<meta name="description" content={description} />
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title || 'Portfoliooo'} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={new URL(ogImage, Astro.site ?? Astro.url).href} />
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title || 'Portfoliooo'} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL(ogImage, Astro.site ?? Astro.url).href} />
 		<Fonts />
 	</head>
 	<body class="font-sans bg-lp-bg" id="root">

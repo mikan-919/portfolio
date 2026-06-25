@@ -32,7 +32,10 @@ const prevPost = sortedPosts[currentIndex - 1];
 const formattedDate = formatShortDateJP(entry.data.date)
 ---
 
-<Layout title={`Portfoliooo | ${entry.data.title}`}>
+<Layout
+    title={`Portfoliooo | ${entry.data.title}`}
+    description={entry.data.description}
+>
     <!-- Header Image & Title -->
     <div class="w-full relative h-80 md:h-[28rem] overflow-hidden">
         {

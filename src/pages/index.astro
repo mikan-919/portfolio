@@ -14,7 +14,7 @@ const allArticles = await getCollection('articles')
 const sortedArticles = sortByDateDescending(allArticles).slice(0, 3)
 ---
 
-<Layout>
+<Layout description="学生エンジニア・摘果みかんのポートフォリオ。制作実績とブログを掲載。">
   <Hero />
   <About />
   <Works works={sortedWorks} />
