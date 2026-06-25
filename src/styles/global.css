@@ -4,6 +4,11 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @plugin "@tailwindcss/typography";
 @layer base {
+  /* font-display は見出し用。Archivo Black に日本語フォールバック(Zen Kaku Gothic New)を
+     合わせるため既定で 900 にする。font-* ユーティリティで上書き可能。 */
+  .font-display {
+    font-weight: 900;
+  }
   html,
   body {
     margin: 0;
