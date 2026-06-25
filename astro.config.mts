@@ -73,6 +73,10 @@ const config = defineConfig({
   cacheDir: './.astro-cache',
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      // ponytail: native .node binary — must not be bundled by Rollup
+      external: ['@resvg/resvg-js'],
+    },
   },
   output: 'static',
   integrations: [solidJs(), sitemap()],
