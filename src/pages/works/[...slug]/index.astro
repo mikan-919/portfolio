@@ -4,6 +4,7 @@ import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from 'astro:content'
 import ExternalLink from "@lucide/astro/icons/external-link";
 import Github from "simple-icons-astro/Github";
+import PostNav from "@/components/ui/PostNav.astro";
 import Tags from "@/components/ui/Tags.astro";
 import Layout from "@/layouts/Layout.astro";
 import { sortByDateDescending } from "@/lib/collectionUtils";
@@ -163,37 +164,12 @@ const formattedDate = formatMonthYear(entry.data.date)
     </div>
 
     <!-- Navigation -->
-    <div class="w-full border-b border-lp-border">
-        <div class="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-[7.5rem]">
-            <div class="grid grid-cols-[1fr_1fr_1fr] divide-x divide-lp-border">
-                {prevWork ? (
-                    <a href={`/works/${prevWork.id}`} class="flex flex-col justify-center py-8 pr-8 hover:bg-lp-surface-sunken transition-colors">
-                        <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">&lt; Newer</span>
-                        <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{prevWork.data.title}</span>
-                    </a>
-                ) : (
-                    <div class="flex flex-col justify-center py-8 pr-8 opacity-30 select-none">
-                        <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">&lt; Newer</span>
-                        <span class="text-sm text-lp-text font-medium">No newer work</span>
-                    </div>
-                )}
-                <div class="flex items-center justify-center py-8">
-                    <a href="/works" class="font-mono text-xs text-lp-muted hover:text-lp-text transition-colors uppercase tracking-widest">
-                        Back to Works
-                    </a>
-                </div>
-                {nextWork ? (
-                    <a href={`/works/${nextWork.id}`} class="flex flex-col justify-center items-end text-right py-8 pl-8 hover:bg-lp-surface-sunken transition-colors">
-                        <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">Older &gt;</span>
-                        <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{nextWork.data.title}</span>
-                    </a>
-                ) : (
-                    <div class="flex flex-col justify-center items-end text-right py-8 pl-8 opacity-30 select-none">
-                        <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">Older &gt;</span>
-                        <span class="text-sm text-lp-text font-medium">No older work</span>
-                    </div>
-                )}
-            </div>
-        </div>
-    </div>
+    <PostNav
+        prev={prevWork ? { href: `/works/${prevWork.id}`, title: prevWork.data.title } : null}
+        next={nextWork ? { href: `/works/${nextWork.id}`, title: nextWork.data.title } : null}
+        backHref="/works"
+        backLabel="Back to Works"
+        newerEmptyLabel="No newer work"
+        olderEmptyLabel="No older work"
+    />
 </Layout>

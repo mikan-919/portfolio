@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from 'astro:content'
 import TableOfContents from "@/components/blog/TableOfContents.tsx";
+import PostNav from "@/components/ui/PostNav.astro";
 import Tags from "@/components/ui/Tags.astro";
 import Layout from "@/layouts/Layout.astro";
 import { sortByDateDescending } from "@/lib/collectionUtils";
@@ -108,33 +109,12 @@ const formattedDate = formatShortDateJP(entry.data.date)
     </div>
 
     <!-- Navigation -->
-    <div class="w-full border-b border-lp-border">
-        <div class="grid grid-cols-3 divide-x divide-lp-border">
-                {prevPost ? (
-                    <a href={`/blog/${prevPost.id}`} class="flex flex-col justify-center py-8 pr-8 pl-8 md:pl-16 lg:pl-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
-                        <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">&lt; Newer</span>
-                        <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{prevPost.data.title}</span>
-                    </a>
-                ) : (
-                    <div class="flex flex-col justify-center py-8 pr-8 pl-8 md:pl-16 lg:pl-[7.5rem] opacity-30 select-none">
-                        <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">&lt; Newer</span>
-                        <span class="text-sm text-lp-text font-medium">No newer posts</span>
-                    </div>
-                )}
-                <a href="/blog" class="flex items-center justify-center py-8 hover:bg-lp-surface-sunken transition-colors font-mono text-xs text-lp-muted hover:text-lp-text uppercase tracking-widest">
-                    Back to Blog
-                </a>
-                {nextPost ? (
-                    <a href={`/blog/${nextPost.id}`} class="flex flex-col justify-center items-end text-right py-8 pl-8 pr-8 md:pr-16 lg:pr-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
-                        <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">Older &gt;</span>
-                        <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{nextPost.data.title}</span>
-                    </a>
-                ) : (
-                    <div class="flex flex-col justify-center items-end text-right py-8 pl-8 pr-8 md:pr-16 lg:pr-[7.5rem] opacity-30 select-none">
-                        <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">Older &gt;</span>
-                        <span class="text-sm text-lp-text font-medium">No older posts</span>
-                    </div>
-                )}
-        </div>
-    </div>
+    <PostNav
+        prev={prevPost ? { href: `/blog/${prevPost.id}`, title: prevPost.data.title } : null}
+        next={nextPost ? { href: `/blog/${nextPost.id}`, title: nextPost.data.title } : null}
+        backHref="/blog"
+        backLabel="Back to Blog"
+        newerEmptyLabel="No newer posts"
+        olderEmptyLabel="No older posts"
+    />
 </Layout>
