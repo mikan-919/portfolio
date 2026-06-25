@@ -49,7 +49,7 @@ const latestArticle = articles[0];
     <BlogFilter tags={uniqueTags} />
     <BlogList articles={articles} />
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("astro:page-load", () => {
             const buttons = document.querySelectorAll(".filter-btn");
             const items = document.querySelectorAll(".article-item");
             const noResults = document.getElementById("no-results");

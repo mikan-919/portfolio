@@ -48,7 +48,7 @@ const featured = works[0];
     <WorksFilter categories={categories} />
     <WorksList works={works} />
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("astro:page-load", () => {
             const buttons = document.querySelectorAll(".filter-btn");
             const items = document.querySelectorAll(".work-item");
             const noResults = document.getElementById("no-results");
