@@ -145,9 +145,20 @@ export default function InfiniteTextBackground() {
 
     window.addEventListener('resize', resize)
 
+    const handleVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId)
+      } else {
+        lastTime = 0
+        animationFrameId = requestAnimationFrame(render)
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+
     onCleanup(() => {
       cancelAnimationFrame(animationFrameId)
       window.removeEventListener('resize', resize)
+      document.removeEventListener('visibilitychange', handleVisibility)
     })
   })
 
