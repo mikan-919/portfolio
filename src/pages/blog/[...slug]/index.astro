@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from 'astro:content'
 import TableOfContents from "@/components/blog/TableOfContents.tsx";
 import Tags from "@/components/ui/Tags.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -8,27 +9,26 @@ import { sortByDateDescending } from "@/lib/collectionUtils";
 import { formatShortDateJP } from "@/lib/dateUtils";
 
 export async function getStaticPaths() {
-    const articles = await getCollection("articles");
-    return articles.map((entry) => ({
+    const articles = await getCollection('articles')
+    const sortedPosts = sortByDateDescending(articles)
+    return sortedPosts.map((entry, index) => ({
         params: { slug: entry.id },
-    }));
+        props: {
+            entry,
+            prevPost: sortedPosts[index - 1] ?? null,
+            nextPost: sortedPosts[index + 1] ?? null,
+        },
+    }))
 }
 
-const { slug } = Astro.params;
-const allPosts = await getCollection("articles");
-
-const sortedPosts = sortByDateDescending(allPosts)
-
-const currentIndex = sortedPosts.findIndex((post) => post.id === slug);
-
-if (currentIndex === -1) {
-    throw new Error("Not Found");
+type Props = {
+    entry: CollectionEntry<'articles'>
+    prevPost: CollectionEntry<'articles'> | null
+    nextPost: CollectionEntry<'articles'> | null
 }
-const entry = sortedPosts[currentIndex];
-const { Content, headings } = await render(entry);
-const nextPost = sortedPosts[currentIndex + 1];
-const prevPost = sortedPosts[currentIndex - 1];
 
+const { entry, prevPost, nextPost } = Astro.props
+const { Content, headings } = await render(entry)
 const formattedDate = formatShortDateJP(entry.data.date)
 ---
 

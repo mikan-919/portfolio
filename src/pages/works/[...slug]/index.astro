@@ -1,33 +1,35 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from 'astro:content'
 import ExternalLink from "@lucide/astro/icons/external-link";
 import Github from "simple-icons-astro/Github";
 import Tags from "@/components/ui/Tags.astro";
 import Layout from "@/layouts/Layout.astro";
 import { sortByDateDescending } from "@/lib/collectionUtils";
 import { formatMonthYear } from "@/lib/dateUtils";
-export const prerender = true;
+export const prerender = true
 export async function getStaticPaths() {
-    const works = await getCollection("works");
-    return works.map((entry) => ({
+    const works = await getCollection('works')
+    const sortedWorks = sortByDateDescending(works)
+    return sortedWorks.map((entry, index) => ({
         params: { slug: entry.id },
-    }));
+        props: {
+            entry,
+            prevWork: sortedWorks[index - 1] ?? null,
+            nextWork: sortedWorks[index + 1] ?? null,
+        },
+    }))
 }
 
-const { slug } = Astro.params;
-const allWorks = await getCollection("works");
-const entry = allWorks.find((entry) => entry.id === slug);
-if (!entry) {
-    return Astro.redirect("/404");
+type Props = {
+    entry: CollectionEntry<'works'>
+    prevWork: CollectionEntry<'works'> | null
+    nextWork: CollectionEntry<'works'> | null
 }
-const { Content } = await render(entry);
 
-const sortedWorks = sortByDateDescending(allWorks)
-const currentIndex = sortedWorks.findIndex((work) => work.id === entry.id);
-const nextWork = sortedWorks[currentIndex + 1];
-const prevWork = sortedWorks[currentIndex - 1];
-
+const { entry, prevWork, nextWork } = Astro.props
+const { Content } = await render(entry)
 const formattedDate = formatMonthYear(entry.data.date)
 ---
 
