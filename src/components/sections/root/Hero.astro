@@ -1,4 +1,9 @@
 ---
+type Props = {
+  projectCount: number
+  articleCount: number
+}
+const { projectCount, articleCount } = Astro.props
 ---
 
 <div class="w-full bg-lp-bg">
@@ -30,12 +35,12 @@
     <!-- stats row -->
     <div class="mt-9 border-t border-b border-lp-border-subtle py-6 w-full flex justify-center gap-16">
       <div class="flex flex-col items-center gap-1">
-        <span class="font-new text-[40px] leading-none text-lp-text">3</span>
+        <span class="font-new text-[40px] leading-none text-lp-text">{projectCount}</span>
         <span class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Projects</span>
       </div>
       <div class="w-px bg-lp-border-subtle"></div>
       <div class="flex flex-col items-center gap-1">
-        <span class="font-new text-[40px] leading-none text-lp-text">12+</span>
+        <span class="font-new text-[40px] leading-none text-lp-text">{articleCount}</span>
         <span class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Blog Posts</span>
       </div>
       <div class="w-px bg-lp-border-subtle"></div>

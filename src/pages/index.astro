@@ -15,7 +15,7 @@ const sortedArticles = sortByDateDescending(allArticles).slice(0, 3)
 ---
 
 <Layout description="学生エンジニア・摘果みかんのポートフォリオ。制作実績とブログを掲載。">
-  <Hero />
+  <Hero projectCount={allWorks.length} articleCount={allArticles.length} />
   <About />
   <Works works={sortedWorks} />
   <BlogContact articles={sortedArticles} />
