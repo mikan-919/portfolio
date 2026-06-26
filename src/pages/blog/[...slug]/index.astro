@@ -82,7 +82,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
                 </div>
                 <div class="py-8 md:pl-10 space-y-2">
                     <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Tags</p>
-                    <Tags tags={entry.data.tags} link={(tag) => `/blog?tag=${tag}`} />
+                    <Tags tags={entry.data.tags} link={(tag) => `/blog/tags/${tag}`} />
                 </div>
             </div>
         </div>

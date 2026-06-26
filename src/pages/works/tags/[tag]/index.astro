@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import WorksList from '@/components/works/WorksList.astro'
+import Layout from '@/layouts/Layout.astro'
+export const prerender = true
+
+export async function getStaticPaths() {
+  const works = await getCollection('works')
+  const allTags = works.flatMap((w) => w.data.tags)
+  const uniqueTags = [...new Set(allTags)]
+  return uniqueTags.map((tag) => ({
+    params: { tag },
+    props: { tag, works: works.filter((w) => w.data.tags.includes(tag)) },
+  }))
+}
+
+type Props = {
+  tag: string
+  works: CollectionEntry<'works'>[]
+}
+
+const { tag, works } = Astro.props
+---
+
+<Layout title={`Portfoliooo | #${tag}`} description={`#${tag} の作品一覧`}>
+  <div class="px-8 md:px-16 lg:px-[7.5rem] pt-12 pb-4">
+    <a href="/works" class="font-mono text-xs text-lp-muted hover:text-lp-text transition-colors">← Works に戻る</a>
+    <h1 class="font-display text-4xl tracking-tight text-lp-text mt-4">#{tag}</h1>
+  </div>
+  <WorksList works={works} />
+</Layout>
