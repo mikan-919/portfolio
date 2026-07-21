@@ -22,7 +22,7 @@ const shownArticles = articles.slice(0, 3)
 const featuredArticle = shownArticles[0]
 const restArticles = shownArticles.slice(1)
 
-const cell = 'border-b border-lp-border p-6 md:p-8'
+const cell = 'border-b border-lp-border p-7 md:p-9'
 ---
 
 <section class="w-full bg-lp-surface">
@@ -44,6 +44,9 @@ const cell = 'border-b border-lp-border p-6 md:p-8'
           ))
         }
       </div>
+      <a href="/about" class="mt-auto pt-4 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide text-lp-accent hover:underline w-fit">
+        プロフィールを見る →
+      </a>
     </div>
 
     <!-- featured work -->
@@ -74,7 +77,7 @@ const cell = 'border-b border-lp-border p-6 md:p-8'
     <!-- featured article -->
     {
       featuredArticle && (
-        <a href={`/blog/${featuredArticle.id}`} class={`${cell} flex flex-col gap-4 hover:bg-lp-accent-subtle transition-colors`}>
+        <a href={`/blog/${featuredArticle.id}`} class={`${cell} lg:row-span-2 flex flex-col gap-4 hover:bg-lp-accent-subtle transition-colors`}>
           <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Latest post</p>
           <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">{featuredArticle.data.title}</h3>
           <p class="text-sm text-lp-muted leading-relaxed line-clamp-3">{featuredArticle.data.description}</p>
@@ -120,7 +123,7 @@ const cell = 'border-b border-lp-border p-6 md:p-8'
     </a>
 
     <!-- timeline strip -->
-    <div class="sm:col-span-2 lg:col-span-4 p-6 md:p-8">
+    <div class="sm:col-span-2 lg:col-span-4 p-7 md:p-9 lg:py-12">
       <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider mb-6">Timeline</p>
       <Timeline variant="horizontal" />
     </div>
