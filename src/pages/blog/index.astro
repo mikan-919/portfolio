@@ -1,21 +1,13 @@
 ---
+import { getCollection } from 'astro:content'
+import Archive from '@/components/archive/Archive.astro'
+import Layout from '@/layouts/Layout.astro'
+import { sortByDateDescending } from '@/lib/collectionUtils'
 
-
-
-
-
-
-
-import { getCollection } from "astro:content";
-import BlogArchive from "@/components/blog/BlogArchive.astro";
-import Layout from "@/layouts/Layout.astro";
-
-const allArticles = await getCollection("articles");
-const sortedArticles = allArticles.sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const allArticles = await getCollection('articles')
+const sortedArticles = sortByDateDescending(allArticles)
 ---
 
-<Layout title="Portfoliooo | Blog" description="摘果みかんのブログ。日常とプログラミングについて書いています。">
-    <BlogArchive articles={sortedArticles} />
+<Layout title="Blog" description="摘果みかんのブログ。日常とプログラミングについて書いています。">
+  <Archive kind="article" entries={sortedArticles} />
 </Layout>

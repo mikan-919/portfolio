@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from 'astro:content'
+import { getCollection, render } from "astro:content";
 import ExternalLink from "@lucide/astro/icons/external-link";
 import Github from "simple-icons-astro/Github";
 import PostNav from "@/components/ui/PostNav.astro";
@@ -35,7 +35,7 @@ const formattedDate = formatMonthYear(entry.data.date)
 ---
 
 <Layout
-    title={`Portfoliooo | ${entry.data.title}`}
+    title={entry.data.title}
     description={entry.data.description}
     ogImage={`/og/works/${entry.id}.png`}
 >
@@ -55,19 +55,19 @@ const formattedDate = formatMonthYear(entry.data.date)
             )
         }
         <div class="absolute inset-0 bg-lp-dark/60">
-            <div class="absolute bottom-0 left-0 w-full px-8 md:px-16 lg:px-[7.5rem] py-10">
+            <div class="absolute bottom-0 left-0 w-full px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-10">
                 <div class="space-y-3">
                     <div class="flex items-center gap-3">
-                        <span class="bg-lp-accent text-lp-accent-on font-mono text-xs px-3 py-1 rounded-full uppercase tracking-wide">
+                        <span class="bg-lp-accent text-lp-accent-on font-mono text-xs px-3 py-1 uppercase tracking-wide">
                             {entry.data.category}
                         </span>
                         {entry.data.isComingSoon && (
-                            <span class="bg-lp-surface text-lp-text font-mono text-xs px-3 py-1 rounded-full uppercase tracking-wide">
+                            <span class="bg-lp-surface text-lp-text font-mono text-xs px-3 py-1 uppercase tracking-wide">
                                 Coming Soon
                             </span>
                         )}
                     </div>
-                    <h1 class="font-display text-4xl md:text-6xl leading-none tracking-tight text-lp-dark-text">
+                    <h1 class="font-display text-3xl sm:text-4xl md:text-6xl leading-none tracking-tight text-lp-dark-text" style="overflow-wrap: anywhere;">
                         {entry.data.title}
                     </h1>
                     <p class="font-mono text-xs text-lp-dark-muted">
@@ -80,7 +80,7 @@ const formattedDate = formatMonthYear(entry.data.date)
 
     <!-- Info Grid -->
     <div class="w-full border-b border-lp-border">
-        <div class="px-8 md:px-16 lg:px-[7.5rem]">
+        <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
             <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-lp-border py-8 gap-0">
                 <div class="py-6 md:py-0 md:pr-8 space-y-2">
                     <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Project Type</p>
@@ -96,7 +96,7 @@ const formattedDate = formatMonthYear(entry.data.date)
                                 href={entry.data.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="text-sm text-lp-accent-strong hover:underline flex items-center gap-1.5"
+                                class="text-sm text-lp-accent hover:underline flex items-center gap-1.5"
                             >
                                 Visit Site
                                 <ExternalLink class="size-3.5" />
@@ -109,7 +109,7 @@ const formattedDate = formatMonthYear(entry.data.date)
                                 href={entry.data.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="text-sm text-lp-accent-strong hover:underline flex items-center gap-1.5"
+                                class="text-sm text-lp-accent hover:underline flex items-center gap-1.5"
                             >
                                 GitHub
                                 <Github class="size-3.5" />
@@ -127,17 +127,17 @@ const formattedDate = formatMonthYear(entry.data.date)
 
     <!-- Content -->
     <div class="w-full border-b border-lp-border">
-        <div class="px-8 md:px-16 lg:px-[7.5rem]">
+        <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
             <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_1fr] min-h-[50vh] divide-x-0 lg:divide-x divide-lp-border">
-                <div class="py-12 lg:pr-12 prose prose-neutral max-w-none
+                <div class="py-8 lg:py-12 lg:pr-12 prose prose-neutral max-w-none
                     prose-headings:font-display prose-headings:tracking-tight prose-headings:text-lp-text
                     prose-p:text-lp-muted prose-p:leading-relaxed
-                    prose-a:text-lp-accent-strong prose-a:decoration-1 prose-a:underline-offset-2
+                    prose-a:text-lp-accent prose-a:decoration-1 prose-a:underline-offset-2
                     prose-blockquote:border-l-4 prose-blockquote:border-lp-accent prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
-                    prose-img:rounded prose-img:border prose-img:border-lp-border">
+                    prose-img:border prose-img:border-lp-border">
                     <Content />
                 </div>
-                <div class="py-12 lg:pl-10 border-t lg:border-t-0 border-lp-border">
+                <div class="py-8 lg:py-12 lg:pl-10 border-t lg:border-t-0 border-lp-border">
                     {
                         entry.data.gallery && entry.data.gallery.length > 0 ? (
                             <div class="flex flex-col gap-4">
@@ -146,7 +146,7 @@ const formattedDate = formatMonthYear(entry.data.date)
                                     <Image
                                         src={img}
                                         alt=""
-                                        class="w-full rounded border border-lp-border"
+                                        class="w-full border border-lp-border"
                                     />
                                 ))}
                             </div>

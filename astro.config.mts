@@ -13,14 +13,6 @@ const config = defineConfig({
     fonts: [
       {
         provider: fontProviders.google(),
-        name: 'Rampart One',
-        cssVariable: '--font-family-rampart-one',
-        weights: [400],
-        display: 'swap',
-        fallbacks: [],
-      },
-      {
-        provider: fontProviders.google(),
         name: 'Zen Kaku Gothic New',
         cssVariable: '--font-family-new',
         weights: [300, 400, 500, 700, 900],
@@ -32,14 +24,6 @@ const config = defineConfig({
         name: 'Inter',
         cssVariable: '--font-family-inter',
         weights: ['100 900'],
-        display: 'swap',
-        fallbacks: [],
-      },
-      {
-        provider: fontProviders.google(),
-        name: 'Figtree',
-        cssVariable: '--font-family-figtree',
-        weights: ['300 900'],
         display: 'swap',
         fallbacks: [],
       },

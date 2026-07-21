@@ -22,6 +22,8 @@ const {
 	description = '学生エンジニア・摘果みかんのポートフォリオ。Web開発の制作実績とブログを掲載。',
 	ogImage = '/og-default.png',
 }: Props = Astro.props
+
+const pageTitle = title ? `${title} | mikan-919` : 'mikan-919 — Web / App Developer'
 ---
 
 <!doctype html>
@@ -32,16 +34,16 @@ const {
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title || 'Portfoliooo'}</title>
+		<title>{pageTitle}</title>
 		<meta name="description" content={description} />
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content={title || 'Portfoliooo'} />
+		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={new URL(ogImage, Astro.site ?? Astro.url).href} />
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={title || 'Portfoliooo'} />
+		<meta name="twitter:title" content={pageTitle} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL(ogImage, Astro.site ?? Astro.url).href} />
 		<link rel="alternate" type="application/rss+xml" title="mikan-919 Blog RSS" href="/blog/rss.xml" />

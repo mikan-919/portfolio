@@ -1,25 +1,17 @@
 ---
+import { getCollection } from 'astro:content'
+import Archive from '@/components/archive/Archive.astro'
+import GitHubCTA from '@/components/works/GithubCTA.astro'
+import Layout from '@/layouts/Layout.astro'
+import { sortByDateDescending } from '@/lib/collectionUtils'
 
-
-
-
-
-
-
-import { getCollection } from "astro:content";
-import GitHubCTA from "@/components/works/GithubCTA.astro";
-import WorksArchive from "@/components/works/WorksArchive.astro";
-import Layout from "@/layouts/Layout.astro";
-
-const allWorks = await getCollection("works");
-const sortedWorks = allWorks.sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const allWorks = await getCollection('works')
+const sortedWorks = sortByDateDescending(allWorks)
 ---
 
-<Layout title="Portfoliooo | Works" description="摘果みかんの制作実績一覧。Web サイト・アプリの開発事例。">
-    <main>
-        <WorksArchive works={sortedWorks} />
-        <GitHubCTA />
-    </main>
+<Layout title="Works" description="摘果みかんの制作実績一覧。Web サイト・アプリの開発事例。">
+  <main>
+    <Archive kind="work" entries={sortedWorks} />
+    <GitHubCTA />
+  </main>
 </Layout>

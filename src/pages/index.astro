@@ -1,23 +1,17 @@
 ---
 import { getCollection } from 'astro:content'
-import About from '@/components/sections/root/About.astro'
-import BlogContact from '@/components/sections/root/BlogContact.astro'
 import Hero from '@/components/sections/root/Hero.astro'
-import Timeline from '@/components/sections/root/Timeline.astro'
-import Works from '@/components/sections/root/Works.astro'
+import HomeGrid from '@/components/sections/root/HomeGrid.astro'
 import Layout from '@/layouts/Layout.astro'
 import { sortByDateDescending } from '@/lib/collectionUtils'
 
 const allWorks = await getCollection('works')
-const sortedWorks = sortByDateDescending(allWorks).slice(0, 3)
+const sortedWorks = sortByDateDescending(allWorks)
 const allArticles = await getCollection('articles')
-const sortedArticles = sortByDateDescending(allArticles).slice(0, 3)
+const sortedArticles = sortByDateDescending(allArticles)
 ---
 
 <Layout description="学生エンジニア・摘果みかんのポートフォリオ。制作実績とブログを掲載。">
   <Hero projectCount={allWorks.length} articleCount={allArticles.length} />
-  <About />
-  <Works works={sortedWorks} />
-  <BlogContact articles={sortedArticles} />
-  <Timeline />
+  <HomeGrid works={sortedWorks} articles={sortedArticles} />
 </Layout>

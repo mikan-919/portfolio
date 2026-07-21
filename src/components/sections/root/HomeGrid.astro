@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets'
+import Timeline from '@/components/Timeline.astro'
+import { formatShortDateJP } from '@/lib/dateUtils'
+import type { ArticlesListProps, WorksListProps } from '@/types/collections'
+
+type Props = WorksListProps & ArticlesListProps
+
+const { works, articles }: Props = Astro.props
+
+const skills: Record<string, string[]> = {
+  Frontend: ['HTML / CSS', 'JavaScript', 'TypeScript', 'React', 'Astro'],
+  Backend: ['Node.js', 'Hono', 'PostgreSQL'],
+  Tools: ['Git', 'Figma', 'Cloudflare'],
+}
+
+const shownWorks = works.slice(0, 3)
+const featuredWork = shownWorks[0]
+const restWorks = shownWorks.slice(1)
+
+const shownArticles = articles.slice(0, 3)
+const featuredArticle = shownArticles[0]
+const restArticles = shownArticles.slice(1)
+
+const cell = 'border-b border-lp-border p-6 md:p-8'
+---
+
+<section class="w-full bg-lp-surface">
+  <div class="max-w-[1200px] mx-auto border-t border-l border-lp-border grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:[grid-auto-flow:dense]">
+    <!-- skills -->
+    <div class={`${cell} border-r lg:row-span-2 flex flex-col gap-5`}>
+      <h2 class="font-display text-2xl leading-none tracking-tight text-lp-text">Skills</h2>
+      <div class="flex flex-col gap-4">
+        {
+          Object.entries(skills).map(([category, tags]) => (
+            <div>
+              <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider mb-2">{category}</p>
+              <div class="flex flex-wrap gap-1.5">
+                {tags.map((tag) => (
+                  <span class="border border-lp-border-subtle px-2 py-0.5 text-xs text-lp-text font-sans">{tag}</span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- featured work -->
+    {
+      featuredWork && (
+        <a
+          href={featuredWork.data.isComingSoon ? undefined : `/works/${featuredWork.id}`}
+          class={`${cell} border-r sm:col-span-2 lg:row-span-2 flex flex-col gap-4 hover:bg-lp-accent-subtle transition-colors`}
+        >
+          <div class="min-h-[160px] relative bg-lp-bg overflow-hidden">
+            {featuredWork.data.image ? (
+              <Image src={featuredWork.data.image} alt={featuredWork.data.title} class="w-full h-full object-cover" />
+            ) : (
+              <div class="absolute inset-0 opacity-20 bg-[radial-gradient(var(--color-lp-text)_1px,transparent_1px)] bg-[length:16px_16px]" />
+            )}
+          </div>
+          <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Featured project</p>
+          <h3 class="font-display text-2xl md:text-3xl leading-tight tracking-tight text-lp-text">{featuredWork.data.title}</h3>
+          <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">{featuredWork.data.description}</p>
+          <div class="flex justify-between items-center mt-auto">
+            <span class="font-mono text-xs text-lp-muted">{featuredWork.data.date.getFullYear()}</span>
+            <span class="text-sm font-mono uppercase tracking-wide text-lp-accent">見る →</span>
+          </div>
+        </a>
+      )
+    }
+
+    <!-- featured article -->
+    {
+      featuredArticle && (
+        <a href={`/blog/${featuredArticle.id}`} class={`${cell} flex flex-col gap-4 hover:bg-lp-accent-subtle transition-colors`}>
+          <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Latest post</p>
+          <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">{featuredArticle.data.title}</h3>
+          <p class="text-sm text-lp-muted leading-relaxed line-clamp-3">{featuredArticle.data.description}</p>
+          <span class="font-mono text-xs text-lp-muted mt-auto">{formatShortDateJP(featuredArticle.data.date)}</span>
+        </a>
+      )
+    }
+
+    <!-- rest works -->
+    {
+      restWorks.map((work) => (
+        <a
+          href={work.data.isComingSoon ? undefined : `/works/${work.id}`}
+          class={`${cell} border-r flex flex-col gap-2 hover:bg-lp-accent-subtle transition-colors`}
+        >
+          <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Project</p>
+          <h4 class="font-display text-lg leading-tight tracking-tight text-lp-text">{work.data.title}</h4>
+          <p class="text-xs text-lp-muted leading-relaxed line-clamp-2">{work.data.description}</p>
+        </a>
+      ))
+    }
+
+    <!-- rest articles -->
+    {
+      restArticles.map((article, i) => (
+        <a
+          href={`/blog/${article.id}`}
+          class={`${cell} ${i === restArticles.length - 1 ? '' : 'border-r'} flex flex-col gap-2 hover:bg-lp-accent-subtle transition-colors`}
+        >
+          <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Post</p>
+          <h4 class="font-display text-lg leading-tight tracking-tight text-lp-text">{article.data.title}</h4>
+          <span class="font-mono text-[11px] text-lp-muted">{formatShortDateJP(article.data.date)}</span>
+        </a>
+      ))
+    }
+
+    <!-- links -->
+    <a href="/works" class={`${cell} border-r flex items-center justify-between font-mono text-sm uppercase tracking-wide text-lp-text hover:bg-lp-accent-subtle transition-colors`}>
+      すべての制作実績 <span>→</span>
+    </a>
+    <a href="/blog" class={`${cell} flex items-center justify-between font-mono text-sm uppercase tracking-wide text-lp-text hover:bg-lp-accent-subtle transition-colors`}>
+      すべての記事 <span>→</span>
+    </a>
+
+    <!-- timeline strip -->
+    <div class="sm:col-span-2 lg:col-span-4 p-6 md:p-8">
+      <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider mb-6">Timeline</p>
+      <Timeline variant="horizontal" />
+    </div>
+  </div>
+</section>

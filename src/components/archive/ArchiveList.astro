@@ -1,0 +1,25 @@
+---
+import ArchiveCard from '@/components/archive/ArchiveCard.astro'
+import type { ArchiveCardData } from '@/types/cards'
+
+type Props = {
+  items: ArchiveCardData[]
+  emptyLabel: string
+}
+const { items, emptyLabel }: Props = Astro.props
+---
+
+<div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {
+      items.map((item) => (
+        <div class="archive-item h-full" data-filter-keys={JSON.stringify(item.filterKeys)}>
+          <ArchiveCard data={item} />
+        </div>
+      ))
+    }
+  </div>
+  <div id="no-results" class="hidden py-16 text-center font-mono text-sm text-lp-muted">
+    {emptyLabel}
+  </div>
+</div>

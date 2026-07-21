@@ -1,6 +1,6 @@
+import { getCollection } from 'astro:content'
 import rss from '@astrojs/rss'
 import type { APIContext } from 'astro'
-import { getCollection } from 'astro:content'
 
 export async function GET(context: APIContext) {
   const articles = await getCollection('articles')
@@ -10,7 +10,7 @@ export async function GET(context: APIContext) {
     title: 'mikan-919 | Blog',
     description: '摘果みかんのブログ。日常とプログラミングについて書いています。',
     site: context.site ?? context.url.origin,
-    items: sorted.map((post) => ({
+    items: sorted.map(post => ({
       title: post.data.title,
       pubDate: post.data.date,
       description: post.data.description,

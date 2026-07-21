@@ -8,21 +8,21 @@ const totalContributions = githubStatus?.[0]?.data.totalContributions ?? 0
 const weeks = githubStatus?.[0]?.data.weeks
 ---
 
-<div class="bg-lp-surface border border-lp-border-subtle rounded p-8 flex flex-col gap-6">
+<div class="flex flex-col gap-6 h-full">
     <div>
-        <p class="font-mono text-xs text-lp-muted uppercase tracking-[0.06em] mb-1">Activity</p>
+        <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider mb-1">Activity</p>
         <div class="flex items-baseline justify-between">
-            <h3 class="font-new text-3xl leading-none tracking-tight text-lp-text">
+            <h3 class="font-display text-2xl leading-none tracking-tight text-lp-text">
                 GitHub
             </h3>
-            <span class="font-new text-3xl leading-none text-lp-accent">
+            <span class="font-display text-2xl leading-none text-lp-accent">
                 {totalContributions}
             </span>
         </div>
         <p class="font-mono text-[11px] text-lp-muted mt-1">contributions in {new Date().getFullYear()}</p>
     </div>
 
-    <div class="rounded overflow-hidden">
+    <div class="overflow-hidden">
         <ContributionGraph client:visible {weeks} />
     </div>
 
@@ -30,7 +30,7 @@ const weeks = githubStatus?.[0]?.data.weeks
         href={`https://github.com/${GITHUB_USERNAME}`}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-1.5 font-mono text-xs text-lp-accent-strong hover:underline"
+        class="inline-flex items-center gap-1.5 font-mono text-xs text-lp-accent hover:underline mt-auto"
     >
         @{GITHUB_USERNAME} on GitHub →
     </a>

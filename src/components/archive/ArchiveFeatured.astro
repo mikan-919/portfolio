@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import { formatShortDateJP } from '@/lib/dateUtils'
+
+type Props = { kind: 'work'; entry: CollectionEntry<'works'> } | { kind: 'article'; entry: CollectionEntry<'articles'> }
+
+const props = Astro.props as Props
+const { kind, entry } = props
+const formattedDate = formatShortDateJP(entry.data.date)
+const image = entry.data.image
+---
+
+<div class="bg-lp-accent-subtle border border-lp-border-subtle">
+  <div class="px-6 py-3 border-b border-lp-border-subtle flex justify-between items-center">
+    <span class="font-mono text-xs text-lp-accent-strong uppercase tracking-widest">
+      {kind === 'work' ? 'Featured Project' : 'Latest Article'}
+    </span>
+    <span class="font-mono text-xs text-lp-muted">{formattedDate}</span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2">
+    <div class="aspect-video w-full relative group overflow-hidden bg-lp-surface-sunken">
+      {
+        image ? (
+          <Image src={image} alt={entry.data.title} class="image-hover-effect w-full h-full object-cover" />
+        ) : (
+          <div class="image-placeholder" />
+        )
+      }
+      {
+        kind === 'work' ? (
+          <a href={entry.data.isComingSoon ? undefined : `/works/${entry.id}`} class="hover-button-overlay">
+            <span aria-disabled={entry.data.isComingSoon} class={`${entry.data.isComingSoon ? 'opacity-75 cursor-not-allowed' : ''} btn-brutal`}>
+              {entry.data.isComingSoon ? 'Coming Soon' : 'View Project'}
+            </span>
+          </a>
+        ) : (
+          <a href={`/blog/${entry.id}`} class="hover-button-overlay">
+            <span class="btn-brutal">Read Article</span>
+          </a>
+        )
+      }
+    </div>
+
+    <div class="px-6 sm:px-8 py-8 sm:py-10 flex flex-col justify-between">
+      <div>
+        <h3 class="font-display text-2xl sm:text-3xl leading-tight tracking-tight text-lp-text mb-3">
+          {entry.data.title}
+        </h3>
+        <p class="text-sm text-lp-muted leading-relaxed">
+          {kind === 'work' ? entry.data.description : (entry.data.summary ?? entry.data.description)}
+        </p>
+      </div>
+      {
+        kind === 'work' ? (
+          <div class="flex gap-3 mt-8">
+            <a
+              aria-disabled={entry.data.isComingSoon || !entry.data.link}
+              href={entry.data.isComingSoon ? undefined : entry.data.link}
+              class={`${entry.data.link ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center justify-center min-h-11 flex-1 text-center bg-lp-accent text-lp-accent-on font-mono font-semibold text-sm uppercase tracking-[0.06em] px-4 hover:bg-lp-accent-strong transition-colors`}
+            >
+              Visit
+            </a>
+            <a
+              aria-disabled={entry.data.isComingSoon || !entry.data.github}
+              href={entry.data.isComingSoon ? undefined : entry.data.github}
+              class={`${entry.data.github ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center justify-center min-h-11 flex-1 text-center border-2 border-lp-text text-lp-text font-mono text-sm uppercase tracking-[0.06em] px-4 hover:bg-lp-text hover:text-lp-surface transition-colors`}
+            >
+              GitHub
+            </a>
+          </div>
+        ) : (
+          <div class="mt-6">
+            <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em] mb-2">Tags</p>
+            <ul class="flex flex-wrap gap-2">
+              {entry.data.tags.map((tag) => (
+                <li class="bg-lp-surface border border-lp-border-subtle px-2.5 py-0.5 text-xs text-lp-text font-mono">#{tag}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</div>

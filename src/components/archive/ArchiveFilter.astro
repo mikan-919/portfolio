@@ -1,0 +1,27 @@
+---
+type Props = {
+  heading: string
+  options: string[]
+  labelPrefix?: string
+}
+const { heading, options, labelPrefix = '' }: Props = Astro.props
+---
+
+<div class="filter-container">
+  <div class="flex justify-between items-end">
+    <div>
+      <h2 class="font-display text-3xl md:text-4xl leading-none tracking-tight text-lp-text mb-5">
+        {heading}
+      </h2>
+      <div class="flex flex-wrap gap-2" id="filter-container">
+        {
+          options.map((opt) => (
+            <button type="button" data-filter={opt} class={`filter-btn ${opt === 'All' ? 'is-active' : ''}`}>
+              {opt === 'All' ? opt : `${labelPrefix}${opt}`}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>

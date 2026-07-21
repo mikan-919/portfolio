@@ -1,58 +1,64 @@
 ---
 import Github from "@/components/sections/about/Github.astro"
-import InfoGrid from "@/components/sections/about/InfoGrid.astro";
-import TimeLine from "@/components/sections/about/TimeLine.astro";
+import InfoGrid from "@/components/sections/about/InfoGrid.astro"
 import Values from "@/components/sections/about/Values.astro"
-import Layout from "@/layouts/Layout.astro";
+import Timeline from "@/components/Timeline.astro"
 import myInfo from '@/content/data/my-info.json'
+import Layout from "@/layouts/Layout.astro"
+
 const { profile } = myInfo
+
+const cell = 'border-b border-lp-border p-6 md:p-8'
 ---
 
-<Layout title="Portfoliooo | About" description="摘果みかんのプロフィール・学習中の技術・GitHub Activity。">
-    <!-- Page Header -->
-    <div class="w-full border-b border-lp-border">
-        <div class="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-[7.5rem] py-16">
+<Layout title="About" description="摘果みかんのプロフィール・学習中の技術・GitHub Activity。">
+    <!-- Page header -->
+    <div class="w-full border-b border-lp-border bg-lp-bg">
+        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-16">
             <p class="font-mono text-xs text-lp-muted uppercase tracking-[0.06em] mb-3">Profile</p>
-            <h1 class="font-display text-6xl md:text-8xl leading-none tracking-tight text-lp-text mb-4">
+            <h1 class="font-display text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight text-lp-text mb-4" style="overflow-wrap: anywhere;">
                 About.
             </h1>
-            <div class="h-[3px] bg-lp-accent w-24 rounded-sm"></div>
+            <div class="h-[3px] bg-lp-accent w-24"></div>
         </div>
     </div>
 
-    <!-- Bio + Info Grid -->
-    <div class="w-full border-b border-lp-border">
-        <div class="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-[7.5rem] py-12">
-            <div class="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-12">
-                <div class="flex flex-col gap-6">
-                    <div>
-                        <h2 class="font-display text-4xl leading-tight tracking-tight text-lp-text">{profile.name}</h2>
-                        <p class="font-mono text-xs text-lp-muted mt-1">{profile.handle}</p>
-                    </div>
-                    <p class="text-sm text-lp-muted leading-relaxed" set:html={profile.bio.replace(/\n/g, '<br />')} />
-                    <p class="font-mono text-[11px] text-lp-subtle">LAST UPDATED: {profile.lastUpdated}</p>
-                </div>
-                <div>
-                    <InfoGrid />
-                </div>
+    <!-- bento grid -->
+    <section class="w-full bg-lp-surface">
+        <div class="max-w-[1200px] mx-auto border-t border-l border-lp-border grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:[grid-auto-flow:dense]">
+            <!-- profile / bio -->
+            <div class={`${cell} border-r sm:col-span-2 lg:row-span-2 flex flex-col gap-4`}>
+                <h2 class="font-display text-2xl md:text-3xl leading-tight tracking-tight text-lp-text">{profile.name}</h2>
+                <p class="font-mono text-xs text-lp-muted -mt-2">{profile.handle}</p>
+                <p class="text-sm text-lp-muted leading-relaxed" set:html={profile.bio.replace(/\n/g, '<br />')} />
+                <p class="font-mono text-[11px] text-lp-subtle mt-auto">LAST UPDATED: {profile.lastUpdated}</p>
             </div>
-        </div>
-    </div>
 
-    <!-- GitHub Activity + Values -->
-    <div class="w-full border-b border-lp-border">
-        <div class="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-[7.5rem] py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- github -->
+            <div class={`${cell} border-r lg:row-span-2`}>
                 <Github />
+            </div>
+
+            <!-- values -->
+            <div class={`${cell} lg:row-span-2`}>
                 <Values />
             </div>
-        </div>
-    </div>
 
-    <!-- Timeline -->
-    <div class="w-full bg-lp-dark border-b border-lp-border">
-        <div class="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-[7.5rem] py-16">
-            <TimeLine />
+            <!-- learning / interests -->
+            <div class="sm:col-span-2 lg:col-span-4 p-6 md:p-8">
+                <InfoGrid />
+            </div>
+        </div>
+    </section>
+
+    <!-- timeline -->
+    <div class="w-full bg-lp-dark">
+        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-16">
+            <p class="font-mono text-xs text-lp-accent uppercase tracking-widest mb-3">History</p>
+            <h3 class="font-display text-3xl md:text-4xl leading-none tracking-tight text-lp-dark-text mb-12">
+                Timeline
+            </h3>
+            <Timeline variant="vertical" dark />
         </div>
     </div>
 </Layout>

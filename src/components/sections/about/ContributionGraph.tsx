@@ -19,21 +19,12 @@ export default function ContributionGraph(props: Props) {
 
   let containerRef!: HTMLDivElement
 
-  // オレンジ寄りのGitHub風カラー（2024〜2025現在の色に近い）
-  // const getColor = (count: number) => {
-  //   if (count === 0) return 'bg-gray-100'
-  //   if (count <= 4) return 'bg-orange-200'
-  //   if (count <= 9) return 'bg-orange-300'
-  //   if (count <= 16) return 'bg-orange-400'
-  //   return 'bg-orange-500' // 17以上は一番濃い
-  // }
-
   const getColor = (count: number) => {
-    if (count === 0) return 'bg-gray-100'
-    if (count <= 3) return 'bg-orange-200'
-    if (count <= 8) return 'bg-orange-400'
-    if (count <= 15) return 'bg-orange-500'
-    return 'bg-orange-600'
+    if (count === 0) return 'bg-lp-border-subtle'
+    if (count <= 3) return 'bg-lp-accent/25'
+    if (count <= 8) return 'bg-lp-accent/50'
+    if (count <= 15) return 'bg-lp-accent/75'
+    return 'bg-lp-accent'
   }
 
   createResizeObserver(
@@ -61,7 +52,7 @@ export default function ContributionGraph(props: Props) {
       <Show
         when={props.weeks && visibleWeeks().length > 0}
         fallback={
-          <div class='px-8 py-12 text-center border-2 border-dashed rounded-xl border-gray-300 text-gray-500'>
+          <div class='px-8 py-12 text-center border-2 border-dashed border-lp-border text-lp-muted'>
             No contribution data available.
           </div>
         }
@@ -71,7 +62,7 @@ export default function ContributionGraph(props: Props) {
             <div class='flex flex-col gap-0.5'>
               {week.contributionDays.map(day => (
                 <div
-                  class={`w-2.5 h-2.5 rounded-xs ${getColor(day.contributionCount)}`}
+                  class={`w-2.5 h-2.5 ${getColor(day.contributionCount)}`}
                   title={`${day.date}: ${day.contributionCount} contributions`}
                 />
               ))}

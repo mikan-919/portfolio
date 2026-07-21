@@ -74,12 +74,11 @@ export default function TableOfContents(props: Props) {
       ref={navRef}
       class='toc-container sticky top-24 self-start hidden lg:block p-8 pr-0 max-h-[calc(100vh-6rem)] overflow-x-hidden overflow-y-auto'
     >
-      <p class='font-black font-mono text-xs mb-4 tracking-widest opacity-50'>TIMELINE</p>
+      <p class='font-bold font-mono text-xs mb-4 tracking-widest text-lp-muted uppercase'>目次</p>
 
-      <ul class='relative border-l-2 border-gray-200 space-y-4'>
-        {/* 黒いバー：Signalの値に応じてスタイルが自動更新される */}
+      <ul class='relative border-l-2 border-lp-border space-y-4'>
         <div
-          class='absolute left-[-2px] w-[2px] bg-black transition-all duration-300 ease-out'
+          class='absolute left-[-2px] w-[2px] bg-lp-accent transition-all duration-300 ease-out'
           style={{
             top: `${indicatorStyle().top}px`,
             height: `${indicatorStyle().height}px`,
@@ -92,9 +91,8 @@ export default function TableOfContents(props: Props) {
               <a
                 href={`#${h.slug}`}
                 data-slug={h.slug}
-                // クラスの出し分けが宣言的でキレイ
                 class={`block transition-colors font-bold leading-tight ${
-                  activeId() === h.slug ? 'text-black scale-105' : 'text-gray-400 hover:text-black'
+                  activeId() === h.slug ? 'text-lp-text' : 'text-lp-muted hover:text-lp-text'
                 }`}
                 onClick={() => {
                   // クリック時に即座にアクティブにする演出

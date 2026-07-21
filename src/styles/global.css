@@ -20,50 +20,55 @@
     transition-duration: 300ms;
   }
 }
+/* Hallmark · macrostructure: Bento Grid (home/about) · Portfolio Grid (archives) · Long Document (detail)
+ * genre: editorial · theme: Brutal · nav: N7 Brutal slab · footer: Ft4 Dense typographic
+ * accent hue: warm (red ~27°) · paper-band: light · display-style: display-heavy
+ */
 :root {
-  --color-lp-bg:             hsl(36, 46%, 95%);
-  --color-lp-surface:        hsl(0, 0%, 100%);
-  --color-lp-surface-sunken: hsl(34, 40%, 92%);
-  --color-lp-border:         hsl(30, 26%, 79%);
-  --color-lp-border-subtle:  hsl(32, 34%, 88%);
-  --color-lp-text:           hsl(24, 20%, 11%);
-  --color-lp-muted:          hsl(27, 12%, 49%);
-  --color-lp-subtle:         hsl(28, 17%, 64%);
-  --color-lp-accent:         hsl(98, 52%, 52%);
-  --color-lp-accent-on:      hsl(22, 22%, 7%);
-  --color-lp-accent-subtle:  hsl(98, 60%, 96%);
-  --color-lp-accent-strong:  hsl(101, 56%, 32%);
-  --color-lp-dark:           hsl(22, 22%, 7%);
-  --color-lp-dark-text:      hsl(38, 52%, 98%);
-  --color-lp-dark-muted:     hsl(27, 12%, 49%);
+  --color-lp-bg: oklch(98% 0.004 85);
+  --color-lp-surface: oklch(99% 0.002 85);
+  --color-lp-surface-sunken: oklch(95% 0.006 85);
+  --color-lp-border: oklch(82% 0.01 85);
+  --color-lp-border-subtle: oklch(90% 0.006 85);
+  --color-lp-text: oklch(16% 0.01 50);
+  --color-lp-muted: oklch(46% 0.01 50);
+  --color-lp-subtle: oklch(62% 0.01 50);
+  --color-lp-accent: oklch(55% 0.21 27);
+  --color-lp-accent-on: oklch(98% 0.005 85);
+  --color-lp-accent-subtle: oklch(95% 0.03 27);
+  --color-lp-accent-strong: oklch(45% 0.19 27);
+  --color-lp-dark: oklch(14% 0.01 50);
+  --color-lp-dark-text: oklch(97% 0.005 85);
+  --color-lp-dark-muted: oklch(58% 0.01 50);
 }
 
 @theme inline {
-  --font-sans:
-    var(--font-family-inter), var(--font-family-new), sans-serif;
+  --font-sans: var(--font-family-inter), var(--font-family-new), sans-serif;
   --font-mono: var(--font-udev-gothic), monospace;
   --font-inter: var(--font-family-inter), sans-serif;
   --font-new: var(--font-family-new), sans-serif;
-  --font-rampart-one: var(--font-family-rampart-one), sans-serif;
-  --font-figtree: var(--font-family-figtree), sans-serif;
   --font-udev-gothic: var(--font-family-udev-gothic), sans-serif;
-  --font-display: var(--font-family-archivo-black), var(--font-family-new), "Arial Black", sans-serif;
+  --font-display:
+    var(--font-family-archivo-black), var(--font-family-new), "Arial Black",
+    sans-serif;
 
-  --color-lp-bg:             var(--color-lp-bg);
-  --color-lp-surface:        var(--color-lp-surface);
+  --radius-none: 0px;
+
+  --color-lp-bg: var(--color-lp-bg);
+  --color-lp-surface: var(--color-lp-surface);
   --color-lp-surface-sunken: var(--color-lp-surface-sunken);
-  --color-lp-border:         var(--color-lp-border);
-  --color-lp-border-subtle:  var(--color-lp-border-subtle);
-  --color-lp-text:           var(--color-lp-text);
-  --color-lp-muted:          var(--color-lp-muted);
-  --color-lp-subtle:         var(--color-lp-subtle);
-  --color-lp-accent:         var(--color-lp-accent);
-  --color-lp-accent-on:      var(--color-lp-accent-on);
-  --color-lp-accent-subtle:  var(--color-lp-accent-subtle);
-  --color-lp-accent-strong:  var(--color-lp-accent-strong);
-  --color-lp-dark:           var(--color-lp-dark);
-  --color-lp-dark-text:      var(--color-lp-dark-text);
-  --color-lp-dark-muted:     var(--color-lp-dark-muted);
+  --color-lp-border: var(--color-lp-border);
+  --color-lp-border-subtle: var(--color-lp-border-subtle);
+  --color-lp-text: var(--color-lp-text);
+  --color-lp-muted: var(--color-lp-muted);
+  --color-lp-subtle: var(--color-lp-subtle);
+  --color-lp-accent: var(--color-lp-accent);
+  --color-lp-accent-on: var(--color-lp-accent-on);
+  --color-lp-accent-subtle: var(--color-lp-accent-subtle);
+  --color-lp-accent-strong: var(--color-lp-accent-strong);
+  --color-lp-dark: var(--color-lp-dark);
+  --color-lp-dark-text: var(--color-lp-dark-text);
+  --color-lp-dark-muted: var(--color-lp-dark-muted);
 }
 
 /* これらのユーティリティーはSectionコンポーネントで使用されているので、特殊な要件がない限り<Section/>を利用してください。 */
@@ -80,7 +85,7 @@
 }
 @layer components {
   .btn-brutal {
-    @apply border border-lp-border bg-lp-surface text-lp-text px-6 py-3 font-sans font-semibold text-sm rounded select-none transition-colors hover:bg-lp-surface-sunken;
+    @apply border-2 border-lp-text bg-lp-surface text-lp-text px-6 py-3 font-mono font-semibold text-sm uppercase tracking-[0.06em] rounded-none select-none transition-colors hover:bg-lp-text hover:text-lp-surface;
   }
   .image-hover-effect {
     @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-105;
@@ -98,6 +103,9 @@
     @apply px-8 md:px-16 lg:px-[7.5rem] py-8 border-b border-lp-border;
   }
   .filter-btn {
-    @apply border border-lp-border bg-lp-surface text-lp-text px-4 py-2 text-sm font-sans cursor-pointer select-none rounded transition-colors hover:bg-lp-surface-sunken;
+    @apply border border-lp-text bg-lp-surface text-lp-text px-4 py-2 text-sm font-mono uppercase tracking-[0.04em] cursor-pointer select-none rounded-none transition-colors hover:bg-lp-text hover:text-lp-surface;
+  }
+  .filter-btn.is-active {
+    @apply bg-lp-accent border-lp-accent text-lp-accent-on;
   }
 }

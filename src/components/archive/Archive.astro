@@ -1,0 +1,117 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import ArchiveFeatured from '@/components/archive/ArchiveFeatured.astro'
+import ArchiveFilter from '@/components/archive/ArchiveFilter.astro'
+import ArchiveHeader from '@/components/archive/ArchiveHeader.astro'
+import ArchiveList from '@/components/archive/ArchiveList.astro'
+import Section from '@/components/ui/Section.astro'
+import { sortByDateAscending } from '@/lib/collectionUtils'
+import { type ArchiveCardData, articleToCard, workToCard } from '@/types/cards'
+
+type Props = { kind: 'work'; entries: CollectionEntry<'works'>[] } | { kind: 'article'; entries: CollectionEntry<'articles'>[] }
+
+const props = Astro.props as Props
+const { kind } = props
+
+const featured = props.entries[0]
+const total = props.entries.length
+const now = new Date()
+
+let rate = 0
+let items: ArchiveCardData[]
+let options: string[]
+
+const eyebrow = kind === 'work' ? 'PROJECT ARCHIVE' : 'BLOG ARCHIVE'
+const title = kind === 'work' ? 'WORKS.' : 'BLOG.'
+const totalLabel = kind === 'work' ? 'TOTAL PROJECTS' : 'TOTAL ARTICLES'
+const rateLabel = kind === 'work' ? 'PROJECTS / YEAR' : 'ARTICLES / MONTH'
+const emptyLabel = kind === 'work' ? 'No projects found in this category.' : 'No articles found with this tag.'
+const filterHeading = kind === 'work' ? 'ALL PROJECTS' : 'ALL ARTICLES'
+const labelPrefix = kind === 'work' ? '' : '#'
+
+if (props.kind === 'work') {
+  const ascending = sortByDateAscending(props.entries)
+  if (ascending.length > 0) {
+    const first = ascending[0].data.date
+    const years = now.getFullYear() - first.getFullYear() + (now.getMonth() - first.getMonth()) / 12
+    rate = years > 0 ? total / years : total
+  }
+  options = ['All', ...new Set(props.entries.map((e) => e.data.category.toUpperCase()))]
+  items = props.entries.map(workToCard)
+} else {
+  const ascending = sortByDateAscending(props.entries)
+  if (ascending.length > 0) {
+    const first = ascending[0].data.date
+    const months = (now.getFullYear() - first.getFullYear()) * 12 + (now.getMonth() - first.getMonth()) + 1
+    rate = months > 0 ? total / months : total
+  }
+  options = ['All', ...new Set(props.entries.flatMap((e) => e.data.tags))]
+  items = props.entries.map(articleToCard)
+}
+---
+
+<Section>
+  <ArchiveHeader eyebrow={eyebrow} title={title} total={total} totalLabel={totalLabel} rate={rate} rateLabel={rateLabel} />
+</Section>
+
+<Section class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-8">
+  {
+    featured &&
+      (kind === 'work' ? (
+        <ArchiveFeatured kind="work" entry={featured as CollectionEntry<'works'>} />
+      ) : (
+        <ArchiveFeatured kind="article" entry={featured as CollectionEntry<'articles'>} />
+      ))
+  }
+</Section>
+
+<Section isGrow>
+  <ArchiveFilter heading={filterHeading} options={options} labelPrefix={labelPrefix} />
+  <ArchiveList items={items} emptyLabel={emptyLabel} />
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn')
+      const items = document.querySelectorAll<HTMLElement>('.archive-item')
+      const noResults = document.getElementById('no-results')
+
+      function applyFilter(filter: string) {
+        buttons.forEach((btn) => {
+          btn.classList.toggle('is-active', btn.dataset.filter === filter)
+        })
+
+        let visibleCount = 0
+        items.forEach((item) => {
+          const keys = JSON.parse(item.dataset.filterKeys || '[]') as string[]
+          const match = filter === 'All' || keys.includes(filter)
+          item.style.display = match ? 'block' : 'none'
+          if (match) visibleCount++
+        })
+
+        if (noResults) {
+          noResults.style.display = visibleCount === 0 ? 'block' : 'none'
+        }
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const filter = btn.dataset.filter
+          if (!filter) return
+          applyFilter(filter)
+          const url = new URL(window.location.href)
+          if (filter === 'All') {
+            url.searchParams.delete('filter')
+          } else {
+            url.searchParams.set('filter', filter)
+          }
+          window.history.pushState({}, '', url)
+        })
+      })
+
+      const params = new URLSearchParams(window.location.search)
+      const initialFilter = params.get('filter')
+      if (initialFilter && Array.from(buttons).some((b) => b.dataset.filter === initialFilter)) {
+        applyFilter(initialFilter)
+      }
+    })
+  </script>
+</Section>

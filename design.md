@@ -1,0 +1,90 @@
+# Design — mikan-919 Portfolio
+
+ロックされたデザインシステム。ページ単位の再生成時は必ずこのファイルを先に読み、
+逸脱する場合はこのファイルを更新してから実装する。
+
+## Genre
+editorial(Brutal はこのクラスタのカタログテーマ)
+
+## Macrostructure family
+
+- **ホーム(marketing)**: Bento Grid — Hero・Skills・Works・Blog・Timeline を
+  不揃いブロックの単一グリッドに統合。ナンバリング見出し(01/02/03...)は使わない。
+- **一覧ページ(Works一覧・Blog一覧・タグ別一覧)**: Portfolio Grid — フィルタ可能な
+  カードグリッド。Works と Blog は type prop で出し分ける共通コンポーネント。
+- **詳細ページ(Works詳細・Blog記事詳細)**: Long Document — 本文中心の連続した
+  読み物。ToC は Blog 記事のみ。
+- **About**: Bento Grid 系(bio・skills・GitHub活動・values・timeline を
+  不揃いブロックで)。
+
+## Theme — Brutal
+
+- `--color-lp-bg`             oklch(98% 0.004 85)   紙
+- `--color-lp-surface`        oklch(99% 0.002 85)   紙より明るい面
+- `--color-lp-surface-sunken` oklch(95% 0.006 85)   沈んだ面
+- `--color-lp-border`         oklch(82% 0.01 85)
+- `--color-lp-border-subtle`  oklch(90% 0.006 85)
+- `--color-lp-text`           oklch(16% 0.01 50)    インク
+- `--color-lp-muted`          oklch(46% 0.01 50)
+- `--color-lp-subtle`         oklch(62% 0.01 50)
+- `--color-lp-accent`         oklch(55% 0.21 27)    赤(唯一のアクセント)
+- `--color-lp-accent-on`      oklch(98% 0.005 85)
+- `--color-lp-accent-subtle`  oklch(95% 0.03 27)
+- `--color-lp-accent-strong`  oklch(45% 0.19 27)
+- `--color-lp-dark`           oklch(14% 0.01 50)
+- `--color-lp-dark-text`      oklch(97% 0.005 85)
+- `--color-lp-dark-muted`     oklch(58% 0.01 50)
+
+軸: paper-band = light / display-style = display-heavy(black sans) / accent-hue = warm(red, ~27°)
+
+## Typography
+
+- Display: Archivo Black(既存)、日本語フォールバック Zen Kaku Gothic New 900
+- Body: Inter(既存)、日本語は Zen Kaku Gothic New
+- Mono / ラベル / データ: UDEV Gothic(既存・ローカル)
+- Figtree・Rampart One は使用箇所なしのため廃止
+- 見出しは常に roman(イタリック禁止)。強調は太さ・アクセント色・下線で表現
+
+## Spacing / Radius
+
+- 既存 Tailwind 4pt spacing を継続使用
+- 角丸は全面的に 0(スラブ的な直角)。既存の `rounded` クラスはすべて撤去
+
+## Motion
+
+- View Transitions(ClientRouter)は既存のまま継続
+- 新規スクロールリビール等は追加しない(motion-cut のまま)
+- transform / opacity のみアニメーション対象。`prefers-reduced-motion` 対応は既存のまま
+
+## Microinteractions
+
+- ホバーは色・下線変化のみ。トースト等の演出は使わない
+
+## CTA voice
+
+- Primary: 塗り(accent)、角丸0、全角トラッキング大文字
+- Secondary: アウトライン(ink)、角丸0
+
+## Nav / Footer
+
+- Nav: **N7 Brutal slab** — 太い border-bottom、全角大文字ワードマーク、
+  トラッキングされた大文字リンク列、角丸なし
+- Footer: **Ft4 Dense typographic** — UDEV Gothic Mono の一枚岩ブロック、
+  hairline 罫線、コロフォン的な密度
+
+## 共通コンポーネント方針
+
+- Works/Blog のカード・ヘッダー・フィルター・リスト・アーカイブ・フィーチャー系は
+  それぞれ1系統に統合し、`type: 'work' | 'article'` で出し分ける
+- ホーム/About の Timeline は1コンポーネントに統合(向きを prop 化)
+- `Section.astro`(`isGrow?, class?, id?`)を全ページで一貫使用し、
+  ページ側で罫線・コンテナ幅を再実装しない
+
+## What pages MUST share
+
+- ワードマーク、赤アクセントの使用箇所(≤5%/viewport)、Archivo Black + Inter の
+  ペアリング、CTA ボイス、角丸0
+
+## What pages MAY differ on
+
+- ページ種別ファミリー内でのアーキタイプ(例: ホームの bento タイル配分)

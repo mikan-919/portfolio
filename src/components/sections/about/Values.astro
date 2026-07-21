@@ -1,15 +1,13 @@
 ---
 import Flame from "@lucide/astro/icons/flame";
+import Palette from "@lucide/astro/icons/palette";
 ---
 
-<div class="bg-lp-surface border border-lp-border-subtle rounded p-8">
-    <p class="font-mono text-xs text-lp-muted uppercase tracking-[0.06em] mb-3">Philosophy</p>
-    <h3 class="font-new text-3xl leading-none tracking-tight text-lp-text mb-8">
-        Values
-    </h3>
+<div class="flex flex-col gap-6 h-full">
+    <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Philosophy</p>
     <div class="space-y-8">
         <div>
-            <h4 class="font-new text-lg text-lp-text mb-2 flex items-center gap-2">
+            <h4 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2">
                 <Flame class="inline-block size-5 text-lp-accent" />
                 Performance
             </h4>
@@ -18,8 +16,9 @@ import Flame from "@lucide/astro/icons/flame";
             </p>
         </div>
         <div>
-            <h4 class="font-new text-lg text-lp-text mb-2">
-                🎨 Attention to Detail
+            <h4 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2">
+                <Palette class="inline-block size-5 text-lp-accent" />
+                Attention to Detail
             </h4>
             <p class="text-sm text-lp-muted leading-relaxed">
                 細部へのこだわりが全体の質を高めると信じています。ピクセル単位の調整や、マイクロインタラクションを大切にしています。

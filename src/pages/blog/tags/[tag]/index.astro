@@ -1,8 +1,8 @@
 ---
-import type { CollectionEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
-import BlogList from '@/components/blog/BlogList.astro'
+import ArchiveList from '@/components/archive/ArchiveList.astro'
 import Layout from '@/layouts/Layout.astro'
+import { articleToCard } from '@/types/cards'
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles')
@@ -14,18 +14,13 @@ export async function getStaticPaths() {
   }))
 }
 
-type Props = {
-  tag: string
-  articles: CollectionEntry<'articles'>[]
-}
-
 const { tag, articles } = Astro.props
 ---
 
-<Layout title={`Portfoliooo | #${tag}`} description={`#${tag} の記事一覧`}>
-  <div class="px-8 md:px-16 lg:px-[7.5rem] pt-12 pb-4">
+<Layout title={`#${tag}`} description={`#${tag} の記事一覧`}>
+  <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem] pt-12 pb-4">
     <a href="/blog" class="font-mono text-xs text-lp-muted hover:text-lp-text transition-colors">← Blog に戻る</a>
     <h1 class="font-display text-4xl tracking-tight text-lp-text mt-4">#{tag}</h1>
   </div>
-  <BlogList articles={articles} />
+  <ArchiveList items={articles.map(articleToCard)} emptyLabel="No articles found." />
 </Layout>

@@ -1,8 +1,8 @@
 ---
-import type { CollectionEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
-import WorksList from '@/components/works/WorksList.astro'
+import ArchiveList from '@/components/archive/ArchiveList.astro'
 import Layout from '@/layouts/Layout.astro'
+import { workToCard } from '@/types/cards'
 export const prerender = true
 
 export async function getStaticPaths() {
@@ -15,18 +15,13 @@ export async function getStaticPaths() {
   }))
 }
 
-type Props = {
-  tag: string
-  works: CollectionEntry<'works'>[]
-}
-
 const { tag, works } = Astro.props
 ---
 
-<Layout title={`Portfoliooo | #${tag}`} description={`#${tag} の作品一覧`}>
-  <div class="px-8 md:px-16 lg:px-[7.5rem] pt-12 pb-4">
+<Layout title={`#${tag}`} description={`#${tag} の作品一覧`}>
+  <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem] pt-12 pb-4">
     <a href="/works" class="font-mono text-xs text-lp-muted hover:text-lp-text transition-colors">← Works に戻る</a>
     <h1 class="font-display text-4xl tracking-tight text-lp-text mt-4">#{tag}</h1>
   </div>
-  <WorksList works={works} />
+  <ArchiveList items={works.map(workToCard)} emptyLabel="No projects found." />
 </Layout>

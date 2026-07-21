@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content'
+
+type Props = {
+  variant?: 'horizontal' | 'vertical'
+  dark?: boolean
+}
+const { variant = 'vertical', dark = false }: Props = Astro.props
+
+const raw = await getCollection('timeline')
+const items = raw.map((e) => e.data).sort((a, b) => a.date.localeCompare(b.date))
+
+function formatDate(rawDate: string): string {
+  const [year, month] = rawDate.split('-')
+  if (!month || month.includes('X')) return year
+  return `${year} · ${month}`
+}
+
+const text = dark ? 'text-lp-dark-text' : 'text-lp-text'
+const muted = dark ? 'text-lp-dark-muted' : 'text-lp-muted'
+const line = dark ? 'bg-lp-dark-muted/40' : 'bg-lp-border'
+const dot = dark ? 'bg-lp-dark-text' : 'bg-lp-text'
+const dotBorder = dark ? 'border-lp-dark' : 'border-lp-surface'
+---
+
+{
+  variant === 'horizontal' ? (
+    <div class="relative">
+      <div class={`absolute left-[6px] right-0 top-[5px] h-[2px] ${line}`} />
+      <div class="grid gap-0 relative" style={`grid-template-columns: repeat(${items.length}, 1fr)`}>
+        {items.map((item) => (
+          <div class="relative pt-7 pr-6">
+            <div class={`absolute top-0 left-0 w-3 h-3 ${dot} border-2 ${dotBorder}`} />
+            <span class={`font-mono text-[11px] ${muted} block mb-1`}>{formatDate(item.date)}</span>
+            <h4 class={`font-sans font-semibold text-sm ${text} m-0 mb-1`}>{item.title}</h4>
+            <p class={`font-sans text-xs ${muted} m-0 leading-relaxed`}>{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <div class="pl-0 md:pl-2">
+      <div class={`border-l-2 ${dark ? 'border-lp-dark-muted/40' : 'border-lp-border'} pl-8 py-4 space-y-10`}>
+        {items.map((item) => (
+          <div class="relative">
+            <div class={`absolute top-1 -left-[2.375rem] w-3 h-3 ${dot}`} />
+            <span class={`font-mono text-[11px] ${muted} block mb-1`}>{formatDate(item.date)}</span>
+            <h4 class={`font-display text-xl leading-tight tracking-tight ${text} m-0`}>{item.title}</h4>
+            <p class={`text-sm ${muted} leading-relaxed mt-1`}>{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
