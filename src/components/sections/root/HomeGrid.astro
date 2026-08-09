@@ -22,13 +22,13 @@ const shownArticles = articles.slice(0, 3)
 const featuredArticle = shownArticles[0]
 const restArticles = shownArticles.slice(1)
 
-const cell = 'border-b border-lp-border p-7 md:p-9'
+const cell = 'bg-lp-surface rounded-xl border border-lp-border-subtle p-7 md:p-9'
 ---
 
-<section class="w-full bg-lp-surface">
-  <div class="max-w-[1200px] mx-auto border-t border-l border-lp-border grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:[grid-auto-flow:dense]">
+<section class="w-full bg-lp-bg">
+  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 sm:[grid-auto-flow:dense]">
     <!-- skills -->
-    <div class={`${cell} border-r lg:row-span-2 flex flex-col gap-5`}>
+    <div class={`${cell} lg:row-span-2 flex flex-col gap-5`}>
       <h2 class="font-display text-2xl leading-none tracking-tight text-lp-text">Skills</h2>
       <div class="flex flex-col gap-4 lg:flex-1 lg:justify-between">
         {
@@ -54,9 +54,9 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
       featuredWork && (
         <a
           href={featuredWork.data.isComingSoon ? undefined : `/works/${featuredWork.id}`}
-          class={`${cell} border-r sm:col-span-2 lg:row-span-2 flex flex-col gap-4 hover:bg-lp-accent-subtle transition-colors`}
+          class={`${cell} sm:col-span-2 lg:row-span-2 flex flex-col gap-4 hover:border-lp-border transition-colors`}
         >
-          <div class="min-h-[160px] relative bg-lp-bg overflow-hidden">
+          <div class="min-h-[160px] relative rounded-lg overflow-hidden bg-lp-bg">
             {featuredWork.data.image ? (
               <Image src={featuredWork.data.image} alt={featuredWork.data.title} class="w-full h-full object-cover" />
             ) : (
@@ -77,7 +77,7 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
     <!-- featured article -->
     {
       featuredArticle && (
-        <a href={`/blog/${featuredArticle.id}`} class={`${cell} lg:row-span-2 flex flex-col gap-4 lg:justify-between hover:bg-lp-accent-subtle transition-colors`}>
+        <a href={`/blog/${featuredArticle.id}`} class={`${cell} lg:row-span-2 flex flex-col gap-4 lg:justify-between hover:border-lp-border transition-colors`}>
           <div class="flex flex-col gap-4">
             <p class="text-xs text-lp-subtle">Latest post</p>
             <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">{featuredArticle.data.title}</h3>
@@ -93,7 +93,7 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
       restWorks.map((work) => (
         <a
           href={work.data.isComingSoon ? undefined : `/works/${work.id}`}
-          class={`${cell} border-r flex flex-col gap-2 hover:bg-lp-accent-subtle transition-colors`}
+          class={`${cell} flex flex-col gap-2 hover:border-lp-border transition-colors`}
         >
           <p class="text-xs text-lp-subtle">Project</p>
           <h4 class="font-display text-lg leading-tight tracking-tight text-lp-text">{work.data.title}</h4>
@@ -104,10 +104,10 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
 
     <!-- rest articles -->
     {
-      restArticles.map((article, i) => (
+      restArticles.map((article) => (
         <a
           href={`/blog/${article.id}`}
-          class={`${cell} ${i === restArticles.length - 1 ? '' : 'border-r'} flex flex-col gap-2 hover:bg-lp-accent-subtle transition-colors`}
+          class={`${cell} flex flex-col gap-2 hover:border-lp-border transition-colors`}
         >
           <p class="text-xs text-lp-subtle">Post</p>
           <h4 class="font-display text-lg leading-tight tracking-tight text-lp-text">{article.data.title}</h4>
@@ -117,15 +117,15 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
     }
 
     <!-- links -->
-    <a href="/works" class={`${cell} border-r flex items-center justify-between text-sm text-lp-text hover:bg-lp-accent-subtle transition-colors`}>
+    <a href="/works" class={`${cell} flex items-center justify-between text-sm text-lp-text hover:border-lp-border transition-colors`}>
       すべての制作実績 <span>→</span>
     </a>
-    <a href="/blog" class={`${cell} flex items-center justify-between text-sm text-lp-text hover:bg-lp-accent-subtle transition-colors`}>
+    <a href="/blog" class={`${cell} flex items-center justify-between text-sm text-lp-text hover:border-lp-border transition-colors`}>
       すべての記事 <span>→</span>
     </a>
 
     <!-- timeline strip -->
-    <div class="sm:col-span-2 lg:col-span-4 p-7 md:p-9 lg:py-12">
+    <div class={`sm:col-span-2 lg:col-span-4 ${cell} lg:py-9`}>
       <p class="text-xs text-lp-subtle mb-6">Timeline</p>
       <Timeline variant="horizontal" />
     </div>
