@@ -8,7 +8,7 @@ import Layout from "@/layouts/Layout.astro"
 
 const { profile } = myInfo
 
-const cell = 'bg-lp-surface rounded-xl border border-lp-border-subtle p-6 md:p-8'
+const cell = 'p-6 md:p-8'
 ---
 
 <Layout title="About" description="摘果みかんのプロフィール・学習中の技術・GitHub Activity。" ogImage="/og/site/about.png">
@@ -24,7 +24,7 @@ const cell = 'bg-lp-surface rounded-xl border border-lp-border-subtle p-6 md:p-8
 
     <!-- bento grid -->
     <section class="w-full bg-lp-bg">
-        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 sm:[grid-auto-flow:dense]">
+        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 sm:[grid-auto-flow:dense]">
             <!-- profile / bio -->
             <div class={`${cell} sm:col-span-2 lg:row-span-2 flex flex-col gap-4`}>
                 <h2 class="font-display text-2xl md:text-3xl leading-tight tracking-tight text-lp-text">{profile.name}</h2>

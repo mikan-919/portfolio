@@ -11,14 +11,19 @@ Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたク�
 
 - **ホーム(marketing)**: Bento Grid — Hero・Skills・Works・Blog・Timeline を
   不揃いブロックの単一グリッドに統合。ナンバリング見出し(01/02/03...)は使わない。
-  セル間はケイ線(border)ではなく `gap` + 個別カード(`rounded-xl` + hairline border)
-  で区切る(excel状の総罫線グリッドにしない)
+  セル間はケイ線(border)ではなく `gap` で区切る。画像を持つプレビュー
+  (Featured Work/Article)のみ `rounded-lg` + hairline border のカードにし、
+  それ以外のテキストのみのセル(Skills・リスト項目・ナビリンク等)は
+  背景もボーダーも無いフラット表示にする(Emil Kowalski 的な余白駆動)
 - **一覧ページ(Works一覧・Blog一覧・タグ別一覧)**: Portfolio Grid — フィルタ可能な
   カードグリッド。Works と Blog は type prop で出し分ける共通コンポーネント。
+  ここは画像プレビューを伴うため catnose 的なソフトカード(rounded + hairline
+  border + pill タグ)を維持する
 - **詳細ページ(Works詳細・Blog記事詳細)**: Long Document — 本文中心の連続した
   読み物。ToC は Blog 記事のみ。
-- **About**: Bento Grid 系(bio・skills・GitHub活動・values・timeline を
-  不揃いブロックで、ホームと同じ gap + カード方式)。
+- **About**: Bento Grid 系(bio・GitHub活動・values・learning/interests)。
+  画像を持たないため全セルフラット(背景・ボーダー無し)、gap と見出しの
+  太字だけで区切る
 
 ## Theme — Swiss Minimal
 
