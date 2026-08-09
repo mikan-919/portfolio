@@ -83,7 +83,7 @@
 }
 @layer components {
   .btn-brutal {
-    @apply inline-flex items-center gap-2 bg-lp-surface text-lp-text px-5 py-2.5 rounded-full text-sm font-medium shadow-sm select-none transition-all hover:shadow-md hover:scale-[1.02];
+    @apply inline-flex items-center gap-2 bg-lp-surface text-lp-text px-4 py-2 rounded-full text-sm shadow-sm select-none transition-shadow hover:shadow-md;
   }
   .image-hover-effect {
     @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-105;
@@ -101,9 +101,9 @@
     @apply px-8 md:px-16 lg:px-[7.5rem] py-8 border-b border-lp-border;
   }
   .filter-btn {
-    @apply border border-lp-border-subtle bg-lp-surface text-lp-muted px-4 py-1.5 text-sm rounded-full cursor-pointer select-none transition-colors hover:border-lp-text hover:text-lp-text;
+    @apply text-lp-muted px-0 py-1 text-sm border-b border-transparent cursor-pointer select-none transition-colors hover:text-lp-text;
   }
   .filter-btn.is-active {
-    @apply bg-lp-text border-lp-text text-lp-surface;
+    @apply text-lp-text border-lp-text;
   }
 }

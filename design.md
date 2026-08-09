@@ -79,9 +79,13 @@ accent-hue = warm(red, ~27°、使用量は従来よりさらに抑える)
 
 ## CTA voice
 
-- Primary: 塗り(accent)、`rounded-full`、通常大文字小文字(uppercase禁止)
-- Secondary: アウトライン(hairline border)、`rounded-full`、ホバーは
-  淡い背景色または枠線色の変化のみ
+- 1画面につき主要アクションは1つまで: 塗り(accent)・`rounded-full`・
+  控えめなサイズ(`px-5 min-h-11`)・通常大文字小文字(uppercase禁止)
+- それ以外のアクション(secondary/GitHubリンク等)はボタン化しない — 下線なし
+  プレーンテキストリンク+矢印(`→`)、ホバーは文字色の変化のみ
+- フィルター/タブは背景・枠線を持たず、下線(border-b)で選択状態を示す
+  テキストタブにする(`.filter-btn`)。カード上のオーバーレイCTA(画像に重ねる
+  ボタン)のみ、視認性のため軽い塗り+shadowのピルを許容する(`.btn-brutal`)
 
 ## Nav / Footer
 

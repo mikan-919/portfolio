@@ -54,20 +54,20 @@ const image = entry.data.image
       </div>
       {
         kind === 'work' ? (
-          <div class="flex gap-3 mt-8">
+          <div class="flex items-center gap-5 mt-8">
             <a
               aria-disabled={entry.data.isComingSoon || !entry.data.link}
               href={entry.data.isComingSoon ? undefined : entry.data.link}
-              class={`${entry.data.link ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center justify-center min-h-11 flex-1 text-center rounded-full bg-lp-accent text-lp-accent-on font-medium text-sm px-4 hover:bg-lp-accent-strong transition-colors`}
+              class={`${entry.data.link ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center min-h-11 rounded-full bg-lp-accent text-lp-accent-on text-sm px-5 hover:bg-lp-accent-strong transition-colors`}
             >
               Visit
             </a>
             <a
               aria-disabled={entry.data.isComingSoon || !entry.data.github}
               href={entry.data.isComingSoon ? undefined : entry.data.github}
-              class={`${entry.data.github ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center justify-center min-h-11 flex-1 text-center rounded-full border border-lp-border text-lp-text font-medium text-sm px-4 hover:border-lp-text hover:bg-lp-surface-sunken transition-colors`}
+              class={`${entry.data.github ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-accent transition-colors`}
             >
-              GitHub
+              GitHub →
             </a>
           </div>
         ) : (
