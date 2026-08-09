@@ -107,3 +107,13 @@
     @apply text-lp-text border-lp-text;
   }
 }
+
+/* prose-code:* はインラインコード用の装飾だが .prose code 全体(fenced code block 内の
+   Shiki トークンを含む <code> も)に掛かってしまうため、コードブロック側は明示的に
+   打ち消す。@layer外の素の規則にして utilities レイヤーより優先させる。 */
+.prose pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+}
