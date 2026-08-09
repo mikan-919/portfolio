@@ -15,11 +15,10 @@ const cell = 'border-b border-lp-border p-6 md:p-8'
     <!-- Page header -->
     <div class="w-full border-b border-lp-border bg-lp-bg">
         <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-16">
-            <p class="font-mono text-xs text-lp-muted uppercase tracking-[0.06em] mb-3">Profile</p>
-            <h1 class="font-display text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight text-lp-text mb-4" style="overflow-wrap: anywhere;">
-                About.
+            <p class="text-xs text-lp-subtle mb-3">Profile</p>
+            <h1 class="font-display text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight text-lp-text" style="overflow-wrap: anywhere;">
+                About
             </h1>
-            <div class="h-[3px] bg-lp-accent w-24"></div>
         </div>
     </div>
 
@@ -31,7 +30,7 @@ const cell = 'border-b border-lp-border p-6 md:p-8'
                 <h2 class="font-display text-2xl md:text-3xl leading-tight tracking-tight text-lp-text">{profile.name}</h2>
                 <p class="font-mono text-xs text-lp-muted -mt-2">{profile.handle}</p>
                 <p class="text-sm text-lp-muted leading-relaxed" set:html={profile.bio.replace(/\n/g, '<br />')} />
-                <p class="font-mono text-[11px] text-lp-subtle mt-auto">LAST UPDATED: {profile.lastUpdated}</p>
+                <p class="text-xs text-lp-subtle mt-auto">Last updated {profile.lastUpdated}</p>
             </div>
 
             <!-- github -->
@@ -54,7 +53,7 @@ const cell = 'border-b border-lp-border p-6 md:p-8'
     <!-- timeline -->
     <div class="w-full bg-lp-dark">
         <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-16">
-            <p class="font-mono text-xs text-lp-accent uppercase tracking-widest mb-3">History</p>
+            <p class="text-xs text-lp-accent mb-3">History</p>
             <h3 class="font-display text-3xl md:text-4xl leading-none tracking-tight text-lp-dark-text mb-12">
                 Timeline
             </h3>

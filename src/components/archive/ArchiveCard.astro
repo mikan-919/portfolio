@@ -23,14 +23,14 @@ const { data }: Props = Astro.props
     {
       data.comingSoon && (
         <div class="absolute inset-0 flex items-center justify-center bg-lp-bg/80">
-          <span class="font-mono text-xs text-lp-muted uppercase tracking-widest">Coming Soon</span>
+          <span class="text-xs text-lp-muted">Coming Soon</span>
         </div>
       )
     }
   </div>
 
   <div class="p-6 flex flex-col gap-2 flex-1">
-    {data.meta && <span class="font-mono text-[10px] text-lp-muted uppercase tracking-[0.06em]">{data.meta}</span>}
+    {data.meta && <span class="text-xs text-lp-subtle">{data.meta}</span>}
     <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">
       {data.title}
     </h3>

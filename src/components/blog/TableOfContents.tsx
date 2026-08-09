@@ -74,7 +74,7 @@ export default function TableOfContents(props: Props) {
       ref={navRef}
       class='toc-container sticky top-24 self-start hidden lg:block p-8 pr-0 max-h-[calc(100vh-6rem)] overflow-x-hidden overflow-y-auto'
     >
-      <p class='font-bold font-mono text-xs mb-4 tracking-widest text-lp-muted uppercase'>目次</p>
+      <p class='text-xs font-medium mb-4 text-lp-subtle'>目次</p>
 
       <ul class='relative border-l-2 border-lp-border space-y-4'>
         <div

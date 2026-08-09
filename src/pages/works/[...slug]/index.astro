@@ -58,11 +58,11 @@ const formattedDate = formatMonthYear(entry.data.date)
             <div class="absolute bottom-0 left-0 w-full px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-10">
                 <div class="space-y-3">
                     <div class="flex items-center gap-3">
-                        <span class="rounded-full bg-lp-accent text-lp-accent-on font-mono text-xs px-3 py-1 uppercase tracking-wide">
+                        <span class="rounded-full bg-lp-accent text-lp-accent-on text-xs font-medium px-3 py-1">
                             {entry.data.category}
                         </span>
                         {entry.data.isComingSoon && (
-                            <span class="rounded-full bg-lp-surface text-lp-text font-mono text-xs px-3 py-1 uppercase tracking-wide">
+                            <span class="rounded-full bg-lp-surface text-lp-text text-xs font-medium px-3 py-1">
                                 Coming Soon
                             </span>
                         )}
@@ -83,13 +83,13 @@ const formattedDate = formatMonthYear(entry.data.date)
         <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
             <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-lp-border py-8 gap-0">
                 <div class="py-6 md:py-0 md:pr-8 space-y-2">
-                    <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Project Type</p>
+                    <p class="text-xs text-lp-subtle">Project Type</p>
                     <p class="font-sans text-lp-text font-medium">
                         {entry.data.role || "—"}
                     </p>
                 </div>
                 <div class="py-6 md:py-0 md:px-8 space-y-2">
-                    <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Links</p>
+                    <p class="text-xs text-lp-subtle">Links</p>
                     <div class="flex flex-col gap-1.5">
                         {entry.data.link ? (
                             <a
@@ -118,7 +118,7 @@ const formattedDate = formatMonthYear(entry.data.date)
                     </div>
                 </div>
                 <div class="py-6 md:py-0 md:pl-8 space-y-2">
-                    <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Tech Stack</p>
+                    <p class="text-xs text-lp-subtle">Tech Stack</p>
                     <Tags tags={entry.data.tags} link={(tag) => `/works/tags/${tag}`} />
                 </div>
             </div>
@@ -141,7 +141,7 @@ const formattedDate = formatMonthYear(entry.data.date)
                     {
                         entry.data.gallery && entry.data.gallery.length > 0 ? (
                             <div class="flex flex-col gap-4">
-                                <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Gallery</p>
+                                <p class="text-xs text-lp-subtle">Gallery</p>
                                 {entry.data.gallery.map((img) => (
                                     <Image
                                         src={img}

@@ -34,7 +34,7 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
         {
           Object.entries(skills).map(([category, tags]) => (
             <div>
-              <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider mb-2">{category}</p>
+              <p class="text-xs text-lp-subtle mb-2">{category}</p>
               <div class="flex flex-wrap gap-1.5">
                 {tags.map((tag) => (
                   <span class="rounded-full border border-lp-border-subtle px-2.5 py-0.5 text-xs text-lp-text font-sans">{tag}</span>
@@ -44,7 +44,7 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
           ))
         }
       </div>
-      <a href="/about" class="mt-auto pt-4 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide text-lp-accent hover:underline w-fit">
+      <a href="/about" class="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm text-lp-accent hover:underline w-fit">
         プロフィールを見る →
       </a>
     </div>
@@ -63,12 +63,12 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
               <div class="absolute inset-0 opacity-20 bg-[radial-gradient(var(--color-lp-text)_1px,transparent_1px)] bg-[length:16px_16px]" />
             )}
           </div>
-          <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Featured project</p>
+          <p class="text-xs text-lp-subtle">Featured project</p>
           <h3 class="font-display text-2xl md:text-3xl leading-tight tracking-tight text-lp-text">{featuredWork.data.title}</h3>
           <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">{featuredWork.data.description}</p>
           <div class="flex justify-between items-center mt-auto">
-            <span class="font-mono text-xs text-lp-muted">{featuredWork.data.date.getFullYear()}</span>
-            <span class="text-sm font-mono uppercase tracking-wide text-lp-accent">見る →</span>
+            <span class="text-xs text-lp-muted">{featuredWork.data.date.getFullYear()}</span>
+            <span class="text-sm text-lp-accent">見る →</span>
           </div>
         </a>
       )
@@ -79,11 +79,11 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
       featuredArticle && (
         <a href={`/blog/${featuredArticle.id}`} class={`${cell} lg:row-span-2 flex flex-col gap-4 lg:justify-between hover:bg-lp-accent-subtle transition-colors`}>
           <div class="flex flex-col gap-4">
-            <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Latest post</p>
+            <p class="text-xs text-lp-subtle">Latest post</p>
             <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">{featuredArticle.data.title}</h3>
             <p class="text-sm text-lp-muted leading-relaxed line-clamp-3">{featuredArticle.data.description}</p>
           </div>
-          <span class="font-mono text-xs text-lp-muted">{formatShortDateJP(featuredArticle.data.date)}</span>
+          <span class="text-xs text-lp-muted">{formatShortDateJP(featuredArticle.data.date)}</span>
         </a>
       )
     }
@@ -95,7 +95,7 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
           href={work.data.isComingSoon ? undefined : `/works/${work.id}`}
           class={`${cell} border-r flex flex-col gap-2 hover:bg-lp-accent-subtle transition-colors`}
         >
-          <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Project</p>
+          <p class="text-xs text-lp-subtle">Project</p>
           <h4 class="font-display text-lg leading-tight tracking-tight text-lp-text">{work.data.title}</h4>
           <p class="text-xs text-lp-muted leading-relaxed line-clamp-2">{work.data.description}</p>
         </a>
@@ -109,24 +109,24 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
           href={`/blog/${article.id}`}
           class={`${cell} ${i === restArticles.length - 1 ? '' : 'border-r'} flex flex-col gap-2 hover:bg-lp-accent-subtle transition-colors`}
         >
-          <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Post</p>
+          <p class="text-xs text-lp-subtle">Post</p>
           <h4 class="font-display text-lg leading-tight tracking-tight text-lp-text">{article.data.title}</h4>
-          <span class="font-mono text-[11px] text-lp-muted">{formatShortDateJP(article.data.date)}</span>
+          <span class="text-xs text-lp-muted">{formatShortDateJP(article.data.date)}</span>
         </a>
       ))
     }
 
     <!-- links -->
-    <a href="/works" class={`${cell} border-r flex items-center justify-between font-mono text-sm uppercase tracking-wide text-lp-text hover:bg-lp-accent-subtle transition-colors`}>
+    <a href="/works" class={`${cell} border-r flex items-center justify-between text-sm text-lp-text hover:bg-lp-accent-subtle transition-colors`}>
       すべての制作実績 <span>→</span>
     </a>
-    <a href="/blog" class={`${cell} flex items-center justify-between font-mono text-sm uppercase tracking-wide text-lp-text hover:bg-lp-accent-subtle transition-colors`}>
+    <a href="/blog" class={`${cell} flex items-center justify-between text-sm text-lp-text hover:bg-lp-accent-subtle transition-colors`}>
       すべての記事 <span>→</span>
     </a>
 
     <!-- timeline strip -->
     <div class="sm:col-span-2 lg:col-span-4 p-7 md:p-9 lg:py-12">
-      <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider mb-6">Timeline</p>
+      <p class="text-xs text-lp-subtle mb-6">Timeline</p>
       <Timeline variant="horizontal" />
     </div>
   </div>

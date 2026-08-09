@@ -75,13 +75,13 @@ const formattedDate = formatShortDateJP(entry.data.date)
         <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
             <div class="grid grid-cols-1 md:grid-cols-[3fr_1fr] divide-y md:divide-y-0 md:divide-x divide-lp-border">
                 <div class="py-8 md:pr-12 space-y-2">
-                    <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Summary</p>
+                    <p class="text-xs text-lp-subtle">Summary</p>
                     <p class="text-sm text-lp-muted leading-relaxed">
                         {entry.data?.summary || "No summary available."}
                     </p>
                 </div>
                 <div class="py-8 md:pl-10 space-y-2">
-                    <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em]">Tags</p>
+                    <p class="text-xs text-lp-subtle">Tags</p>
                     <Tags tags={entry.data.tags} link={(tag) => `/blog/tags/${tag}`} />
                 </div>
             </div>

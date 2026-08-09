@@ -44,8 +44,9 @@ accent-hue = warm(red, ~27°、使用量は従来よりさらに抑える)
 - Display: Inter(Bold 700)+ 日本語は Zen Kaku Gothic New。ポスター的な極太
   ディスプレイ書体(Archivo Black)は廃止 — 見出しはサイズと余白で階層化する
 - Body: Inter(既存)、日本語は Zen Kaku Gothic New
-- Mono / ラベル / データ: UDEV Gothic。ラベル用途では多用しすぎない
-  (ページ全体でトラッキングの強い全角大文字ラベルを乱立させない)
+- Mono: UDEV Gothic。日付・ハンドル・タグチップ・コード等の「データ」表示のみに限定する
+- ラベル(Profile / Activity / Tags 等の小見出し)は mono ではなく通常の sans
+  (`text-xs text-lp-subtle`)、大文字強制(uppercase)・強いトラッキングは使わない
 - Figtree・Rampart One は使用箇所なしのため廃止
 - 見出しは常に roman(イタリック禁止)。強調は太さ・アクセント色・下線で表現
 

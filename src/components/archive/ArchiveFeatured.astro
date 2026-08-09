@@ -13,8 +13,8 @@ const image = entry.data.image
 
 <div class="bg-lp-accent-subtle border border-lp-border-subtle rounded-lg overflow-hidden">
   <div class="px-6 py-3 border-b border-lp-border-subtle flex justify-between items-center">
-    <span class="font-mono text-xs text-lp-accent-strong uppercase tracking-widest">
-      {kind === 'work' ? 'Featured Project' : 'Latest Article'}
+    <span class="text-xs text-lp-accent-strong">
+      {kind === 'work' ? 'Featured project' : 'Latest article'}
     </span>
     <span class="font-mono text-xs text-lp-muted">{formattedDate}</span>
   </div>
@@ -72,7 +72,7 @@ const image = entry.data.image
           </div>
         ) : (
           <div class="mt-6">
-            <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em] mb-2">Tags</p>
+            <p class="text-xs text-lp-subtle mb-2">Tags</p>
             <ul class="flex flex-wrap gap-2">
               {entry.data.tags.map((tag) => (
                 <li class="rounded-full bg-lp-surface border border-lp-border-subtle px-3 py-0.5 text-xs text-lp-text font-mono">#{tag}</li>
