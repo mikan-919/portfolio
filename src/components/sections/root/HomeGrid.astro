@@ -30,7 +30,7 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
     <!-- skills -->
     <div class={`${cell} border-r lg:row-span-2 flex flex-col gap-5`}>
       <h2 class="font-display text-2xl leading-none tracking-tight text-lp-text">Skills</h2>
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 lg:flex-1 lg:justify-between">
         {
           Object.entries(skills).map(([category, tags]) => (
             <div>
@@ -77,11 +77,13 @@ const cell = 'border-b border-lp-border p-7 md:p-9'
     <!-- featured article -->
     {
       featuredArticle && (
-        <a href={`/blog/${featuredArticle.id}`} class={`${cell} lg:row-span-2 flex flex-col gap-4 hover:bg-lp-accent-subtle transition-colors`}>
-          <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Latest post</p>
-          <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">{featuredArticle.data.title}</h3>
-          <p class="text-sm text-lp-muted leading-relaxed line-clamp-3">{featuredArticle.data.description}</p>
-          <span class="font-mono text-xs text-lp-muted mt-auto">{formatShortDateJP(featuredArticle.data.date)}</span>
+        <a href={`/blog/${featuredArticle.id}`} class={`${cell} lg:row-span-2 flex flex-col gap-4 lg:justify-between hover:bg-lp-accent-subtle transition-colors`}>
+          <div class="flex flex-col gap-4">
+            <p class="font-mono text-[11px] text-lp-muted uppercase tracking-wider">Latest post</p>
+            <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">{featuredArticle.data.title}</h3>
+            <p class="text-sm text-lp-muted leading-relaxed line-clamp-3">{featuredArticle.data.description}</p>
+          </div>
+          <span class="font-mono text-xs text-lp-muted">{formatShortDateJP(featuredArticle.data.date)}</span>
         </a>
       )
     }

@@ -18,7 +18,7 @@ const techStackCollection = defineCollection({
 
 // Worksコレクションの定義
 const worksCollection = defineCollection({
-  loader: glob({ pattern: 'works/*.md', base: './src/content' }),
+  loader: glob({ pattern: '*.md', base: './src/content/works' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -38,7 +38,7 @@ const worksCollection = defineCollection({
 
 // Articlesコレクションの定義
 const articlesCollection = defineCollection({
-  loader: glob({ pattern: 'articles/*.md', base: './src/content' }),
+  loader: glob({ pattern: '*.md', base: './src/content/articles' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
