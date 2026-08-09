@@ -6,23 +6,20 @@ type Props = {
 const { projectCount, articleCount } = Astro.props
 ---
 
-<div class="w-full bg-lp-bg border-b border-lp-border">
+<div class="w-full bg-lp-bg">
   <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 sm:py-20 lg:py-24">
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 lg:gap-16 lg:items-end">
       <!-- statement -->
       <div class="flex flex-col items-start text-left">
-        <span class="border border-lp-accent bg-lp-accent-subtle text-lp-accent-strong font-mono text-xs tracking-wide px-3 py-1">
+        <span class="rounded-full bg-lp-accent-subtle text-lp-accent-strong text-xs px-3 py-1">
           Open to opportunities
         </span>
 
-        <div class="mt-5 w-full">
-          <h1 class="font-new text-[56px] sm:text-[72px] lg:text-[88px] leading-none font-bold tracking-tight text-lp-text m-0" style="overflow-wrap: anywhere;">
-            摘果みかん
-          </h1>
-          <div class="h-[5px] bg-lp-accent mt-3 w-28"></div>
-        </div>
+        <h1 class="font-new text-[56px] sm:text-[72px] lg:text-[88px] leading-none font-bold tracking-tight text-lp-text mt-5 mb-0" style="overflow-wrap: anywhere;">
+          摘果みかん
+        </h1>
 
-        <p class="font-mono text-sm text-lp-muted tracking-[0.04em] mt-5">
+        <p class="text-sm text-lp-muted mt-3">
           Student Developer · Web Engineer · @Mikan-919
         </p>
 
@@ -31,35 +28,35 @@ const { projectCount, articleCount } = Astro.props
           日常とコードのことを書くブログを運営。
         </p>
 
-        <div class="flex flex-wrap gap-3 mt-8">
+        <div class="flex flex-wrap items-center gap-6 mt-8">
           <a
             href="/works"
-            class="inline-flex items-center min-h-11 bg-lp-accent text-lp-accent-on font-mono font-semibold text-sm uppercase tracking-[0.06em] px-6 hover:bg-lp-accent-strong transition-colors"
+            class="inline-flex items-center min-h-11 rounded-full bg-lp-accent text-lp-accent-on text-sm px-5 hover:bg-lp-accent-strong transition-colors"
           >
             制作実績を見る
           </a>
           <a
             href="/blog"
-            class="inline-flex items-center min-h-11 border-2 border-lp-text text-lp-text font-mono text-sm uppercase tracking-[0.06em] px-6 hover:bg-lp-text hover:text-lp-surface transition-colors"
+            class="inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-accent transition-colors"
           >
-            ブログを読む
+            ブログを読む →
           </a>
         </div>
       </div>
 
       <!-- spec sheet -->
-      <div class="flex flex-row lg:flex-col gap-6 lg:gap-0 lg:w-[180px] lg:border-l lg:border-lp-border-subtle lg:pl-8">
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0 lg:border-b lg:border-lp-border-subtle lg:py-3">
+      <div class="flex flex-row lg:flex-col gap-6 lg:gap-4 lg:w-[180px]">
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
           <span class="font-new text-2xl lg:text-xl leading-none text-lp-text">{projectCount}</span>
-          <span class="font-mono text-[10px] text-lp-muted uppercase tracking-[0.06em]">Projects</span>
+          <span class="text-xs text-lp-subtle">Projects</span>
         </div>
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0 lg:border-b lg:border-lp-border-subtle lg:py-3">
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
           <span class="font-new text-2xl lg:text-xl leading-none text-lp-text">{articleCount}</span>
-          <span class="font-mono text-[10px] text-lp-muted uppercase tracking-[0.06em]">Blog Posts</span>
+          <span class="text-xs text-lp-subtle">Blog Posts</span>
         </div>
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0 lg:py-3">
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
           <span class="font-new text-2xl lg:text-xl leading-none text-lp-text">2022</span>
-          <span class="font-mono text-[10px] text-lp-muted uppercase tracking-[0.06em]">Since</span>
+          <span class="text-xs text-lp-subtle">Since</span>
         </div>
       </div>
     </div>

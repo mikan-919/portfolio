@@ -10,7 +10,7 @@ const {tags,link}:Props=Astro.props
         tags.map((tag) => (
             <a
                 href={link(tag)}
-                class="bg-lp-surface-sunken border border-lp-border-subtle px-3 py-1.5 text-xs text-lp-text font-mono hover:border-lp-text transition-colors"
+                class="rounded-full bg-lp-surface-sunken border border-lp-border-subtle px-3 py-1.5 text-xs text-lp-text font-mono hover:border-lp-text transition-colors"
             >
                 #{tag}
             </a>

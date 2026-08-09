@@ -17,7 +17,7 @@
 }
 
 .header {
-  @apply inline-flex items-baseline space-x-1 mb-3 border-lp-border border-b text-center tracking-wider w-full relative;
+  @apply inline-flex items-baseline space-x-1 mb-3 text-center tracking-wider w-full relative;
 }
 
 .headerTitle {

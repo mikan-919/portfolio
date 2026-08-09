@@ -15,30 +15,30 @@ const { prev, next, backHref, backLabel, newerEmptyLabel, olderEmptyLabel } =
     Astro.props
 ---
 
-<div class="w-full border-b border-lp-border">
-    <div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 divide-x-0 sm:divide-x divide-lp-border">
+<div class="w-full">
+    <div class="grid grid-cols-1 sm:grid-cols-3">
         {prev ? (
             <a href={prev.href} class="flex flex-col justify-center py-6 sm:py-8 px-5 sm:pr-8 sm:pl-8 md:pl-16 lg:pl-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
-                <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">&lt; Newer</span>
+                <span class="text-xs text-lp-subtle mb-1">&lt; Newer</span>
                 <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{prev.title}</span>
             </a>
         ) : (
             <div class="flex flex-col justify-center py-6 sm:py-8 px-5 sm:pr-8 sm:pl-8 md:pl-16 lg:pl-[7.5rem] opacity-30 select-none">
-                <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">&lt; Newer</span>
+                <span class="text-xs text-lp-subtle mb-1">&lt; Newer</span>
                 <span class="text-sm text-lp-text font-medium">{newerEmptyLabel}</span>
             </div>
         )}
-        <a href={backHref} class="flex items-center justify-center min-h-11 py-6 sm:py-8 hover:bg-lp-surface-sunken transition-colors font-mono text-xs text-lp-muted hover:text-lp-text uppercase tracking-widest">
+        <a href={backHref} class="flex items-center justify-center min-h-11 py-6 sm:py-8 hover:bg-lp-surface-sunken transition-colors text-sm text-lp-muted hover:text-lp-text">
             {backLabel}
         </a>
         {next ? (
             <a href={next.href} class="flex flex-col justify-center sm:items-end sm:text-right py-6 sm:py-8 px-5 sm:pl-8 sm:pr-8 md:pr-16 lg:pr-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
-                <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">Older &gt;</span>
+                <span class="text-xs text-lp-subtle mb-1">Older &gt;</span>
                 <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{next.title}</span>
             </a>
         ) : (
             <div class="flex flex-col justify-center sm:items-end sm:text-right py-6 sm:py-8 px-5 sm:pl-8 sm:pr-8 md:pr-16 lg:pr-[7.5rem] opacity-30 select-none">
-                <span class="font-mono text-[10px] text-lp-muted uppercase tracking-widest mb-1">Older &gt;</span>
+                <span class="text-xs text-lp-subtle mb-1">Older &gt;</span>
                 <span class="text-sm text-lp-text font-medium">{olderEmptyLabel}</span>
             </div>
         )}

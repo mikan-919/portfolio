@@ -11,10 +11,10 @@ const formattedDate = formatShortDateJP(entry.data.date)
 const image = entry.data.image
 ---
 
-<div class="bg-lp-accent-subtle border border-lp-border-subtle">
+<div class="bg-lp-accent-subtle border border-lp-border-subtle rounded-lg overflow-hidden">
   <div class="px-6 py-3 border-b border-lp-border-subtle flex justify-between items-center">
-    <span class="font-mono text-xs text-lp-accent-strong uppercase tracking-widest">
-      {kind === 'work' ? 'Featured Project' : 'Latest Article'}
+    <span class="text-xs text-lp-accent-strong">
+      {kind === 'work' ? 'Featured project' : 'Latest article'}
     </span>
     <span class="font-mono text-xs text-lp-muted">{formattedDate}</span>
   </div>
@@ -54,28 +54,28 @@ const image = entry.data.image
       </div>
       {
         kind === 'work' ? (
-          <div class="flex gap-3 mt-8">
+          <div class="flex items-center gap-5 mt-8">
             <a
               aria-disabled={entry.data.isComingSoon || !entry.data.link}
               href={entry.data.isComingSoon ? undefined : entry.data.link}
-              class={`${entry.data.link ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center justify-center min-h-11 flex-1 text-center bg-lp-accent text-lp-accent-on font-mono font-semibold text-sm uppercase tracking-[0.06em] px-4 hover:bg-lp-accent-strong transition-colors`}
+              class={`${entry.data.link ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center min-h-11 rounded-full bg-lp-accent text-lp-accent-on text-sm px-5 hover:bg-lp-accent-strong transition-colors`}
             >
               Visit
             </a>
             <a
               aria-disabled={entry.data.isComingSoon || !entry.data.github}
               href={entry.data.isComingSoon ? undefined : entry.data.github}
-              class={`${entry.data.github ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center justify-center min-h-11 flex-1 text-center border-2 border-lp-text text-lp-text font-mono text-sm uppercase tracking-[0.06em] px-4 hover:bg-lp-text hover:text-lp-surface transition-colors`}
+              class={`${entry.data.github ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-accent transition-colors`}
             >
-              GitHub
+              GitHub →
             </a>
           </div>
         ) : (
           <div class="mt-6">
-            <p class="font-mono text-[11px] text-lp-muted uppercase tracking-[0.06em] mb-2">Tags</p>
+            <p class="text-xs text-lp-subtle mb-2">Tags</p>
             <ul class="flex flex-wrap gap-2">
               {entry.data.tags.map((tag) => (
-                <li class="bg-lp-surface border border-lp-border-subtle px-2.5 py-0.5 text-xs text-lp-text font-mono">#{tag}</li>
+                <li class="rounded-full bg-lp-surface border border-lp-border-subtle px-3 py-0.5 text-xs text-lp-text font-mono">#{tag}</li>
               ))}
             </ul>
           </div>

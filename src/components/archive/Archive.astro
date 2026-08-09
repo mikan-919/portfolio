@@ -21,12 +21,12 @@ let rate = 0
 let items: ArchiveCardData[]
 let options: string[]
 
-const eyebrow = kind === 'work' ? 'PROJECT ARCHIVE' : 'BLOG ARCHIVE'
-const title = kind === 'work' ? 'WORKS.' : 'BLOG.'
-const totalLabel = kind === 'work' ? 'TOTAL PROJECTS' : 'TOTAL ARTICLES'
-const rateLabel = kind === 'work' ? 'PROJECTS / YEAR' : 'ARTICLES / MONTH'
+const eyebrow = kind === 'work' ? 'Project archive' : 'Blog archive'
+const title = kind === 'work' ? 'Works' : 'Blog'
+const totalLabel = kind === 'work' ? 'Total projects' : 'Total articles'
+const rateLabel = kind === 'work' ? 'Projects / year' : 'Articles / month'
 const emptyLabel = kind === 'work' ? 'No projects found in this category.' : 'No articles found with this tag.'
-const filterHeading = kind === 'work' ? 'ALL PROJECTS' : 'ALL ARTICLES'
+const filterHeading = kind === 'work' ? 'All projects' : 'All articles'
 const labelPrefix = kind === 'work' ? '' : '#'
 
 if (props.kind === 'work') {

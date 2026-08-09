@@ -4,20 +4,28 @@
 逸脱する場合はこのファイルを更新してから実装する。
 
 ## Genre
-editorial(Brutal はこのクラスタのカタログテーマ)
+editorial(Swiss International Typographic Style を基調に、
+Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたクラスタ)
 
 ## Macrostructure family
 
 - **ホーム(marketing)**: Bento Grid — Hero・Skills・Works・Blog・Timeline を
   不揃いブロックの単一グリッドに統合。ナンバリング見出し(01/02/03...)は使わない。
+  セル間はケイ線(border)ではなく `gap` で区切る。画像を持つプレビュー
+  (Featured Work/Article)のみ `rounded-lg` + hairline border のカードにし、
+  それ以外のテキストのみのセル(Skills・リスト項目・ナビリンク等)は
+  背景もボーダーも無いフラット表示にする(Emil Kowalski 的な余白駆動)
 - **一覧ページ(Works一覧・Blog一覧・タグ別一覧)**: Portfolio Grid — フィルタ可能な
   カードグリッド。Works と Blog は type prop で出し分ける共通コンポーネント。
+  ここは画像プレビューを伴うため catnose 的なソフトカード(rounded + hairline
+  border + pill タグ)を維持する
 - **詳細ページ(Works詳細・Blog記事詳細)**: Long Document — 本文中心の連続した
   読み物。ToC は Blog 記事のみ。
-- **About**: Bento Grid 系(bio・skills・GitHub活動・values・timeline を
-  不揃いブロックで)。
+- **About**: Bento Grid 系(bio・GitHub活動・values・learning/interests)。
+  画像を持たないため全セルフラット(背景・ボーダー無し)、gap と見出しの
+  太字だけで区切る
 
-## Theme — Brutal
+## Theme — Swiss Minimal
 
 - `--color-lp-bg`             oklch(98% 0.004 85)   紙
 - `--color-lp-surface`        oklch(99% 0.002 85)   紙より明るい面
@@ -35,42 +43,60 @@ editorial(Brutal はこのクラスタのカタログテーマ)
 - `--color-lp-dark-text`      oklch(97% 0.005 85)
 - `--color-lp-dark-muted`     oklch(58% 0.01 50)
 
-軸: paper-band = light / display-style = display-heavy(black sans) / accent-hue = warm(red, ~27°)
+軸: paper-band = light / display-style = grotesque-medium(太すぎない sans) /
+accent-hue = warm(red, ~27°、使用量は従来よりさらに抑える)
 
 ## Typography
 
-- Display: Archivo Black(既存)、日本語フォールバック Zen Kaku Gothic New 900
+- Display: Inter(Bold 700)+ 日本語は Zen Kaku Gothic New。ポスター的な極太
+  ディスプレイ書体(Archivo Black)は廃止 — 見出しはサイズと余白で階層化する
 - Body: Inter(既存)、日本語は Zen Kaku Gothic New
-- Mono / ラベル / データ: UDEV Gothic(既存・ローカル)
+- Mono: UDEV Gothic。日付・ハンドル・タグチップ・コード等の「データ」表示のみに限定する
+- ラベル(Profile / Activity / Tags 等の小見出し)は mono ではなく通常の sans
+  (`text-xs text-lp-subtle`)、大文字強制(uppercase)・強いトラッキングは使わない
 - Figtree・Rampart One は使用箇所なしのため廃止
 - 見出しは常に roman(イタリック禁止)。強調は太さ・アクセント色・下線で表現
 
 ## Spacing / Radius
 
 - 既存 Tailwind 4pt spacing を継続使用
-- 角丸は全面的に 0(スラブ的な直角)。既存の `rounded` クラスはすべて撤去
+- 角丸は小さめ(`rounded-md`〜`rounded-lg`、ピル状要素は `rounded-full`)を
+  ボタン・タグ・カード・バッジに適用する。スラブ的な直角一辺倒(角丸0)は廃止
+- 罫線はヘアライン(1px, `border`)を基本とする。`border-2` 以上の太い罫線・
+  塗りつぶしのフルインバートホバーは使わない
+- 同一背景色で隣接するセクション同士(Header以外)を区切るための罫線
+  (`border-b`/`divide-x`/`divide-y`)は置かない。区切りは `gap` と余白のみで
+  表現する。罫線は「背景色が変わる境界」か「Timeline/ToCの縦スパイン」等、
+  意味を持つ場合のみ許可する
 
 ## Motion
 
 - View Transitions(ClientRouter)は既存のまま継続
-- 新規スクロールリビール等は追加しない(motion-cut のまま)
+- ホバーは色・背景・枠線の微細なトランジションのみ。scale等の演出も
+  控えめ(1.02〜1.03 程度)に留める
 - transform / opacity のみアニメーション対象。`prefers-reduced-motion` 対応は既存のまま
 
 ## Microinteractions
 
-- ホバーは色・下線変化のみ。トースト等の演出は使わない
+- ホバーは色・下線・淡い背景変化・枠線変化のみ。反転(black↔white)や
+  トースト等の強い演出は使わない
 
 ## CTA voice
 
-- Primary: 塗り(accent)、角丸0、全角トラッキング大文字
-- Secondary: アウトライン(ink)、角丸0
+- 1画面につき主要アクションは1つまで: 塗り(accent)・`rounded-full`・
+  控えめなサイズ(`px-5 min-h-11`)・通常大文字小文字(uppercase禁止)
+- それ以外のアクション(secondary/GitHubリンク等)はボタン化しない — 下線なし
+  プレーンテキストリンク+矢印(`→`)、ホバーは文字色の変化のみ
+- フィルター/タブは背景・枠線を持たず、下線(border-b)で選択状態を示す
+  テキストタブにする(`.filter-btn`)。カード上のオーバーレイCTA(画像に重ねる
+  ボタン)のみ、視認性のため軽い塗り+shadowのピルを許容する(`.btn-brutal`)
 
 ## Nav / Footer
 
-- Nav: **N7 Brutal slab** — 太い border-bottom、全角大文字ワードマーク、
-  トラッキングされた大文字リンク列、角丸なし
-- Footer: **Ft4 Dense typographic** — UDEV Gothic Mono の一枚岩ブロック、
-  hairline 罫線、コロフォン的な密度
+- Nav: ヘアラインの border-bottom、控えめなワードマーク、通常表記の
+  ナビゲーションリンク(uppercase・強いトラッキングは使わない)
+- Footer: 本文は可読性重視の sans/日本語フォントを使用し、コロフォン的な
+  コピーライト行のみ UDEV Gothic Mono を残す
 
 ## 共通コンポーネント方針
 
@@ -82,8 +108,8 @@ editorial(Brutal はこのクラスタのカタログテーマ)
 
 ## What pages MUST share
 
-- ワードマーク、赤アクセントの使用箇所(≤5%/viewport)、Archivo Black + Inter の
-  ペアリング、CTA ボイス、角丸0
+- ワードマーク、赤アクセントの使用箇所(≤5%/viewport)、Inter + Zen Kaku Gothic New
+  のペアリング、CTA ボイス、小さめ角丸、ヘアライン罫線
 
 ## What pages MAY differ on
 

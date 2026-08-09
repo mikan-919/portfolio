@@ -4,10 +4,10 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @plugin "@tailwindcss/typography";
 @layer base {
-  /* font-display は見出し用。Archivo Black に日本語フォールバック(Zen Kaku Gothic New)を
-     合わせるため既定で 900 にする。font-* ユーティリティで上書き可能。 */
+  /* font-display は見出し用。Inter + Zen Kaku Gothic New を bold(700)で使う。
+     font-* ユーティリティで上書き可能。 */
   .font-display {
-    font-weight: 900;
+    font-weight: 700;
   }
   html,
   body {
@@ -21,8 +21,8 @@
   }
 }
 /* Hallmark · macrostructure: Bento Grid (home/about) · Portfolio Grid (archives) · Long Document (detail)
- * genre: editorial · theme: Brutal · nav: N7 Brutal slab · footer: Ft4 Dense typographic
- * accent hue: warm (red ~27°) · paper-band: light · display-style: display-heavy
+ * genre: editorial(Swiss Minimal) · theme: Swiss Minimal · nav: hairline slim · footer: dense typographic
+ * accent hue: warm (red ~27°) · paper-band: light · display-style: grotesque-medium
  */
 :root {
   --color-lp-bg: oklch(98% 0.004 85);
@@ -48,9 +48,7 @@
   --font-inter: var(--font-family-inter), sans-serif;
   --font-new: var(--font-family-new), sans-serif;
   --font-udev-gothic: var(--font-family-udev-gothic), sans-serif;
-  --font-display:
-    var(--font-family-archivo-black), var(--font-family-new), "Arial Black",
-    sans-serif;
+  --font-display: var(--font-family-inter), var(--font-family-new), sans-serif;
 
   --radius-none: 0px;
 
@@ -72,8 +70,8 @@
 }
 
 /* これらのユーティリティーはSectionコンポーネントで使用されているので、特殊な要件がない限り<Section/>を利用してください。 */
-@utility full-width-border {
-  @apply w-full border-b border-lp-border;
+@utility full-width-band {
+  @apply w-full;
 }
 @utility content-container {
   @apply max-w-[1200px] w-full mx-auto;
@@ -85,7 +83,7 @@
 }
 @layer components {
   .btn-brutal {
-    @apply border-2 border-lp-text bg-lp-surface text-lp-text px-6 py-3 font-mono font-semibold text-sm uppercase tracking-[0.06em] rounded-none select-none transition-colors hover:bg-lp-text hover:text-lp-surface;
+    @apply inline-flex items-center gap-2 bg-lp-surface text-lp-text px-4 py-2 rounded-full text-sm shadow-sm select-none transition-shadow hover:shadow-md;
   }
   .image-hover-effect {
     @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-105;
@@ -100,12 +98,22 @@
     @apply px-8 md:px-16 lg:px-[7.5rem] py-12;
   }
   .filter-container {
-    @apply px-8 md:px-16 lg:px-[7.5rem] py-8 border-b border-lp-border;
+    @apply px-8 md:px-16 lg:px-[7.5rem] py-8;
   }
   .filter-btn {
-    @apply border border-lp-text bg-lp-surface text-lp-text px-4 py-2 text-sm font-mono uppercase tracking-[0.04em] cursor-pointer select-none rounded-none transition-colors hover:bg-lp-text hover:text-lp-surface;
+    @apply text-lp-muted px-0 py-1 text-sm border-b border-transparent cursor-pointer select-none transition-colors hover:text-lp-text;
   }
   .filter-btn.is-active {
-    @apply bg-lp-accent border-lp-accent text-lp-accent-on;
+    @apply text-lp-text border-lp-text;
   }
+}
+
+/* prose-code:* はインラインコード用の装飾だが .prose code 全体(fenced code block 内の
+   Shiki トークンを含む <code> も)に掛かってしまうため、コードブロック側は明示的に
+   打ち消す。@layer外の素の規則にして utilities レイヤーより優先させる。 */
+.prose pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
 }

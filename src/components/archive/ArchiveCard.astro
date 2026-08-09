@@ -10,7 +10,7 @@ const { data }: Props = Astro.props
 
 <a
   href={data.href}
-  class={`group flex flex-col bg-lp-surface border border-lp-border-subtle hover:border-lp-text transition-colors h-full ${data.comingSoon ? 'pointer-events-none' : ''}`}
+  class={`group flex flex-col bg-lp-surface border border-lp-border-subtle rounded-lg overflow-hidden hover:border-lp-text transition-colors h-full ${data.comingSoon ? 'pointer-events-none' : ''}`}
 >
   <div class="aspect-video relative overflow-hidden bg-lp-surface-sunken">
     {
@@ -23,14 +23,14 @@ const { data }: Props = Astro.props
     {
       data.comingSoon && (
         <div class="absolute inset-0 flex items-center justify-center bg-lp-bg/80">
-          <span class="font-mono text-xs text-lp-muted uppercase tracking-widest">Coming Soon</span>
+          <span class="text-xs text-lp-muted">Coming Soon</span>
         </div>
       )
     }
   </div>
 
   <div class="p-6 flex flex-col gap-2 flex-1">
-    {data.meta && <span class="font-mono text-[10px] text-lp-muted uppercase tracking-[0.06em]">{data.meta}</span>}
+    {data.meta && <span class="text-xs text-lp-subtle">{data.meta}</span>}
     <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">
       {data.title}
     </h3>
@@ -40,7 +40,7 @@ const { data }: Props = Astro.props
     <div class="flex flex-wrap gap-1.5 mt-2">
       {
         data.tags.slice(0, 3).map((tag) => (
-          <span class="bg-lp-surface-sunken border border-lp-border-subtle px-2 py-0.5 text-[10px] text-lp-text font-mono">
+          <span class="rounded-full bg-lp-surface-sunken border border-lp-border-subtle px-2.5 py-0.5 text-[10px] text-lp-text font-mono">
             #{tag}
           </span>
         ))
