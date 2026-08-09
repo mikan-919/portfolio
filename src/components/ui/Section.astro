@@ -40,7 +40,7 @@ const { isGrow, class: className, id }: Props = Astro.props;
 
 <section
     id={id}
-    class={`full-width-border flex flex-col ${isGrow ? "grow" : ""}`}
+    class={`full-width-band flex flex-col ${isGrow ? "grow" : ""}`}
 >
     <div class={`content-container ${isGrow ? "grow" : ""} ${className}`}>
         <slot />

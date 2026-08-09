@@ -19,12 +19,11 @@ const { eyebrow, title, total, totalLabel, rate, rateLabel }: Props = Astro.prop
       </h1>
     </div>
 
-    <div class="hidden lg:flex gap-12 text-right">
+    <div class="hidden lg:flex gap-16 text-right">
       <div>
         <p class="font-display text-[40px] leading-none text-lp-text">{total}</p>
         <p class="text-xs text-lp-subtle mt-1">{totalLabel}</p>
       </div>
-      <div class="w-px bg-lp-border-subtle"></div>
       <div>
         <p class="font-display text-[40px] leading-none text-lp-text">{rate.toFixed(1)}</p>
         <p class="text-xs text-lp-subtle mt-1">{rateLabel}</p>

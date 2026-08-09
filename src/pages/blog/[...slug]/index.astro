@@ -71,16 +71,16 @@ const formattedDate = formatShortDateJP(entry.data.date)
     </div>
 
     <!-- Summary & Tags -->
-    <div class="w-full border-b border-lp-border">
+    <div class="w-full">
         <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
-            <div class="grid grid-cols-1 md:grid-cols-[3fr_1fr] divide-y md:divide-y-0 md:divide-x divide-lp-border">
-                <div class="py-8 md:pr-12 space-y-2">
+            <div class="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-8 py-10">
+                <div class="space-y-2">
                     <p class="text-xs text-lp-subtle">Summary</p>
                     <p class="text-sm text-lp-muted leading-relaxed">
                         {entry.data?.summary || "No summary available."}
                     </p>
                 </div>
-                <div class="py-8 md:pl-10 space-y-2">
+                <div class="space-y-2">
                     <p class="text-xs text-lp-subtle">Tags</p>
                     <Tags tags={entry.data.tags} link={(tag) => `/blog/tags/${tag}`} />
                 </div>
@@ -89,14 +89,14 @@ const formattedDate = formatShortDateJP(entry.data.date)
     </div>
 
     <!-- Content -->
-    <div class="w-full border-b border-lp-border">
+    <div class="w-full">
         <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
-            <div class="grid grid-cols-1 lg:grid-cols-[18rem_minmax(0,1fr)] min-h-[calc(100vh-600px)] divide-x-0 lg:divide-x divide-lp-border">
+            <div class="grid grid-cols-1 lg:grid-cols-[18rem_minmax(0,1fr)] gap-10 min-h-[calc(100vh-600px)]">
                 <!-- 目次 (PCのみ表示) -->
-                <aside class="hidden lg:block py-12 pr-10">
+                <aside class="hidden lg:block py-12">
                     <TableOfContents client:idle headings={headings} />
                 </aside>
-                <div class="py-8 lg:py-12 lg:pl-12 prose prose-neutral max-w-none
+                <div class="py-8 lg:py-12 prose prose-neutral max-w-none
                     prose-headings:font-display prose-headings:tracking-tight prose-headings:text-lp-text
                     prose-p:text-lp-muted prose-p:leading-relaxed
                     prose-a:text-lp-accent prose-a:decoration-1 prose-a:underline-offset-2

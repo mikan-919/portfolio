@@ -15,8 +15,8 @@ const { prev, next, backHref, backLabel, newerEmptyLabel, olderEmptyLabel } =
     Astro.props
 ---
 
-<div class="w-full border-b border-lp-border">
-    <div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 divide-x-0 sm:divide-x divide-lp-border">
+<div class="w-full">
+    <div class="grid grid-cols-1 sm:grid-cols-3">
         {prev ? (
             <a href={prev.href} class="flex flex-col justify-center py-6 sm:py-8 px-5 sm:pr-8 sm:pl-8 md:pl-16 lg:pl-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
                 <span class="text-xs text-lp-subtle mb-1">&lt; Newer</span>
