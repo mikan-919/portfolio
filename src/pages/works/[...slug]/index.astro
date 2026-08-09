@@ -58,11 +58,11 @@ const formattedDate = formatMonthYear(entry.data.date)
             <div class="absolute bottom-0 left-0 w-full px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-10">
                 <div class="space-y-3">
                     <div class="flex items-center gap-3">
-                        <span class="bg-lp-accent text-lp-accent-on font-mono text-xs px-3 py-1 uppercase tracking-wide">
+                        <span class="rounded-full bg-lp-accent text-lp-accent-on font-mono text-xs px-3 py-1 uppercase tracking-wide">
                             {entry.data.category}
                         </span>
                         {entry.data.isComingSoon && (
-                            <span class="bg-lp-surface text-lp-text font-mono text-xs px-3 py-1 uppercase tracking-wide">
+                            <span class="rounded-full bg-lp-surface text-lp-text font-mono text-xs px-3 py-1 uppercase tracking-wide">
                                 Coming Soon
                             </span>
                         )}
@@ -134,7 +134,7 @@ const formattedDate = formatMonthYear(entry.data.date)
                     prose-p:text-lp-muted prose-p:leading-relaxed
                     prose-a:text-lp-accent prose-a:decoration-1 prose-a:underline-offset-2
                     prose-blockquote:border-l-4 prose-blockquote:border-lp-accent prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
-                    prose-img:border prose-img:border-lp-border">
+                    prose-img:rounded-lg prose-img:border prose-img:border-lp-border">
                     <Content />
                 </div>
                 <div class="py-8 lg:py-12 lg:pl-10 border-t lg:border-t-0 border-lp-border">
@@ -146,7 +146,7 @@ const formattedDate = formatMonthYear(entry.data.date)
                                     <Image
                                         src={img}
                                         alt=""
-                                        class="w-full border border-lp-border"
+                                        class="w-full rounded-lg border border-lp-border"
                                     />
                                 ))}
                             </div>

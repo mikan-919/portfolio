@@ -28,14 +28,6 @@ const config = defineConfig({
         fallbacks: [],
       },
       {
-        provider: fontProviders.google(),
-        name: 'Archivo Black',
-        cssVariable: '--font-family-archivo-black',
-        weights: [400],
-        display: 'swap',
-        fallbacks: [],
-      },
-      {
         provider: fontProviders.local(),
         name: 'UDEV Gothic',
         cssVariable: '--font-family-udev-gothic',

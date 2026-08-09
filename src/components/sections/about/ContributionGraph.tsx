@@ -52,7 +52,7 @@ export default function ContributionGraph(props: Props) {
       <Show
         when={props.weeks && visibleWeeks().length > 0}
         fallback={
-          <div class='px-8 py-12 text-center border-2 border-dashed border-lp-border text-lp-muted'>
+          <div class='px-8 py-12 text-center rounded-lg border border-dashed border-lp-border text-lp-muted'>
             No contribution data available.
           </div>
         }
@@ -62,7 +62,7 @@ export default function ContributionGraph(props: Props) {
             <div class='flex flex-col gap-0.5'>
               {week.contributionDays.map(day => (
                 <div
-                  class={`w-2.5 h-2.5 ${getColor(day.contributionCount)}`}
+                  class={`w-2.5 h-2.5 rounded-[2px] ${getColor(day.contributionCount)}`}
                   title={`${day.date}: ${day.contributionCount} contributions`}
                 />
               ))}
