@@ -8,7 +8,8 @@ type Props = {
 const { variant = 'vertical', dark = false }: Props = Astro.props
 
 const raw = await getCollection('timeline')
-const items = raw.map((e) => e.data).sort((a, b) => a.date.localeCompare(b.date))
+const sortedItems = raw.map((e) => e.data).sort((a, b) => b.date.localeCompare(a.date))
+const items = variant === 'horizontal' ? sortedItems.slice(0, 4) : sortedItems
 
 function formatDate(rawDate: string): string {
   const [year, month] = rawDate.split('-')

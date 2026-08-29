@@ -1,9 +1,9 @@
 [
   {
     "id": "1",
-    "date": "2025-12-01",
-    "title": "Portfolio Renewal",
-    "desc": "AstroとTailwind CSSを使用してポートフォリオをリニューアル。"
+    "date": "2021-XX-XX",
+    "title": "Hello World",
+    "desc": "プログラミングに興味を持ち、HTML/CSSの基礎を学び始める。"
   },
   {
     "id": "2",
@@ -13,8 +13,32 @@
   },
   {
     "id": "3",
-    "date": "2021-XX-XX",
-    "title": "Hello World",
-    "desc": "プログラミングに興味を持ち、HTML/CSSの基礎を学び始める。"
+    "date": "2026-06-25",
+    "title": "Portfolio Renewal",
+    "desc": "Astroで構築したポートフォリオを、Swiss Minimalを軸に全面リニューアル。"
+  },
+  {
+    "id": "4",
+    "date": "2026-07-22",
+    "title": "irisout",
+    "desc": "JSXを手書き相当のVanilla JSへ変換する、ランタイムレスなコンパイラを公開。"
+  },
+  {
+    "id": "5",
+    "date": "2026-07-27",
+    "title": "Rhodolite",
+    "desc": "関数を跨いで要求を伝播する独自言語をRustで開発。インタプリタとWasm生成まで実装。"
+  },
+  {
+    "id": "6",
+    "date": "2026-08-23",
+    "title": "Agent Development Tools",
+    "desc": "contmux、Logos、dotagentsなど、AIエージェント開発を支えるツール群を制作。"
+  },
+  {
+    "id": "7",
+    "date": "2026-08-26",
+    "title": "remarkdown",
+    "desc": "Markdownの構造を保ったままリアルタイム翻訳できる、左右分割エディタを開発。"
   }
 ]

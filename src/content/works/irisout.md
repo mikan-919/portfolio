@@ -4,8 +4,8 @@ category: "other"
 role: "Design / Development"
 description: "JSXを書くと、仮想DOMもリアクティブランタイムも持たない手書き相当のvanilla JSにコンパイルするビルド時コンパイラ。"
 techStack:
-    - "TypeScript"
-    - "Bun"
+    - "typescript"
+    - "bun"
 tags:
     - "Compiler"
     - "JSX"
