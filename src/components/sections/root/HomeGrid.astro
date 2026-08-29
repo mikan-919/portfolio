@@ -29,9 +29,14 @@ const flat = 'p-7 md:p-9'
 <section class="w-full bg-lp-bg">
   <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 sm:[grid-auto-flow:dense]">
     <!-- skills -->
-    <div class={`${flat} lg:col-span-3 lg:row-span-2 flex flex-col gap-5`}>
-      <h2 class="font-display text-2xl leading-none tracking-tight text-lp-text">Skills</h2>
-      <div class="flex flex-col gap-4 lg:flex-1 lg:justify-between">
+    <div class={`${flat} sm:col-span-2 lg:col-span-12`}>
+      <div class="flex items-end justify-between gap-6 mb-6">
+        <h2 class="font-display text-2xl leading-none tracking-tight text-lp-text">Skills</h2>
+        <a href="/about" class="inline-flex items-center gap-1.5 text-sm text-lp-accent hover:underline w-fit">
+          プロフィールを見る →
+        </a>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-8">
         {
           Object.entries(skills).map(([category, tags]) => (
             <div>
@@ -45,9 +50,6 @@ const flat = 'p-7 md:p-9'
           ))
         }
       </div>
-      <a href="/about" class="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm text-lp-accent hover:underline w-fit">
-        プロフィールを見る →
-      </a>
     </div>
 
     <!-- featured work -->
@@ -55,7 +57,7 @@ const flat = 'p-7 md:p-9'
       featuredWork && (
         <a
           href={featuredWork.data.isComingSoon ? undefined : `/works/${featuredWork.id}`}
-          class={`${card} sm:col-span-2 lg:col-span-5 lg:row-span-2 flex flex-col gap-4 hover:border-lp-border transition-colors`}
+          class={`${card} sm:col-span-2 lg:col-span-6 flex flex-col gap-4 hover:border-lp-border transition-colors`}
         >
           <div class="min-h-[160px] relative rounded-lg overflow-hidden bg-lp-bg">
             {featuredWork.data.image ? (
@@ -78,7 +80,7 @@ const flat = 'p-7 md:p-9'
     <!-- featured article -->
     {
       featuredArticle && (
-        <a href={`/blog/${featuredArticle.id}`} class={`${card} lg:col-span-4 lg:row-span-2 flex flex-col gap-4 lg:justify-between hover:border-lp-border transition-colors`}>
+        <a href={`/blog/${featuredArticle.id}`} class={`${card} sm:col-span-2 lg:col-span-6 flex flex-col gap-4 lg:justify-between hover:border-lp-border transition-colors`}>
           <div class="flex flex-col gap-4">
             <p class="text-xs text-lp-subtle">Latest post</p>
             <h3 class="font-display text-xl leading-tight tracking-tight text-lp-text">{featuredArticle.data.title}</h3>
