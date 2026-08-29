@@ -25,3 +25,5 @@ isComingSoon: false
 迷路のseedは2人が揃うまでクライアントへ送らず、先に正しい経路を提出したプレイヤーをサーバー側で判定する設計にしている。
 
 フロントエンドとWorkerをViteでまとめ、WebSocket Hibernation APIによる接続維持、VitestとPlaywrightによるテスト、GitHub ActionsからCloudflareへの継続的デプロイまで構成している。
+
+[実装を自分で読み解いた記事を読む](/blog/2026-08-29)
