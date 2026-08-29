@@ -67,7 +67,7 @@ const image = entry.data.image
               href={entry.data.isComingSoon ? undefined : entry.data.github}
               class={`${entry.data.github ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-accent transition-colors`}
             >
-              GitHub →
+              {entry.data.githubVisibility === 'private' ? 'GitHub · Private' : 'GitHub · Public →'}
             </a>
           </div>
         ) : (

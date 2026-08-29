@@ -12,6 +12,7 @@ tags:
     - "Performance"
 image: "../../assets/images/works/irisout.webp"
 github: "https://github.com/mikan-919/irisout"
+githubVisibility: "public"
 date: 2026-07-22
 isComingSoon: false
 ---

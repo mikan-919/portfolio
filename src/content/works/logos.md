@@ -11,6 +11,7 @@ tags:
     - "AI Agent"
     - "Local First"
 github: "https://github.com/mikan-919/logos"
+githubVisibility: "public"
 date: 2026-08-23
 isComingSoon: false
 ---

@@ -12,7 +12,7 @@ tags:
     - "WebSocket"
     - "Durable Objects"
 link: "https://mazemaze.mikan-919.workers.dev/"
-github: "https://github.com/mikan-919/mazemaze"
+githubVisibility: "private"
 date: 2026-08-29
 isComingSoon: false
 ---

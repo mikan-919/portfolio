@@ -31,6 +31,7 @@ const worksCollection = defineCollection({
       gallery: z.array(image()).optional(),
       link: z.string().url().optional(),
       github: z.string().url().optional(),
+      githubVisibility: z.enum(['public', 'private']).optional(),
       isComingSoon: z.boolean().default(false),
       date: z.date(),
     }),

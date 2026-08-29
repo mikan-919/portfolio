@@ -10,6 +10,7 @@ tags:
     - "Compiler"
     - "WebAssembly"
 github: "https://github.com/mikan-919/rhodolite"
+githubVisibility: "public"
 date: 2026-07-27
 isComingSoon: false
 ---

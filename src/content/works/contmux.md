@@ -10,6 +10,7 @@ tags:
     - "Docker"
     - "AI Agent"
 github: "https://github.com/mikan-919/contmux"
+githubVisibility: "public"
 date: 2026-08-23
 isComingSoon: false
 ---
