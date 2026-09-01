@@ -12,39 +12,39 @@ Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたク�
 - **ホーム(marketing)**: Bento Grid — Hero・Skills・Works・Blog・Timeline を
   不揃いブロックの単一グリッドに統合。ナンバリング見出し(01/02/03...)は使わない。
   セル間はケイ線(border)ではなく `gap` で区切る。画像を持つプレビュー
-  (Featured Work/Article)のみ `rounded-lg` + hairline border のカードにし、
+  (Featured Work/Article)のみ `rounded-lg` + 白い面のカードにし、罫線は置かない。
   それ以外のテキストのみのセル(Skills・リスト項目・ナビリンク等)は
   背景もボーダーも無いフラット表示にする(Emil Kowalski 的な余白駆動)
 - **一覧ページ(Works一覧・Blog一覧・タグ別一覧)**: Portfolio Grid — フィルタ可能な
   カードグリッド。Works と Blog は type prop で出し分ける共通コンポーネント。
-  ここは画像プレビューを伴うため catnose 的なソフトカード(rounded + hairline
-  border + pill タグ)を維持する
+  ここは画像プレビューを伴うため catnose 的なソフトカード(rounded + 面の明度差
+  + pill タグ)を維持する。カードとタグに罫線は置かない
 - **詳細ページ(Works詳細・Blog記事詳細)**: Long Document — 本文中心の連続した
   読み物。ToC は Blog 記事のみ。
 - **About**: Bento Grid 系(bio・GitHub活動・values・learning/interests)。
   画像を持たないため全セルフラット(背景・ボーダー無し)、gap と見出しの
   太字だけで区切る
 
-## Theme — Swiss Minimal
+## Theme — Monochrome Swiss Minimal
 
-- `--color-lp-bg`             oklch(98% 0.004 85)   紙
-- `--color-lp-surface`        oklch(99% 0.002 85)   紙より明るい面
-- `--color-lp-surface-sunken` oklch(95% 0.006 85)   沈んだ面
-- `--color-lp-border`         oklch(82% 0.01 85)
-- `--color-lp-border-subtle`  oklch(90% 0.006 85)
-- `--color-lp-text`           oklch(16% 0.01 50)    インク
-- `--color-lp-muted`          oklch(46% 0.01 50)
-- `--color-lp-subtle`         oklch(62% 0.01 50)
-- `--color-lp-accent`         oklch(55% 0.21 27)    赤(唯一のアクセント)
-- `--color-lp-accent-on`      oklch(98% 0.005 85)
-- `--color-lp-accent-subtle`  oklch(95% 0.03 27)
-- `--color-lp-accent-strong`  oklch(45% 0.19 27)
-- `--color-lp-dark`           oklch(14% 0.01 50)
-- `--color-lp-dark-text`      oklch(97% 0.005 85)
-- `--color-lp-dark-muted`     oklch(58% 0.01 50)
+- `--color-lp-bg`             oklch(97% 0 0)   淡いグレーの紙
+- `--color-lp-surface`        oklch(100% 0 0)  白い面
+- `--color-lp-surface-sunken` oklch(93% 0 0)   沈んだ面
+- `--color-lp-border`         oklch(74% 0 0)   意味のある線専用
+- `--color-lp-border-subtle`  oklch(88% 0 0)
+- `--color-lp-text`           oklch(14% 0 0)   インク
+- `--color-lp-muted`          oklch(42% 0 0)
+- `--color-lp-subtle`         oklch(58% 0 0)
+- `--color-lp-accent`         oklch(18% 0 0)   強調用の黒
+- `--color-lp-accent-on`      oklch(98% 0 0)
+- `--color-lp-accent-subtle`  oklch(91% 0 0)
+- `--color-lp-accent-strong`  oklch(8% 0 0)
+- `--color-lp-dark`           oklch(11% 0 0)
+- `--color-lp-dark-text`      oklch(97% 0 0)
+- `--color-lp-dark-muted`     oklch(65% 0 0)
 
-軸: paper-band = light / display-style = grotesque-medium(太すぎない sans) /
-accent-hue = warm(red, ~27°、使用量は従来よりさらに抑える)
+軸: paper-band = cool light / display-style = grotesque-medium(太すぎない sans) /
+accent-hue = none。階層は黒・白・グレーの明度差と余白で表現する
 
 ## Typography
 
@@ -62,12 +62,11 @@ accent-hue = warm(red, ~27°、使用量は従来よりさらに抑える)
 - 既存 Tailwind 4pt spacing を継続使用
 - 角丸は小さめ(`rounded-md`〜`rounded-lg`、ピル状要素は `rounded-full`)を
   ボタン・タグ・カード・バッジに適用する。スラブ的な直角一辺倒(角丸0)は廃止
-- 罫線はヘアライン(1px, `border`)を基本とする。`border-2` 以上の太い罫線・
-  塗りつぶしのフルインバートホバーは使わない
-- 同一背景色で隣接するセクション同士(Header以外)を区切るための罫線
-  (`border-b`/`divide-x`/`divide-y`)は置かない。区切りは `gap` と余白のみで
-  表現する。罫線は「背景色が変わる境界」か「Timeline/ToCの縦スパイン」等、
-  意味を持つ場合のみ許可する
+- 罫線は原則使わない。カード・タグ・画像・Headerの輪郭は背景の明度差と余白で表現する
+- Timeline/ToCのスパインやフィルターの選択下線など、構造や状態を伝える線だけを
+  ヘアラインで許可する。`border-2` 以上の太い罫線や装飾目的の区切り線は使わない
+- 同一背景色で隣接するセクション同士を区切る罫線
+  (`border-b`/`divide-x`/`divide-y`)は置かない。区切りは `gap` と余白のみで表現する
 
 ## Motion
 
@@ -93,7 +92,7 @@ accent-hue = warm(red, ~27°、使用量は従来よりさらに抑える)
 
 ## Nav / Footer
 
-- Nav: ヘアラインの border-bottom、控えめなワードマーク、通常表記の
+- Nav: 罫線なしの半透明フローティング面、控えめなワードマーク、通常表記の
   ナビゲーションリンク(uppercase・強いトラッキングは使わない)
 - Footer: 本文は可読性重視の sans/日本語フォントを使用し、コロフォン的な
   コピーライト行のみ UDEV Gothic Mono を残す
@@ -108,8 +107,8 @@ accent-hue = warm(red, ~27°、使用量は従来よりさらに抑える)
 
 ## What pages MUST share
 
-- ワードマーク、赤アクセントの使用箇所(≤5%/viewport)、Inter + Zen Kaku Gothic New
-  のペアリング、CTA ボイス、小さめ角丸、ヘアライン罫線
+- ワードマーク、モノクロームの配色、Inter + Zen Kaku Gothic New
+  のペアリング、CTA ボイス、小さめ角丸、罫線に頼らない余白設計
 
 ## What pages MAY differ on
 

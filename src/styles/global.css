@@ -21,25 +21,25 @@
   }
 }
 /* Hallmark · macrostructure: Bento Grid (home/about) · Portfolio Grid (archives) · Long Document (detail)
- * genre: editorial(Swiss Minimal) · theme: Swiss Minimal · nav: hairline slim · footer: dense typographic
- * accent hue: warm (red ~27°) · paper-band: light · display-style: grotesque-medium
+ * genre: editorial(Swiss Minimal) · theme: monochrome · nav: floating slim · footer: dense typographic
+ * accent hue: none (ink only) · paper-band: cool light · display-style: grotesque-medium
  */
 :root {
-  --color-lp-bg: oklch(98% 0.004 85);
-  --color-lp-surface: oklch(99% 0.002 85);
-  --color-lp-surface-sunken: oklch(95% 0.006 85);
-  --color-lp-border: oklch(82% 0.01 85);
-  --color-lp-border-subtle: oklch(90% 0.006 85);
-  --color-lp-text: oklch(16% 0.01 50);
-  --color-lp-muted: oklch(46% 0.01 50);
-  --color-lp-subtle: oklch(62% 0.01 50);
-  --color-lp-accent: oklch(55% 0.21 27);
-  --color-lp-accent-on: oklch(98% 0.005 85);
-  --color-lp-accent-subtle: oklch(95% 0.03 27);
-  --color-lp-accent-strong: oklch(45% 0.19 27);
-  --color-lp-dark: oklch(14% 0.01 50);
-  --color-lp-dark-text: oklch(97% 0.005 85);
-  --color-lp-dark-muted: oklch(58% 0.01 50);
+  --color-lp-bg: oklch(97% 0 0);
+  --color-lp-surface: oklch(100% 0 0);
+  --color-lp-surface-sunken: oklch(93% 0 0);
+  --color-lp-border: oklch(74% 0 0);
+  --color-lp-border-subtle: oklch(88% 0 0);
+  --color-lp-text: oklch(14% 0 0);
+  --color-lp-muted: oklch(42% 0 0);
+  --color-lp-subtle: oklch(58% 0 0);
+  --color-lp-accent: oklch(18% 0 0);
+  --color-lp-accent-on: oklch(98% 0 0);
+  --color-lp-accent-subtle: oklch(91% 0 0);
+  --color-lp-accent-strong: oklch(8% 0 0);
+  --color-lp-dark: oklch(11% 0 0);
+  --color-lp-dark-text: oklch(97% 0 0);
+  --color-lp-dark-muted: oklch(65% 0 0);
 }
 
 @theme inline {
@@ -86,7 +86,7 @@
     @apply inline-flex items-center gap-2 bg-lp-surface text-lp-text px-4 py-2 rounded-full text-sm shadow-sm select-none transition-shadow hover:shadow-md;
   }
   .image-hover-effect {
-    @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-105;
+    @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-102;
   }
   .image-placeholder {
     @apply absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-lp-text)_1px,transparent_1px)] bg-size-[16px_16px];

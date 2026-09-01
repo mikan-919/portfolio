@@ -140,8 +140,8 @@ const formattedDate = formatMonthYear(entry.data.date)
                     prose-headings:font-display prose-headings:tracking-tight prose-headings:text-lp-text
                     prose-p:text-lp-muted prose-p:leading-relaxed
                     prose-a:text-lp-accent prose-a:decoration-1 prose-a:underline-offset-2
-                    prose-blockquote:border-l-4 prose-blockquote:border-lp-accent prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
-                    prose-img:rounded-lg prose-img:border prose-img:border-lp-border">
+                    prose-blockquote:border-0 prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
+                    prose-img:rounded-lg">
                     <Content />
                 </div>
                 <div class="py-8 lg:py-12">
@@ -153,7 +153,7 @@ const formattedDate = formatMonthYear(entry.data.date)
                                     <Image
                                         src={img}
                                         alt=""
-                                        class="w-full rounded-lg border border-lp-border"
+                                        class="w-full rounded-lg"
                                     />
                                 ))}
                             </div>

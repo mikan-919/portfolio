@@ -33,19 +33,19 @@ const cell = 'p-6 md:p-8'
                 <p class="text-xs text-lp-subtle mt-auto">Last updated {profile.lastUpdated}</p>
             </div>
 
-            <!-- github -->
-            <div class={`${cell} lg:row-span-2`}>
-                <Github />
-            </div>
-
             <!-- values -->
-            <div class={`${cell} lg:row-span-2`}>
+            <div class={`${cell} sm:col-span-2 lg:col-span-2 lg:row-span-2`}>
                 <Values />
             </div>
 
-            <!-- learning / interests -->
-            <div class={`sm:col-span-2 lg:col-span-4 ${cell}`}>
-                <InfoGrid />
+            <!-- github / learning / interests -->
+            <div class="sm:col-span-2 lg:col-span-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                <div class={cell}>
+                    <Github />
+                </div>
+                <div class={cell}>
+                    <InfoGrid />
+                </div>
             </div>
         </div>
     </section>
