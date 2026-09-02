@@ -4,9 +4,8 @@ dist/
 # generated types
 .astro/
 
-# astro build cache: フォントのみオフラインビルド用に同梱、他は無視
-.astro-cache/*
-!.astro-cache/fonts/
+# astro build cache
+.astro-cache/
 
 # dependencies
 node_modules/

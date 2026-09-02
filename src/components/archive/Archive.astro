@@ -76,7 +76,9 @@ if (props.kind === 'work') {
 
       function applyFilter(filter: string) {
         buttons.forEach((btn) => {
-          btn.classList.toggle('is-active', btn.dataset.filter === filter)
+          const isActive = btn.dataset.filter === filter
+          btn.classList.toggle('is-active', isActive)
+          btn.setAttribute('aria-pressed', String(isActive))
         })
 
         let visibleCount = 0

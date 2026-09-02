@@ -11,7 +11,19 @@ const allArticles = await getCollection('articles')
 const sortedArticles = sortByDateDescending(allArticles)
 ---
 
-<Layout description="学生エンジニア・摘果みかんのポートフォリオ。制作実績とブログを掲載。">
+<Layout
+  description="Web・言語処理系・開発者ツールを作る学生エンジニア、摘果みかんのポートフォリオ。制作実績と技術ブログを掲載。"
+  structuredData={{
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: '摘果みかん',
+    alternateName: 'mikan-919',
+    url: new URL('/', Astro.site ?? Astro.url).href,
+    sameAs: ['https://github.com/mikan-919', 'https://twitter.com/mikan_919_main'],
+    jobTitle: 'Student Developer',
+    knowsAbout: ['Web Development', 'Rust', 'TypeScript', 'Compilers', 'Developer Tools'],
+  }}
+>
   <Hero projectCount={allWorks.length} articleCount={allArticles.length} />
   <HomeGrid works={sortedWorks} articles={sortedArticles} />
 </Layout>

@@ -4,8 +4,7 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @plugin "@tailwindcss/typography";
 @layer base {
-  /* font-display は見出し用。Inter + Zen Kaku Gothic New を bold(700)で使う。
-     font-* ユーティリティで上書き可能。 */
+  /* 見出しはOS標準のサンセリフをbold(700)で使う。 */
   .font-display {
     font-weight: 700;
   }
@@ -18,6 +17,27 @@
     scroll-padding-top: 74px;
     transition-timing-function: cubic-bezier(0.5, 0.25, 0, 1);
     transition-duration: 300ms;
+  }
+
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-lp-text);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html,
+    body {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+      transition-duration: 0.01ms;
+    }
   }
 }
 /* Hallmark · macrostructure: Bento Grid (home/about) · Portfolio Grid (archives) · Long Document (detail)
@@ -43,12 +63,18 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-family-inter), var(--font-family-new), sans-serif;
-  --font-mono: var(--font-udev-gothic), monospace;
-  --font-inter: var(--font-family-inter), sans-serif;
-  --font-new: var(--font-family-new), sans-serif;
-  --font-udev-gothic: var(--font-family-udev-gothic), sans-serif;
-  --font-display: var(--font-family-inter), var(--font-family-new), sans-serif;
+  --font-sans:
+    Inter, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui,
+    sans-serif;
+  --font-mono: var(--font-family-udev-gothic), monospace;
+  --font-inter: Inter, system-ui, sans-serif;
+  --font-new:
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui,
+    sans-serif;
+  --font-udev-gothic: var(--font-family-udev-gothic), monospace;
+  --font-display:
+    Inter, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui,
+    sans-serif;
 
   --radius-none: 0px;
 
@@ -82,6 +108,9 @@
   -webkit-text-stroke-color: --value([*]);
 }
 @layer components {
+  .skip-link {
+    @apply fixed top-3 left-3 z-[100] -translate-y-20 rounded-md bg-lp-dark px-4 py-2 text-sm text-lp-dark-text transition-transform focus:translate-y-0;
+  }
   .btn-brutal {
     @apply inline-flex items-center gap-2 bg-lp-surface text-lp-text px-4 py-2 rounded-full text-sm shadow-sm select-none transition-shadow hover:shadow-md;
   }

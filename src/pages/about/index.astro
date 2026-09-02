@@ -11,7 +11,21 @@ const { profile } = myInfo
 const cell = 'p-6 md:p-8'
 ---
 
-<Layout title="About" description="摘果みかんのプロフィール・学習中の技術・GitHub Activity。" ogImage="/og/site/about.png">
+<Layout
+    title="About"
+    description="Web・言語処理系・開発者ツールを作る学生エンジニア、摘果みかんのプロフィール。"
+    ogImage="/og/site/about.png"
+    structuredData={{
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: profile.name,
+        alternateName: profile.handle,
+        description: profile.bio.replace(/\n/g, ' '),
+        url: new URL('/about', Astro.site ?? Astro.url).href,
+        sameAs: ['https://github.com/mikan-919', 'https://twitter.com/mikan_919_main'],
+        knowsAbout: ['Web Development', 'Rust', 'TypeScript', 'Compilers', 'Developer Tools'],
+    }}
+>
     <!-- Page header -->
     <div class="w-full bg-lp-bg">
         <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-16">

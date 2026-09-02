@@ -1,60 +1,66 @@
 ---
+import { ClientRouter } from 'astro:transitions'
+import Footer from '@/components/Footer.astro'
+import Header from '@/components/Header.astro'
+import '@/styles/global.css'
+import Fonts from './Fonts.astro'
 
-
-
-
-
-
-
-import "../styles/global.css";
-import { ClientRouter } from "astro:transitions";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import Fonts from "./Fonts.astro";
+type StructuredData = Record<string, unknown>
 
 type Props = {
-	title?: string
-	description?: string
-	ogImage?: string
+  title?: string
+  description?: string
+  ogImage?: string
+  ogType?: 'website' | 'article'
+  structuredData?: StructuredData | StructuredData[]
 }
+
 const {
-	title,
-	description = '学生エンジニア・摘果みかんのポートフォリオ。Web開発の制作実績とブログを掲載。',
-	ogImage = '/og/site/home.png',
+  title,
+  description = 'Web・言語処理系・開発者ツールを作る学生エンジニア、摘果みかんのポートフォリオ。',
+  ogImage = '/og/site/home.png',
+  ogType = 'website',
+  structuredData,
 }: Props = Astro.props
 
-const pageTitle = title ? `${title} | mikan-919` : 'mikan-919 — Web / App Developer'
+const pageTitle = title ? `${title} | mikan-919` : 'mikan-919 — Web / Developer Tools'
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href
+const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).href
+const jsonLd = structuredData ? JSON.stringify(structuredData).replace(/</g, '\\u003c') : null
 ---
 
 <!doctype html>
 <html lang="ja">
-	<head>
-		<ClientRouter />
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="google-site-verification" content="k4cB2IegdjFuoL4Elw6MHo6Mn6OvftHdZg5O03GwMDo" />
-		<title>{pageTitle}</title>
-		<meta name="description" content={description} />
-		<!-- Open Graph -->
-		<meta property="og:type" content="website" />
-		<meta property="og:title" content={pageTitle} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={new URL(ogImage, Astro.site ?? Astro.url).href} />
-		<!-- Twitter Card -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={pageTitle} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={new URL(ogImage, Astro.site ?? Astro.url).href} />
-		<link rel="alternate" type="application/rss+xml" title="mikan-919 Blog RSS" href="/blog/rss.xml" />
-		<Fonts />
-	</head>
-	<body class="font-sans bg-lp-bg" id="root">
-		<main class="min-h-screen flex flex-col">
-			<Header />
-			<slot />
-			<Footer />
-		</main>
-	</body>
+  <head>
+    <ClientRouter />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="google-site-verification" content="k4cB2IegdjFuoL4Elw6MHo6Mn6OvftHdZg5O03GwMDo" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <link rel="alternate" type="application/rss+xml" title="mikan-919 Blog RSS" href="/blog/rss.xml" />
+    {jsonLd && <script is:inline type="application/ld+json" set:html={jsonLd} />}
+    <Fonts />
+  </head>
+  <body class="font-sans bg-lp-bg min-h-screen flex flex-col" id="root">
+    <a href="#main-content" class="skip-link">本文へ移動</a>
+    <Header />
+    <main id="main-content" class="flex-1" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>

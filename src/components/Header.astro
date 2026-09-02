@@ -1,15 +1,44 @@
 ---
+const pathname = Astro.url.pathname
+const isCurrent = (href: string) => (href === '/' ? pathname === href : pathname.startsWith(href))
+const navItems = [
+  { href: '/works', label: 'Works' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/about', label: 'About' },
+]
+
+const wordmarkClass = 'font-display text-base md:text-lg tracking-tight text-lp-text leading-none shrink-0'
+const navLinkClass =
+  'inline-flex items-center min-h-11 text-sm text-lp-muted hover:text-lp-text aria-[current=page]:text-lp-text aria-[current=page]:underline underline-offset-4 transition-colors'
 ---
 
 <header class="w-full bg-lp-bg/90 backdrop-blur-md sticky top-0 z-50">
   <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] h-16 flex items-center gap-4 md:gap-8">
-    <a href="/" class="font-display text-base md:text-lg tracking-tight text-lp-text leading-none shrink-0">
-      MIKAN<span class="text-lp-accent">-919</span>
-    </a>
-    <nav class="flex items-center gap-4 sm:gap-6 md:gap-7 ml-auto" aria-label="Primary">
-      <a href="/works" class="inline-flex items-center min-h-11 text-sm text-lp-muted hover:text-lp-text transition-colors">Works</a>
-      <a href="/blog" class="inline-flex items-center min-h-11 text-sm text-lp-muted hover:text-lp-text transition-colors">Blog</a>
-      <a href="/about" class="inline-flex items-center min-h-11 text-sm text-lp-muted hover:text-lp-text transition-colors">About</a>
+    {
+      isCurrent('/') ? (
+        <a href="/" aria-current="page" class={wordmarkClass}>
+          MIKAN<span class="text-lp-accent">-919</span>
+        </a>
+      ) : (
+        <a href="/" class={wordmarkClass}>
+          MIKAN<span class="text-lp-accent">-919</span>
+        </a>
+      )
+    }
+    <nav class="flex items-center gap-4 sm:gap-6 md:gap-7 ml-auto" aria-label="メインナビゲーション">
+      {
+        navItems.map(({ href, label }) =>
+          isCurrent(href) ? (
+            <a href={href} aria-current="page" class={navLinkClass}>
+              {label}
+            </a>
+          ) : (
+            <a href={href} class={navLinkClass}>
+              {label}
+            </a>
+          ),
+        )
+      }
     </nav>
     <a
       href="https://twitter.com/mikan_919_main"

@@ -12,45 +12,20 @@ const config = defineConfig({
   experimental: {
     fonts: [
       {
-        provider: fontProviders.google(),
-        name: 'Zen Kaku Gothic New',
-        cssVariable: '--font-family-new',
-        weights: [300, 400, 500, 700, 900],
-        display: 'swap',
-        fallbacks: [],
-      },
-      {
-        provider: fontProviders.google(),
-        name: 'Inter',
-        cssVariable: '--font-family-inter',
-        weights: ['100 900'],
-        display: 'swap',
-        fallbacks: [],
-      },
-      {
         provider: fontProviders.local(),
         name: 'UDEV Gothic',
         cssVariable: '--font-family-udev-gothic',
-        fallbacks: [],
+        fallbacks: ['monospace'],
         options: {
-          variants: [
-            { src: ['./src/assets/fonts/UDEVGothicHSLG-Bold.woff2'], weight: 700, style: 'normal' },
-            { src: ['./src/assets/fonts/UDEVGothicHSLG-BoldItalic.woff2'], weight: 700, style: 'italic' },
-            { src: ['./src/assets/fonts/UDEVGothicHSLG-Regular.woff2'], weight: 400, style: 'normal' },
-            { src: ['./src/assets/fonts/UDEVGothicHSLG-Italic.woff2'], weight: 400, style: 'italic' },
-          ],
+          variants: [{ src: ['./src/assets/fonts/UDEVGothicHSLG-Regular.woff2'], weight: 400, style: 'normal' }],
         },
       },
     ],
   },
-
-  // ponytail: クラウドビルドでのフォント再DL失敗を防ぐため、ビルドキャッシュを
-  // node_modules 外に移してリポジトリへ同梱する。フォント構成を変えたら .astro-cache/fonts を再生成してコミット。
-  cacheDir: './.astro-cache',
   vite: {
     plugins: [tailwindcss()],
     ssr: {
-      // ponytail: native .node binary — must not be bundled by Rollup
+      // native .node binary — must not be bundled by Rollup
       external: ['@resvg/resvg-js'],
     },
   },

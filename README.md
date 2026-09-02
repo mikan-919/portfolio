@@ -24,7 +24,13 @@
 bun run dev
 ```
 
-### ビルド
+### チェックとビルド
+
+Astroの型・コンテンツチェックを実行します:
+
+```bash
+bun run check
+```
 
 本番用にプロジェクトをビルドします:
 
@@ -45,6 +51,7 @@ bun run preview
 | スクリプト | 説明 |
 | :--- | :--- |
 | `dev` | Astro開発サーバーを起動します。 |
+| `check` | Astroの型・コンテンツチェックを実行します。 |
 | `build` | 本番用にサイトをビルドします。 |
 | `preview` | ビルドされたサイトをプレビューします。 |
 | `fmt` | Biomeを使用してコードのチェックとフォーマットを行います。 |
@@ -62,7 +69,7 @@ bun run preview
 │   ├── layouts/  # レイアウト
 │   ├── pages/    # ページ
 │   └── styles/   # グローバルスタイル
-├── astro.config.mjs # Astro設定
+├── astro.config.mts # Astro設定
 ├── package.json  # プロジェクトの依存関係とスクリプト
 └── ...
 ```

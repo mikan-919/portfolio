@@ -16,7 +16,12 @@ const { heading, options, labelPrefix = '' }: Props = Astro.props
       <div class="flex flex-wrap gap-x-5 gap-y-2" id="filter-container">
         {
           options.map((opt) => (
-            <button type="button" data-filter={opt} class={`filter-btn ${opt === 'All' ? 'is-active' : ''}`}>
+            <button
+              type="button"
+              data-filter={opt}
+              aria-pressed={opt === 'All' ? 'true' : 'false'}
+              class={`filter-btn ${opt === 'All' ? 'is-active' : ''}`}
+            >
               {opt === 'All' ? opt : `${labelPrefix}${opt}`}
             </button>
           ))

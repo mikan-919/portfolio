@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "fmt": "biome check --write",
+    "check": "astro check",
     "dev": "astro dev",
     "build": "NODE_OPTIONS=--dns-result-order=ipv4first astro build",
     "preview": "astro preview",

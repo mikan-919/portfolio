@@ -38,6 +38,22 @@ const formattedDate = formatMonthYear(entry.data.date)
     title={entry.data.title}
     description={entry.data.description}
     ogImage={`/og/works/${entry.id}.png`}
+    structuredData={{
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        name: entry.data.title,
+        description: entry.data.description,
+        image: new URL(`/og/works/${entry.id}.png`, Astro.site ?? Astro.url).href,
+        dateCreated: entry.data.date.toISOString(),
+        creator: {
+            '@type': 'Person',
+            name: '摘果みかん',
+            url: new URL('/about', Astro.site ?? Astro.url).href,
+        },
+        url: new URL(`/works/${entry.id}`, Astro.site ?? Astro.url).href,
+        sameAs: [entry.data.link, entry.data.github].filter(Boolean),
+        keywords: entry.data.tags.join(', '),
+    }}
 >
     <!-- Header Image & Title -->
     <div class="w-full relative h-80 md:h-[28rem] overflow-hidden">
@@ -149,10 +165,10 @@ const formattedDate = formatMonthYear(entry.data.date)
                         entry.data.gallery && entry.data.gallery.length > 0 ? (
                             <div class="flex flex-col gap-4">
                                 <p class="text-xs text-lp-subtle">Gallery</p>
-                                {entry.data.gallery.map((img) => (
+                                {entry.data.gallery.map((img, index) => (
                                     <Image
                                         src={img}
-                                        alt=""
+                                        alt={`${entry.data.title}のスクリーンショット ${index + 1}`}
                                         class="w-full rounded-lg"
                                     />
                                 ))}

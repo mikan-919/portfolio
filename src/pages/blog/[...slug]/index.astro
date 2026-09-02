@@ -37,6 +37,22 @@ const formattedDate = formatShortDateJP(entry.data.date)
     title={entry.data.title}
     description={entry.data.description}
     ogImage={`/og/blog/${entry.id}.png`}
+    ogType="article"
+    structuredData={{
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: entry.data.title,
+        description: entry.data.description,
+        image: new URL(`/og/blog/${entry.id}.png`, Astro.site ?? Astro.url).href,
+        datePublished: entry.data.date.toISOString(),
+        author: {
+            '@type': 'Person',
+            name: '摘果みかん',
+            url: new URL('/about', Astro.site ?? Astro.url).href,
+        },
+        mainEntityOfPage: new URL(`/blog/${entry.id}`, Astro.site ?? Astro.url).href,
+        keywords: entry.data.tags.join(', '),
+    }}
 >
     <!-- Header Image & Title -->
     <div class="w-full relative h-80 md:h-[28rem] overflow-hidden">

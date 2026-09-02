@@ -1,37 +1,40 @@
 ---
-import { getCollection } from "astro:content";
-import { GITHUB_USERNAME } from "@/lib/constants";
-import ContributionGraph from "./ContributionGraph";
+import { getCollection } from 'astro:content'
+import { GITHUB_USERNAME } from '@/lib/constants'
+import ContributionGraph from './ContributionGraph'
 
-const githubStatus = await getCollection('githubStatus').catch(e=>console.log(e));
-const totalContributions = githubStatus?.[0]?.data.totalContributions ?? 0
-const weeks = githubStatus?.[0]?.data.weeks
+const githubStatus = await getCollection('githubStatus').catch(() => [])
+const status = githubStatus[0]?.data
 ---
 
 <div class="flex flex-col gap-6 h-full">
-    <div>
-        <p class="text-xs text-lp-subtle mb-1">Activity</p>
-        <div class="flex items-baseline justify-between">
-            <h3 class="font-display text-2xl leading-none tracking-tight text-lp-text">
-                GitHub
-            </h3>
-            <span class="font-display text-2xl leading-none text-lp-accent">
-                {totalContributions}
-            </span>
-        </div>
+  <div>
+    <p class="text-xs text-lp-subtle mb-1">Activity</p>
+    <div class="flex items-baseline justify-between gap-4">
+      <h3 class="font-display text-2xl leading-none tracking-tight text-lp-text">GitHub</h3>
+      {status && <span class="font-display text-2xl leading-none text-lp-accent">{status.totalContributions}</span>}
+    </div>
+    {
+      status ? (
         <p class="font-mono text-[11px] text-lp-muted mt-1">contributions in {new Date().getFullYear()}</p>
-    </div>
+      ) : (
+        <p class="text-xs text-lp-muted mt-2">最新の活動はGitHubプロフィールで確認できます。</p>
+      )
+    }
+  </div>
 
-    <div class="overflow-hidden">
-        <ContributionGraph client:visible {weeks} />
+  {status && (
+    <div class="overflow-hidden" role="img" aria-label={`${new Date().getFullYear()}年のGitHubコントリビューション`}>
+      <ContributionGraph client:visible weeks={status.weeks} />
     </div>
+  )}
 
-    <a
-        href={`https://github.com/${GITHUB_USERNAME}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-1.5 font-mono text-xs text-lp-accent hover:underline mt-auto"
-    >
-        @{GITHUB_USERNAME} on GitHub →
-    </a>
+  <a
+    href={`https://github.com/${GITHUB_USERNAME}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-1.5 font-mono text-xs text-lp-accent hover:underline mt-auto"
+  >
+    @{GITHUB_USERNAME} on GitHub →
+  </a>
 </div>
