@@ -34,7 +34,7 @@ Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたク�
 - `--color-lp-border-subtle`  oklch(88% 0 0)
 - `--color-lp-text`           oklch(14% 0 0)   インク
 - `--color-lp-muted`          oklch(42% 0 0)
-- `--color-lp-subtle`         oklch(58% 0 0)
+- `--color-lp-subtle`         oklch(52% 0 0)   小さい補助テキストでも WCAG AA を満たすグレー
 - `--color-lp-accent`         oklch(18% 0 0)   強調用の黒
 - `--color-lp-accent-on`      oklch(98% 0 0)
 - `--color-lp-accent-subtle`  oklch(91% 0 0)
