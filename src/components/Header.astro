@@ -13,7 +13,7 @@ const navLinkClass =
 ---
 
 <header class="w-full bg-lp-bg/90 backdrop-blur-md sticky top-0 z-50">
-  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] h-16 flex items-center gap-4 md:gap-8">
+  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] h-16 flex items-center gap-4 md:gap-8 relative">
     {
       isCurrent('/') ? (
         <a href="/" aria-current="page" class={wordmarkClass}>
@@ -25,7 +25,8 @@ const navLinkClass =
         </a>
       )
     }
-    <nav class="flex items-center gap-4 sm:gap-6 md:gap-7 ml-auto" aria-label="メインナビゲーション">
+
+    <nav class="hidden sm:flex items-center gap-4 md:gap-7 ml-auto" aria-label="メインナビゲーション">
       {
         navItems.map(({ href, label }) =>
           isCurrent(href) ? (
@@ -44,9 +45,40 @@ const navLinkClass =
       href="https://twitter.com/mikan_919_main"
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex items-center min-h-11 shrink-0 text-sm text-lp-text hover:text-lp-accent transition-colors"
+      class="hidden sm:inline-flex items-center min-h-11 shrink-0 text-sm text-lp-text hover:text-lp-accent transition-colors"
     >
       Contact
     </a>
+
+    <details class="group sm:hidden ml-auto">
+      <summary class="list-none [&::-webkit-details-marker]:hidden inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-full text-sm text-lp-text hover:bg-lp-surface-sunken transition-colors">
+        <span class="group-open:hidden">Menu</span>
+        <span class="hidden group-open:inline">Close</span>
+      </summary>
+      <nav
+        class="absolute top-[calc(100%-0.25rem)] left-5 right-5 rounded-lg bg-lp-surface p-2 shadow-lg"
+        aria-label="モバイルナビゲーション"
+      >
+        {
+          navItems.map(({ href, label }) => (
+            <a
+              href={href}
+              aria-current={isCurrent(href) ? 'page' : undefined}
+              class="flex min-h-12 items-center rounded-md px-4 text-sm text-lp-muted hover:bg-lp-surface-sunken hover:text-lp-text aria-[current=page]:bg-lp-surface-sunken aria-[current=page]:text-lp-text transition-colors"
+            >
+              {label}
+            </a>
+          ))
+        }
+        <a
+          href="https://twitter.com/mikan_919_main"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex min-h-12 items-center rounded-md px-4 text-sm text-lp-muted hover:bg-lp-surface-sunken hover:text-lp-text transition-colors"
+        >
+          Contact ↗
+        </a>
+      </nav>
+    </details>
   </div>
 </header>

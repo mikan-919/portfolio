@@ -55,7 +55,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
     }}
 >
     <!-- Header Image & Title -->
-    <div class="w-full relative h-80 md:h-[28rem] overflow-hidden">
+    <div class="w-full relative h-[28rem] sm:h-96 md:h-[28rem] overflow-hidden">
         {
             entry.data.image ? (
                 <Image
@@ -112,7 +112,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
                 <aside class="hidden lg:block py-12">
                     <TableOfContents client:idle headings={headings} />
                 </aside>
-                <div class="py-8 lg:py-12 prose prose-neutral max-w-none
+                <div class="min-w-0 py-8 lg:py-12 prose prose-neutral max-w-none
                     prose-headings:font-display prose-headings:tracking-tight prose-headings:text-lp-text
                     prose-p:text-lp-muted prose-p:leading-relaxed
                     prose-a:text-lp-accent prose-a:decoration-1 prose-a:underline-offset-2

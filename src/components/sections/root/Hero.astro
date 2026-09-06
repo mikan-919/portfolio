@@ -15,7 +15,7 @@ const { projectCount, articleCount } = Astro.props
           Open to opportunities
         </span>
 
-        <h1 class="font-display text-[56px] sm:text-[72px] lg:text-[88px] leading-none font-bold tracking-tight text-lp-text mt-5 mb-0" style="overflow-wrap: anywhere;">
+        <h1 class="font-display text-[48px] min-[360px]:text-[56px] sm:text-[72px] lg:text-[88px] leading-none font-bold tracking-tight text-lp-text mt-5 mb-0" style="overflow-wrap: anywhere;">
           摘果みかん
         </h1>
 
@@ -45,7 +45,7 @@ const { projectCount, articleCount } = Astro.props
       </div>
 
       <!-- spec sheet -->
-      <div class="flex flex-row lg:flex-col gap-6 lg:gap-4 lg:w-[180px]">
+      <div class="flex w-full flex-row justify-between gap-4 sm:justify-start sm:gap-10 lg:w-[180px] lg:flex-col lg:gap-4">
         <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
           <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">{projectCount}</span>
           <span class="text-xs text-lp-subtle">Projects</span>

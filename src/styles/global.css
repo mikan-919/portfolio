@@ -121,16 +121,25 @@
     @apply absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-lp-text)_1px,transparent_1px)] bg-size-[16px_16px];
   }
   .hover-button-overlay {
-    @apply absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px];
+    @apply absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-300;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .hover-button-overlay {
+      @apply opacity-0;
+    }
+    .group:hover .hover-button-overlay,
+    .hover-button-overlay:focus-visible {
+      @apply opacity-100 backdrop-blur-[2px];
+    }
   }
   .section-header {
-    @apply px-8 md:px-16 lg:px-[7.5rem] py-12;
+    @apply px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-12;
   }
   .filter-container {
-    @apply px-8 md:px-16 lg:px-[7.5rem] py-8;
+    @apply px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-8;
   }
   .filter-btn {
-    @apply text-lp-muted px-0 py-1 text-sm border-b border-transparent cursor-pointer select-none transition-colors hover:text-lp-text;
+    @apply min-h-11 text-lp-muted px-0 py-1 text-sm border-b border-transparent cursor-pointer select-none transition-colors hover:text-lp-text;
   }
   .filter-btn.is-active {
     @apply text-lp-text border-lp-text;
@@ -145,4 +154,21 @@
   color: inherit;
   padding: 0;
   border-radius: 0;
+}
+
+/* 長いコード・表・URLでモバイル幅を押し広げない。 */
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.prose :where(p, li, a) {
+  overflow-wrap: anywhere;
 }
