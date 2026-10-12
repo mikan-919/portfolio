@@ -7,6 +7,9 @@ dist/
 # astro build cache
 .astro-cache/
 
+# Cloudflare build output and local state
+.cloudflare/
+
 # dependencies
 node_modules/
 

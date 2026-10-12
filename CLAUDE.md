@@ -5,7 +5,7 @@ If you are unfamiliar with the library's unique notation or are not confident, f
 ## Tools
 In this project,
 - must use `bun` as the package manager
-- must use `bun` as the runtime
+- run package scripts with `bun`; Cloudflare CLI and its Astro commands require Node.js 22.18 or later, so do not force them to run with `bun --bun`
 
 ## Libraries
 In this project,

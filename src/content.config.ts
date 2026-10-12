@@ -1,17 +1,18 @@
-import { defineCollection, reference, z } from 'astro:content'
+import { defineCollection, reference } from 'astro:content'
 import { file, glob } from 'astro/loaders'
+import { z } from 'astro/zod'
 import type { GitHubApiResponse } from '@/types/github'
 
 // TechStackコレクションの定義
 const techStackCollection = defineCollection({
-  loader: glob({ pattern: 'tech-stack/*.md', base: './src/content' }),
+  loader: glob({ pattern: '*.md', base: './src/content/tech-stack' }),
   schema: () =>
     z.object({
       displayName: z.string(),
       description: z.string(),
       publisher: z.string(),
-      officialSite: z.string().url().optional(),
-      github: z.string().url().optional(),
+      officialSite: z.url().optional(),
+      github: z.url().optional(),
       iconId: z.string(),
     }),
 })
@@ -29,8 +30,8 @@ const worksCollection = defineCollection({
       tags: z.array(z.string()),
       image: image().optional(),
       gallery: z.array(image()).optional(),
-      link: z.string().url().optional(),
-      github: z.string().url().optional(),
+      link: z.url().optional(),
+      github: z.url().optional(),
       githubVisibility: z.enum(['public', 'private']).optional(),
       isComingSoon: z.boolean().default(false),
       date: z.date(),
