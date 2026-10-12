@@ -23,7 +23,7 @@ const {
   structuredData,
 }: Props = Astro.props
 
-const pageTitle = title ? `${title} | mikan-919` : 'mikan-919 — Web / Developer Tools'
+const pageTitle = title ? `${title} | mikan-919` : 'mikan-919'
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href
 const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).href
 const jsonLd = structuredData ? JSON.stringify(structuredData).replace(/</g, '\\u003c') : null
