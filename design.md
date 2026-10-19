@@ -49,7 +49,7 @@ Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたク�
 
 軸: paper-band = cool light / display-style = grotesque-medium(太すぎない sans) /
 accent-hue = persimmon(hue 40)。階層は黒・白・グレーの明度差と余白で表現し、
-柿色はリンク・選択中・フォーカスリング・ワードマーク以外に使わない。塗りボタンの `accent` は
+柿色はリンク・選択中・フォーカスリング・ワードマーク・生成カバーの1点以外に使わない。塗りボタンの `accent` は
 インクのまま(ダークでは反転する)を維持する
 
 ### Dark mode
@@ -60,6 +60,12 @@ accent-hue = persimmon(hue 40)。階層は黒・白・グレーの明度差と�
   柿色へ反転する。sunken は surface より暗いまま維持する
 - Footer と About の Timeline が使う `dark` 面は、ダークモードでも bg より暗い帯として維持する
 - 画像・OG画像は反転しない
+
+### Generated covers
+
+- `image` を持たない Works/Article には、ID のハッシュから決定的に生成するカバーを当てる
+- 紙・インク・グレーで構成し、柿色は1点だけ差す
+- 1280x720 の PNG をビルド時に生成し、外部ネットワークに依存しない
 
 ## Typography
 

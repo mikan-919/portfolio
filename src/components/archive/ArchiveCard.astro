@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import CoverImage from '@/components/ui/CoverImage.astro'
 import type { ArchiveCardData } from '@/types/cards'
 
 type Props = {
@@ -13,13 +13,7 @@ const { data }: Props = Astro.props
   class={`group flex flex-col bg-lp-surface rounded-lg overflow-hidden transition-colors h-full ${data.comingSoon ? 'pointer-events-none' : ''}`}
 >
   <div class="aspect-video relative overflow-hidden bg-lp-surface-sunken">
-    {
-      data.image ? (
-        <Image src={data.image} alt={data.title} class="image-hover-effect w-full h-full object-cover" />
-      ) : (
-        <div class="image-placeholder" />
-      )
-    }
+    <CoverImage src={data.image} alt={data.title} class="image-hover-effect w-full h-full object-cover" />
     {
       data.comingSoon && (
         <div class="absolute inset-0 flex items-center justify-center bg-lp-bg/80">

@@ -157,9 +157,6 @@
   .image-hover-effect {
     @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-102;
   }
-  .image-placeholder {
-    @apply absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-lp-text)_1px,transparent_1px)] bg-size-[16px_16px];
-  }
   .hover-button-overlay {
     @apply absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-300;
   }

@@ -1,4 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
+import type { ImageMetadata } from 'astro'
+import { coverUrl } from '@/lib/cover'
 
 export type ArchiveKind = 'work' | 'article'
 
@@ -9,7 +11,7 @@ export type ArchiveCardData = {
   excerpt: string
   tags: string[]
   date: Date
-  image?: CollectionEntry<'works' | 'articles'>['data']['image']
+  image?: ImageMetadata | string
   meta?: string
   comingSoon?: boolean
   filterKeys: string[]
@@ -23,7 +25,7 @@ export function workToCard(entry: CollectionEntry<'works'>): ArchiveCardData {
     excerpt: entry.data.description,
     tags: entry.data.tags,
     date: entry.data.date,
-    image: entry.data.image,
+    image: entry.data.image ?? coverUrl('works', entry.id),
     meta: entry.data.category,
     comingSoon: entry.data.isComingSoon,
     filterKeys: [entry.data.category.toUpperCase()],
@@ -38,7 +40,7 @@ export function articleToCard(entry: CollectionEntry<'articles'>): ArchiveCardDa
     excerpt: entry.data.summary ?? entry.data.description,
     tags: entry.data.tags,
     date: entry.data.date,
-    image: entry.data.image,
+    image: entry.data.image ?? coverUrl('articles', entry.id),
     filterKeys: entry.data.tags,
   }
 }

@@ -4,10 +4,12 @@ import type { CollectionEntry } from 'astro:content'
 import { getCollection, render } from "astro:content";
 import ExternalLink from "@lucide/astro/icons/external-link";
 import Github from "simple-icons-astro/Github";
+import CoverImage from "@/components/ui/CoverImage.astro";
 import PostNav from "@/components/ui/PostNav.astro";
 import Tags from "@/components/ui/Tags.astro";
 import Layout from "@/layouts/Layout.astro";
 import { sortByDateDescending } from "@/lib/collectionUtils";
+import { coverUrl } from "@/lib/cover";
 import { formatMonthYear } from "@/lib/dateUtils";
 export const prerender = true
 export async function getStaticPaths() {
@@ -57,19 +59,11 @@ const formattedDate = formatMonthYear(entry.data.date)
 >
     <!-- Header Image & Title -->
     <div class="w-full relative h-96 md:h-[28rem] overflow-hidden">
-        {
-            entry.data.image ? (
-                <Image
-                    src={entry.data.image}
-                    alt={entry.data.title}
-                    class="w-full h-full object-cover"
-                />
-            ) : (
-                <div class="w-full h-full bg-lp-surface-sunken">
-                    <div class="image-placeholder" />
-                </div>
-            )
-        }
+        <CoverImage
+            src={entry.data.image ?? coverUrl('works', entry.id)}
+            alt={entry.data.title}
+            class="w-full h-full object-cover"
+        />
         <div class="absolute inset-0 bg-lp-dark/60">
             <div class="absolute bottom-0 left-0 w-full px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-10">
                 <div class="space-y-3">

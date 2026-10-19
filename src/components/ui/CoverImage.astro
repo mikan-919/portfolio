@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+
+type Props = {
+  src?: ImageMetadata | string
+  alt: string
+  class?: string
+}
+
+const { src, alt, class: className = 'w-full h-full object-cover' } = Astro.props
+---
+
+{
+  typeof src === 'string' ? (
+    <img src={src} alt={alt} width="1280" height="720" loading="lazy" decoding="async" class={className} />
+  ) : src ? (
+    <Image src={src} alt={alt} class={className} />
+  ) : null
+}

@@ -1,7 +1,8 @@
 ---
-import { Image } from 'astro:assets'
 import Timeline from '@/components/Timeline.astro'
+import CoverImage from '@/components/ui/CoverImage.astro'
 import { pickFeatured } from '@/lib/collectionUtils'
+import { coverUrl } from '@/lib/cover'
 import { formatShortDateJP } from '@/lib/dateUtils'
 import type { ArticlesListProps, WorksListProps } from '@/types/collections'
 
@@ -59,11 +60,7 @@ const flat = 'py-7 md:py-9'
           class={`${card} sm:col-span-2 lg:col-span-6 flex flex-col gap-4 hover:bg-lp-surface-sunken transition-colors`}
         >
           <div class="min-h-[160px] relative rounded-lg overflow-hidden bg-lp-bg">
-            {featuredWork.data.image ? (
-              <Image src={featuredWork.data.image} alt={featuredWork.data.title} class="w-full h-full object-cover" />
-            ) : (
-              <div class="absolute inset-0 opacity-20 bg-[radial-gradient(var(--color-lp-text)_1px,transparent_1px)] bg-[length:16px_16px]" />
-            )}
+            <CoverImage src={featuredWork.data.image ?? coverUrl('works', featuredWork.id)} alt={featuredWork.data.title} />
           </div>
           <p class="text-xs text-lp-subtle">Featured project</p>
           <h3 class="font-display text-2xl md:text-3xl leading-tight text-lp-text">{featuredWork.data.title}</h3>
@@ -81,11 +78,7 @@ const flat = 'py-7 md:py-9'
       featuredArticle && (
         <a href={`/blog/${featuredArticle.id}`} class={`${card} sm:col-span-2 lg:col-span-6 flex flex-col gap-4 hover:bg-lp-surface-sunken transition-colors`}>
           <div class="min-h-[160px] relative rounded-lg overflow-hidden bg-lp-bg">
-            {featuredArticle.data.image ? (
-              <Image src={featuredArticle.data.image} alt={featuredArticle.data.title} class="w-full h-full object-cover" />
-            ) : (
-              <div class="absolute inset-0 opacity-20 bg-[radial-gradient(var(--color-lp-text)_1px,transparent_1px)] bg-[length:16px_16px]" />
-            )}
+            <CoverImage src={featuredArticle.data.image ?? coverUrl('articles', featuredArticle.id)} alt={featuredArticle.data.title} />
           </div>
           <p class="text-xs text-lp-subtle">Featured post</p>
           <h3 class="font-display text-xl leading-tight text-lp-text">{featuredArticle.data.title}</h3>
