@@ -3,7 +3,7 @@ No remark, no verbose, no introduction, no conclusion, no follow-up, no filler w
 If you are unfamiliar with the library's unique notation or are not confident, feel free to use Context7.
 
 ## Version control
-- Use Git only. Do not use Jujutsu (`jj`) in this repository.
+- Use Git only.
 
 ## Tools
 In this project,
