@@ -78,7 +78,7 @@ export default function TableOfContents(props: Props) {
 
       <ul class='relative border-l-2 border-lp-border space-y-4'>
         <div
-          class='absolute left-[-2px] w-[2px] bg-lp-accent transition-all duration-300 ease-out'
+          class='absolute left-[-2px] w-[2px] bg-lp-highlight transition-all duration-300 ease-out'
           style={{
             top: `${indicatorStyle().top}px`,
             height: `${indicatorStyle().height}px`,

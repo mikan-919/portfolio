@@ -65,7 +65,7 @@ const image = entry.data.image
             <a
               aria-disabled={entry.data.isComingSoon || !entry.data.github}
               href={entry.data.isComingSoon ? undefined : entry.data.github}
-              class={`${entry.data.github ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-accent transition-colors`}
+              class={`${entry.data.github ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-highlight transition-colors`}
             >
               {entry.data.githubVisibility === 'private' ? 'GitHub · Private' : 'GitHub · Public →'}
             </a>

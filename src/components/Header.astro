@@ -9,7 +9,7 @@ const navItems = [
 
 const wordmarkClass = 'font-display text-base md:text-lg tracking-tight text-lp-text leading-none shrink-0'
 const navLinkClass =
-  'inline-flex items-center min-h-11 text-sm text-lp-muted hover:text-lp-text aria-[current=page]:text-lp-text aria-[current=page]:underline underline-offset-4 transition-colors'
+  'inline-flex items-center min-h-11 text-sm text-lp-muted hover:text-lp-text aria-[current=page]:text-lp-text aria-[current=page]:underline aria-[current=page]:decoration-lp-highlight aria-[current=page]:decoration-2 underline-offset-4 transition-colors'
 ---
 
 <header class="w-full bg-lp-bg/90 backdrop-blur-md sticky top-0 z-50">
@@ -17,11 +17,11 @@ const navLinkClass =
     {
       isCurrent('/') ? (
         <a href="/" aria-current="page" class={wordmarkClass}>
-          MIKAN<span class="text-lp-accent">-919</span>
+          MIKAN<span class="text-lp-highlight">-919</span>
         </a>
       ) : (
         <a href="/" class={wordmarkClass}>
-          MIKAN<span class="text-lp-accent">-919</span>
+          MIKAN<span class="text-lp-highlight">-919</span>
         </a>
       )
     }
@@ -45,7 +45,7 @@ const navLinkClass =
       href="https://twitter.com/mikan_919_main"
       target="_blank"
       rel="noopener noreferrer"
-      class="hidden sm:inline-flex items-center min-h-11 shrink-0 text-sm text-lp-text hover:text-lp-accent transition-colors"
+      class="hidden sm:inline-flex items-center min-h-11 shrink-0 text-sm text-lp-text hover:text-lp-highlight transition-colors"
     >
       Contact
     </a>
@@ -64,7 +64,7 @@ const navLinkClass =
             <a
               href={href}
               aria-current={isCurrent(href) ? 'page' : undefined}
-              class="flex min-h-12 items-center rounded-md px-4 text-sm text-lp-muted hover:bg-lp-surface-sunken hover:text-lp-text aria-[current=page]:bg-lp-surface-sunken aria-[current=page]:text-lp-text transition-colors"
+              class="flex min-h-12 items-center rounded-md px-4 text-sm text-lp-muted hover:bg-lp-surface-sunken hover:text-lp-text aria-[current=page]:bg-lp-surface-sunken aria-[current=page]:text-lp-highlight transition-colors"
             >
               {label}
             </a>

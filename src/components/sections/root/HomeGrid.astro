@@ -32,7 +32,7 @@ const flat = 'py-7 md:py-9'
     <div class={`${flat} sm:col-span-2 lg:col-span-12`}>
       <div class="flex items-end justify-between gap-6 mb-6">
         <h2 class="font-display text-2xl leading-none tracking-tight text-lp-text">Skills</h2>
-        <a href="/about" class="inline-flex items-center gap-1.5 text-sm text-lp-accent hover:underline w-fit">
+        <a href="/about" class="inline-flex items-center gap-1.5 text-sm text-lp-highlight hover:underline w-fit">
           プロフィールを見る →
         </a>
       </div>
@@ -71,7 +71,7 @@ const flat = 'py-7 md:py-9'
           <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">{featuredWork.data.description}</p>
           <div class="flex justify-between items-center mt-auto">
             <span class="text-xs text-lp-muted">{featuredWork.data.date.getFullYear()}</span>
-            <span class="text-sm text-lp-accent">見る →</span>
+            <span class="text-sm text-lp-highlight">見る →</span>
           </div>
         </a>
       )
@@ -96,7 +96,7 @@ const flat = 'py-7 md:py-9'
       restWorks.map((work) => (
         <a
           href={work.data.isComingSoon ? undefined : `/works/${work.id}`}
-          class={`${flat} lg:col-span-3 flex h-full flex-col gap-2 hover:text-lp-accent transition-colors`}
+          class={`${flat} lg:col-span-3 flex h-full flex-col gap-2 hover:text-lp-highlight transition-colors`}
         >
           <p class="text-xs text-lp-subtle">Project</p>
           <h4 class="font-display text-lg leading-tight text-lp-text">{work.data.title}</h4>
@@ -111,7 +111,7 @@ const flat = 'py-7 md:py-9'
       restArticles.map((article) => (
         <a
           href={`/blog/${article.id}`}
-          class={`${flat} lg:col-span-3 flex h-full flex-col gap-2 hover:text-lp-accent transition-colors`}
+          class={`${flat} lg:col-span-3 flex h-full flex-col gap-2 hover:text-lp-highlight transition-colors`}
         >
           <p class="text-xs text-lp-subtle">Post</p>
           <h4 class="font-display text-lg leading-tight text-lp-text">{article.data.title}</h4>
@@ -121,10 +121,10 @@ const flat = 'py-7 md:py-9'
     }
 
     <!-- links -->
-    <a href="/works" class={`${flat} lg:col-span-3 flex items-center justify-between text-sm text-lp-text hover:text-lp-accent transition-colors`}>
+    <a href="/works" class={`${flat} lg:col-span-3 flex items-center justify-between text-sm text-lp-text hover:text-lp-highlight transition-colors`}>
       すべての制作実績 <span>→</span>
     </a>
-    <a href="/blog" class={`${flat} lg:col-span-3 flex items-center justify-between text-sm text-lp-text hover:text-lp-accent transition-colors`}>
+    <a href="/blog" class={`${flat} lg:col-span-3 flex items-center justify-between text-sm text-lp-text hover:text-lp-highlight transition-colors`}>
       すべての記事 <span>→</span>
     </a>
 

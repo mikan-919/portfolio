@@ -25,7 +25,7 @@ Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたク�
   画像を持たないため全セルフラット(背景・ボーダー無し)、gap と見出しの
   太字だけで区切る
 
-## Theme — Monochrome Swiss Minimal
+## Theme — Monochrome + Persimmon Accent
 
 - `--color-lp-bg`             oklch(97% 0 0)   淡いグレーの紙
 - `--color-lp-surface`        oklch(100% 0 0)  白い面
@@ -39,12 +39,24 @@ Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたク�
 - `--color-lp-accent-on`      oklch(98% 0 0)
 - `--color-lp-accent-subtle`  oklch(91% 0 0)
 - `--color-lp-accent-strong`  oklch(8% 0 0)
+- `--color-lp-highlight`      oklch(52% 0.17 40)  柿色。リンク・選択中・フォーカスリング・ワードマーク専用
 - `--color-lp-dark`           oklch(11% 0 0)
 - `--color-lp-dark-text`      oklch(97% 0 0)
 - `--color-lp-dark-muted`     oklch(65% 0 0)
 
 軸: paper-band = cool light / display-style = grotesque-medium(太すぎない sans) /
-accent-hue = none。階層は黒・白・グレーの明度差と余白で表現する
+accent-hue = persimmon(hue 40)。階層は黒・白・グレーの明度差と余白で表現し、
+柿色はリンク・選択中・フォーカスリング・ワードマーク以外に使わない。塗りボタンの `accent` は
+インクのまま(ダークでは反転する)を維持する
+
+### Dark mode
+
+- `prefers-color-scheme: dark` で反転する。テーマ切替UIは持たない
+- bg / surface / surface-sunken / border / text / muted / subtle / accent を
+  dark 用の値に差し替える。`accent` は明るいインクへ、`highlight` は明度を上げた
+  柿色へ反転する。sunken は surface より暗いまま維持する
+- Footer と About の Timeline が使う `dark` 面は、ダークモードでも bg より暗い帯として維持する
+- 画像・OG画像は反転しない
 
 ## Typography
 
@@ -93,7 +105,8 @@ accent-hue = none。階層は黒・白・グレーの明度差と余白で表現
 ## Nav / Footer
 
 - Nav: 罫線なしの半透明フローティング面、控えめなワードマーク、通常表記の
-  ナビゲーションリンク(uppercase・強いトラッキングは使わない)
+  ナビゲーションリンク(uppercase・強いトラッキングは使わない)。現在地の下線は
+  `highlight` 色で示す
 - Footer: 本文は可読性重視の sans/日本語フォントを使用し、コロフォン的な
   コピーライト行のみ UDEV Gothic Mono を残す
 
@@ -107,7 +120,7 @@ accent-hue = none。階層は黒・白・グレーの明度差と余白で表現
 
 ## What pages MUST share
 
-- ワードマーク、モノクロームの配色、Inter + Zen Kaku Gothic New
+- ワードマーク、モノクロームの配色と柿色の限定使用、Inter + Zen Kaku Gothic New
   のペアリング、CTA ボイス、小さめ角丸、罫線に頼らない余白設計
 
 ## What pages MAY differ on
