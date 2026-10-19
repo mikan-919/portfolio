@@ -14,11 +14,14 @@ Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたク�
   セル間はケイ線(border)ではなく `gap` で区切る。画像を持つプレビュー
   (Featured Work/Article)のみ `rounded-lg` + 白い面のカードにし、罫線は置かない。
   それ以外のテキストのみのセル(Skills・リスト項目・ナビリンク等)は
-  背景もボーダーも無いフラット表示にする(Emil Kowalski 的な余白駆動)
+  背景もボーダーも無いフラット表示にする(Emil Kowalski 的な余白駆動)。
+  Featured Work/Article は `image` を持つエントリを優先し、同じプロジェクトが
+  両方のカードに並ばないようにする
 - **一覧ページ(Works一覧・Blog一覧・タグ別一覧)**: Portfolio Grid — フィルタ可能な
   カードグリッド。Works と Blog は type prop で出し分ける共通コンポーネント。
   ここは画像プレビューを伴うため catnose 的なソフトカード(rounded + 面の明度差
-  + pill タグ)を維持する。カードとタグに罫線は置かない
+  + pill タグ)を維持する。カードとタグに罫線は置かない。先頭の Featured も
+  `image` を持つエントリを優先する
 - **詳細ページ(Works詳細・Blog記事詳細)**: Long Document — 本文中心の連続した
   読み物。ToC は Blog 記事のみ。
 - **About**: Bento Grid 系(bio・GitHub活動・values・learning/interests)。

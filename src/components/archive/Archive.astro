@@ -5,7 +5,7 @@ import ArchiveFilter from '@/components/archive/ArchiveFilter.astro'
 import ArchiveHeader from '@/components/archive/ArchiveHeader.astro'
 import ArchiveList from '@/components/archive/ArchiveList.astro'
 import Section from '@/components/ui/Section.astro'
-import { sortByDateAscending } from '@/lib/collectionUtils'
+import { pickFeatured, type SortableCollectionEntry, sortByDateAscending } from '@/lib/collectionUtils'
 import { type ArchiveCardData, articleToCard, workToCard } from '@/types/cards'
 
 type Props = { kind: 'work'; entries: CollectionEntry<'works'>[] } | { kind: 'article'; entries: CollectionEntry<'articles'>[] }
@@ -13,7 +13,7 @@ type Props = { kind: 'work'; entries: CollectionEntry<'works'>[] } | { kind: 'ar
 const props = Astro.props as Props
 const { kind } = props
 
-const featured = props.entries[0]
+const featured = pickFeatured(props.entries as SortableCollectionEntry[])
 const total = props.entries.length
 const now = new Date()
 
