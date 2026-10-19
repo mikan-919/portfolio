@@ -15,7 +15,7 @@ const { projectCount, articleCount } = Astro.props
           Open to opportunities
         </span>
 
-        <h1 class="font-display text-[48px] min-[360px]:text-[56px] sm:text-[72px] lg:text-[88px] leading-none font-bold tracking-tight text-lp-text mt-5 mb-0" style="overflow-wrap: anywhere;">
+        <h1 class="font-display text-[48px] min-[360px]:text-[56px] sm:text-[72px] lg:text-[88px] leading-none font-bold tracking-[0.02em] text-lp-text mt-5 mb-0" style="overflow-wrap: anywhere;">
           摘果みかん
         </h1>
 
@@ -44,19 +44,30 @@ const { projectCount, articleCount } = Astro.props
         </div>
       </div>
 
-      <!-- spec sheet -->
-      <div class="flex w-full flex-row justify-start gap-8 sm:gap-10 lg:w-[180px] lg:flex-col lg:gap-4">
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
-          <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">{projectCount}</span>
-          <span class="text-xs text-lp-subtle">Projects</span>
+      <!-- mark + spec sheet -->
+      <div class="flex w-full flex-row justify-start gap-8 sm:gap-10 lg:w-[180px] lg:flex-col lg:gap-8">
+        <div class="hidden lg:flex size-40 shrink-0 items-center justify-center" aria-hidden="true">
+          <span
+            class="font-display text-[104px] leading-none tracking-tight text-transparent"
+            style="-webkit-text-stroke: 1px var(--color-lp-text);"
+          >
+            919
+          </span>
         </div>
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
-          <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">{articleCount}</span>
-          <span class="text-xs text-lp-subtle">Blog Posts</span>
-        </div>
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
-          <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">2021</span>
-          <span class="text-xs text-lp-subtle">Since</span>
+
+        <div class="flex w-full flex-row gap-8 sm:gap-10 lg:flex-col lg:gap-4">
+          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
+            <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">{projectCount}</span>
+            <span class="text-xs text-lp-subtle">Projects</span>
+          </div>
+          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
+            <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">{articleCount}</span>
+            <span class="text-xs text-lp-subtle">Blog Posts</span>
+          </div>
+          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
+            <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">2021</span>
+            <span class="text-xs text-lp-subtle">Since</span>
+          </div>
         </div>
       </div>
     </div>

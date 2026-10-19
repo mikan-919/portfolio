@@ -41,7 +41,7 @@ const cell = 'p-6 md:p-8'
         <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 sm:[grid-auto-flow:dense]">
             <!-- profile / bio -->
             <div class={`${cell} sm:col-span-2 lg:row-span-2 flex flex-col gap-4`}>
-                <h2 class="font-display text-2xl md:text-3xl leading-tight tracking-tight text-lp-text">{profile.name}</h2>
+                <h2 class="font-display text-2xl md:text-3xl leading-tight text-lp-text">{profile.name}</h2>
                 <p class="font-mono text-xs text-lp-muted -mt-2">{profile.handle}</p>
                 <p class="text-sm text-lp-muted leading-relaxed" set:html={profile.bio.replace(/\n/g, '<br />')} />
                 <p class="text-xs text-lp-subtle mt-auto">Last updated {profile.lastUpdated}</p>

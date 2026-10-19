@@ -4,9 +4,13 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @plugin "@tailwindcss/typography";
 @layer base {
-  /* 見出しはOS標準のサンセリフをbold(700)で使う。 */
+  /* 見出しは Inter + Zen Kaku Gothic New を bold(700) で使う。 */
   .font-display {
     font-weight: 700;
+    font-feature-settings: "palt" 1;
+    line-break: strict;
+    text-wrap: balance;
+    word-break: auto-phrase;
   }
   html,
   body {
@@ -17,6 +21,15 @@
     scroll-padding-top: 74px;
     transition-timing-function: cubic-bezier(0.5, 0.25, 0, 1);
     transition-duration: 300ms;
+  }
+  body {
+    line-height: 1.8;
+  }
+  .prose :where(h1, h2, h3, h4, h5, h6) {
+    font-feature-settings: "palt" 1;
+    line-break: strict;
+    text-wrap: balance;
+    word-break: auto-phrase;
   }
 
   :where(a, button, [tabindex]):focus-visible {
@@ -64,16 +77,19 @@
 
 @theme inline {
   --font-sans:
-    Inter, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui,
-    sans-serif;
-  --font-mono: var(--font-family-udev-gothic), monospace;
-  --font-inter: Inter, system-ui, sans-serif;
-  --font-new:
+    var(--font-family-inter), var(--font-family-zen-kaku),
     "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui,
     sans-serif;
+  --font-mono: var(--font-family-udev-gothic), monospace;
+  --font-inter:
+    var(--font-family-inter), var(--font-family-zen-kaku), sans-serif;
+  --font-new:
+    var(--font-family-zen-kaku), "Hiragino Kaku Gothic ProN", "Yu Gothic",
+    "Noto Sans JP", system-ui, sans-serif;
   --font-udev-gothic: var(--font-family-udev-gothic), monospace;
   --font-display:
-    Inter, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui,
+    var(--font-family-inter), var(--font-family-zen-kaku),
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui,
     sans-serif;
 
   --radius-none: 0px;

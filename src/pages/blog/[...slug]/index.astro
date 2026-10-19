@@ -72,7 +72,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
         <div class="absolute inset-0 bg-lp-dark/60">
             <div class="absolute bottom-0 left-0 w-full px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-10">
                 <div class="space-y-3">
-                    <h1 class="font-display text-3xl sm:text-4xl md:text-6xl leading-none tracking-tight text-lp-dark-text" style="overflow-wrap: anywhere;">
+                    <h1 class="font-display text-3xl sm:text-4xl md:text-6xl leading-none text-lp-dark-text" style="overflow-wrap: anywhere;">
                         {entry.data.title}
                     </h1>
                     <p class="font-mono text-xs text-lp-dark-muted">
@@ -112,9 +112,10 @@ const formattedDate = formatShortDateJP(entry.data.date)
                 <aside class="hidden lg:block py-12">
                     <TableOfContents client:idle headings={headings} />
                 </aside>
-                <div class="min-w-0 py-8 lg:py-12 prose prose-neutral max-w-none
-                    prose-headings:font-display prose-headings:tracking-tight prose-headings:text-lp-text
-                    prose-p:text-lp-muted prose-p:leading-relaxed
+                <div class="min-w-0 py-8 lg:py-12 prose prose-neutral max-w-[40em]
+                    prose-headings:font-display prose-headings:text-lp-text
+                    prose-p:text-lp-muted prose-p:leading-[1.9]
+                    prose-li:leading-[1.9]
                     prose-a:text-lp-accent prose-a:decoration-1 prose-a:underline-offset-2
                     prose-blockquote:border-0 prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
                     prose-img:rounded-lg

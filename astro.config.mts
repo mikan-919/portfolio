@@ -12,6 +12,23 @@ const config = defineConfig({
   site: 'https://tekka-mikan.pages.dev',
   fonts: [
     {
+      provider: fontProviders.google(),
+      name: 'Inter',
+      cssVariable: '--font-family-inter',
+      weights: [400, 600, 700],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: [],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Zen Kaku Gothic New',
+      cssVariable: '--font-family-zen-kaku',
+      weights: [400, 700],
+      styles: ['normal'],
+      fallbacks: [],
+    },
+    {
       provider: fontProviders.local(),
       name: 'UDEV Gothic',
       cssVariable: '--font-family-udev-gothic',
