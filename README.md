@@ -1,6 +1,10 @@
-# Portfolio
+<h1 align="center">Portfolio</h1>
 
-モダンな(当社比)Web技術を使用して構築された、パフォーマンスとデザインに焦点を当てた私のポートフォリオサイトです。
+<p align="center">Astro と SolidJS で作る個人ポートフォリオサイト</p>
+
+<p align="center"><a href="#技術スタック">技術スタック</a> · <a href="#開発">開発</a> · <a href="#スクリプト">スクリプト</a> · <a href="#プロジェクト構造">プロジェクト構造</a></p>
+
+![Portfolioのトップページ](src/assets/images/works/portfolio-v2.png)
 
 ## 技術スタック
 
