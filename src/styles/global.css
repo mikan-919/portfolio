@@ -329,6 +329,26 @@ html:active-view-transition-type(page-prev)::view-transition-new(pager) {
   }
 }
 
+/* 場面の傾き(src/lib/scene.ts)。[data-scene] の要素は、ステージ中央のカメラ(透視 1200px)から見て
+   ステージ中央を軸に回る。--scene-base に要素ごとの置き方(奥へ傾けるなど)を足せる。PC だけ。 */
+@media (min-width: 64rem) {
+  [data-scene] {
+    transform-origin: var(--scene-ox, 50%) var(--scene-oy, 50%);
+    transform: perspective(1200px) translateZ(var(--scene-tz, 0px))
+      rotateX(var(--scene-rx, 0deg)) rotateY(var(--scene-ry, 0deg))
+      var(--scene-base,);
+  }
+  /* 右側の面は、右端を軸に奥へ傾けて置く(ホームのメニューと同じ見え方) */
+  [data-scene="angled"] {
+    --scene-base: translate(
+        calc(100% - var(--scene-ox)),
+        calc(50% - var(--scene-oy))
+      )
+      rotateY(-6deg)
+      translate(calc(var(--scene-ox) - 100%), calc(var(--scene-oy) - 50%));
+  }
+}
+
 /* 横のページ送り。JS が無いときはネイティブの横スクロールのまま。 */
 [data-pager] {
   overflow-x: auto;

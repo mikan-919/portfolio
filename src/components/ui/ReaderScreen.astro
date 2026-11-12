@@ -1,9 +1,12 @@
 ---
 // 詳細ページの1画面構成。左(モバイルでは上)に概要、右に本文を1段ずつのページで送る(src/lib/pager.ts)。
+// PC では画面全体を1枚の面として、場面と一緒に傾ける(src/lib/scene.ts)。はみ出した分は外側で切る。
 import PagerBar from '@/components/ui/PagerBar.astro'
 ---
 
+<div class="h-full overflow-hidden">
 <div
+  data-scene
   class="grid h-full grid-rows-[auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] lg:grid-rows-1 xl:grid-cols-[minmax(0,30rem)_minmax(0,1fr)]"
 >
   <aside class="flex min-w-0 flex-col lg:overflow-y-auto lg:border-r lg:border-lp-border-subtle lg:[scrollbar-width:none]">
@@ -24,4 +27,5 @@ import PagerBar from '@/components/ui/PagerBar.astro'
     </article>
     <PagerBar class="w-full max-w-[40em] self-center" />
   </div>
+</div>
 </div>

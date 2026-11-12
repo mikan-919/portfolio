@@ -1,0 +1,16 @@
+---
+// ホームと同じクラゲの写真(黒を透明にしたもの)。背景の飾りとして置く。
+// 明るい面では淡い水彩のように、暗い面では光って見える。
+type Props = { class?: string }
+const { class: className = '' } = Astro.props
+---
+
+<img
+  src="/jellyfish.webp"
+  alt=""
+  width="450"
+  height="1100"
+  decoding="async"
+  aria-hidden="true"
+  class={`pointer-events-none max-w-none select-none ${className}`}
+/>

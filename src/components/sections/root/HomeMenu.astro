@@ -102,8 +102,6 @@ const info = 'min-w-0 max-lg:hidden'
 
 <style>
   @media (min-width: 64rem) {
-    /* ホーム左側の fx が配る場面の回転を受ける。回転の中心はステージの中央(右の列なので 100% - 50vw)で、
-       透視は index.astro のグリッドに置いた perspective(fx と同じ 1200px、中心はステージ中央)を使う */
     /* 包む要素とメニュー自体はクリックを受けない。3D の場面では透明な箱も奥行きで並べられ、
        奥へ傾いたタイルより手前にあるとクリックを横取りするため */
     [data-scene],
@@ -113,10 +111,9 @@ const info = 'min-w-0 max-lg:hidden'
     .menu-panel > a {
       pointer-events: auto;
     }
+    /* 場面の傾きは global.css の [data-scene] の規則。メニューとタイルの奥行きを、その場面の中で重ねる */
     [data-scene] {
       transform-style: preserve-3d;
-      transform-origin: calc(100% - 50vw) 50%;
-      transform: translateZ(var(--scene-tz, 0px)) rotateX(var(--scene-rx, 0deg)) rotateY(var(--scene-ry, 0deg));
     }
     /* メニュー自体は右端を軸に奥へ傾けておく */
     .menu-panel {

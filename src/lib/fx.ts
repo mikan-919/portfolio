@@ -1,17 +1,18 @@
 // HTML-in-Canvas(Chrome 157+)。[data-fx] の中身を実DOMのまま WebGL テクスチャにし、
 // 奥行きの違う板(レイヤー)として3D空間に並べて描く。
 // - 起動: 各レイヤーが奥から回転しながら跳ね起き、横スライスが揃う。上から1本の走査線が全レイヤーを描き出す
-// - ポインター: ステージ(main)のどこにあっても、ステージ基準の位置で傾ける。[data-scene] の要素(ホームのメニュー)が
-//   あるときは、カメラ(透視の中心)と回転の中心をステージの中央に置いて1つの場面にし、回転を CSS 変数で渡す
-//   (--scene-rx / --scene-ry / --scene-tz と、-1〜1 に直した --scene-x / --scene-y)。
+// - ポインター: 画面全体で共有する場面の傾き(src/lib/scene.ts)に合わせて、ステージ中央のカメラで板を回す。
+//   [data-scene] の要素の中にある板は、その要素ごと CSS で傾くので自分では回さない(二重に回さない)。
 //   板の上で動かしている間は、奥のレイヤー(z < 0)だけが周辺から粒子に分解されて弾かれる。
 //   文字のレイヤーは崩さない(読む邪魔にならないように)
-// - クリック: 波紋が広がり、板が奥へ押されて戻る
+// - クリック: 波紋が広がり、場面全体が奥へ押されて戻る
 // - 数秒おきに短いグリッチ
 // 中身の [data-fx-layer="<z>"] は別レイヤーになる(z は CSS px、正が手前)。
 // レイヤーは border box で切り取られるので、はみ出す字形には padding を取る。
 // 傾けると板の縁が見えるので、縁まで届く奥のレイヤーは中身の端をぼかしておく。
 // 非対応環境では何もしない(通常の HTML が表示される)。
+
+import { push, scene, subscribe } from './scene'
 
 type DrawableCanvas = HTMLCanvasElement & {
   getElementImageDefaultSize: (element: Element) => { width: number; height: number }
@@ -29,12 +30,9 @@ type Layer = {
   x: number // canvas 内の位置(CSS px)
   y: number
 }
-type Spring = { x: number; v: number; to: number; k: number; c: number }
 
 const DEPTH = 1200 // perspective(CSS px)
 const STAGGER = 0.18 // レイヤーごとの起動の遅れ
-const TILT_X = 4 // ポインターで傾ける最大角(度)。上下
-const TILT_Y = 6 // 左右
 
 // 板の四隅を CSS px の行列 M で射影する。uv は透視補正されて届く。
 const VERTEX = `#version 300 es
@@ -108,17 +106,6 @@ void main() {
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
 // 行き過ぎてから戻るイージング。
 const back = (t: number) => 1 + 2.70158 * (t - 1) ** 3 + 1.70158 * (t - 1) ** 2
-
-const spring = (k: number, c: number): Spring => ({ x: 0, v: 0, to: 0, k, c })
-// 1ステップ進め、まだ動いていれば true。
-const step = (s: Spring, dt: number): boolean => {
-  s.v += (s.k * (s.to - s.x) - s.c * s.v) * dt
-  s.x += s.v * dt
-  if (Math.abs(s.to - s.x) > 0.01 || Math.abs(s.v) > 0.05) return true
-  s.x = s.to
-  s.v = 0
-  return false
-}
 
 // 画面上の点を、行列 m で射影された板の上の座標へ戻す(z=0 平面のホモグラフィの逆)。
 const unproject = (m: DOMMatrix, x: number, y: number): [number, number] => {
@@ -203,12 +190,11 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
 
   const perspective = new DOMMatrix()
   perspective.m34 = -1 / DEPTH
-  const scene = host.closest<HTMLElement>('main') ?? host
-  const followers = [...document.querySelectorAll<HTMLElement>('[data-scene]')]
-  const tilt = { rx: spring(90, 9), ry: spring(90, 9), tz: spring(70, 8) }
+  const stage = host.closest<HTMLElement>('main') ?? host
+  // [data-scene] の中にある板は CSS で要素ごと傾くので、ここでは回さない。
+  const inScene = Boolean(host.closest('[data-scene]'))
   let accentCss = ''
   let pointer = [0, 0] // canvas 基準(CSS px)
-  let aim = [0, 0] // ステージ基準(-1〜1)
   let velocity = [0, 0]
   let click = [0, 0]
   let moved = -1e9
@@ -226,15 +212,17 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     const width = canvas.clientWidth
     const height = canvas.clientHeight
     const dpr = canvas.width / width
-    // カメラと場面の回転の中心。一緒に傾く要素(ホームのメニュー)があるときはステージ中央に置いて
-    // 1つの場面にする。無いときは canvas の中央(端の板が canvas からはみ出して切れないように)。
+    // カメラと場面の回転の中心はステージ中央(CSS で傾く [data-scene] と同じ)。
+    // [data-scene] の中では回さず、カメラも canvas の中央に置く。
     let ox = width / 2
     let oy = height / 2
-    if (followers.length) {
-      const stage = scene.getBoundingClientRect()
+    let [rx, ry, tz] = [0, 0, 0]
+    if (!inScene) {
+      const area = stage.getBoundingClientRect()
       const box = canvas.getBoundingClientRect()
-      ox = stage.left + stage.width / 2 - box.left
-      oy = stage.top + stage.height / 2 - box.top
+      ox = area.left + area.width / 2 - box.left
+      oy = area.top + area.height / 2 - box.top
+      ;[rx, ry, tz] = [scene.rx.x, scene.ry.x, scene.tz.x]
     }
     gl.viewport(0, 0, canvas.width, canvas.height)
     gl.clearColor(0, 0, 0, 0)
@@ -254,9 +242,9 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
       const matrix = new DOMMatrix()
         .translate(ox, oy)
         .multiply(perspective)
-        .translate(0, 0, tilt.tz.x)
-        .rotateAxisAngle(1, 0, 0, tilt.rx.x)
-        .rotateAxisAngle(0, 1, 0, tilt.ry.x)
+        .translate(0, 0, tz)
+        .rotateAxisAngle(1, 0, 0, rx)
+        .rotateAxisAngle(0, 1, 0, ry)
         .translate(width / 2 - ox, height / 2 - oy)
         .translate(0, 0, -rest * 700)
         .rotateAxisAngle(1, 0, 0, -rest * 75)
@@ -285,16 +273,11 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
   // ページ送りで横へ外れている間も描かない。
   const visible = (rect: DOMRect) =>
     rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth
-  // 何かが動いている間だけ rAF を回す。
+  // 何かが動いている間だけ rAF を回す(場面の傾きだけが動いているときは、下の subscribe で描く)。
   const tick = (now: number) => {
     const ms = Math.min(now - last, 50)
-    const dt = ms / 1000
     last = now
     const rect = canvas.getBoundingClientRect()
-    const active = now - moved < 1400
-    // 回転の中心がステージ中央なので、端ほど大きく動く。角度は控えめにする。
-    tilt.rx.to = active ? -aim[1] * TILT_X : 0
-    tilt.ry.to = active ? aim[0] * TILT_Y : 0
     // ポインターが止まったら粒子を戻す(指している文字が読めるように)。
     if (now - moved > 160) lensTarget = 0
     boot = Math.min(1, boot + ms / 1500)
@@ -302,19 +285,8 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     glitch = Math.max(0, glitch - ms / 350)
     ripple = Math.min(1, ripple + ms / 900)
     velocity = [velocity[0] * 0.85, velocity[1] * 0.85]
-    const moving = [step(tilt.rx, dt), step(tilt.ry, dt), step(tilt.tz, dt)].some(Boolean)
-    for (const follower of followers) {
-      follower.style.setProperty('--scene-rx', `${tilt.rx.x}deg`)
-      follower.style.setProperty('--scene-ry', `${tilt.ry.x}deg`)
-      follower.style.setProperty('--scene-tz', `${tilt.tz.x}px`)
-      follower.style.setProperty('--scene-x', String(tilt.ry.x / TILT_Y))
-      follower.style.setProperty('--scene-y', String(-tilt.rx.x / TILT_X))
-    }
     if (visible(rect)) draw()
-    frame =
-      moving || active || boot < 1 || lensTarget > 0 || lens > 0.002 || glitch > 0 || ripple < 1
-        ? requestAnimationFrame(tick)
-        : 0
+    frame = boot < 1 || lensTarget > 0 || lens > 0.002 || glitch > 0 || ripple < 1 ? requestAnimationFrame(tick) : 0
   }
   const kick = () => {
     if (frame || !started) return
@@ -379,29 +351,30 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     const rect = canvas.getBoundingClientRect()
     return [event.clientX - rect.left, event.clientY - rect.top]
   }
-  // ステージのどこで動かしても傾ける。粒子は板の上にあるときだけ出す。
-  scene.addEventListener('pointermove', event => {
+  const unsubscribe = subscribe(() => {
+    if (!inScene && started && !frame && visible(canvas.getBoundingClientRect())) draw()
+  })
+  // 粒子は板の上にあるときだけ出す。
+  stage.addEventListener('pointermove', event => {
     const next = locate(event)
     const now = performance.now()
     if (now - moved < 100) {
       velocity = [velocity[0] * 0.6 + (next[0] - pointer[0]) * 0.4, velocity[1] * 0.6 + (next[1] - pointer[1]) * 0.4]
     }
-    const stage = scene.getBoundingClientRect()
-    aim = [((event.clientX - stage.left) / stage.width) * 2 - 1, ((event.clientY - stage.top) / stage.height) * 2 - 1]
     const rect = canvas.getBoundingClientRect()
     pointer = next
     moved = now
     lensTarget = next[0] >= 0 && next[1] >= 0 && next[0] <= rect.width && next[1] <= rect.height ? 1 : 0
     kick()
   })
-  scene.addEventListener('pointerleave', () => {
+  stage.addEventListener('pointerleave', () => {
     moved = -1e9
     kick()
   })
   host.addEventListener('pointerdown', event => {
     click = locate(event)
     ripple = 0
-    tilt.tz.v -= 900
+    push(-900)
     kick()
   })
 
@@ -412,7 +385,6 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
       () => {
         if (!document.hidden && !frame && visible(canvas.getBoundingClientRect())) {
           glitch = 1
-          tilt.ry.v += Math.random() < 0.5 ? 40 : -40
           kick()
         }
         scheduleGlitch()
@@ -425,6 +397,7 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
   return () => {
     cancelAnimationFrame(frame)
     clearTimeout(timer)
+    unsubscribe()
     sizeObserver.disconnect()
     heightObserver.disconnect()
     gl.getExtension('WEBGL_lose_context')?.loseContext()

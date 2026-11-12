@@ -1,5 +1,6 @@
 ---
 import FxCanvas from '@/components/ui/FxCanvas.astro'
+import Jellyfish from '@/components/ui/Jellyfish.astro'
 
 const profile = [
   { label: 'Class', value: 'Student Developer' },
@@ -22,14 +23,7 @@ const profile = [
           919
         </span>
         <!-- 黒を透明にした写真。明るい面では淡い水彩のように、暗い面では光って見える -->
-        <img
-          src="/jellyfish.webp"
-          alt=""
-          width="450"
-          height="1100"
-          decoding="async"
-          class="absolute -top-[4%] right-[2%] h-[108%] w-auto max-w-none opacity-80 dark:opacity-60 max-lg:-right-[8%] max-lg:opacity-40 max-lg:dark:opacity-30"
-        />
+        <Jellyfish class="absolute -top-[4%] right-[2%] h-[108%] w-auto opacity-80 dark:opacity-60 max-lg:-right-[8%] max-lg:opacity-40 max-lg:dark:opacity-30" />
       </div>
     </div>
 
