@@ -1,46 +1,32 @@
 ---
-interface NavItem {
-    href: string
-    title: string
+// 本文の最後に置く前後のリンク。
+type NavItem = {
+  href: string
+  title: string
 }
-interface Props {
-    prev: NavItem | null
-    next: NavItem | null
-    backHref: string
-    backLabel: string
-    newerEmptyLabel: string
-    olderEmptyLabel: string
+type Props = {
+  prev: NavItem | null
+  next: NavItem | null
+  prevLabel: string
+  nextLabel: string
+  backHref: string
+  backLabel: string
 }
-const { prev, next, backHref, backLabel, newerEmptyLabel, olderEmptyLabel } =
-    Astro.props
+const { prev, next, prevLabel, nextLabel, backHref, backLabel }: Props = Astro.props
+
+const links = [prev && { ...prev, label: prevLabel }, next && { ...next, label: nextLabel }].filter((link) => link !== null)
 ---
 
-<div class="w-full">
-    <div class="grid grid-cols-1 sm:grid-cols-3">
-        {prev ? (
-            <a href={prev.href} class="flex flex-col justify-center py-6 sm:py-8 px-5 sm:pr-8 sm:pl-8 md:pl-16 lg:pl-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
-                <span class="label-tech mb-1">&lt; Newer</span>
-                <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{prev.title}</span>
-            </a>
-        ) : (
-            <div class="flex flex-col justify-center py-6 sm:py-8 px-5 sm:pr-8 sm:pl-8 md:pl-16 lg:pl-[7.5rem] opacity-30 select-none">
-                <span class="label-tech mb-1">&lt; Newer</span>
-                <span class="text-sm text-lp-text font-medium">{newerEmptyLabel}</span>
-            </div>
-        )}
-        <a href={backHref} class="flex items-center justify-center min-h-11 py-6 sm:py-8 hover:bg-lp-surface-sunken transition-colors text-sm text-lp-muted hover:text-lp-text">
-            {backLabel}
-        </a>
-        {next ? (
-            <a href={next.href} class="flex flex-col justify-center sm:items-end sm:text-right py-6 sm:py-8 px-5 sm:pl-8 sm:pr-8 md:pr-16 lg:pr-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
-                <span class="label-tech mb-1">Older &gt;</span>
-                <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{next.title}</span>
-            </a>
-        ) : (
-            <div class="flex flex-col justify-center sm:items-end sm:text-right py-6 sm:py-8 px-5 sm:pl-8 sm:pr-8 md:pr-16 lg:pr-[7.5rem] opacity-30 select-none">
-                <span class="label-tech mb-1">Older &gt;</span>
-                <span class="text-sm text-lp-text font-medium">{olderEmptyLabel}</span>
-            </div>
-        )}
-    </div>
-</div>
+<nav aria-label="前後のページ" class="mt-8">
+  {
+    links.map(({ href, title, label }) => (
+      <a href={href} class="group flex min-h-11 flex-col justify-center gap-1 border-b border-lp-border-subtle py-3">
+        <span class="label-tech">{label}</span>
+        <span class="text-sm font-medium leading-snug text-lp-text line-clamp-2 transition-colors group-hover:text-lp-highlight">{title}</span>
+      </a>
+    ))
+  }
+  <a href={backHref} class="mt-4 inline-flex min-h-11 items-center text-sm text-lp-highlight hover:underline underline-offset-4">
+    {backLabel}
+  </a>
+</nav>

@@ -1,0 +1,27 @@
+---
+// 詳細ページの1画面構成。左(モバイルでは上)に概要、右に本文を1段ずつのページで送る(src/lib/pager.ts)。
+import PagerBar from '@/components/ui/PagerBar.astro'
+---
+
+<div
+  class="grid h-full grid-rows-[auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] lg:grid-rows-1 xl:grid-cols-[minmax(0,30rem)_minmax(0,1fr)]"
+>
+  <aside class="flex min-w-0 flex-col lg:overflow-y-auto lg:border-r lg:border-lp-border-subtle">
+    <slot name="aside" />
+  </aside>
+  <div class="flex min-h-0 min-w-0 flex-col gap-4 px-5 pb-4 pt-5 sm:px-8 md:px-16 lg:px-12 lg:py-10">
+    <article
+      data-pager
+      class="reader prose prose-neutral min-h-0 w-full max-w-[40em] flex-1 self-center
+        prose-headings:font-display prose-headings:text-lp-text
+        prose-p:text-lp-muted prose-p:leading-[1.9]
+        prose-li:leading-[1.9]
+        prose-a:text-lp-highlight prose-a:decoration-lp-highlight prose-a:decoration-1 prose-a:underline-offset-2
+        prose-blockquote:border-0 prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
+        prose-code:text-lp-accent prose-code:bg-lp-accent-subtle prose-code:px-1 prose-code:py-0.5"
+    >
+      <slot />
+    </article>
+    <PagerBar class="w-full max-w-[40em] self-center" />
+  </div>
+</div>

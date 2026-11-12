@@ -3,7 +3,6 @@
 // - 起動: 各レイヤーが奥から回転しながら跳ね起き、横スライスと走査線が揃う
 // - ポインター: 板が傾き、動かしている間は周辺が粒子に分解されて弾かれる
 // - クリック: 波紋が広がり、板が奥へ押されて戻る
-// - スクロール: 板が奥へ倒れながら消える
 // - 数秒おきに短いグリッチ
 // 中身の [data-fx-layer="<z>"] は別レイヤーになる(z は CSS px、正が手前)。
 // レイヤーは border box で切り取られるので、はみ出す字形には padding を取る。
@@ -208,7 +207,6 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
   let lensTarget = 0
   let glitch = 0
   let ripple = 1
-  let opacity = 1
   let frame = 0
   let last = 0
   let started = false
@@ -249,27 +247,27 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
       gl.uniform2f(u.P, px * dpr, py * dpr)
       gl.uniform2f(u.C, cx * dpr, cy * dpr)
       gl.uniform1f(u.B, t)
-      gl.uniform1f(u.O, opacity * clamp(t * 4))
+      gl.uniform1f(u.O, clamp(t * 4))
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       // 描いた位置へヒットテストと読み上げ位置を合わせる(後に更新した要素が手前になる)。
       canvas.updateElementGeometry(layer.el, { canvasTransform: matrix })
     }
   }
 
+  // ページ送りで横へ外れている間も描かない。
+  const visible = (rect: DOMRect) =>
+    rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth
   // 何かが動いている間だけ rAF を回す。
   const tick = (now: number) => {
     const ms = Math.min(now - last, 50)
     const dt = ms / 1000
     last = now
     const rect = canvas.getBoundingClientRect()
-    const scrolled = clamp(-rect.top / rect.height)
     const active = now - moved < 1400
     const nx = active ? (pointer[0] / rect.width) * 2 - 1 : 0
     const ny = active ? (pointer[1] / rect.height) * 2 - 1 : 0
-    tilt.rx.to = scrolled * 55 - ny * 5
+    tilt.rx.to = -ny * 5
     tilt.ry.to = nx * 8
-    tilt.tz.to = scrolled * -500
-    opacity = 1 - scrolled * 0.85
     // ポインターが止まったら粒子を戻す(指している文字が読めるように)。
     if (now - moved > 160) lensTarget = 0
     boot = Math.min(1, boot + ms / 1500)
@@ -278,7 +276,7 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     ripple = Math.min(1, ripple + ms / 900)
     velocity = [velocity[0] * 0.85, velocity[1] * 0.85]
     const moving = [step(tilt.rx, dt), step(tilt.ry, dt), step(tilt.tz, dt)].some(Boolean)
-    if (rect.bottom > 0 && rect.top < innerHeight) draw()
+    if (visible(rect)) draw()
     frame =
       moving || active || boot < 1 || lensTarget > 0 || lens > 0.002 || glitch > 0 || ripple < 1
         ? requestAnimationFrame(tick)
@@ -368,15 +366,13 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     tilt.tz.v -= 900
     kick()
   })
-  addEventListener('scroll', kick, { passive: true })
 
   // 画面内で静止しているとき、数秒おきに短いグリッチを入れる。
   let timer = 0
   const scheduleGlitch = () => {
     timer = window.setTimeout(
       () => {
-        const rect = canvas.getBoundingClientRect()
-        if (!document.hidden && !frame && rect.bottom > 0 && rect.top < innerHeight) {
+        if (!document.hidden && !frame && visible(canvas.getBoundingClientRect())) {
           glitch = 1
           tilt.ry.v += Math.random() < 0.5 ? 40 : -40
           kick()
@@ -391,7 +387,6 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
   return () => {
     cancelAnimationFrame(frame)
     clearTimeout(timer)
-    removeEventListener('scroll', kick)
     sizeObserver.disconnect()
     heightObserver.disconnect()
     gl.getExtension('WEBGL_lose_context')?.loseContext()

@@ -17,8 +17,6 @@
     margin: 0;
     width: 100%;
     height: 100%;
-    scroll-behavior: smooth;
-    scroll-padding-top: 74px;
     transition-timing-function: cubic-bezier(0.5, 0.25, 0, 1);
     transition-duration: 300ms;
   }
@@ -38,11 +36,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html,
-    body {
-      scroll-behavior: auto;
-    }
-
     *,
     *::before,
     *::after {
@@ -133,13 +126,6 @@
   --color-lp-dark-muted: var(--color-lp-dark-muted);
 }
 
-/* これらのユーティリティーはSectionコンポーネントで使用されているので、特殊な要件がない限り<Section/>を利用してください。 */
-@utility full-width-band {
-  @apply w-full;
-}
-@utility content-container {
-  @apply max-w-[1200px] w-full mx-auto;
-}
 @utility text-stroke-* {
   -webkit-text-stroke-width: calc(--value(integer) * 1px);
   -webkit-text-stroke-color: --value(--color-*);
@@ -149,29 +135,8 @@
   .skip-link {
     @apply fixed top-3 left-3 z-[100] -translate-y-20 bg-lp-dark px-4 py-2 text-sm text-lp-dark-text transition-transform focus:translate-y-0;
   }
-  .btn-brutal {
-    @apply inline-flex items-center gap-2 bg-lp-surface text-lp-text px-4 py-2 text-sm shadow-sm select-none transition-shadow hover:shadow-md;
-  }
   .image-hover-effect {
     @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-102;
-  }
-  .hover-button-overlay {
-    @apply absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-300;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .hover-button-overlay {
-      @apply opacity-0;
-    }
-    .group:hover .hover-button-overlay,
-    .hover-button-overlay:focus-visible {
-      @apply opacity-100 backdrop-blur-[2px];
-    }
-  }
-  .section-header {
-    @apply px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-12;
-  }
-  .filter-container {
-    @apply px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-8;
   }
   .filter-btn {
     @apply min-h-11 text-lp-muted px-0 py-1 text-sm font-tech tracking-wider border-b border-transparent cursor-pointer select-none transition-colors hover:text-lp-text;
@@ -192,17 +157,6 @@
       100% calc(100% - var(--cut, 16px)),
       calc(100% - var(--cut, 16px)) 100%,
       0 100%
-    );
-  }
-  .btn-cut {
-    @apply inline-flex items-center gap-3 min-h-11 px-6 bg-lp-accent text-lp-accent-on text-sm transition-colors hover:bg-lp-highlight;
-    clip-path: polygon(
-      10px 0,
-      100% 0,
-      100% calc(100% - 10px),
-      calc(100% - 10px) 100%,
-      0 100%,
-      0 10px
     );
   }
   /* 面取りカード。ホバーで下端に柿色のバーが伸びる。 */
@@ -236,13 +190,29 @@
   }
 }
 
-/* View Transitions(Layout.astro の transition:animate から参照)。
-   旧ページは暗くなりながら奥へ回り、新ページは右から回り込みつつ斜めのワイプで現れる。 */
-::view-transition {
-  background: var(--color-lp-dark);
+/* --- 1画面構成(Layout.astro / src/lib/pager.ts) --- */
+
+/* ページ遷移(ClientRouter): Header とステータスバーは残し、ステージ(main)だけを入れ替える。
+   旧画面は暗くなりながら奥へ回り、新画面は回り込みつつ斜めのワイプで現れる。
+   ページ送りの View Transition(page-next / page-prev)ではステージを動かさない。 */
+#main-content {
+  view-transition-name: stage;
 }
-::view-transition-new(root) {
-  mix-blend-mode: normal;
+html:not(
+  :active-view-transition-type(page-next, page-prev)
+)::view-transition-group(stage) {
+  background: var(--color-lp-dark);
+  overflow: clip;
+}
+html:not(
+  :active-view-transition-type(page-next, page-prev)
+)::view-transition-old(stage) {
+  animation: ak-out 0.7s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+html:not(
+  :active-view-transition-type(page-next, page-prev)
+)::view-transition-new(stage) {
+  animation: ak-wipe 0.7s cubic-bezier(0.7, 0, 0.2, 1) both;
 }
 @keyframes ak-out {
   to {
@@ -261,72 +231,110 @@
   }
 }
 
-/* スクロール連動の出入り(CSS scroll-driven animations)。
-   画面に入るときに奥から起き上がり、上へ抜けるときに奥へ倒れる。非対応環境では静止表示。 */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    /* ショートハンドにすると Lightning CSS が animation-timeline を併合して無効な宣言になるため個別指定 */
-    .reveal,
-    .reveal-l,
-    .reveal-r {
-      animation-name: ak-flip;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view();
-    }
-    .reveal-l {
-      animation-name: ak-swing-l;
-    }
-    .reveal-r {
-      animation-name: ak-swing-r;
-    }
-  }
+/* ページ送り: 斜めの境目が横切り、旧ページを切り取りながら新ページを差し込む。
+   旧と新の切り口の間を少し空け、下の柿色を細い帯として見せる(ページ要素は不透明な背景を持つ)。 */
+::view-transition-group(pager) {
+  overflow: clip;
 }
-@keyframes ak-flip {
-  entry 0% {
-    opacity: 0;
-    transform: perspective(1000px) translateY(110px) rotateX(-55deg) scale(0.9);
+::view-transition-image-pair(pager) {
+  background: var(--color-lp-highlight);
+}
+html:active-view-transition-type(page-next)::view-transition-old(pager) {
+  animation: pg-cut-next 0.55s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+html:active-view-transition-type(page-next)::view-transition-new(pager) {
+  animation: pg-in-next 0.55s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+html:active-view-transition-type(page-prev)::view-transition-old(pager) {
+  animation: pg-cut-prev 0.55s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+html:active-view-transition-type(page-prev)::view-transition-new(pager) {
+  animation: pg-in-prev 0.55s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+/* 境目は上端が下端より 15% 右にある斜線。次へ: 右から左へ動く */
+@keyframes pg-in-next {
+  from {
+    clip-path: polygon(130% 0, 100% 0, 100% 100%, 115% 100%);
+    transform: translateX(4%);
   }
-  entry 100%,
-  exit 0% {
-    opacity: 1;
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, -15% 100%);
     transform: none;
   }
-  exit 100% {
-    opacity: 0.15;
-    transform: perspective(1000px) translateY(-70px) rotateX(40deg) scale(0.94);
+}
+@keyframes pg-cut-next {
+  from {
+    clip-path: polygon(0 0, 128.5% 0, 113.5% 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, -1.5% 0, -16.5% 100%, 0 100%);
+    filter: brightness(0.55);
   }
 }
-@keyframes ak-swing-l {
-  entry 0% {
-    opacity: 0;
-    transform: perspective(1000px) translateX(-140px) rotateY(50deg)
-      rotateZ(-4deg);
+/* 前へ: 左から右へ動く */
+@keyframes pg-in-prev {
+  from {
+    clip-path: polygon(0 0, -1.5% 0, -16.5% 100%, 0 100%);
+    transform: translateX(-4%);
   }
-  entry 100%,
-  exit 0% {
-    opacity: 1;
+  to {
+    clip-path: polygon(0 0, 130% 0, 115% 100%, 0 100%);
     transform: none;
-  }
-  exit 100% {
-    opacity: 0.15;
-    transform: perspective(1000px) translateX(-80px) rotateY(30deg);
   }
 }
-@keyframes ak-swing-r {
-  entry 0% {
+@keyframes pg-cut-prev {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, -15% 100%);
+  }
+  to {
+    clip-path: polygon(131.5% 0, 100% 0, 100% 100%, 116.5% 100%);
+    filter: brightness(0.55);
+  }
+}
+
+/* 横のページ送り。JS が無いときはネイティブの横スクロールのまま。 */
+[data-pager] {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  background: var(--color-lp-bg);
+}
+[data-pager][data-pager-ready] {
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* 本文を1段ずつのページにする(段の幅 = 1ページ)。図やコードはページの高さに収め、
+   はみ出す分はその中でスクロールする。 */
+.reader {
+  columns: 1;
+  column-gap: 4rem;
+  column-fill: auto;
+  container-type: size;
+}
+.reader :where(img, video, figure, pre, table) {
+  max-height: 100cqh;
+  break-inside: avoid;
+}
+.reader :where(img, video) {
+  width: auto;
+  margin-inline: auto;
+}
+.reader :where(pre, table) {
+  overflow: auto;
+}
+.reader :where(h1, h2, h3, h4) {
+  break-after: avoid;
+}
+
+/* ホームのメニュー: 読み込み時にタイルが右から順に差し込まれる。 */
+.menu-tile {
+  animation: tile-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  animation-delay: calc(0.25s + var(--i, 0) * 0.08s);
+}
+@keyframes tile-in {
+  from {
     opacity: 0;
-    transform: perspective(1000px) translateX(140px) rotateY(-50deg)
-      rotateZ(4deg);
-  }
-  entry 100%,
-  exit 0% {
-    opacity: 1;
-    transform: none;
-  }
-  exit 100% {
-    opacity: 0.15;
-    transform: perspective(1000px) translateX(80px) rotateY(-30deg);
+    transform: translateX(56px) skewX(-10deg);
   }
 }
 

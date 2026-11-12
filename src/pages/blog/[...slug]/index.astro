@@ -1,131 +1,128 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { getCollection, render } from "astro:content";
-import TableOfContents from "@/components/blog/TableOfContents.tsx";
-import CoverImage from "@/components/ui/CoverImage.astro";
-import PostNav from "@/components/ui/PostNav.astro";
-import Tags from "@/components/ui/Tags.astro";
-import Layout from "@/layouts/Layout.astro";
-import { sortByDateDescending } from "@/lib/collectionUtils";
-import { coverUrl } from "@/lib/cover";
-import { formatShortDateJP } from "@/lib/dateUtils";
+import { getCollection, render } from 'astro:content'
+import CoverImage from '@/components/ui/CoverImage.astro'
+import PostNav from '@/components/ui/PostNav.astro'
+import ReaderScreen from '@/components/ui/ReaderScreen.astro'
+import Tags from '@/components/ui/Tags.astro'
+import Layout from '@/layouts/Layout.astro'
+import { sortByDateDescending } from '@/lib/collectionUtils'
+import { coverUrl } from '@/lib/cover'
+import { formatShortDateJP } from '@/lib/dateUtils'
 
 export async function getStaticPaths() {
-    const articles = await getCollection('articles')
-    const sortedPosts = sortByDateDescending(articles)
-    return sortedPosts.map((entry, index) => ({
-        params: { slug: entry.id },
-        props: {
-            entry,
-            prevPost: sortedPosts[index - 1] ?? null,
-            nextPost: sortedPosts[index + 1] ?? null,
-        },
-    }))
+  const articles = await getCollection('articles')
+  const sortedPosts = sortByDateDescending(articles)
+  return sortedPosts.map((entry, index) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prevPost: sortedPosts[index - 1] ?? null,
+      nextPost: sortedPosts[index + 1] ?? null,
+    },
+  }))
 }
 
 type Props = {
-    entry: CollectionEntry<'articles'>
-    prevPost: CollectionEntry<'articles'> | null
-    nextPost: CollectionEntry<'articles'> | null
+  entry: CollectionEntry<'articles'>
+  prevPost: CollectionEntry<'articles'> | null
+  nextPost: CollectionEntry<'articles'> | null
 }
 
 const { entry, prevPost, nextPost } = Astro.props
 const { Content, headings } = await render(entry)
+const toc = headings.filter((h) => h.depth > 1 && h.depth < 4)
 const formattedDate = formatShortDateJP(entry.data.date)
 ---
 
 <Layout
-    title={entry.data.title}
-    description={entry.data.description}
-    ogImage={`/og/blog/${entry.id}.png`}
-    ogType="article"
-    structuredData={{
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: entry.data.title,
-        description: entry.data.description,
-        image: new URL(`/og/blog/${entry.id}.png`, Astro.site ?? Astro.url).href,
-        datePublished: entry.data.date.toISOString(),
-        author: {
-            '@type': 'Person',
-            name: '摘果みかん',
-            url: new URL('/about', Astro.site ?? Astro.url).href,
-        },
-        mainEntityOfPage: new URL(`/blog/${entry.id}`, Astro.site ?? Astro.url).href,
-        keywords: entry.data.tags.join(', '),
-    }}
+  title={entry.data.title}
+  description={entry.data.description}
+  ogImage={`/og/blog/${entry.id}.png`}
+  ogType="article"
+  structuredData={{
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: entry.data.title,
+    description: entry.data.description,
+    image: new URL(`/og/blog/${entry.id}.png`, Astro.site ?? Astro.url).href,
+    datePublished: entry.data.date.toISOString(),
+    author: {
+      '@type': 'Person',
+      name: '摘果みかん',
+      url: new URL('/about', Astro.site ?? Astro.url).href,
+    },
+    mainEntityOfPage: new URL(`/blog/${entry.id}`, Astro.site ?? Astro.url).href,
+    keywords: entry.data.tags.join(', '),
+  }}
 >
-    <!-- Header Image & Title -->
-    <div class="w-full relative h-[28rem] sm:h-96 md:h-[28rem] overflow-hidden">
+  <ReaderScreen>
+    <Fragment slot="aside">
+      <div class="relative shrink-0 overflow-hidden bg-lp-dark max-lg:h-36 lg:aspect-[4/3]">
         <CoverImage
-            src={entry.data.image ?? coverUrl('articles', entry.id)}
-            alt={entry.data.title}
-            class="w-full h-full object-cover"
+          src={entry.data.image ?? coverUrl('articles', entry.id)}
+          alt=""
+          class="absolute inset-0 size-full object-cover opacity-45"
         />
-        <div class="absolute inset-0 bg-lp-dark/60">
-            <div class="absolute bottom-0 left-0 w-full px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-10">
-                <div class="space-y-3">
-                    <h1 class="font-display text-3xl sm:text-4xl md:text-6xl leading-none text-lp-dark-text" style="overflow-wrap: anywhere;">
-                        {entry.data.title}
-                    </h1>
-                    <p class="font-mono text-xs text-lp-dark-muted">
-                        {formattedDate}
-                    </p>
-                    <p class="text-sm text-lp-dark-text/80 max-w-xl leading-relaxed">
-                        {entry.data.description}
-                    </p>
-                </div>
-            </div>
+        <div class="absolute inset-0 bg-linear-to-t from-lp-dark via-lp-dark/50 to-transparent" aria-hidden="true"></div>
+        <div class="absolute inset-x-0 bottom-0 space-y-2 px-5 pb-4 sm:px-8 md:px-16 lg:px-10 lg:pb-6 xl:pl-[7.5rem]">
+          <p class="font-mono text-xs text-lp-dark-muted">{formattedDate}</p>
+          <h1
+            class="font-display text-2xl leading-tight text-lp-dark-text line-clamp-2 lg:text-3xl lg:line-clamp-4"
+            style="overflow-wrap: anywhere;"
+          >
+            {entry.data.title}
+          </h1>
         </div>
-    </div>
-
-    <!-- Summary & Tags -->
-    <div class="w-full">
-        <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
-            <div class="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-8 py-10">
-                <div class="space-y-2">
-                    <p class="label-tech">Summary</p>
-                    <p class="text-sm text-lp-muted leading-relaxed">
-                        {entry.data?.summary || "No summary available."}
-                    </p>
-                </div>
-                <div class="space-y-2">
-                    <p class="label-tech">Tags</p>
-                    <Tags tags={entry.data.tags} link={(tag) => `/blog/tags/${tag}`} />
-                </div>
+      </div>
+      <div class="hidden flex-col gap-8 px-10 py-8 lg:flex xl:pl-[7.5rem]">
+        {
+          entry.data.summary && (
+            <div>
+              <p class="label-tech">Summary</p>
+              <p class="mt-2 text-sm leading-relaxed text-lp-muted">{entry.data.summary}</p>
             </div>
-        </div>
-    </div>
+          )
+        }
+        {
+          toc.length > 0 && (
+            <nav data-pager-toc aria-label="目次">
+              <p class="label-tech">Contents</p>
+              <ul class="mt-3 space-y-2 border-l border-lp-border">
+                {toc.map((h) => (
+                  <li
+                    class={`relative before:absolute before:-left-px before:inset-y-0 before:w-[2px] before:origin-top before:scale-y-0 before:bg-lp-highlight before:transition-transform has-[[aria-current=location]]:before:scale-y-100 ${h.depth === 3 ? 'pl-7 text-xs' : 'pl-4 text-sm'}`}
+                  >
+                    <a
+                      href={`#${h.slug}`}
+                      class="block leading-snug text-lp-muted transition-colors hover:text-lp-text aria-[current=location]:text-lp-text"
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
+      </div>
+    </Fragment>
 
-    <!-- Content -->
-    <div class="w-full">
-        <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
-            <div class="grid grid-cols-1 lg:grid-cols-[18rem_minmax(0,1fr)] gap-10 min-h-[calc(100vh-600px)]">
-                <!-- 目次 (PCのみ表示) -->
-                <aside class="hidden lg:block py-12">
-                    <TableOfContents client:idle headings={headings} />
-                </aside>
-                <div class="min-w-0 py-8 lg:py-12 prose prose-neutral max-w-[40em]
-                    prose-headings:font-display prose-headings:text-lp-text
-                    prose-p:text-lp-muted prose-p:leading-[1.9]
-                    prose-li:leading-[1.9]
-                    prose-a:text-lp-highlight prose-a:decoration-lp-highlight prose-a:decoration-1 prose-a:underline-offset-2
-                    prose-blockquote:border-0 prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
-                    prose-img:
-                    prose-code:text-lp-accent prose-code:bg-lp-accent-subtle prose-code:rounded prose-code:px-1 prose-code:py-0.5">
-                    <Content />
-                </div>
-            </div>
-        </div>
-    </div>
+    <Content />
 
-    <!-- Navigation -->
-    <PostNav
+    <footer class="not-prose mt-12 break-inside-avoid border-t border-lp-border-subtle pt-6">
+      <p class="label-tech">Tags</p>
+      <div class="mt-3">
+        <Tags tags={entry.data.tags} link={(tag) => `/blog/tags/${tag}`} />
+      </div>
+      <PostNav
         prev={prevPost ? { href: `/blog/${prevPost.id}`, title: prevPost.data.title } : null}
         next={nextPost ? { href: `/blog/${nextPost.id}`, title: nextPost.data.title } : null}
+        prevLabel="← Newer"
+        nextLabel="Older →"
         backHref="/blog"
-        backLabel="Back to Blog"
-        newerEmptyLabel="No newer posts"
-        olderEmptyLabel="No older posts"
-    />
+        backLabel="記事の一覧へ"
+      />
+    </footer>
+  </ReaderScreen>
 </Layout>

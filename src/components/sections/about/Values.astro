@@ -3,26 +3,23 @@ import Flame from "@lucide/astro/icons/flame";
 import Palette from "@lucide/astro/icons/palette";
 ---
 
-<div class="flex flex-col gap-6 h-full">
-    <p class="label-tech">Philosophy</p>
-    <div class="space-y-8">
-        <div>
-            <h4 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2">
-                <Flame class="inline-block size-5 text-lp-accent" />
-                Performance
-            </h4>
-            <p class="text-sm text-lp-muted leading-relaxed">
-                コードはなるべく高速に。低スペックのためという面もありますが、今後の拡張の幅を広げるためにも基本的にコードの最適化をなるべくするようにしています。
-            </p>
-        </div>
-        <div>
-            <h4 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2">
-                <Palette class="inline-block size-5 text-lp-accent" />
-                Attention to Detail
-            </h4>
-            <p class="text-sm text-lp-muted leading-relaxed">
-                細部へのこだわりが全体の質を高めると信じています。ピクセル単位の調整や、マイクロインタラクションを大切にしています。
-            </p>
-        </div>
+<div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
+    <div>
+        <h3 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2 lg:text-2xl">
+            <Flame class="inline-block size-5 text-lp-accent" />
+            Performance
+        </h3>
+        <p class="text-sm text-lp-muted leading-relaxed lg:text-base lg:leading-[1.9]">
+            コードはなるべく高速に。低スペックのためという面もありますが、今後の拡張の幅を広げるためにも基本的にコードの最適化をなるべくするようにしています。
+        </p>
+    </div>
+    <div>
+        <h3 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2 lg:text-2xl">
+            <Palette class="inline-block size-5 text-lp-accent" />
+            Attention to Detail
+        </h3>
+        <p class="text-sm text-lp-muted leading-relaxed lg:text-base lg:leading-[1.9]">
+            細部へのこだわりが全体の質を高めると信じています。ピクセル単位の調整や、マイクロインタラクションを大切にしています。
+        </p>
     </div>
 </div>

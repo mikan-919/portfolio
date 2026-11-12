@@ -13,8 +13,8 @@ const navLinkClass =
   'group relative flex h-16 flex-col justify-center text-lp-muted hover:text-lp-text aria-[current=page]:text-lp-text transition-colors before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:origin-left before:scale-x-0 before:bg-lp-highlight before:transition-transform hover:before:scale-x-100 aria-[current=page]:before:scale-x-100'
 ---
 
-<header class="w-full bg-lp-bg/90 backdrop-blur-md sticky top-0 z-50 border-b border-lp-border-subtle">
-  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] h-16 flex items-center gap-4 md:gap-10 relative">
+<header class="relative z-50 w-full bg-lp-bg border-b border-lp-border-subtle">
+  <div class="px-5 sm:px-8 md:px-16 xl:px-[7.5rem] h-16 flex items-center gap-4 md:gap-10 relative">
     <a href="/" aria-current={isCurrent('/') ? 'page' : undefined} class={wordmarkClass}>
       MIKAN<span class="text-lp-highlight">-919</span>
     </a>

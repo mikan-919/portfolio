@@ -28,15 +28,13 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href
 const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).href
 const jsonLd = structuredData ? JSON.stringify(structuredData).replace(/</g, '\\u003c') : null
 
-// ページ遷移は3D回転つきの斜めワイプ(keyframes は global.css)。
-const wipe = {
-  old: { name: 'ak-out', duration: '0.7s', easing: 'cubic-bezier(0.7, 0, 0.2, 1)', fillMode: 'both' },
-  new: { name: 'ak-wipe', duration: '0.7s', easing: 'cubic-bezier(0.7, 0, 0.2, 1)', fillMode: 'both' },
-}
+// 1画面構成: Header とステータスバー(Footer)の間のステージ(main)だけが入れ替わる。
+// ページはステージに収め、はみ出す中身は [data-pager] で横に送る(src/lib/pager.ts)。
+// 収まらないほど低い画面でだけ main が縦にスクロールする。遷移の演出は global.css。
 ---
 
 <!doctype html>
-<html lang="ja" transition:name="root" transition:animate={{ forwards: wipe, backwards: wipe }}>
+<html lang="ja">
   <head>
     <ClientRouter />
     <meta charset="UTF-8" />
@@ -77,10 +75,10 @@ const wipe = {
       })()
     </script>
   </head>
-  <body class="font-sans bg-lp-bg min-h-screen flex flex-col" id="root">
+  <body class="font-sans bg-lp-bg h-dvh overflow-hidden grid grid-rows-[auto_minmax(0,1fr)_auto]" id="root">
     <a href="#main-content" class="skip-link">本文へ移動</a>
     <Header />
-    <main id="main-content" class="flex-1" tabindex="-1">
+    <main id="main-content" class="relative min-h-0 overflow-y-auto bg-lp-bg" tabindex="-1">
       <slot />
     </main>
     <Footer />

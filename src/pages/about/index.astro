@@ -1,83 +1,103 @@
 ---
-import Github from "@/components/sections/about/Github.astro"
-import InfoGrid from "@/components/sections/about/InfoGrid.astro"
-import Values from "@/components/sections/about/Values.astro"
-import Timeline from "@/components/Timeline.astro"
-import FxCanvas from "@/components/ui/FxCanvas.astro"
-import SectionTitle from "@/components/ui/SectionTitle.astro"
+import Github from '@/components/sections/about/Github.astro'
+import InfoGrid from '@/components/sections/about/InfoGrid.astro'
+import Values from '@/components/sections/about/Values.astro'
+import Timeline from '@/components/Timeline.astro'
+import FxCanvas from '@/components/ui/FxCanvas.astro'
+import PagerBar from '@/components/ui/PagerBar.astro'
+import SectionTitle from '@/components/ui/SectionTitle.astro'
 import myInfo from '@/content/data/my-info.json'
-import Layout from "@/layouts/Layout.astro"
+import Layout from '@/layouts/Layout.astro'
 
 const { profile } = myInfo
 
-const cell = 'p-6 md:p-8'
+const screens = [
+  { id: 'profile', en: 'Profile' },
+  { id: 'values', en: 'Values' },
+  { id: 'activity', en: 'Activity' },
+  { id: 'timeline', en: 'Timeline' },
+]
+// 1画面ずつ横に送る。収まらないほど低い画面でだけ、画面の中が縦にスクロールする。
+const screen = 'flex h-full w-full shrink-0 flex-col justify-center-safe overflow-y-auto px-5 py-6 sm:px-8 md:px-16 lg:py-12 xl:px-[7.5rem]'
+const tab =
+  'relative flex h-12 items-center gap-2 text-lp-muted transition-colors hover:text-lp-text aria-[current=true]:text-lp-text before:absolute before:inset-x-0 before:bottom-0 before:h-[2px] before:origin-left before:scale-x-0 before:bg-lp-highlight before:transition-transform aria-[current=true]:before:scale-x-100'
 ---
 
 <Layout
-    title="About"
-    description="Web・言語処理系・開発者ツールを作る学生エンジニア、摘果みかんのプロフィール。"
-    ogImage="/og/site/about.png"
-    structuredData={{
-        '@context': 'https://schema.org',
-        '@type': 'Person',
-        name: profile.name,
-        alternateName: profile.handle,
-        description: profile.bio.replace(/\n/g, ' '),
-        url: new URL('/about', Astro.site ?? Astro.url).href,
-        sameAs: ['https://github.com/mikan-919', 'https://twitter.com/mikan_919_main'],
-        knowsAbout: ['Web Development', 'Rust', 'TypeScript', 'Compilers', 'Developer Tools'],
-    }}
+  title="About"
+  description="Web・言語処理系・開発者ツールを作る学生エンジニア、摘果みかんのプロフィール。"
+  ogImage="/og/site/about.png"
+  structuredData={{
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: profile.name,
+    alternateName: profile.handle,
+    description: profile.bio.replace(/\n/g, ' '),
+    url: new URL('/about', Astro.site ?? Astro.url).href,
+    sameAs: ['https://github.com/mikan-919', 'https://twitter.com/mikan_919_main'],
+    knowsAbout: ['Web Development', 'Rust', 'TypeScript', 'Compilers', 'Developer Tools'],
+  }}
 >
-    <!-- Page header -->
-    <FxCanvas>
-        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-12">
-            <div class="flex items-center gap-4 mb-8">
-                <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
-                <span class="label-tech">Profile</span>
-                <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
-                <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
-            </div>
-            <div data-fx-layer="120" class="py-3 -my-3">
-                <h1 class="font-display text-5xl sm:text-6xl md:text-8xl uppercase leading-none tracking-[0.02em] text-lp-text" style="overflow-wrap: anywhere;">
-                    About
-                </h1>
-            </div>
-        </div>
-    </FxCanvas>
-
-    <!-- bento grid -->
-    <section class="w-full bg-lp-bg">
-        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 sm:[grid-auto-flow:dense]">
-            <!-- profile / bio -->
-            <div class={`${cell} reveal-l sm:col-span-2 lg:row-span-2 flex flex-col gap-4`}>
-                <h2 class="font-display text-2xl md:text-3xl leading-tight text-lp-text">{profile.name}</h2>
-                <p class="font-mono text-xs text-lp-muted -mt-2">{profile.handle}</p>
-                <p class="text-sm text-lp-muted leading-relaxed" set:html={profile.bio.replace(/\n/g, '<br />')} />
-                <p class="text-xs text-lp-subtle mt-auto">Last updated {profile.lastUpdated}</p>
-            </div>
-
-            <!-- values -->
-            <div class={`${cell} reveal-r sm:col-span-2 lg:col-span-2 lg:row-span-2`}>
-                <Values />
-            </div>
-
-            <!-- github / learning / interests -->
-            <div class="sm:col-span-2 lg:col-span-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-                <div class={`${cell} reveal-l`}>
-                    <Github />
-                </div>
-                <div class={`${cell} reveal-r`}>
-                    <InfoGrid />
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- timeline -->
-    <div class="w-full bg-lp-dark">
-        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-16">
-            <SectionTitle en="Timeline" ja="経歴" dark />
-            <Timeline variant="vertical" dark />
-        </div>
+  <div class="flex h-full flex-col">
+    <div class="flex items-center gap-6 border-b border-lp-border-subtle px-5 sm:px-8 md:px-16 xl:px-[7.5rem]">
+      <nav aria-label="About の画面" class="flex gap-6 sm:gap-10">
+        {
+          screens.map(({ id, en }, index) => (
+            <a href={`#${id}`} data-pager-to={index} aria-current={index === 0 ? 'true' : undefined} class={tab}>
+              <span class="font-mono text-xs">{String(index + 1).padStart(2, '0')}</span>
+              <span class="font-tech text-sm font-medium uppercase tracking-[0.14em] max-sm:sr-only">{en}</span>
+            </a>
+          ))
+        }
+      </nav>
+      <PagerBar class="ml-auto w-56 max-sm:hidden" />
     </div>
+
+    <div data-pager class="flex min-h-0 flex-1">
+      <section id="profile" class={screen} aria-label="Profile">
+        <div class="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+          <div class="min-w-0">
+            <FxCanvas>
+              <div>
+                <div class="flex items-center gap-4">
+                  <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
+                  <span class="label-tech whitespace-nowrap">Personnel file</span>
+                  <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
+                  <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
+                </div>
+                <!-- 見出し: 手前のレイヤー。字形が切れないよう上下に padding を取る -->
+                <div data-fx-layer="120" class="mt-4 py-3">
+                  <h1 class="font-display text-[clamp(3rem,12vw,6rem)] uppercase leading-none tracking-[0.02em] text-lp-text">About</h1>
+                </div>
+              </div>
+            </FxCanvas>
+            <h2 class="mt-4 font-display text-2xl leading-tight text-lp-text lg:text-3xl">{profile.name}</h2>
+            <p class="mt-1 font-mono text-xs text-lp-muted">{profile.handle}</p>
+          </div>
+          <div class="min-w-0">
+            <p class="text-sm leading-relaxed text-lp-muted lg:text-base lg:leading-[1.9]" set:html={profile.bio.replace(/\n/g, '<br />')} />
+            <p class="mt-4 text-xs text-lp-subtle">Last updated {profile.lastUpdated}</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="values" class={screen} aria-label="Values">
+        <SectionTitle en="Values" ja="大切にしていること" />
+        <Values />
+      </section>
+
+      <section id="activity" class={screen} aria-label="Activity">
+        <SectionTitle en="Activity" ja="活動と学習" />
+        <div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
+          <Github />
+          <InfoGrid />
+        </div>
+      </section>
+
+      <section id="timeline" class={`${screen} bg-lp-dark`} aria-label="Timeline">
+        <SectionTitle en="Timeline" ja="経歴" dark />
+        <Timeline />
+      </section>
+    </div>
+  </div>
 </Layout>

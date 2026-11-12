@@ -1,43 +1,38 @@
 ---
 import FxCanvas from '@/components/ui/FxCanvas.astro'
 
-type Props = {
-  projectCount: number
-  articleCount: number
-}
-const { projectCount, articleCount } = Astro.props
-
-const pad = (value: number) => String(value).padStart(2, '0')
-const specs = [
-  { label: 'Projects', value: pad(projectCount) },
-  { label: 'Blog posts', value: pad(articleCount) },
+const profile = [
+  { label: 'Class', value: 'Student Developer' },
+  { label: 'Field', value: 'Web / Developer Tools' },
+  { label: 'ID', value: '@mikan-919', mono: true },
   { label: 'Since', value: '2021' },
 ]
 ---
 
+<!-- ホーム左側のプロフィール票。PC ではステージの高さいっぱいに広げる(6.5rem + 1px = 境界線込みの Header + ステータスバー)。 -->
 <FxCanvas>
-  <div class="relative w-full overflow-hidden">
+  <div class="relative flex w-full flex-col justify-center overflow-hidden lg:min-h-[calc(100dvh-6.5rem-1px)]">
     <!-- backdrop: 奥のレイヤー -->
     <div data-fx-layer="-320" class="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
       <div class="grid-dots absolute inset-y-0 right-0 w-2/3 [mask-image:linear-gradient(to_right,transparent,black)] opacity-60"></div>
-      <span class="absolute -right-4 -bottom-14 sm:-bottom-20 lg:-bottom-28 font-display text-[15rem] sm:text-[22rem] lg:text-[30rem] leading-none tracking-tighter text-lp-surface-sunken">
+      <span class="absolute -right-4 -bottom-[0.2em] font-display text-[min(48vw,58vh,30rem)] leading-none tracking-tighter text-lp-surface-sunken">
         919
       </span>
     </div>
 
-    <div class="relative max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] pt-10 sm:pt-14 pb-14 sm:pb-20">
+    <div class="relative px-5 sm:px-8 md:px-16 lg:pr-12 xl:pl-[7.5rem] py-6 sm:py-10">
       <div class="flex items-center gap-4">
         <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
         <span class="label-tech">Profile</span>
         <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
-        <span class="label-tech text-lp-text">Open to opportunities</span>
-        <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
+        <span class="label-tech whitespace-nowrap text-lp-text">Open to opportunities</span>
+        <span class="hazard h-2 w-20 max-sm:hidden" aria-hidden="true"></span>
       </div>
 
       <!-- 名前: 手前のレイヤー。字形が切れないよう上下に padding を取る -->
-      <div data-fx-layer="120" class="mt-8 sm:mt-12 py-4">
+      <div data-fx-layer="120" class="mt-[min(3vh,3rem)] py-4 lg:mt-[min(5vh,3rem)]">
         <h1
-          class="font-display text-[52px] min-[360px]:text-[60px] sm:text-[88px] lg:text-[120px] leading-none font-bold tracking-[0.02em] text-lp-text m-0"
+          class="font-display text-[max(2.75rem,min(14vw,12vh,8.5rem))] leading-none font-bold tracking-[0.02em] text-lp-text m-0"
           style="overflow-wrap: anywhere;"
         >
           摘果みかん
@@ -47,40 +42,22 @@ const specs = [
         </p>
       </div>
 
-      <dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-sm">
-        <dt class="label-tech self-center">Class</dt>
-        <dd class="text-lp-text">Student Developer</dd>
-        <dt class="label-tech self-center">Field</dt>
-        <dd class="text-lp-text">Web / Developer Tools</dd>
-        <dt class="label-tech self-center">ID</dt>
-        <dd class="font-mono text-lp-text">@mikan-919</dd>
-      </dl>
-
-      <p class="text-base sm:text-lg leading-[1.75] text-lp-muted max-w-[540px] mt-6">
-        Web・言語処理系・開発者ツールを作る学生エンジニア。<br />
-        RustやTypeScriptで、設計から中核実装まで取り組んでいます。
-      </p>
-
-      <div class="flex flex-wrap items-center gap-6 mt-8">
-        <a href="/works" class="btn-cut">
-          <span class="size-1.5 bg-lp-highlight" aria-hidden="true"></span>
-          制作実績を見る
-        </a>
-        <a href="/blog" class="inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-highlight transition-colors">
-          ブログを読む →
-        </a>
-      </div>
-
-      <dl class="mt-14 sm:mt-20 flex gap-8 sm:gap-14">
+      <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-sm">
         {
-          specs.map(({ label, value }) => (
-            <div class="border-l border-lp-border pl-4">
-              <dt class="label-tech">{label}</dt>
-              <dd class="font-display text-3xl sm:text-5xl leading-none text-lp-text mt-2">{value}</dd>
-            </div>
+          profile.map(({ label, value, mono }) => (
+            <>
+              <dt class="label-tech self-center">{label}</dt>
+              <dd class={`text-lp-text ${mono ? 'font-mono' : ''}`}>{value}</dd>
+            </>
           ))
         }
       </dl>
+
+      <!-- 低いモバイル画面ではメニューを優先して紹介文を省く -->
+      <p class="text-sm sm:text-base lg:text-lg leading-[1.75] text-lp-muted max-w-[540px] mt-[min(3vh,1.5rem)] max-lg:[@media(max-height:760px)]:hidden">
+        Web・言語処理系・開発者ツールを作る学生エンジニア。<br />
+        RustやTypeScriptで、設計から中核実装まで取り組んでいます。
+      </p>
     </div>
   </div>
 </FxCanvas>

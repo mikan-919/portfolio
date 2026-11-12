@@ -7,53 +7,34 @@ const works = await getCollection('works')
 const timestamps = [...articles, ...works].map((entry) => entry.data.date.getTime())
 const lastUpdated = timestamps.length > 0 ? new Date(Math.max(...timestamps)) : new Date()
 
-const navItems = [
-  { href: '/works', label: 'Works' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/about', label: 'About' },
+const links = [
   { href: '/blog/rss.xml', label: 'RSS' },
   { href: 'https://github.com/mikan-919', label: 'GitHub', external: true },
-  { href: 'https://twitter.com/mikan_919_main', label: 'X / Twitter', external: true },
+  { href: 'https://twitter.com/mikan_919_main', label: 'X', external: true },
   { href: 'https://zenn.dev', label: 'Zenn', external: true },
 ]
 ---
 
+<!-- 画面下端のステータスバー -->
 <footer class="w-full bg-lp-dark">
-  <div class="hazard h-2 w-full" aria-hidden="true"></div>
-  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-12 md:py-16">
-    <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
-      <div class="max-w-xl">
-        <p class="font-display text-4xl md:text-6xl leading-none tracking-[0.04em] text-lp-dark-text">
-          MIKAN<span class="text-lp-highlight">-919</span>
-        </p>
-        <p class="mt-5 text-sm text-lp-dark-muted leading-relaxed">
-          Web・言語処理系・開発者ツールを作る学生エンジニア。制作の依頼と連絡は X / Twitter へ。
-        </p>
-      </div>
-
-      <nav class="grid grid-cols-2 gap-x-12 gap-y-1 font-tech text-sm font-medium uppercase tracking-[0.14em]" aria-label="フッターナビゲーション">
-        {
-          navItems.map(({ href, label, external }) => (
-            <a
-              href={href}
-              target={external ? '_blank' : undefined}
-              rel={external ? 'noopener noreferrer' : undefined}
-              class="inline-flex min-h-9 items-center text-lp-dark-muted hover:text-lp-dark-text transition-colors"
-            >
-              {label}
-              {external && <span aria-hidden="true"> ↗</span>}
-            </a>
-          ))
-        }
-      </nav>
-    </div>
-
-    <div class="mt-12 pt-5 border-t border-lp-dark-muted/30 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-      <p class="font-mono text-[11px] text-lp-dark-muted">&copy; {new Date().getFullYear()} mikan-919.</p>
-      <p class="font-mono text-[11px] text-lp-dark-muted">Last updated {formatShortDateJP(lastUpdated)}</p>
-      <p class="font-mono text-[11px] text-lp-dark-muted">
-        Built with <a href="https://astro.build/" target="_blank" rel="noopener noreferrer" class="hover:text-lp-dark-text transition-colors">Astro</a>.
-      </p>
-    </div>
+  <div class="flex h-10 items-center gap-4 px-5 sm:px-8 md:px-16 xl:px-[7.5rem]">
+    <span class="hazard h-2 w-8 shrink-0" aria-hidden="true"></span>
+    <p class="hidden sm:block font-mono text-[11px] text-lp-dark-muted">&copy; {new Date().getFullYear()} mikan-919</p>
+    <p class="hidden md:block font-mono text-[11px] text-lp-dark-muted">Last updated {formatShortDateJP(lastUpdated)}</p>
+    <nav class="ml-auto flex gap-4 sm:gap-6 font-tech text-[11px] font-medium uppercase tracking-[0.14em]" aria-label="外部リンク">
+      {
+        links.map(({ href, label, external }) => (
+          <a
+            href={href}
+            target={external ? '_blank' : undefined}
+            rel={external ? 'noopener noreferrer' : undefined}
+            class="inline-flex min-h-10 items-center whitespace-nowrap text-lp-dark-muted hover:text-lp-dark-text transition-colors"
+          >
+            {label}
+            {external && <span aria-hidden="true">&nbsp;↗</span>}
+          </a>
+        ))
+      }
+    </nav>
   </div>
 </footer>

@@ -4,39 +4,47 @@ import FxCanvas from '@/components/ui/FxCanvas.astro'
 type Props = {
   eyebrow: string
   title: string
+  ja?: string
+  // タグ名など、大文字にしない見出し
+  plain?: boolean
   total: number
   totalLabel: string
   rate: number
   rateLabel: string
 }
-const { eyebrow, title, total, totalLabel, rate, rateLabel }: Props = Astro.props
+const { eyebrow, title, ja, plain = false, total, totalLabel, rate, rateLabel }: Props = Astro.props
+
+const titleClass = plain
+  ? 'text-3xl lg:text-4xl'
+  : 'text-[clamp(2.5rem,12vw,3.75rem)] uppercase tracking-[0.02em] lg:text-6xl'
 ---
 
 <FxCanvas>
-<div class="section-header">
-  <div class="flex items-center gap-4 mb-8">
-    <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
-    <span class="label-tech">{eyebrow}</span>
-    <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
-    <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
-  </div>
-  <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4">
-    <div data-fx-layer="120" class="py-3 -my-3">
-      <h1 class="font-display text-5xl sm:text-6xl lg:text-8xl uppercase leading-none tracking-[0.02em] text-lp-text" style="overflow-wrap: anywhere;">
-        {title}
-      </h1>
+  <div>
+    <div class="flex items-center gap-4">
+      <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
+      <span class="label-tech whitespace-nowrap">{eyebrow}</span>
+      <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
+      <span class="hazard h-2 w-12" aria-hidden="true"></span>
     </div>
-
-    <div class="hidden lg:flex gap-10">
-      <div class="border-l border-lp-border pl-4">
-        <p class="label-tech">{totalLabel}</p>
-        <p class="font-display text-[40px] leading-none text-lp-text mt-2">{String(total).padStart(2, '0')}</p>
+    <div class="flex items-end justify-between gap-4 lg:block">
+      <!-- 見出し: 手前のレイヤー。字形が切れないよう上下に padding を取る -->
+      <div data-fx-layer="120" class="mt-1 min-w-0 py-3 lg:mt-6">
+        <h1 class={`font-display leading-none text-lp-text ${titleClass}`} style="overflow-wrap: anywhere;">
+          {title}
+        </h1>
+        {ja && <p class="mt-2 text-xs text-lp-subtle">{ja}</p>}
       </div>
-      <div class="border-l border-lp-border pl-4">
-        <p class="label-tech">{rateLabel}</p>
-        <p class="font-display text-[40px] leading-none text-lp-text mt-2">{rate.toFixed(1)}</p>
-      </div>
+      <dl class="flex shrink-0 gap-6 pb-3 lg:mt-6 lg:gap-10 lg:pb-0">
+        <div class="border-l border-lp-border pl-3 lg:pl-4">
+          <dt class="label-tech">{totalLabel}</dt>
+          <dd class="mt-1 font-display text-2xl leading-none text-lp-text lg:mt-2 lg:text-[40px]">{String(total).padStart(2, '0')}</dd>
+        </div>
+        <div class="border-l border-lp-border pl-3 max-sm:hidden lg:pl-4">
+          <dt class="label-tech">{rateLabel}</dt>
+          <dd class="mt-1 font-display text-2xl leading-none text-lp-text lg:mt-2 lg:text-[40px]">{rate.toFixed(1)}</dd>
+        </div>
+      </dl>
     </div>
   </div>
-</div>
 </FxCanvas>

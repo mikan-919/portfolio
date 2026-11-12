@@ -1,194 +1,150 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
-import { getCollection, render } from "astro:content";
-import ExternalLink from "@lucide/astro/icons/external-link";
-import Github from "simple-icons-astro/Github";
-import CoverImage from "@/components/ui/CoverImage.astro";
-import PostNav from "@/components/ui/PostNav.astro";
-import Tags from "@/components/ui/Tags.astro";
-import Layout from "@/layouts/Layout.astro";
-import { sortByDateDescending } from "@/lib/collectionUtils";
-import { coverUrl } from "@/lib/cover";
-import { formatMonthYear } from "@/lib/dateUtils";
+import { getCollection, render } from 'astro:content'
+import ExternalLink from '@lucide/astro/icons/external-link'
+import Github from 'simple-icons-astro/Github'
+import CoverImage from '@/components/ui/CoverImage.astro'
+import PostNav from '@/components/ui/PostNav.astro'
+import ReaderScreen from '@/components/ui/ReaderScreen.astro'
+import Tags from '@/components/ui/Tags.astro'
+import Layout from '@/layouts/Layout.astro'
+import { sortByDateDescending } from '@/lib/collectionUtils'
+import { coverUrl } from '@/lib/cover'
+import { formatMonthYear } from '@/lib/dateUtils'
 export const prerender = true
 export async function getStaticPaths() {
-    const works = await getCollection('works')
-    const sortedWorks = sortByDateDescending(works)
-    return sortedWorks.map((entry, index) => ({
-        params: { slug: entry.id },
-        props: {
-            entry,
-            prevWork: sortedWorks[index - 1] ?? null,
-            nextWork: sortedWorks[index + 1] ?? null,
-        },
-    }))
+  const works = await getCollection('works')
+  const sortedWorks = sortByDateDescending(works)
+  return sortedWorks.map((entry, index) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prevWork: sortedWorks[index - 1] ?? null,
+      nextWork: sortedWorks[index + 1] ?? null,
+    },
+  }))
 }
 
 type Props = {
-    entry: CollectionEntry<'works'>
-    prevWork: CollectionEntry<'works'> | null
-    nextWork: CollectionEntry<'works'> | null
+  entry: CollectionEntry<'works'>
+  prevWork: CollectionEntry<'works'> | null
+  nextWork: CollectionEntry<'works'> | null
 }
 
 const { entry, prevWork, nextWork } = Astro.props
 const { Content } = await render(entry)
 const formattedDate = formatMonthYear(entry.data.date)
+const link = 'inline-flex min-h-11 items-center gap-1.5 text-sm text-lp-highlight hover:underline lg:min-h-0'
 ---
 
 <Layout
-    title={entry.data.title}
-    description={entry.data.description}
-    ogImage={`/og/works/${entry.id}.png`}
-    structuredData={{
-        '@context': 'https://schema.org',
-        '@type': 'CreativeWork',
-        name: entry.data.title,
-        description: entry.data.description,
-        image: new URL(`/og/works/${entry.id}.png`, Astro.site ?? Astro.url).href,
-        dateCreated: entry.data.date.toISOString(),
-        creator: {
-            '@type': 'Person',
-            name: '摘果みかん',
-            url: new URL('/about', Astro.site ?? Astro.url).href,
-        },
-        url: new URL(`/works/${entry.id}`, Astro.site ?? Astro.url).href,
-        sameAs: [entry.data.link, entry.data.github].filter(Boolean),
-        keywords: entry.data.tags.join(', '),
-    }}
+  title={entry.data.title}
+  description={entry.data.description}
+  ogImage={`/og/works/${entry.id}.png`}
+  structuredData={{
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: entry.data.title,
+    description: entry.data.description,
+    image: new URL(`/og/works/${entry.id}.png`, Astro.site ?? Astro.url).href,
+    dateCreated: entry.data.date.toISOString(),
+    creator: {
+      '@type': 'Person',
+      name: '摘果みかん',
+      url: new URL('/about', Astro.site ?? Astro.url).href,
+    },
+    url: new URL(`/works/${entry.id}`, Astro.site ?? Astro.url).href,
+    sameAs: [entry.data.link, entry.data.github].filter(Boolean),
+    keywords: entry.data.tags.join(', '),
+  }}
 >
-    <!-- Header Image & Title -->
-    <div class="w-full relative h-96 md:h-[28rem] overflow-hidden">
-        <CoverImage
-            src={entry.data.image ?? coverUrl('works', entry.id)}
-            alt={entry.data.title}
-            class="w-full h-full object-cover"
-        />
-        <div class="absolute inset-0 bg-lp-dark/60">
-            <div class="absolute bottom-0 left-0 w-full px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-10">
-                <div class="space-y-3">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-lp-accent text-lp-accent-on text-xs font-medium px-3 py-1">
-                            {entry.data.category}
-                        </span>
-                        {entry.data.isComingSoon && (
-                            <span class="bg-lp-surface text-lp-text text-xs font-medium px-3 py-1">
-                                Coming Soon
-                            </span>
-                        )}
-                    </div>
-                    <h1 class="font-display text-3xl sm:text-4xl md:text-6xl leading-none text-lp-dark-text" style="overflow-wrap: anywhere;">
-                        {entry.data.title}
-                    </h1>
-                    <p class="font-mono text-xs text-lp-dark-muted">
-                        {formattedDate}
-                    </p>
-                </div>
-            </div>
+  <ReaderScreen>
+    <Fragment slot="aside">
+      <div class="relative shrink-0 overflow-hidden bg-lp-dark max-lg:h-36 lg:aspect-[4/3]">
+        <CoverImage src={entry.data.image ?? coverUrl('works', entry.id)} alt="" class="absolute inset-0 size-full object-cover opacity-45" />
+        <div class="absolute inset-0 bg-linear-to-t from-lp-dark via-lp-dark/50 to-transparent" aria-hidden="true"></div>
+        <div class="absolute inset-x-0 bottom-0 space-y-2 px-5 pb-4 sm:px-8 md:px-16 lg:px-10 lg:pb-6 xl:pl-[7.5rem]">
+          <div class="flex items-center gap-3">
+            <span class="bg-lp-dark-text px-2 py-0.5 font-tech text-[11px] font-medium uppercase tracking-[0.14em] text-lp-dark">
+              {entry.data.category}
+            </span>
+            {entry.data.isComingSoon && <span class="label-tech text-lp-dark-muted">Coming soon</span>}
+            <span class="ml-auto font-mono text-xs text-lp-dark-muted">{formattedDate}</span>
+          </div>
+          <h1 class="font-display text-2xl leading-tight text-lp-dark-text line-clamp-2 lg:text-4xl" style="overflow-wrap: anywhere;">
+            {entry.data.title}
+          </h1>
         </div>
-    </div>
-
-    <!-- Info Grid -->
-    <div class="w-full">
-        <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 py-10">
-                <div class="space-y-2">
-                    <p class="label-tech">Project Type</p>
-                    <p class="font-sans text-lp-text font-medium">
-                        {entry.data.role || "—"}
-                    </p>
-                </div>
-                <div class="space-y-2">
-                    <p class="label-tech">Links</p>
-                    <div class="flex flex-col gap-1.5">
-                        {entry.data.link && (
-                            <a
-                                href={entry.data.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-sm text-lp-highlight hover:underline flex items-center gap-1.5"
-                            >
-                                Visit Site
-                                <ExternalLink class="size-3.5" />
-                            </a>
-                        )}
-                        {entry.data.github && (
-                            <a
-                                href={entry.data.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-sm text-lp-highlight hover:underline flex items-center gap-1.5"
-                            >
-                                GitHub · Public
-                                <Github class="size-3.5" />
-                            </a>
-                        )}
-                        {entry.data.githubVisibility === 'private' && (
-                            <span class="text-sm text-lp-muted flex items-center gap-1.5">
-                                GitHub · Private
-                                <Github class="size-3.5" />
-                            </span>
-                        )}
-                        {!entry.data.link && !entry.data.github && entry.data.githubVisibility !== 'private' && (
-                            <span class="text-sm text-lp-muted">—</span>
-                        )}
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <p class="label-tech">Tech Stack</p>
-                    <Tags tags={entry.data.tags} link={(tag) => `/works/tags/${tag}`} />
-                </div>
-            </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-6 px-5 sm:px-8 md:px-16 lg:flex-col lg:items-stretch lg:gap-8 lg:px-10 lg:py-8 xl:pl-[7.5rem]">
+        <div class="hidden lg:block">
+          <p class="label-tech">Project type</p>
+          <p class="mt-2 font-medium text-lp-text">{entry.data.role || '—'}</p>
         </div>
-    </div>
-
-    <!-- Content -->
-    <div class="w-full">
-        <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
-            <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_1fr] gap-10 min-h-[50vh]">
-                <div class="min-w-0 py-8 lg:py-12 prose prose-neutral max-w-[40em]
-                    prose-headings:font-display prose-headings:text-lp-text
-                    prose-p:text-lp-muted prose-p:leading-[1.9]
-                    prose-li:leading-[1.9]
-                    prose-a:text-lp-highlight prose-a:decoration-lp-highlight prose-a:decoration-1 prose-a:underline-offset-2
-                    prose-blockquote:border-0 prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
-                    prose-img:">
-                    <Content />
-                </div>
-                <div class="py-8 lg:py-12">
-                    {
-                        entry.data.gallery && entry.data.gallery.length > 0 ? (
-                            <div class="flex flex-col gap-4">
-                                <p class="label-tech">Gallery</p>
-                                {entry.data.gallery.map((img, index) => (
-                                    <Image
-                                        src={img}
-                                        alt={`${entry.data.title}のスクリーンショット ${index + 1}`}
-                                        class="w-full"
-                                    />
-                                ))}
-                            </div>
-                        ) : (
-                            <div class="h-full flex items-center justify-center opacity-30">
-                                <div class="text-center">
-                                    <span class="block text-4xl mb-2">📷</span>
-                                    <span class="font-mono text-xs text-lp-muted">No Gallery Images</span>
-                                </div>
-                            </div>
-                        )
-                    }
-                </div>
-            </div>
+        <div>
+          <p class="label-tech hidden lg:block">Links</p>
+          <div class="flex flex-wrap gap-x-6 lg:mt-2 lg:flex-col lg:gap-1.5">
+            {
+              entry.data.link && (
+                <a href={entry.data.link} target="_blank" rel="noopener noreferrer" class={link}>
+                  Visit site
+                  <ExternalLink class="size-3.5" />
+                </a>
+              )
+            }
+            {
+              entry.data.github && (
+                <a href={entry.data.github} target="_blank" rel="noopener noreferrer" class={link}>
+                  GitHub
+                  <Github class="size-3.5" />
+                </a>
+              )
+            }
+            {
+              entry.data.githubVisibility === 'private' && (
+                <span class="inline-flex min-h-11 items-center gap-1.5 text-sm text-lp-muted lg:min-h-0">
+                  GitHub · Private
+                  <Github class="size-3.5" />
+                </span>
+              )
+            }
+            {
+              !entry.data.link && !entry.data.github && entry.data.githubVisibility !== 'private' && (
+                <span class="text-sm text-lp-muted max-lg:hidden">—</span>
+              )
+            }
+          </div>
         </div>
-    </div>
+      </div>
+    </Fragment>
 
-    <!-- Navigation -->
-    <PostNav
+    <Content />
+
+    {
+      entry.data.gallery && entry.data.gallery.length > 0 && (
+        <section class="not-prose mt-10">
+          <p class="label-tech">Gallery</p>
+          {entry.data.gallery.map((img, index) => (
+            <Image src={img} alt={`${entry.data.title}のスクリーンショット ${index + 1}`} class="mt-4" />
+          ))}
+        </section>
+      )
+    }
+
+    <footer class="not-prose mt-12 break-inside-avoid border-t border-lp-border-subtle pt-6">
+      <p class="label-tech">Tech stack</p>
+      <div class="mt-3">
+        <Tags tags={entry.data.tags} link={(tag) => `/works/tags/${tag}`} />
+      </div>
+      <PostNav
         prev={prevWork ? { href: `/works/${prevWork.id}`, title: prevWork.data.title } : null}
         next={nextWork ? { href: `/works/${nextWork.id}`, title: nextWork.data.title } : null}
+        prevLabel="← Newer"
+        nextLabel="Older →"
         backHref="/works"
-        backLabel="Back to Works"
-        newerEmptyLabel="No newer work"
-        olderEmptyLabel="No older work"
-    />
+        backLabel="制作実績の一覧へ"
+      />
+    </footer>
+  </ReaderScreen>
 </Layout>

@@ -1,0 +1,99 @@
+---
+import CoverImage from '@/components/ui/CoverImage.astro'
+import { pickFeatured } from '@/lib/collectionUtils'
+import { coverUrl } from '@/lib/cover'
+import { formatShortDateJP } from '@/lib/dateUtils'
+import type { ArticlesListProps, WorksListProps } from '@/types/collections'
+
+type Props = WorksListProps & ArticlesListProps
+
+// works / articles は新しい順。
+const { works, articles }: Props = Astro.props
+
+const featuredWork = pickFeatured(works)
+const latestArticle = articles[0]
+const pad = (value: number) => String(value).padStart(2, '0')
+
+// ホーム右側のメニュー。PC では奥へ傾けた面にタイルを並べる。ホバーで左へ寄り、下端に柿色のバーが伸びる。
+const tile =
+  'menu-tile chamfer group relative flex min-h-0 flex-col justify-between gap-2 overflow-hidden p-4 sm:p-5 transition-[translate] duration-300 hover:-translate-x-2 focus-visible:-translate-x-2 after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-lp-highlight after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:after:scale-x-100'
+const word = 'font-display uppercase leading-none tracking-[0.04em]'
+const big = 'text-[min(8vw,2.25rem)] lg:text-[clamp(1.5rem,5.5vh,3.25rem)]'
+const small = 'text-[min(8vw,2.25rem)] lg:text-[clamp(1.5rem,4vh,2.25rem)]'
+const count = 'font-display text-[min(8vw,2.25rem)] leading-none tabular-nums lg:text-[clamp(1.5rem,5.5vh,3.25rem)]'
+// モバイルは 2x2 のタイルで、語と件数だけを出す。
+const info = 'min-w-0 max-lg:hidden'
+---
+
+<nav
+  aria-label="メニュー"
+  class="grid min-h-56 grid-cols-2 auto-rows-fr gap-2 px-5 pb-5 sm:gap-3 sm:px-8 md:px-16 lg:origin-right lg:[transform:perspective(1600px)_rotateY(-9deg)] lg:grid-rows-[3fr_2fr_1.3fr] lg:py-10 lg:pl-0 lg:pr-12 xl:pr-[7.5rem]"
+>
+  <a href="/works" class={`${tile} lg:col-span-2 bg-lp-dark text-lp-dark-text`} style="--i: 0; --cut: 24px">
+    {
+      featuredWork && (
+        <CoverImage
+          src={featuredWork.data.image ?? coverUrl('works', featuredWork.id)}
+          alt=""
+          class="absolute inset-0 size-full object-cover opacity-30 transition duration-500 group-hover:scale-105 group-hover:opacity-45"
+        />
+      )
+    }
+    <span class="absolute inset-0 bg-linear-to-t from-lp-dark via-lp-dark/70 to-lp-dark/10" aria-hidden="true"></span>
+    <div class="relative flex items-start justify-end gap-4 lg:justify-between">
+      {
+        featuredWork && (
+          <p class={info}>
+            <span class="label-tech block text-lp-dark-muted">Featured</span>
+            <span class="mt-1 block truncate font-display text-sm sm:text-base">{featuredWork.data.title}</span>
+          </p>
+        )
+      }
+      <span class={count}>{pad(works.length)}</span>
+    </div>
+    <p class="relative">
+      <span class={`${word} ${big} block`}>Works</span>
+      <span class="mt-1 block text-xs text-lp-dark-muted">制作実績</span>
+    </p>
+  </a>
+
+  <a href="/blog" class={`${tile} lg:col-span-2 bg-lp-surface text-lp-text`} style="--i: 1">
+    <div class="flex items-start justify-end gap-4 lg:justify-between">
+      {
+        latestArticle && (
+          <p class={info}>
+            <span class="label-tech block">Latest · {formatShortDateJP(latestArticle.data.date)}</span>
+            <span class="mt-1 block truncate font-display text-sm sm:text-base">{latestArticle.data.title}</span>
+          </p>
+        )
+      }
+      <span class={count}>{pad(articles.length)}</span>
+    </div>
+    <p>
+      <span class={`${word} ${big} block`}>Blog</span>
+      <span class="mt-1 block text-xs text-lp-subtle">記事</span>
+    </p>
+  </a>
+
+  <a href="/about" class={`${tile} bg-lp-surface-sunken text-lp-text`} style="--i: 2">
+    <span class="label-tech max-lg:hidden">Profile</span>
+    <p class="mt-auto">
+      <span class={`${word} ${small} block`}>About</span>
+      <span class="mt-1 block text-xs text-lp-subtle">人物</span>
+    </p>
+  </a>
+
+  <a
+    href="https://github.com/mikan-919"
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`${tile} bg-lp-accent text-lp-accent-on`}
+    style="--i: 3"
+  >
+    <span class="label-tech text-current/70 max-lg:hidden">External ↗</span>
+    <p class="mt-auto">
+      <span class={`${word} ${small} block`}>GitHub</span>
+      <span class="mt-1 block text-xs text-current/70">コード</span>
+    </p>
+  </a>
+</nav>

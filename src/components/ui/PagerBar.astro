@@ -1,0 +1,32 @@
+---
+// [data-pager] の操作部(src/lib/pager.ts)。2ページ以上あるときだけ表示する。
+import ChevronLeft from '@lucide/astro/icons/chevron-left'
+import ChevronRight from '@lucide/astro/icons/chevron-right'
+
+type Props = { class?: string }
+const { class: className = '' } = Astro.props
+
+const button =
+  'chamfer inline-flex size-11 shrink-0 items-center justify-center bg-lp-accent text-lp-accent-on transition-colors hover:bg-lp-highlight disabled:pointer-events-none disabled:opacity-25'
+---
+
+<div data-pager-ui hidden class={`flex items-center gap-3 ${className}`}>
+  <button type="button" data-pager-prev class={button} style="--cut: 8px" aria-label="前のページ">
+    <ChevronLeft class="size-4" />
+  </button>
+  <p class="font-display text-sm leading-none tabular-nums text-lp-text" aria-live="polite">
+    <span data-pager-now>01</span><span class="text-lp-subtle"> / <span data-pager-total>01</span></span>
+  </p>
+  <span class="relative h-[2px] min-w-8 flex-1 bg-lp-border-subtle" aria-hidden="true">
+    <span
+      class="absolute inset-0 origin-left bg-lp-highlight transition-transform duration-500 [transform:scaleX(var(--pager-progress,0))]"
+    ></span>
+  </span>
+  <button type="button" data-pager-next class={button} style="--cut: 8px" aria-label="次のページ">
+    <ChevronRight class="size-4" />
+  </button>
+</div>
+
+<script>
+  import '@/lib/pager'
+</script>
