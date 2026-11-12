@@ -123,8 +123,9 @@ const info = 'min-w-0 max-lg:hidden'
 </style>
 
 <script>
-  // ポインターの位置を --px / --py としてばねで追わせる(ばねの強さはホーム左側の fx と同じ)。
-  // 動かすのをやめて 1.4 秒たつか、外へ出ると正面へ戻る。
+  // ポインターの位置を --px / --py としてばねで追わせる。位置はステージ(main)基準で取り、
+  // ホーム左側の fx と同じ基準・同じばねにして、どちらの上にあっても両側が一緒に傾くようにする。
+  // 動かすのをやめて 1.4 秒たつか、ステージの外へ出ると正面へ戻る。
   const reduce = matchMedia('(prefers-reduced-motion: reduce)')
 
   document.addEventListener('astro:page-load', () => {
@@ -158,14 +159,15 @@ const info = 'min-w-0 max-lg:hidden'
       frame = requestAnimationFrame(tick)
     }
 
-    root.addEventListener('pointermove', (event) => {
+    const scene = root.closest<HTMLElement>('main') ?? root
+    scene.addEventListener('pointermove', (event) => {
       if (event.pointerType !== 'mouse') return
-      const rect = root.getBoundingClientRect()
+      const rect = scene.getBoundingClientRect()
       aim(((event.clientX - rect.left) / rect.width) * 2 - 1, ((event.clientY - rect.top) / rect.height) * 2 - 1)
       clearTimeout(idle)
       idle = window.setTimeout(() => aim(0, 0), 1400)
     })
-    root.addEventListener('pointerleave', () => {
+    scene.addEventListener('pointerleave', () => {
       clearTimeout(idle)
       aim(0, 0)
     })

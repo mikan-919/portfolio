@@ -1,7 +1,8 @@
 // HTML-in-Canvas(Chrome 157+)。[data-fx] の中身を実DOMのまま WebGL テクスチャにし、
 // 奥行きの違う板(レイヤー)として3D空間に並べて描く。
 // - 起動: 各レイヤーが奥から回転しながら跳ね起き、横スライスが揃う。上から1本の走査線が全レイヤーを描き出す
-// - ポインター: 板が傾き、動かしている間は奥のレイヤー(z < 0)だけが周辺から粒子に分解されて弾かれる。
+// - ポインター: ステージ(main)のどこにあっても、ステージ基準の位置で板が傾く(ホームのメニューも同じ基準で傾く)。
+//   板の上で動かしている間は、奥のレイヤー(z < 0)だけが周辺から粒子に分解されて弾かれる。
 //   文字のレイヤーは崩さない(読む邪魔にならないように)
 // - クリック: 波紋が広がり、板が奥へ押されて戻る
 // - 数秒おきに短いグリッチ
@@ -200,7 +201,8 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
   perspective.m34 = -1 / DEPTH
   const tilt = { rx: spring(90, 9), ry: spring(90, 9), tz: spring(70, 8) }
   let accentCss = ''
-  let pointer = [0, 0]
+  let pointer = [0, 0] // canvas 基準(CSS px)
+  let aim = [0, 0] // ステージ基準(-1〜1)
   let velocity = [0, 0]
   let click = [0, 0]
   let moved = -1e9
@@ -267,10 +269,8 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     last = now
     const rect = canvas.getBoundingClientRect()
     const active = now - moved < 1400
-    const nx = active ? (pointer[0] / rect.width) * 2 - 1 : 0
-    const ny = active ? (pointer[1] / rect.height) * 2 - 1 : 0
-    tilt.rx.to = -ny * 5
-    tilt.ry.to = nx * 8
+    tilt.rx.to = active ? -aim[1] * 5 : 0
+    tilt.ry.to = active ? aim[0] * 8 : 0
     // ポインターが止まったら粒子を戻す(指している文字が読めるように)。
     if (now - moved > 160) lensTarget = 0
     boot = Math.min(1, boot + ms / 1500)
@@ -348,18 +348,23 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     const rect = canvas.getBoundingClientRect()
     return [event.clientX - rect.left, event.clientY - rect.top]
   }
-  host.addEventListener('pointermove', event => {
+  // ステージのどこで動かしても傾ける。粒子は板の上にあるときだけ出す。
+  const scene = host.closest<HTMLElement>('main') ?? host
+  scene.addEventListener('pointermove', event => {
     const next = locate(event)
     const now = performance.now()
     if (now - moved < 100) {
       velocity = [velocity[0] * 0.6 + (next[0] - pointer[0]) * 0.4, velocity[1] * 0.6 + (next[1] - pointer[1]) * 0.4]
     }
+    const stage = scene.getBoundingClientRect()
+    aim = [((event.clientX - stage.left) / stage.width) * 2 - 1, ((event.clientY - stage.top) / stage.height) * 2 - 1]
+    const rect = canvas.getBoundingClientRect()
     pointer = next
     moved = now
-    lensTarget = 1
+    lensTarget = next[0] >= 0 && next[1] >= 0 && next[0] <= rect.width && next[1] <= rect.height ? 1 : 0
     kick()
   })
-  host.addEventListener('pointerleave', () => {
+  scene.addEventListener('pointerleave', () => {
     moved = -1e9
     kick()
   })
