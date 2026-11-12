@@ -289,6 +289,7 @@ html:active-view-transition-type(page-prev)::view-transition-new(pager) {
 [data-pager] {
   overflow-x: auto;
   overscroll-behavior-x: contain;
+  scrollbar-width: none; /* JS が付く前の一瞬や Windows でもバーを出さない */
   background: var(--color-lp-bg);
 }
 [data-pager][data-pager-ready] {

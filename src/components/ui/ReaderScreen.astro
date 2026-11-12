@@ -6,7 +6,7 @@ import PagerBar from '@/components/ui/PagerBar.astro'
 <div
   class="grid h-full grid-rows-[auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] lg:grid-rows-1 xl:grid-cols-[minmax(0,30rem)_minmax(0,1fr)]"
 >
-  <aside class="flex min-w-0 flex-col lg:overflow-y-auto lg:border-r lg:border-lp-border-subtle">
+  <aside class="flex min-w-0 flex-col lg:overflow-y-auto lg:border-r lg:border-lp-border-subtle lg:[scrollbar-width:none]">
     <slot name="aside" />
   </aside>
   <div class="flex min-h-0 min-w-0 flex-col gap-4 px-5 pb-4 pt-5 sm:px-8 md:px-16 lg:px-12 lg:py-10">

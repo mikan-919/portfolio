@@ -64,6 +64,7 @@ const mount = (el: HTMLElement): (() => void) => {
       return target && pageOf(target) <= page
     })
     for (const link of links) link.ariaCurrent = link === active ? 'location' : null
+    active?.scrollIntoView({ block: 'nearest' }) // 目次が長くて欄の中でスクロールするとき、現在地を見せる
   }
 
   const go = (next: number) => {

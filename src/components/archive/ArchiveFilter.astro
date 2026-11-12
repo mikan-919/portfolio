@@ -16,7 +16,7 @@ const { options, labelPrefix = '' }: Props = Astro.props
           type="button"
           data-filter={opt}
           aria-pressed={opt === 'All' ? 'true' : 'false'}
-          class={`filter-btn shrink-0 lg:min-h-0 lg:leading-tight ${opt === 'All' ? 'is-active' : ''}`}
+          class={`filter-btn shrink-0 lg:min-h-0 lg:text-xs lg:leading-tight ${opt === 'All' ? 'is-active' : ''}`}
         >
           {opt === 'All' ? opt : `${labelPrefix}${opt}`}
         </button>

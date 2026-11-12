@@ -37,7 +37,7 @@ const emptyLabel = isWork ? 'No projects found in this category.' : 'No articles
 
 <!-- 左(モバイルでは上)に見出しと絞り込み、右にカードの列。列は横にページ送りする -->
 <div class="grid h-full grid-rows-[auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:grid-rows-1">
-  <aside class="flex min-w-0 flex-col gap-3 px-5 pt-5 sm:px-8 md:px-16 lg:gap-8 lg:overflow-y-auto lg:border-r lg:border-lp-border-subtle lg:py-10 lg:pr-10 xl:pl-[7.5rem]">
+  <aside class="flex min-w-0 flex-col gap-3 px-5 pt-5 sm:px-8 md:px-16 lg:gap-8 lg:overflow-y-auto lg:border-r lg:[scrollbar-width:none] lg:border-lp-border-subtle lg:py-10 lg:pr-10 xl:pl-[7.5rem]">
     <ArchiveHeader
       eyebrow={tag ? `${copy.title} tag` : copy.eyebrow}
       title={tag ? `#${tag}` : copy.title}
