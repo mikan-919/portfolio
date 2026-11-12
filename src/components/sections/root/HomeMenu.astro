@@ -14,7 +14,7 @@ const featuredWork = pickFeatured(works)
 const latestArticle = articles[0]
 const pad = (value: number) => String(value).padStart(2, '0')
 
-// ホーム右側のメニュー。PC では奥へ傾けた面にタイルを並べ、ポインターの方向へばねで傾ける(視差は下の <style>)。
+// ホーム右側のメニュー。PC では奥へ傾けた面にタイルを並べ、ホーム左側と1つの場面として傾ける(下のスタイル)。
 // ホバーで左へ寄り、下端に柿色のバーが伸びる。
 const tile =
   'menu-tile chamfer group relative flex min-h-0 flex-col justify-between gap-2 overflow-hidden p-4 sm:p-5 transition-[translate] duration-300 hover:-translate-x-2 focus-visible:-translate-x-2 after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-lp-highlight after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:after:scale-x-100'
@@ -26,7 +26,7 @@ const count = 'font-display text-[min(8vw,2.25rem)] leading-none tabular-nums lg
 const info = 'min-w-0 max-lg:hidden'
 ---
 
-<div data-parallax class="flex min-h-0 flex-col px-5 pb-5 sm:px-8 md:px-16 lg:py-10 lg:pl-0 lg:pr-12 xl:pr-[7.5rem]">
+<div data-scene class="flex min-h-0 flex-col px-5 pb-5 sm:px-8 md:px-16 lg:py-10 lg:pl-0 lg:pr-12 xl:pr-[7.5rem]">
   <nav aria-label="メニュー" class="menu-panel grid min-h-56 flex-1 grid-cols-2 auto-rows-fr gap-2 sm:gap-3 lg:grid-rows-[3fr_2fr_1.3fr]">
     <a href="/works" class={`${tile} lg:col-span-2 bg-lp-dark text-lp-dark-text`} style="--i: 0; --cut: 24px; --z: 64px">
       {
@@ -102,74 +102,38 @@ const info = 'min-w-0 max-lg:hidden'
 
 <style>
   @media (min-width: 64rem) {
-    /* 面はポインターから --px / --py(-1〜1)を受けて傾く。ホーム左側の fx と同じく、指した側が奥へ下がる */
+    /* ホーム左側の fx が配る場面の回転を受ける。回転の中心はステージの中央(右の列なので 100% - 50vw)で、
+       透視は index.astro のグリッドに置いた perspective(fx と同じ 1200px、中心はステージ中央)を使う */
+    /* 包む要素とメニュー自体はクリックを受けない。3D の場面では透明な箱も奥行きで並べられ、
+       奥へ傾いたタイルより手前にあるとクリックを横取りするため */
+    [data-scene],
+    .menu-panel {
+      pointer-events: none;
+    }
+    .menu-panel > a {
+      pointer-events: auto;
+    }
+    [data-scene] {
+      transform-style: preserve-3d;
+      transform-origin: calc(100% - 50vw) 50%;
+      transform: translateZ(var(--scene-tz, 0px)) rotateX(var(--scene-rx, 0deg)) rotateY(var(--scene-ry, 0deg));
+    }
+    /* メニュー自体は右端を軸に奥へ傾けておく */
     .menu-panel {
       transform-origin: right;
       transform-style: preserve-3d;
-      transform: perspective(1600px) rotateY(calc(-9deg + var(--px, 0) * 8deg)) rotateX(calc(var(--py, 0) * -5deg));
+      transform: rotateY(-9deg);
     }
-    /* タイルを奥行きの違う位置に置き、面が傾くとタイル同士がずれて見えるようにする */
+    /* タイルを奥行きの違う位置に置き、場面が傾くとタイル同士がずれて見えるようにする */
     .menu-panel > a {
       transform: translateZ(var(--z, 0px));
     }
     /* タイルの中でも、画像は奥へ、文字は手前へずらす */
     .back {
-      translate: calc(var(--px, 0) * -14px) calc(var(--py, 0) * -10px);
+      translate: calc(var(--scene-x, 0) * -14px) calc(var(--scene-y, 0) * -10px);
     }
     .front {
-      translate: calc(var(--px, 0) * 6px) calc(var(--py, 0) * 4px);
+      translate: calc(var(--scene-x, 0) * 6px) calc(var(--scene-y, 0) * 4px);
     }
   }
 </style>
-
-<script>
-  // ポインターの位置を --px / --py としてばねで追わせる。位置はステージ(main)基準で取り、
-  // ホーム左側の fx と同じ基準・同じばねにして、どちらの上にあっても両側が一緒に傾くようにする。
-  // 動かすのをやめて 1.4 秒たつか、ステージの外へ出ると正面へ戻る。
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)')
-
-  document.addEventListener('astro:page-load', () => {
-    const root = document.querySelector<HTMLElement>('[data-parallax]')
-    if (!root || reduce.matches) return
-    const target = [0, 0]
-    const position = [0, 0]
-    const velocity = [0, 0]
-    let frame = 0
-    let last = 0
-    let idle = 0
-
-    const tick = (now: number) => {
-      const dt = Math.min((now - last) / 1000, 0.05)
-      last = now
-      let moving = false
-      for (const axis of [0, 1]) {
-        velocity[axis] += (90 * (target[axis] - position[axis]) - 9 * velocity[axis]) * dt
-        position[axis] += velocity[axis] * dt
-        moving ||= Math.abs(target[axis] - position[axis]) > 0.001 || Math.abs(velocity[axis]) > 0.001
-      }
-      root.style.setProperty('--px', position[0].toFixed(4))
-      root.style.setProperty('--py', position[1].toFixed(4))
-      frame = moving ? requestAnimationFrame(tick) : 0
-    }
-    const aim = (x: number, y: number) => {
-      target[0] = x
-      target[1] = y
-      if (frame) return
-      last = performance.now()
-      frame = requestAnimationFrame(tick)
-    }
-
-    const scene = root.closest<HTMLElement>('main') ?? root
-    scene.addEventListener('pointermove', (event) => {
-      if (event.pointerType !== 'mouse') return
-      const rect = scene.getBoundingClientRect()
-      aim(((event.clientX - rect.left) / rect.width) * 2 - 1, ((event.clientY - rect.top) / rect.height) * 2 - 1)
-      clearTimeout(idle)
-      idle = window.setTimeout(() => aim(0, 0), 1400)
-    })
-    scene.addEventListener('pointerleave', () => {
-      clearTimeout(idle)
-      aim(0, 0)
-    })
-  })
-</script>

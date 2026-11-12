@@ -24,8 +24,10 @@ const sortedArticles = sortByDateDescending(allArticles)
     knowsAbout: ['Web Development', 'Rust', 'TypeScript', 'Compilers', 'Developer Tools'],
   }}
 >
-  <!-- 左にプロフィール、右にメニュー。モバイルでは縦に積み、メニューが残りの高さを埋める -->
-  <div class="grid min-h-full grid-rows-[auto_1fr] lg:h-full lg:grid-cols-[minmax(0,1fr)_minmax(0,min(34rem,42vw))] lg:grid-rows-1">
+  <!-- 左にプロフィール、右にメニュー。モバイルでは縦に積み、メニューが残りの高さを埋める。
+       PC では左右を1つの場面として傾ける(透視は fx と同じ 1200px で、中心はステージ中央)。
+       入場や傾きで外へ出た分は切り、main にスクロールバーを出さない -->
+  <div class="grid min-h-full grid-rows-[auto_1fr] overflow-hidden lg:h-full lg:[perspective:1200px] lg:grid-cols-[minmax(0,1fr)_minmax(0,min(34rem,42vw))] lg:grid-rows-1">
     <Hero />
     <HomeMenu works={sortedWorks} articles={sortedArticles} />
   </div>

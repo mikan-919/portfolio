@@ -1,7 +1,9 @@
 // HTML-in-Canvas(Chrome 157+)。[data-fx] の中身を実DOMのまま WebGL テクスチャにし、
 // 奥行きの違う板(レイヤー)として3D空間に並べて描く。
 // - 起動: 各レイヤーが奥から回転しながら跳ね起き、横スライスが揃う。上から1本の走査線が全レイヤーを描き出す
-// - ポインター: ステージ(main)のどこにあっても、ステージ基準の位置で板が傾く(ホームのメニューも同じ基準で傾く)。
+// - ポインター: ステージ(main)のどこにあっても、ステージ基準の位置で傾ける。[data-scene] の要素(ホームのメニュー)が
+//   あるときは、カメラ(透視の中心)と回転の中心をステージの中央に置いて1つの場面にし、回転を CSS 変数で渡す
+//   (--scene-rx / --scene-ry / --scene-tz と、-1〜1 に直した --scene-x / --scene-y)。
 //   板の上で動かしている間は、奥のレイヤー(z < 0)だけが周辺から粒子に分解されて弾かれる。
 //   文字のレイヤーは崩さない(読む邪魔にならないように)
 // - クリック: 波紋が広がり、板が奥へ押されて戻る
@@ -31,6 +33,8 @@ type Spring = { x: number; v: number; to: number; k: number; c: number }
 
 const DEPTH = 1200 // perspective(CSS px)
 const STAGGER = 0.18 // レイヤーごとの起動の遅れ
+const TILT_X = 4 // ポインターで傾ける最大角(度)。上下
+const TILT_Y = 6 // 左右
 
 // 板の四隅を CSS px の行列 M で射影する。uv は透視補正されて届く。
 const VERTEX = `#version 300 es
@@ -199,6 +203,8 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
 
   const perspective = new DOMMatrix()
   perspective.m34 = -1 / DEPTH
+  const scene = host.closest<HTMLElement>('main') ?? host
+  const followers = [...document.querySelectorAll<HTMLElement>('[data-scene]')]
   const tilt = { rx: spring(90, 9), ry: spring(90, 9), tz: spring(70, 8) }
   let accentCss = ''
   let pointer = [0, 0] // canvas 基準(CSS px)
@@ -219,6 +225,16 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     const width = canvas.clientWidth
     const height = canvas.clientHeight
     const dpr = canvas.width / width
+    // カメラと場面の回転の中心。一緒に傾く要素(ホームのメニュー)があるときはステージ中央に置いて
+    // 1つの場面にする。無いときは canvas の中央(端の板が canvas からはみ出して切れないように)。
+    let ox = width / 2
+    let oy = height / 2
+    if (followers.length) {
+      const stage = scene.getBoundingClientRect()
+      const box = canvas.getBoundingClientRect()
+      ox = stage.left + stage.width / 2 - box.left
+      oy = stage.top + stage.height / 2 - box.top
+    }
     gl.viewport(0, 0, canvas.width, canvas.height)
     gl.clearColor(0, 0, 0, 0)
     gl.clear(gl.COLOR_BUFFER_BIT)
@@ -232,16 +248,22 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
       if (!layer.width) continue
       const t = clamp(boot * span - index * STAGGER)
       const rest = 1 - back(t) // 起動の残り。行き過ぎると負になる。
-      // 奥行き z の板を、静止時は画面上で等倍になるよう拡大してから置く。
+      // ステージ中央のカメラで見た場面を回し、起動中はキャンバス中央を軸に板を跳ね起こす。
+      // 奥行き z の板は、静止時に画面上で等倍になるよう拡大してから置く。
       const matrix = new DOMMatrix()
-        .translate(width / 2, height / 2)
+        .translate(ox, oy)
         .multiply(perspective)
-        .translate(0, 0, tilt.tz.x - rest * 700)
-        .rotateAxisAngle(1, 0, 0, tilt.rx.x - rest * 75)
-        .rotateAxisAngle(0, 1, 0, tilt.ry.x + rest * 35 * (index % 2 ? -1 : 1))
+        .translate(0, 0, tilt.tz.x)
+        .rotateAxisAngle(1, 0, 0, tilt.rx.x)
+        .rotateAxisAngle(0, 1, 0, tilt.ry.x)
+        .translate(width / 2 - ox, height / 2 - oy)
+        .translate(0, 0, -rest * 700)
+        .rotateAxisAngle(1, 0, 0, -rest * 75)
+        .rotateAxisAngle(0, 1, 0, rest * 35 * (index % 2 ? -1 : 1))
+        .translate(ox - width / 2, oy - height / 2)
         .translate(0, 0, layer.z)
         .scale((DEPTH - layer.z) / DEPTH)
-        .translate(layer.x - width / 2, layer.y - height / 2)
+        .translate(layer.x - ox, layer.y - oy)
       const [px, py] = unproject(matrix, pointer[0], pointer[1])
       const [cx, cy] = unproject(matrix, click[0], click[1])
       gl.bindTexture(gl.TEXTURE_2D, layer.texture)
@@ -269,8 +291,9 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     last = now
     const rect = canvas.getBoundingClientRect()
     const active = now - moved < 1400
-    tilt.rx.to = active ? -aim[1] * 5 : 0
-    tilt.ry.to = active ? aim[0] * 8 : 0
+    // 回転の中心がステージ中央なので、端ほど大きく動く。角度は控えめにする。
+    tilt.rx.to = active ? -aim[1] * TILT_X : 0
+    tilt.ry.to = active ? aim[0] * TILT_Y : 0
     // ポインターが止まったら粒子を戻す(指している文字が読めるように)。
     if (now - moved > 160) lensTarget = 0
     boot = Math.min(1, boot + ms / 1500)
@@ -279,6 +302,13 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     ripple = Math.min(1, ripple + ms / 900)
     velocity = [velocity[0] * 0.85, velocity[1] * 0.85]
     const moving = [step(tilt.rx, dt), step(tilt.ry, dt), step(tilt.tz, dt)].some(Boolean)
+    for (const follower of followers) {
+      follower.style.setProperty('--scene-rx', `${tilt.rx.x}deg`)
+      follower.style.setProperty('--scene-ry', `${tilt.ry.x}deg`)
+      follower.style.setProperty('--scene-tz', `${tilt.tz.x}px`)
+      follower.style.setProperty('--scene-x', String(tilt.ry.x / TILT_Y))
+      follower.style.setProperty('--scene-y', String(-tilt.rx.x / TILT_X))
+    }
     if (visible(rect)) draw()
     frame =
       moving || active || boot < 1 || lensTarget > 0 || lens > 0.002 || glitch > 0 || ripple < 1
@@ -349,7 +379,6 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     return [event.clientX - rect.left, event.clientY - rect.top]
   }
   // ステージのどこで動かしても傾ける。粒子は板の上にあるときだけ出す。
-  const scene = host.closest<HTMLElement>('main') ?? host
   scene.addEventListener('pointermove', event => {
     const next = locate(event)
     const now = performance.now()
