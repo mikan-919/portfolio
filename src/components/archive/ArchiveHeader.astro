@@ -19,6 +19,8 @@ const titleClass = plain
   : 'text-[clamp(2.5rem,12vw,3.75rem)] uppercase tracking-[0.02em] lg:text-6xl'
 ---
 
+<!-- ページ遷移でホームのタイルから流れ込む見出し(src/lib/flow.ts) -->
+<div data-flip-page="head">
 <FxCanvas>
   <div>
     <div class="flex items-center gap-4">
@@ -48,3 +50,4 @@ const titleClass = plain
     </div>
   </div>
 </FxCanvas>
+</div>

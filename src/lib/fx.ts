@@ -212,7 +212,8 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
   let velocity = [0, 0]
   let click = [0, 0]
   let moved = -1e9
-  let boot = 0
+  // ページ遷移で別の要素から流れ込む見出し(flow.ts が名前を付けている)は、起動の演出を飛ばして最初から描く。
+  let boot = host.closest<HTMLElement>('[data-flip-page]')?.style.viewTransitionName ? 1 : 0
   let lens = 0
   let lensTarget = 0
   let glitch = 0

@@ -58,7 +58,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
 >
   <ReaderScreen>
     <Fragment slot="aside">
-      <div class="relative shrink-0 overflow-hidden bg-lp-dark max-lg:h-36 lg:h-[34%] lg:min-h-40">
+      <div data-flip-page="cover" class="relative shrink-0 overflow-hidden bg-lp-dark max-lg:h-36 lg:h-[34%] lg:min-h-40">
         <CoverImage
           src={entry.data.image ?? coverUrl('articles', entry.id)}
           alt=""
@@ -68,6 +68,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
         <div class="absolute inset-x-0 bottom-0 space-y-2 px-5 pb-4 sm:px-8 md:px-16 lg:px-10 lg:pb-6 xl:pl-[7.5rem]">
           <p class="font-mono text-xs text-lp-dark-muted">{formattedDate}</p>
           <h1
+            data-flip-page="title"
             class="font-display text-2xl leading-tight text-lp-dark-text line-clamp-2 lg:text-3xl lg:line-clamp-4"
             style="overflow-wrap: anywhere;"
           >

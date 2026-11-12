@@ -183,10 +183,11 @@
   }
 }
 
-/* --- 1画面構成(Layout.astro / src/lib/pager.ts) --- */
+/* --- 1画面構成(Layout.astro / src/lib/pager.ts / src/lib/flow.ts) --- */
 
-/* ページ遷移(ClientRouter): Header とステータスバーは残し、ステージ(main)だけを入れ替える。
-   旧画面は暗くなりながら奥へ回り、新画面は回り込みつつ斜めのワイプで現れる。
+/* ページ遷移(ClientRouter): Header とステータスバーは残し、ステージ(main)だけが横に流れて入れ替わる。
+   深い階層へ進むときは左へ、浅い階層へ戻るときは右へ流れる(html[data-flow="up"]、src/lib/flow.ts)。
+   クリックしたものと行き先で対応する要素(.flip)は、位置と大きさをつないで移る。片側にしかないものはステージと一緒に流す。
    ページ送りの View Transition(page-next / page-prev)ではステージを動かさない。 */
 #main-content {
   view-transition-name: stage;
@@ -194,33 +195,76 @@
 html:not(
   :active-view-transition-type(page-next, page-prev)
 )::view-transition-group(stage) {
-  background: var(--color-lp-dark);
   overflow: clip;
 }
 html:not(
   :active-view-transition-type(page-next, page-prev)
-)::view-transition-old(stage) {
-  animation: ak-out 0.7s cubic-bezier(0.7, 0, 0.2, 1) both;
+)::view-transition-old(stage),
+::view-transition-old(.flip):only-child {
+  animation: flow-out 0.6s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
 html:not(
   :active-view-transition-type(page-next, page-prev)
-)::view-transition-new(stage) {
-  animation: ak-wipe 0.7s cubic-bezier(0.7, 0, 0.2, 1) both;
+)::view-transition-new(stage),
+::view-transition-new(.flip):only-child {
+  animation: flow-in 0.6s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
-@keyframes ak-out {
+html[data-flow="up"]::view-transition-old(stage),
+html[data-flow="up"]::view-transition-old(.flip):only-child {
+  animation-name: flow-out-up;
+}
+html[data-flow="up"]::view-transition-new(stage),
+html[data-flow="up"]::view-transition-new(.flip):only-child {
+  animation-name: flow-in-up;
+}
+/* 対応する要素はステージと同じ長さ・緩急で移る。カバーは縦横比が違っても切り抜いて埋める */
+::view-transition-group(.flip) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+::view-transition-group(flip-cover) {
+  overflow: clip;
+}
+::view-transition-old(flip-cover),
+::view-transition-new(flip-cover) {
+  block-size: 100%;
+  object-fit: cover;
+}
+/* 前の画面は前半で消え、次の画面は後半から現れる(二重写しにしない)。動きは全体を通してつなぐ */
+@keyframes flow-out {
+  50% {
+    opacity: 0;
+  }
   to {
-    transform: perspective(1400px) translateX(-10%) rotateY(24deg) scale(0.86);
-    filter: brightness(0.35);
+    opacity: 0;
+    transform: translateX(-8%);
   }
 }
-@keyframes ak-wipe {
+@keyframes flow-in {
   from {
-    clip-path: polygon(120% 0, 100% 0, 100% 100%, 100% 100%);
-    transform: perspective(1400px) translateX(16%) rotateY(-24deg) scale(1.08);
+    opacity: 0;
+    transform: translateX(8%);
+  }
+  40% {
+    opacity: 0;
+  }
+}
+@keyframes flow-out-up {
+  50% {
+    opacity: 0;
   }
   to {
-    clip-path: polygon(-20% 0, 100% 0, 100% 100%, 0 100%);
-    transform: none;
+    opacity: 0;
+    transform: translateX(8%);
+  }
+}
+@keyframes flow-in-up {
+  from {
+    opacity: 0;
+    transform: translateX(-8%);
+  }
+  40% {
+    opacity: 0;
   }
 }
 

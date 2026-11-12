@@ -174,6 +174,7 @@ const mount = (el: HTMLElement): (() => void) => {
   const observer = new ResizeObserver(render)
   observer.observe(el)
   document.fonts.ready.then(render)
+  page = current() // 戻ってきたときなど、表示済みの位置から始める
   el.setAttribute('data-pager-ready', '')
 
   return () => {

@@ -61,7 +61,7 @@ const link = 'inline-flex min-h-11 items-center gap-1.5 text-sm text-lp-highligh
 >
   <ReaderScreen>
     <Fragment slot="aside">
-      <div class="relative shrink-0 overflow-hidden bg-lp-dark max-lg:h-36 lg:h-[40%] lg:min-h-48">
+      <div data-flip-page="cover" class="relative shrink-0 overflow-hidden bg-lp-dark max-lg:h-36 lg:h-[40%] lg:min-h-48">
         <CoverImage src={entry.data.image ?? coverUrl('works', entry.id)} alt="" class="absolute inset-0 size-full object-cover opacity-45" />
         <div class="absolute inset-0 bg-linear-to-t from-lp-dark via-lp-dark/50 to-transparent" aria-hidden="true"></div>
         <div class="absolute inset-x-0 bottom-0 space-y-2 px-5 pb-4 sm:px-8 md:px-16 lg:px-10 lg:pb-6 xl:pl-[7.5rem]">
@@ -72,7 +72,7 @@ const link = 'inline-flex min-h-11 items-center gap-1.5 text-sm text-lp-highligh
             {entry.data.isComingSoon && <span class="label-tech text-lp-dark-muted">Coming soon</span>}
             <span class="ml-auto font-mono text-xs text-lp-dark-muted">{formattedDate}</span>
           </div>
-          <h1 class="font-display text-2xl leading-tight text-lp-dark-text line-clamp-2 lg:text-4xl" style="overflow-wrap: anywhere;">
+          <h1 data-flip-page="title" class="font-display text-2xl leading-tight text-lp-dark-text line-clamp-2 lg:text-4xl" style="overflow-wrap: anywhere;">
             {entry.data.title}
           </h1>
         </div>

@@ -12,9 +12,10 @@ const { data }: Props = Astro.props
 <!-- 列の高さいっぱいの縦長カード。画像が余りの高さを埋める -->
 <a
   href={data.href}
+  data-flip
   class={`group card-cut flex h-full flex-col overflow-hidden ${data.comingSoon ? 'pointer-events-none' : ''}`}
 >
-  <div class="relative min-h-24 flex-1 overflow-hidden bg-lp-surface-sunken">
+  <div data-flip-part="cover" class="relative min-h-24 flex-1 overflow-hidden bg-lp-surface-sunken">
     <CoverImage src={data.image} alt="" class="image-hover-effect absolute inset-0 size-full object-cover" />
     {
       data.comingSoon && (
@@ -30,7 +31,7 @@ const { data }: Props = Astro.props
       {data.meta && <span class="label-tech">{data.meta}</span>}
       <span class="ml-auto font-mono text-xs text-lp-muted">{formatShortDateJP(data.date)}</span>
     </div>
-    <h2 class="font-display text-xl leading-tight text-lp-text line-clamp-2">
+    <h2 data-flip-part="title" class="font-display text-xl leading-tight text-lp-text line-clamp-2">
       {data.title}
     </h2>
     <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">
