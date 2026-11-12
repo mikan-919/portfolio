@@ -2,12 +2,12 @@
 // 回転の中心とカメラ(透視 1200px)はステージ中央。[data-scene] の要素へ CSS 変数で配る
 // (--scene-rx / --scene-ry / --scene-tz、-1〜1 に直した --scene-x / --scene-y、要素から見た中心 --scene-ox / --scene-oy)。
 // 変形の規則は global.css。fx(src/lib/fx.ts)は同じ値で WebGL の板を回す。
-// 動かすのをやめて 1.4 秒たつか、ステージの外へ出ると正面へ戻る。タッチと prefers-reduced-motion では傾けない。
+// ポインターが止まっても傾きは保ち、ステージの外へ出ると正面へ戻る。タッチと prefers-reduced-motion では傾けない。
 
 type Spring = { x: number; v: number; to: number; k: number; c: number }
 
-const TILT_X = 4 // 最大の傾き(度)。上下
-const TILT_Y = 6 // 左右
+const TILT_X = 3 // 最大の傾き(度)。上下
+const TILT_Y = 4 // 左右
 
 const spring = (k: number, c: number): Spring => ({ x: 0, v: 0, to: 0, k, c })
 // 1ステップ進め、まだ動いていれば true。
@@ -34,8 +34,8 @@ export const subscribe = (listener: () => void) => {
 const reduce = matchMedia('(prefers-reduced-motion: reduce)')
 let stage: HTMLElement | null = null
 let followers: HTMLElement[] = []
-let aim = [0, 0]
-let moved = -1e9
+// ステージの上にあるポインターの位置(-1〜1)。ステージの外では null
+let aim: [number, number] | null = null
 let frame = 0
 let last = 0
 
@@ -68,12 +68,11 @@ const publish = () => {
 const tick = (now: number) => {
   const dt = Math.min(now - last, 50) / 1000
   last = now
-  const active = now - moved < 1400
-  scene.rx.to = active ? -aim[1] * TILT_X : 0
-  scene.ry.to = active ? aim[0] * TILT_Y : 0
+  scene.rx.to = aim ? -aim[1] * TILT_X : 0
+  scene.ry.to = aim ? aim[0] * TILT_Y : 0
   const moving = [step(scene.rx, dt), step(scene.ry, dt), step(scene.tz, dt)].some(Boolean)
   publish()
-  frame = moving || active ? requestAnimationFrame(tick) : 0
+  frame = moving ? requestAnimationFrame(tick) : 0
 }
 const kick = () => {
   if (frame) return
@@ -100,11 +99,10 @@ document.addEventListener('astro:page-load', () => {
     if (event.pointerType !== 'mouse') return
     const rect = current.getBoundingClientRect()
     aim = [((event.clientX - rect.left) / rect.width) * 2 - 1, ((event.clientY - rect.top) / rect.height) * 2 - 1]
-    moved = performance.now()
     kick()
   })
   current.addEventListener('pointerleave', () => {
-    moved = -1e9
+    aim = null
     kick()
   })
   observer = new ResizeObserver(place)

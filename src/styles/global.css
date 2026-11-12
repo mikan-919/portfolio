@@ -338,14 +338,10 @@ html:active-view-transition-type(page-prev)::view-transition-new(pager) {
       rotateX(var(--scene-rx, 0deg)) rotateY(var(--scene-ry, 0deg))
       var(--scene-base,);
   }
-  /* 右側の面は、右端を軸に奥へ傾けて置く(ホームのメニューと同じ見え方) */
+  /* 右側の面は、左側を奥へ傾けて置く(ホームのメニューと同じ見え方)。傾ける軸はステージ中央の縦線。
+     面の右端を軸にすると面全体が場面の軸より奥に入り、場面が傾いたとき右端を中心に揺れて見える */
   [data-scene="angled"] {
-    --scene-base: translate(
-        calc(100% - var(--scene-ox)),
-        calc(50% - var(--scene-oy))
-      )
-      rotateY(-6deg)
-      translate(calc(var(--scene-ox) - 100%), calc(var(--scene-oy) - 50%));
+    --scene-base: rotateY(-3deg);
   }
 }
 
