@@ -1,0 +1,27 @@
+---
+// 英日併記のセクション見出し。右端に任意のテキストリンクを置ける。
+type Props = {
+  en: string
+  ja: string
+  href?: string
+  linkLabel?: string
+  dark?: boolean
+}
+const { en, ja, href, linkLabel, dark = false }: Props = Astro.props
+---
+
+<div class="flex items-center gap-4 mb-8">
+  <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
+  <h2 class={`font-display text-2xl md:text-3xl uppercase leading-none tracking-[0.04em] ${dark ? 'text-lp-dark-text' : 'text-lp-text'}`}>
+    {en}
+  </h2>
+  <span class={`text-xs shrink-0 ${dark ? 'text-lp-dark-muted' : 'text-lp-subtle'}`}>{ja}</span>
+  <span class={`h-px flex-1 ${dark ? 'bg-lp-dark-muted/40' : 'bg-lp-border-subtle'}`} aria-hidden="true"></span>
+  {
+    href && (
+      <a href={href} class="shrink-0 text-sm text-lp-highlight hover:underline underline-offset-4">
+        {linkLabel} →
+      </a>
+    )
+  }
+</div>

@@ -84,13 +84,13 @@ const formattedDate = formatShortDateJP(entry.data.date)
         <div class="px-5 sm:px-8 md:px-16 lg:px-[7.5rem]">
             <div class="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-8 py-10">
                 <div class="space-y-2">
-                    <p class="text-xs text-lp-subtle">Summary</p>
+                    <p class="label-tech">Summary</p>
                     <p class="text-sm text-lp-muted leading-relaxed">
                         {entry.data?.summary || "No summary available."}
                     </p>
                 </div>
                 <div class="space-y-2">
-                    <p class="text-xs text-lp-subtle">Tags</p>
+                    <p class="label-tech">Tags</p>
                     <Tags tags={entry.data.tags} link={(tag) => `/blog/tags/${tag}`} />
                 </div>
             </div>
@@ -111,7 +111,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
                     prose-li:leading-[1.9]
                     prose-a:text-lp-highlight prose-a:decoration-lp-highlight prose-a:decoration-1 prose-a:underline-offset-2
                     prose-blockquote:border-0 prose-blockquote:bg-lp-accent-subtle prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic
-                    prose-img:rounded-lg
+                    prose-img:
                     prose-code:text-lp-accent prose-code:bg-lp-accent-subtle prose-code:rounded prose-code:px-1 prose-code:py-0.5">
                     <Content />
                 </div>

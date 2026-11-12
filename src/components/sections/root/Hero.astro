@@ -1,75 +1,84 @@
 ---
+import FxCanvas from '@/components/ui/FxCanvas.astro'
+
 type Props = {
   projectCount: number
   articleCount: number
 }
 const { projectCount, articleCount } = Astro.props
+
+const pad = (value: number) => String(value).padStart(2, '0')
+const specs = [
+  { label: 'Projects', value: pad(projectCount) },
+  { label: 'Blog posts', value: pad(articleCount) },
+  { label: 'Since', value: '2021' },
+]
 ---
 
-<div class="w-full bg-lp-bg">
-  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 sm:py-20 lg:py-24">
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 lg:gap-16 lg:items-end">
-      <!-- statement -->
-      <div class="flex flex-col items-start text-left">
-        <span class="rounded-full bg-lp-accent-subtle text-lp-accent-strong text-xs px-3 py-1">
-          Open to opportunities
-        </span>
+<FxCanvas>
+  <div class="relative w-full overflow-hidden">
+    <!-- backdrop -->
+    <div class="grid-dots absolute inset-y-0 right-0 w-2/3 [mask-image:linear-gradient(to_right,transparent,black)] opacity-60" aria-hidden="true"></div>
+    <span
+      class="absolute -right-4 -bottom-14 sm:-bottom-20 lg:-bottom-28 font-display text-[15rem] sm:text-[22rem] lg:text-[30rem] leading-none tracking-tighter text-lp-surface-sunken select-none pointer-events-none"
+      aria-hidden="true"
+    >
+      919
+    </span>
 
-        <h1 class="font-display text-[48px] min-[360px]:text-[56px] sm:text-[72px] lg:text-[88px] leading-none font-bold tracking-[0.02em] text-lp-text mt-5 mb-0" style="overflow-wrap: anywhere;">
-          摘果みかん
-        </h1>
-
-        <p class="text-sm text-lp-muted mt-3">
-          Student Developer · Web / Developer Tools · @Mikan-919
-        </p>
-
-        <p class="text-lg leading-[1.65] text-lp-muted max-w-[540px] mt-3">
-          Web・言語処理系・開発者ツールを作る学生エンジニア。<br />
-          RustやTypeScriptで、設計から中核実装まで取り組んでいます。
-        </p>
-
-        <div class="flex flex-wrap items-center gap-6 mt-8">
-          <a
-            href="/works"
-            class="inline-flex items-center min-h-11 rounded-full bg-lp-accent text-lp-accent-on text-sm px-5 hover:bg-lp-accent-strong transition-colors"
-          >
-            制作実績を見る
-          </a>
-          <a
-            href="/blog"
-            class="inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-highlight transition-colors"
-          >
-            ブログを読む →
-          </a>
-        </div>
+    <div class="relative max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] pt-10 sm:pt-14 pb-14 sm:pb-20">
+      <div class="flex items-center gap-4">
+        <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
+        <span class="label-tech">Profile</span>
+        <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
+        <span class="label-tech text-lp-text">Open to opportunities</span>
+        <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
       </div>
 
-      <!-- mark + spec sheet -->
-      <div class="flex w-full flex-row justify-start gap-8 sm:gap-10 lg:w-[180px] lg:flex-col lg:gap-8">
-        <div class="hidden lg:flex size-40 shrink-0 items-center justify-center" aria-hidden="true">
-          <span
-            class="font-display text-[104px] leading-none tracking-tight text-transparent"
-            style="-webkit-text-stroke: 1px var(--color-lp-text);"
-          >
-            919
-          </span>
-        </div>
+      <h1
+        class="font-display text-[52px] min-[360px]:text-[60px] sm:text-[88px] lg:text-[120px] leading-none font-bold tracking-[0.02em] text-lp-text mt-12 sm:mt-16 mb-0"
+        style="overflow-wrap: anywhere;"
+      >
+        摘果みかん
+      </h1>
+      <p class="font-tech font-medium uppercase text-sm sm:text-base tracking-[0.5em] text-lp-highlight mt-4" aria-hidden="true">
+        Tekka Mikan
+      </p>
 
-        <div class="flex w-full flex-row gap-8 sm:gap-10 lg:flex-col lg:gap-4">
-          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
-            <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">{projectCount}</span>
-            <span class="text-xs text-lp-subtle">Projects</span>
-          </div>
-          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
-            <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">{articleCount}</span>
-            <span class="text-xs text-lp-subtle">Blog Posts</span>
-          </div>
-          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-baseline gap-1 lg:gap-0">
-            <span class="font-display text-2xl lg:text-xl leading-none text-lp-text">2021</span>
-            <span class="text-xs text-lp-subtle">Since</span>
-          </div>
-        </div>
+      <dl class="mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-sm">
+        <dt class="label-tech self-center">Class</dt>
+        <dd class="text-lp-text">Student Developer</dd>
+        <dt class="label-tech self-center">Field</dt>
+        <dd class="text-lp-text">Web / Developer Tools</dd>
+        <dt class="label-tech self-center">ID</dt>
+        <dd class="font-mono text-lp-text">@mikan-919</dd>
+      </dl>
+
+      <p class="text-base sm:text-lg leading-[1.75] text-lp-muted max-w-[540px] mt-6">
+        Web・言語処理系・開発者ツールを作る学生エンジニア。<br />
+        RustやTypeScriptで、設計から中核実装まで取り組んでいます。
+      </p>
+
+      <div class="flex flex-wrap items-center gap-6 mt-8">
+        <a href="/works" class="btn-cut">
+          <span class="size-1.5 bg-lp-highlight" aria-hidden="true"></span>
+          制作実績を見る
+        </a>
+        <a href="/blog" class="inline-flex items-center min-h-11 text-sm text-lp-text hover:text-lp-highlight transition-colors">
+          ブログを読む →
+        </a>
       </div>
+
+      <dl class="mt-14 sm:mt-20 flex gap-8 sm:gap-14">
+        {
+          specs.map(({ label, value }) => (
+            <div class="border-l border-lp-border pl-4">
+              <dt class="label-tech">{label}</dt>
+              <dd class="font-display text-3xl sm:text-5xl leading-none text-lp-text mt-2">{value}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
   </div>
-</div>
+</FxCanvas>

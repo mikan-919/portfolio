@@ -19,12 +19,12 @@ const { prev, next, backHref, backLabel, newerEmptyLabel, olderEmptyLabel } =
     <div class="grid grid-cols-1 sm:grid-cols-3">
         {prev ? (
             <a href={prev.href} class="flex flex-col justify-center py-6 sm:py-8 px-5 sm:pr-8 sm:pl-8 md:pl-16 lg:pl-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
-                <span class="text-xs text-lp-subtle mb-1">&lt; Newer</span>
+                <span class="label-tech mb-1">&lt; Newer</span>
                 <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{prev.title}</span>
             </a>
         ) : (
             <div class="flex flex-col justify-center py-6 sm:py-8 px-5 sm:pr-8 sm:pl-8 md:pl-16 lg:pl-[7.5rem] opacity-30 select-none">
-                <span class="text-xs text-lp-subtle mb-1">&lt; Newer</span>
+                <span class="label-tech mb-1">&lt; Newer</span>
                 <span class="text-sm text-lp-text font-medium">{newerEmptyLabel}</span>
             </div>
         )}
@@ -33,12 +33,12 @@ const { prev, next, backHref, backLabel, newerEmptyLabel, olderEmptyLabel } =
         </a>
         {next ? (
             <a href={next.href} class="flex flex-col justify-center sm:items-end sm:text-right py-6 sm:py-8 px-5 sm:pl-8 sm:pr-8 md:pr-16 lg:pr-[7.5rem] hover:bg-lp-surface-sunken transition-colors">
-                <span class="text-xs text-lp-subtle mb-1">Older &gt;</span>
+                <span class="label-tech mb-1">Older &gt;</span>
                 <span class="text-sm text-lp-text font-medium leading-tight line-clamp-2">{next.title}</span>
             </a>
         ) : (
             <div class="flex flex-col justify-center sm:items-end sm:text-right py-6 sm:py-8 px-5 sm:pl-8 sm:pr-8 md:pr-16 lg:pr-[7.5rem] opacity-30 select-none">
-                <span class="text-xs text-lp-subtle mb-1">Older &gt;</span>
+                <span class="label-tech mb-1">Older &gt;</span>
                 <span class="text-sm text-lp-text font-medium">{olderEmptyLabel}</span>
             </div>
         )}

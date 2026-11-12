@@ -2,71 +2,57 @@
 const pathname = Astro.url.pathname
 const isCurrent = (href: string) => (href === '/' ? pathname === href : pathname.startsWith(href))
 const navItems = [
-  { href: '/works', label: 'Works' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/about', label: 'About' },
+  { href: '/works', label: 'Works', ja: '制作実績' },
+  { href: '/blog', label: 'Blog', ja: '記事' },
+  { href: '/about', label: 'About', ja: '人物' },
 ]
 
-const wordmarkClass = 'font-display text-base md:text-lg tracking-tight text-lp-text leading-none shrink-0'
+const wordmarkClass = 'font-display text-lg md:text-xl tracking-[0.04em] text-lp-text leading-none shrink-0'
+// 英日2段。現在地は上端に柿色のバーを出す。
 const navLinkClass =
-  'inline-flex items-center min-h-11 text-sm text-lp-muted hover:text-lp-text aria-[current=page]:text-lp-text aria-[current=page]:underline aria-[current=page]:decoration-lp-highlight aria-[current=page]:decoration-2 underline-offset-4 transition-colors'
+  'group relative flex h-16 flex-col justify-center text-lp-muted hover:text-lp-text aria-[current=page]:text-lp-text transition-colors before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:origin-left before:scale-x-0 before:bg-lp-highlight before:transition-transform hover:before:scale-x-100 aria-[current=page]:before:scale-x-100'
 ---
 
-<header class="w-full bg-lp-bg/90 backdrop-blur-md sticky top-0 z-50">
-  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] h-16 flex items-center gap-4 md:gap-8 relative">
-    {
-      isCurrent('/') ? (
-        <a href="/" aria-current="page" class={wordmarkClass}>
-          MIKAN<span class="text-lp-highlight">-919</span>
-        </a>
-      ) : (
-        <a href="/" class={wordmarkClass}>
-          MIKAN<span class="text-lp-highlight">-919</span>
-        </a>
-      )
-    }
+<header class="w-full bg-lp-bg/90 backdrop-blur-md sticky top-0 z-50 border-b border-lp-border-subtle">
+  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] h-16 flex items-center gap-4 md:gap-10 relative">
+    <a href="/" aria-current={isCurrent('/') ? 'page' : undefined} class={wordmarkClass}>
+      MIKAN<span class="text-lp-highlight">-919</span>
+    </a>
 
-    <nav class="hidden sm:flex items-center gap-4 md:gap-7 ml-auto" aria-label="メインナビゲーション">
+    <nav class="hidden sm:flex items-center gap-6 md:gap-10 ml-auto" aria-label="メインナビゲーション">
       {
-        navItems.map(({ href, label }) =>
-          isCurrent(href) ? (
-            <a href={href} aria-current="page" class={navLinkClass}>
-              {label}
-            </a>
-          ) : (
-            <a href={href} class={navLinkClass}>
-              {label}
-            </a>
-          ),
-        )
+        navItems.map(({ href, label, ja }) => (
+          <a href={href} aria-current={isCurrent(href) ? 'page' : undefined} class={navLinkClass}>
+            <span class="font-tech text-sm font-medium uppercase leading-none tracking-[0.14em]">{label}</span>
+            <span class="mt-1 text-[10px] leading-none text-lp-subtle">{ja}</span>
+          </a>
+        ))
       }
     </nav>
     <a
       href="https://twitter.com/mikan_919_main"
       target="_blank"
       rel="noopener noreferrer"
-      class="hidden sm:inline-flex items-center min-h-11 shrink-0 text-sm text-lp-text hover:text-lp-highlight transition-colors"
+      class="hidden sm:inline-flex items-center min-h-11 shrink-0 font-tech text-sm font-medium uppercase tracking-[0.14em] text-lp-text hover:text-lp-highlight transition-colors"
     >
-      Contact
+      Contact ↗
     </a>
 
     <details class="group sm:hidden ml-auto">
-      <summary class="list-none [&::-webkit-details-marker]:hidden inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-full text-sm text-lp-text hover:bg-lp-surface-sunken transition-colors">
+      <summary class="list-none [&::-webkit-details-marker]:hidden inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center font-tech text-sm font-medium uppercase tracking-[0.14em] text-lp-text hover:bg-lp-surface-sunken transition-colors">
         <span class="group-open:hidden">Menu</span>
         <span class="hidden group-open:inline">Close</span>
       </summary>
-      <nav
-        class="absolute top-[calc(100%-0.25rem)] left-5 right-5 rounded-lg bg-lp-surface p-2 shadow-lg"
-        aria-label="モバイルナビゲーション"
-      >
+      <nav class="chamfer absolute top-full left-5 right-5 bg-lp-surface p-2 shadow-lg" aria-label="モバイルナビゲーション">
         {
-          navItems.map(({ href, label }) => (
+          navItems.map(({ href, label, ja }) => (
             <a
               href={href}
               aria-current={isCurrent(href) ? 'page' : undefined}
-              class="flex min-h-12 items-center rounded-md px-4 text-sm text-lp-muted hover:bg-lp-surface-sunken hover:text-lp-text aria-[current=page]:bg-lp-surface-sunken aria-[current=page]:text-lp-highlight transition-colors"
+              class="flex min-h-12 items-baseline gap-3 px-4 py-3 text-lp-muted hover:bg-lp-surface-sunken hover:text-lp-text aria-[current=page]:bg-lp-surface-sunken aria-[current=page]:text-lp-highlight transition-colors"
             >
-              {label}
+              <span class="font-tech text-sm font-medium uppercase tracking-[0.14em]">{label}</span>
+              <span class="text-[11px] text-lp-subtle">{ja}</span>
             </a>
           ))
         }
@@ -74,7 +60,7 @@ const navLinkClass =
           href="https://twitter.com/mikan_919_main"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex min-h-12 items-center rounded-md px-4 text-sm text-lp-muted hover:bg-lp-surface-sunken hover:text-lp-text transition-colors"
+          class="flex min-h-12 items-center px-4 font-tech text-sm font-medium uppercase tracking-[0.14em] text-lp-muted hover:bg-lp-surface-sunken hover:text-lp-text transition-colors"
         >
           Contact ↗
         </a>

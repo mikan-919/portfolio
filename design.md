@@ -4,36 +4,30 @@
 逸脱する場合はこのファイルを更新してから実装する。
 
 ## Genre
-editorial(Swiss International Typographic Style を基調に、
-Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたクラスタ)
+tactical UI(Arknights の公式サイト・ゲーム内UIを参照した、工業的で情報密度のある
+モノクローム画面)。Swiss 的なグリッドと余白は土台として残し、その上に
+面取り・ヘアライン・英日併記ラベル・シェーダー演出を重ねる
 
 ## Macrostructure family
 
-- **ホーム(marketing)**: Bento Grid — Hero・Skills・Works・Blog・Timeline を
-  不揃いブロックの単一グリッドに統合。ナンバリング見出し(01/02/03...)は使わない。
-  セル間はケイ線(border)ではなく `gap` で区切る。画像を持つプレビュー
-  (Featured Work/Article)のみ `rounded-lg` + 白い面のカードにし、罫線は置かない。
-  それ以外のテキストのみのセル(Skills・リスト項目・ナビリンク等)は
-  背景もボーダーも無いフラット表示にする(Emil Kowalski 的な余白駆動)。
+- **ホーム**: Hero(プロフィール票)+ 英日併記の見出しで区切った
+  Skills / Works / Blog / Timeline の縦積み。Works と Blog は
+  「Featured カード + 行リスト」の2カラムで、左右を交互に入れ替える。
   Featured Work/Article は `image` を持つエントリを優先し、同じプロジェクトが
   両方のカードに並ばないようにする
 - **一覧ページ(Works一覧・Blog一覧・タグ別一覧)**: Portfolio Grid — フィルタ可能な
   カードグリッド。Works と Blog は type prop で出し分ける共通コンポーネント。
-  ここは画像プレビューを伴うため catnose 的なソフトカード(rounded + 面の明度差
-  + pill タグ)を維持する。カードとタグに罫線は置かない。先頭の Featured も
-  `image` を持つエントリを優先する
+  先頭の Featured も `image` を持つエントリを優先する
 - **詳細ページ(Works詳細・Blog記事詳細)**: Long Document — 本文中心の連続した
-  読み物。ToC は Blog 記事のみ。
-- **About**: Bento Grid 系(bio・GitHub活動・values・learning/interests)。
-  画像を持たないため全セルフラット(背景・ボーダー無し)、gap と見出しの
-  太字だけで区切る
+  読み物。ToC は Blog 記事のみ。演出は載せない
+- **About**: ページ見出し + フラットなセルのグリッド + dark 面の Timeline
 
 ## Theme — Monochrome + Persimmon Accent
 
 - `--color-lp-bg`             oklch(97% 0 0)   淡いグレーの紙
 - `--color-lp-surface`        oklch(100% 0 0)  白い面
 - `--color-lp-surface-sunken` oklch(93% 0 0)   沈んだ面
-- `--color-lp-border`         oklch(74% 0 0)   意味のある線専用
+- `--color-lp-border`         oklch(74% 0 0)   ヘアライン
 - `--color-lp-border-subtle`  oklch(88% 0 0)
 - `--color-lp-text`           oklch(14% 0 0)   インク
 - `--color-lp-muted`          oklch(42% 0 0)
@@ -42,22 +36,18 @@ Emil Kowalski・catnose 的な抑制の効いたミニマルさへ寄せたク�
 - `--color-lp-accent-on`      oklch(98% 0 0)
 - `--color-lp-accent-subtle`  oklch(91% 0 0)
 - `--color-lp-accent-strong`  oklch(8% 0 0)
-- `--color-lp-highlight`      oklch(52% 0.17 40)  柿色。リンク・選択中・フォーカスリング・ワードマーク専用
+- `--color-lp-highlight`      oklch(52% 0.17 40)  柿色
 - `--color-lp-dark`           oklch(11% 0 0)
 - `--color-lp-dark-text`      oklch(97% 0 0)
 - `--color-lp-dark-muted`     oklch(65% 0 0)
 
-軸: paper-band = cool light / display-style = grotesque-medium(太すぎない sans) /
-accent-hue = persimmon(hue 40)。階層は黒・白・グレーの明度差と余白で表現し、
-柿色はリンク・選択中・フォーカスリング・ワードマーク・生成カバーの1点以外に使わない。塗りボタンの `accent` は
-インクのまま(ダークでは反転する)を維持する
+階層は黒・白・グレーの明度差で表現する。柿色は Arknights の黄・シアンに相当する
+唯一の信号色で、リンク・選択中・フォーカスリング・ワードマーク・見出しマーカー・
+ハザードストライプ・ホバー時のバー・シェーダーの粒子に使う。本文の面や大きな塗りには使わない
 
 ### Dark mode
 
 - `prefers-color-scheme: dark` で反転する。テーマ切替UIは持たない
-- bg / surface / surface-sunken / border / text / muted / subtle / accent を
-  dark 用の値に差し替える。`accent` は明るいインクへ、`highlight` は明度を上げた
-  柿色へ反転する。sunken は surface より暗いまま維持する
 - Footer と About の Timeline が使う `dark` 面は、ダークモードでも bg より暗い帯として維持する
 - 画像・OG画像は反転しない
 
@@ -69,55 +59,48 @@ accent-hue = persimmon(hue 40)。階層は黒・白・グレーの明度差と�
 
 ## Typography
 
-- Display: Inter(Bold 700)+ 日本語は Zen Kaku Gothic New。ポスター的な極太
-  ディスプレイ書体(Archivo Black)は廃止 — 見出しはサイズと余白で階層化する
-- Body: Inter(既存)、日本語は Zen Kaku Gothic New
-- Mono: UDEV Gothic。日付・ハンドル・タグチップ・コード等の「データ」表示のみに限定する
-- ラベル(Profile / Activity / Tags 等の小見出し)は mono ではなく通常の sans
-  (`text-xs text-lp-subtle`)、大文字強制(uppercase)・強いトラッキングは使わない
-- Figtree・Rampart One は使用箇所なしのため廃止
-- 見出しは常に roman(イタリック禁止)。強調は太さ・アクセント色・下線で表現
+- Display / ラベルの欧文: Oxanium(500 / 700)。角を落とした字形で Bender 系の代替。
+  日本語は Zen Kaku Gothic New
+- Body: Inter、日本語は Zen Kaku Gothic New
+- Mono: UDEV Gothic。日付・ハンドル・コード等の「データ」表示のみ
+- 欧文のページ見出し・セクション見出しは大文字、日本語の副題を併記する
+  (`WORKS 制作実績`)。併記は `SectionTitle.astro` に集約する
+- 小ラベルは `.label-tech`(Oxanium 500・11px・大文字・tracking 0.14em)
+- 見出しは常に roman(イタリック禁止)
 
-## Spacing / Radius
+## Shape / Line
 
-- 既存 Tailwind 4pt spacing を継続使用
-- 角丸は小さめ(`rounded-md`〜`rounded-lg`、ピル状要素は `rounded-full`)を
-  ボタン・タグ・カード・バッジに適用する。スラブ的な直角一辺倒(角丸0)は廃止
-- 罫線は原則使わない。カード・タグ・画像・Headerの輪郭は背景の明度差と余白で表現する
-- Timeline/ToCのスパインやフィルターの選択下線など、構造や状態を伝える線だけを
-  ヘアラインで許可する。`border-2` 以上の太い罫線や装飾目的の区切り線は使わない
-- 同一背景色で隣接するセクション同士を区切る罫線
-  (`border-b`/`divide-x`/`divide-y`)は置かない。区切りは `gap` と余白のみで表現する
+- 角丸は使わない。面は直角、または右下を 45° で落とす(`.chamfer` / `.card-cut`)
+- 主要ボタンは左上と右下を落とす(`.btn-cut`)
+- ヘアライン(1px)は構造を示す場所に使う: Header 下端、見出しの延長線、
+  行リストの区切り、スペック欄の左罫。`border-2` 以上は使わない
+- 面取りした要素に border は付けない(clip-path で欠けるため)。面の明度差で輪郭を出す
+- 装飾は次の4種に限る: ハザードストライプ(`.hazard`)、ドットグリッド(`.grid-dots`)、
+  アウトラインの巨大数字、見出し先頭の柿色スクエア
 
 ## Motion
 
-- View Transitions(ClientRouter)は既存のまま継続
-- ホバーは色・背景・枠線の微細なトランジションのみ。scale等の演出も
-  控えめ(1.02〜1.03 程度)に留める
-- transform / opacity のみアニメーション対象。`prefers-reduced-motion` 対応は既存のまま
-
-## Microinteractions
-
-- ホバーは色・下線・淡い背景変化・枠線変化のみ。反転(black↔white)や
-  トースト等の強い演出は使わない
+- **HTML-in-Canvas**(`FxCanvas.astro` + `src/lib/fx.ts`): Hero と一覧/About の
+  ページ見出しは、実DOMを WebGL のテクスチャとして描く。
+  読み込み時に横スライスが揃う起動演出を1回、ポインター周辺だけ内容が
+  粒子に分解される。DOM はそのまま操作・選択・読み上げできる
+- 非対応ブラウザ(Chrome 157 未満など)と `prefers-reduced-motion` では通常の HTML を表示する
+- View Transitions(ClientRouter)は斜めのワイプ
+- ホバーは色・背景の変化と柿色バーの伸長のみ。scale は 1.02 まで
+- 常時ループするアニメーションは置かない(rAF は演出中のみ回す)
 
 ## CTA voice
 
-- 1画面につき主要アクションは1つまで: 塗り(accent)・`rounded-full`・
-  控えめなサイズ(`px-5 min-h-11`)・通常大文字小文字(uppercase禁止)
-- それ以外のアクション(secondary/GitHubリンク等)はボタン化しない — 下線なし
-  プレーンテキストリンク+矢印(`→`)、ホバーは文字色の変化のみ
-- フィルター/タブは背景・枠線を持たず、下線(border-b)で選択状態を示す
-  テキストタブにする(`.filter-btn`)。カード上のオーバーレイCTA(画像に重ねる
-  ボタン)のみ、視認性のため軽い塗り+shadowのピルを許容する(`.btn-brutal`)
+- 1画面につき主要アクションは1つまで: `.btn-cut`(塗り accent、ホバーで柿色)
+- それ以外のアクションはボタン化しない — プレーンテキストリンク+矢印(`→`)
+- フィルター/タブは下線(border-b)で選択状態を示すテキストタブ(`.filter-btn`)。
+  カード上のオーバーレイCTAのみ軽い塗りを許容する(`.btn-brutal`)
 
 ## Nav / Footer
 
-- Nav: 罫線なしの半透明フローティング面、控えめなワードマーク、通常表記の
-  ナビゲーションリンク(uppercase・強いトラッキングは使わない)。現在地の下線は
-  `highlight` 色で示す
-- Footer: 本文は可読性重視の sans/日本語フォントを使用し、コロフォン的な
-  コピーライト行のみ UDEV Gothic Mono を残す
+- Nav: 半透明の面 + 下端ヘアライン。リンクは英(Oxanium 大文字)と日(小)の2段併記。
+  現在地は `highlight` 色のバーで示す
+- Footer: dark 面、上端にハザードストライプ。コピーライト行のみ UDEV Gothic Mono
 
 ## 共通コンポーネント方針
 
@@ -129,9 +112,9 @@ accent-hue = persimmon(hue 40)。階層は黒・白・グレーの明度差と�
 
 ## What pages MUST share
 
-- ワードマーク、モノクロームの配色と柿色の限定使用、Inter + Zen Kaku Gothic New
-  のペアリング、CTA ボイス、小さめ角丸、罫線に頼らない余白設計
+- ワードマーク、モノクロームの配色と柿色の信号色、Oxanium + Zen Kaku Gothic New の
+  英日併記、面取り、ヘアライン
 
 ## What pages MAY differ on
 
-- ページ種別ファミリー内でのアーキタイプ(例: ホームの bento タイル配分)
+- ページ種別ファミリー内でのアーキタイプ(例: ホームの Featured の左右)

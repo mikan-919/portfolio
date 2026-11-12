@@ -12,9 +12,9 @@ const formattedDate = formatShortDateJP(entry.data.date)
 const image = entry.data.image ?? coverUrl(kind === 'work' ? 'works' : 'articles', entry.id)
 ---
 
-<div class="bg-lp-accent-subtle rounded-lg overflow-hidden">
+<div class="chamfer bg-lp-accent-subtle overflow-hidden" style="--cut: 28px">
   <div class="px-6 pt-5 flex justify-between items-center">
-    <span class="text-xs text-lp-accent-strong">
+    <span class="label-tech text-lp-accent-strong">
       {kind === 'work' ? 'Featured project' : 'Featured article'}
     </span>
     <span class="font-mono text-xs text-lp-muted">{formattedDate}</span>
@@ -53,7 +53,7 @@ const image = entry.data.image ?? coverUrl(kind === 'work' ? 'works' : 'articles
             <a
               aria-disabled={entry.data.isComingSoon || !entry.data.link}
               href={entry.data.isComingSoon ? undefined : entry.data.link}
-              class={`${entry.data.link ? '' : 'opacity-40 pointer-events-none'} inline-flex items-center min-h-11 rounded-full bg-lp-accent text-lp-accent-on text-sm px-5 hover:bg-lp-accent-strong transition-colors`}
+              class={`${entry.data.link ? '' : 'opacity-40 pointer-events-none'} btn-cut`}
             >
               Visit
             </a>
@@ -67,10 +67,10 @@ const image = entry.data.image ?? coverUrl(kind === 'work' ? 'works' : 'articles
           </div>
         ) : (
           <div class="mt-6">
-            <p class="text-xs text-lp-subtle mb-2">Tags</p>
+            <p class="label-tech mb-2">Tags</p>
             <ul class="flex flex-wrap gap-2">
               {entry.data.tags.map((tag) => (
-                <li class="rounded-full bg-lp-surface px-3 py-0.5 text-xs text-lp-text font-mono">#{tag}</li>
+                <li class="chip bg-lp-surface">#{tag}</li>
               ))}
             </ul>
           </div>

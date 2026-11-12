@@ -1,4 +1,6 @@
 ---
+import FxCanvas from '@/components/ui/FxCanvas.astro'
+
 type Props = {
   eyebrow: string
   title: string
@@ -10,24 +12,31 @@ type Props = {
 const { eyebrow, title, total, totalLabel, rate, rateLabel }: Props = Astro.props
 ---
 
+<FxCanvas>
 <div class="section-header">
+  <div class="flex items-center gap-4 mb-8">
+    <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
+    <span class="label-tech">{eyebrow}</span>
+    <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
+    <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
+  </div>
   <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4">
     <div>
-      <p class="text-xs text-lp-subtle mb-2">{eyebrow}</p>
-      <h1 class="font-display text-5xl sm:text-6xl lg:text-8xl leading-none tracking-tight text-lp-text" style="overflow-wrap: anywhere;">
+      <h1 class="font-display text-5xl sm:text-6xl lg:text-8xl uppercase leading-none tracking-[0.02em] text-lp-text" style="overflow-wrap: anywhere;">
         {title}
       </h1>
     </div>
 
-    <div class="hidden lg:flex gap-16 text-right">
-      <div>
-        <p class="font-display text-[40px] leading-none text-lp-text">{total}</p>
-        <p class="text-xs text-lp-subtle mt-1">{totalLabel}</p>
+    <div class="hidden lg:flex gap-10">
+      <div class="border-l border-lp-border pl-4">
+        <p class="label-tech">{totalLabel}</p>
+        <p class="font-display text-[40px] leading-none text-lp-text mt-2">{String(total).padStart(2, '0')}</p>
       </div>
-      <div>
-        <p class="font-display text-[40px] leading-none text-lp-text">{rate.toFixed(1)}</p>
-        <p class="text-xs text-lp-subtle mt-1">{rateLabel}</p>
+      <div class="border-l border-lp-border pl-4">
+        <p class="label-tech">{rateLabel}</p>
+        <p class="font-display text-[40px] leading-none text-lp-text mt-2">{rate.toFixed(1)}</p>
       </div>
     </div>
   </div>
 </div>
+</FxCanvas>

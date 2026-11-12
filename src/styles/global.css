@@ -35,7 +35,6 @@
   :where(a, button, [tabindex]):focus-visible {
     outline: 2px solid var(--color-lp-highlight);
     outline-offset: 3px;
-    border-radius: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -53,10 +52,7 @@
     }
   }
 }
-/* Hallmark · macrostructure: Bento Grid (home/about) · Portfolio Grid (archives) · Long Document (detail)
- * genre: editorial(Swiss Minimal) · theme: monochrome + persimmon accent · nav: floating slim · footer: dense typographic
- * accent hue: persimmon (links/active/focus/wordmark only) · paper-band: cool light / cool dark · display-style: grotesque-medium
- */
+/* genre: tactical UI(Arknights 参照) · theme: monochrome + persimmon signal · 詳細は design.md */
 :root {
   color-scheme: light dark;
   --color-lp-bg: oklch(97% 0 0);
@@ -110,8 +106,10 @@
     var(--font-family-zen-kaku), "Hiragino Kaku Gothic ProN", "Yu Gothic",
     "Noto Sans JP", system-ui, sans-serif;
   --font-udev-gothic: var(--font-family-udev-gothic), monospace;
+  --font-tech:
+    var(--font-family-oxanium), var(--font-family-zen-kaku), sans-serif;
   --font-display:
-    var(--font-family-inter), var(--font-family-zen-kaku),
+    var(--font-family-oxanium), var(--font-family-zen-kaku),
     "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui,
     sans-serif;
 
@@ -149,10 +147,10 @@
 }
 @layer components {
   .skip-link {
-    @apply fixed top-3 left-3 z-[100] -translate-y-20 rounded-md bg-lp-dark px-4 py-2 text-sm text-lp-dark-text transition-transform focus:translate-y-0;
+    @apply fixed top-3 left-3 z-[100] -translate-y-20 bg-lp-dark px-4 py-2 text-sm text-lp-dark-text transition-transform focus:translate-y-0;
   }
   .btn-brutal {
-    @apply inline-flex items-center gap-2 bg-lp-surface text-lp-text px-4 py-2 rounded-full text-sm shadow-sm select-none transition-shadow hover:shadow-md;
+    @apply inline-flex items-center gap-2 bg-lp-surface text-lp-text px-4 py-2 text-sm shadow-sm select-none transition-shadow hover:shadow-md;
   }
   .image-hover-effect {
     @apply transition-all transform-gpu duration-600 scale-100 group-hover:scale-102;
@@ -176,11 +174,98 @@
     @apply px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-8;
   }
   .filter-btn {
-    @apply min-h-11 text-lp-muted px-0 py-1 text-sm border-b border-transparent cursor-pointer select-none transition-colors hover:text-lp-text;
+    @apply min-h-11 text-lp-muted px-0 py-1 text-sm font-tech tracking-wider border-b border-transparent cursor-pointer select-none transition-colors hover:text-lp-text;
   }
   .filter-btn.is-active {
     @apply text-lp-text border-lp-highlight;
   }
+
+  /* --- tactical UI --- */
+  .label-tech {
+    @apply font-tech text-[11px] font-medium uppercase tracking-[0.14em] text-lp-subtle;
+  }
+  .chamfer,
+  .card-cut {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--cut, 16px)),
+      calc(100% - var(--cut, 16px)) 100%,
+      0 100%
+    );
+  }
+  .btn-cut {
+    @apply inline-flex items-center gap-3 min-h-11 px-6 bg-lp-accent text-lp-accent-on text-sm transition-colors hover:bg-lp-highlight;
+    clip-path: polygon(
+      10px 0,
+      100% 0,
+      100% calc(100% - 10px),
+      calc(100% - 10px) 100%,
+      0 100%,
+      0 10px
+    );
+  }
+  /* 面取りカード。ホバーで下端に柿色のバーが伸びる。 */
+  .card-cut {
+    @apply relative bg-lp-surface transition-colors hover:bg-lp-surface-sunken;
+  }
+  .card-cut::after {
+    content: "";
+    @apply absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-lp-highlight transition-transform duration-300;
+  }
+  .card-cut:hover::after,
+  .card-cut:focus-visible::after {
+    @apply scale-x-100;
+  }
+  .chip {
+    @apply inline-block bg-lp-surface-sunken px-2 py-0.5 font-tech text-[11px] tracking-wide text-lp-text;
+  }
+  .hazard {
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--color-lp-highlight) 0 6px,
+      transparent 6px 12px
+    );
+  }
+  .grid-dots {
+    background-image: radial-gradient(
+      var(--color-lp-border) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+}
+
+/* View Transitions: 斜めのワイプ(Layout.astro の transition:animate から参照) */
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+@keyframes ak-hold {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ak-wipe {
+  from {
+    clip-path: polygon(0 0, 0 0, -20% 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 120% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* HTML-in-Canvas(src/lib/fx.ts)。対応環境では canvas へ移すまで中身を隠し、
+   素のHTMLが一瞬見えてから消えるちらつきを防ぐ。 */
+[data-fx] > canvas {
+  display: block;
+  width: 100%;
+}
+[data-fx] > canvas > .fx-content {
+  width: 100%;
+}
+.fx-on [data-fx]:not([data-fx-ready]) > .fx-content {
+  visibility: hidden;
 }
 
 /* prose-code:* はインラインコード用の装飾だが .prose code 全体(fenced code block 内の

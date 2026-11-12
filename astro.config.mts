@@ -22,6 +22,15 @@ const config = defineConfig({
     },
     {
       provider: fontProviders.google(),
+      name: 'Oxanium',
+      cssVariable: '--font-family-oxanium',
+      weights: [500, 700],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: [],
+    },
+    {
+      provider: fontProviders.google(),
       name: 'Zen Kaku Gothic New',
       cssVariable: '--font-family-zen-kaku',
       weights: [400, 700],

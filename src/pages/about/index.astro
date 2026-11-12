@@ -3,6 +3,8 @@ import Github from "@/components/sections/about/Github.astro"
 import InfoGrid from "@/components/sections/about/InfoGrid.astro"
 import Values from "@/components/sections/about/Values.astro"
 import Timeline from "@/components/Timeline.astro"
+import FxCanvas from "@/components/ui/FxCanvas.astro"
+import SectionTitle from "@/components/ui/SectionTitle.astro"
 import myInfo from '@/content/data/my-info.json'
 import Layout from "@/layouts/Layout.astro"
 
@@ -27,14 +29,19 @@ const cell = 'p-6 md:p-8'
     }}
 >
     <!-- Page header -->
-    <div class="w-full bg-lp-bg">
-        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-16">
-            <p class="text-xs text-lp-subtle mb-3">Profile</p>
-            <h1 class="font-display text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight text-lp-text" style="overflow-wrap: anywhere;">
+    <FxCanvas>
+        <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-12">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="size-2 shrink-0 bg-lp-highlight" aria-hidden="true"></span>
+                <span class="label-tech">Profile</span>
+                <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
+                <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
+            </div>
+            <h1 class="font-display text-5xl sm:text-6xl md:text-8xl uppercase leading-none tracking-[0.02em] text-lp-text" style="overflow-wrap: anywhere;">
                 About
             </h1>
         </div>
-    </div>
+    </FxCanvas>
 
     <!-- bento grid -->
     <section class="w-full bg-lp-bg">
@@ -67,10 +74,7 @@ const cell = 'p-6 md:p-8'
     <!-- timeline -->
     <div class="w-full bg-lp-dark">
         <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-16">
-            <p class="text-xs text-lp-dark-muted mb-3">History</p>
-            <h3 class="font-display text-3xl md:text-4xl leading-none tracking-tight text-lp-dark-text mb-12">
-                Timeline
-            </h3>
+            <SectionTitle en="Timeline" ja="経歴" dark />
             <Timeline variant="vertical" dark />
         </div>
     </div>

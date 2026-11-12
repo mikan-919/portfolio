@@ -1,6 +1,7 @@
 ---
 import Timeline from '@/components/Timeline.astro'
 import CoverImage from '@/components/ui/CoverImage.astro'
+import SectionTitle from '@/components/ui/SectionTitle.astro'
 import { pickFeatured } from '@/lib/collectionUtils'
 import { coverUrl } from '@/lib/cover'
 import { formatShortDateJP } from '@/lib/dateUtils'
@@ -22,28 +23,26 @@ const featuredWork =
 const restWorks = works.filter((work) => work.id !== featuredWork?.id).slice(0, 3)
 const restArticles = articles.filter((article) => article.id !== featuredArticle?.id).slice(0, 3)
 
-const card = 'bg-lp-surface rounded-lg p-6 md:p-9'
-const flat = 'py-7 md:py-9'
+const featured = 'card-cut group flex flex-col gap-4 p-5 md:p-7 lg:col-span-7'
+const rows = 'lg:col-span-5 flex flex-col border-t border-lp-border-subtle'
+// 行リスト。ホバーで左端に柿色のバーが立つ。
+const row =
+  'group relative flex flex-col gap-1.5 border-b border-lp-border-subtle py-5 pl-0 transition-[padding] duration-300 hover:pl-4 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:origin-top before:scale-y-0 before:bg-lp-highlight before:transition-transform before:duration-300 hover:before:scale-y-100'
 ---
 
 <section class="w-full bg-lp-bg">
-  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 sm:[grid-auto-flow:dense]">
+  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 flex flex-col gap-20 md:gap-28">
     <!-- skills -->
-    <div class={`${flat} sm:col-span-2 lg:col-span-12`}>
-      <div class="flex items-end justify-between gap-6 mb-6">
-        <h2 class="font-display text-2xl leading-none tracking-tight text-lp-text">Skills</h2>
-        <a href="/about" class="inline-flex items-center gap-1.5 text-sm text-lp-highlight hover:underline w-fit">
-          プロフィールを見る →
-        </a>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-8">
+    <div>
+      <SectionTitle en="Skills" ja="技術" href="/about" linkLabel="プロフィールを見る" />
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
         {
           Object.entries(skills).map(([category, tags]) => (
-            <div>
-              <p class="text-xs text-lp-subtle mb-2">{category}</p>
+            <div class="border-l border-lp-border pl-4">
+              <p class="label-tech mb-3">{category}</p>
               <div class="flex flex-wrap gap-1.5">
                 {tags.map((tag) => (
-                  <span class="rounded-full bg-lp-surface-sunken px-2.5 py-0.5 text-xs text-lp-text font-sans">{tag}</span>
+                  <span class="chip">{tag}</span>
                 ))}
               </div>
             </div>
@@ -52,82 +51,89 @@ const flat = 'py-7 md:py-9'
       </div>
     </div>
 
-    <!-- featured work -->
-    {
-      featuredWork && (
-        <a
-          href={featuredWork.data.isComingSoon ? undefined : `/works/${featuredWork.id}`}
-          class={`${card} sm:col-span-2 lg:col-span-6 flex flex-col gap-4 hover:bg-lp-surface-sunken transition-colors`}
-        >
-          <div class="min-h-[160px] relative rounded-lg overflow-hidden bg-lp-bg">
-            <CoverImage src={featuredWork.data.image ?? coverUrl('works', featuredWork.id)} alt={featuredWork.data.title} />
-          </div>
-          <p class="text-xs text-lp-subtle">Featured project</p>
-          <h3 class="font-display text-2xl md:text-3xl leading-tight text-lp-text">{featuredWork.data.title}</h3>
-          <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">{featuredWork.data.description}</p>
-          <div class="flex justify-between items-center mt-auto">
-            <span class="text-xs text-lp-muted">{featuredWork.data.date.getFullYear()}</span>
-            <span class="text-sm text-lp-highlight">見る →</span>
-          </div>
-        </a>
-      )
-    }
+    <!-- works -->
+    <div>
+      <SectionTitle en="Works" ja="制作実績" href="/works" linkLabel="すべて見る" />
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+        {
+          featuredWork && (
+            <a href={featuredWork.data.isComingSoon ? undefined : `/works/${featuredWork.id}`} class={featured} style="--cut: 28px">
+              <div class="aspect-video relative overflow-hidden bg-lp-bg">
+                <CoverImage
+                  src={featuredWork.data.image ?? coverUrl('works', featuredWork.id)}
+                  alt={featuredWork.data.title}
+                  class="image-hover-effect w-full h-full object-cover"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="label-tech">Featured project</span>
+                <span class="font-mono text-xs text-lp-muted">{featuredWork.data.date.getFullYear()}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl leading-tight text-lp-text">{featuredWork.data.title}</h3>
+              <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">{featuredWork.data.description}</p>
+            </a>
+          )
+        }
+        <div class={rows}>
+          {
+            restWorks.map((work) => (
+              <a href={work.data.isComingSoon ? undefined : `/works/${work.id}`} class={row}>
+                <div class="flex items-center justify-between">
+                  <span class="label-tech">{work.data.category}</span>
+                  <span class="font-mono text-xs text-lp-muted">{work.data.date.getFullYear()}</span>
+                </div>
+                <h4 class="font-display text-xl leading-tight text-lp-text group-hover:text-lp-highlight transition-colors">
+                  {work.data.title}
+                </h4>
+                <p class="text-xs text-lp-muted leading-relaxed line-clamp-2">{work.data.description}</p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
 
-    <!-- featured article -->
-    {
-      featuredArticle && (
-        <a href={`/blog/${featuredArticle.id}`} class={`${card} sm:col-span-2 lg:col-span-6 flex flex-col gap-4 hover:bg-lp-surface-sunken transition-colors`}>
-          <div class="min-h-[160px] relative rounded-lg overflow-hidden bg-lp-bg">
-            <CoverImage src={featuredArticle.data.image ?? coverUrl('articles', featuredArticle.id)} alt={featuredArticle.data.title} />
-          </div>
-          <p class="text-xs text-lp-subtle">Featured post</p>
-          <h3 class="font-display text-xl leading-tight text-lp-text">{featuredArticle.data.title}</h3>
-          <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">{featuredArticle.data.description}</p>
-          <span class="text-xs text-lp-muted mt-auto">{formatShortDateJP(featuredArticle.data.date)}</span>
-        </a>
-      )
-    }
-
-    <!-- rest works -->
-    {
-      restWorks.map((work) => (
-        <a
-          href={work.data.isComingSoon ? undefined : `/works/${work.id}`}
-          class={`${flat} lg:col-span-3 flex h-full flex-col gap-2 hover:text-lp-highlight transition-colors`}
-        >
-          <p class="text-xs text-lp-subtle">Project</p>
-          <h4 class="font-display text-lg leading-tight text-lp-text">{work.data.title}</h4>
-          <p class="text-xs text-lp-muted leading-relaxed line-clamp-2">{work.data.description}</p>
-          <span class="text-xs text-lp-muted mt-auto">{work.data.date.getFullYear()}</span>
-        </a>
-      ))
-    }
-
-    <!-- rest articles -->
-    {
-      restArticles.map((article) => (
-        <a
-          href={`/blog/${article.id}`}
-          class={`${flat} lg:col-span-3 flex h-full flex-col gap-2 hover:text-lp-highlight transition-colors`}
-        >
-          <p class="text-xs text-lp-subtle">Post</p>
-          <h4 class="font-display text-lg leading-tight text-lp-text">{article.data.title}</h4>
-          <span class="text-xs text-lp-muted mt-auto">{formatShortDateJP(article.data.date)}</span>
-        </a>
-      ))
-    }
-
-    <!-- links -->
-    <a href="/works" class={`${flat} lg:col-span-3 flex items-center justify-between text-sm text-lp-text hover:text-lp-highlight transition-colors`}>
-      すべての制作実績 <span>→</span>
-    </a>
-    <a href="/blog" class={`${flat} lg:col-span-3 flex items-center justify-between text-sm text-lp-text hover:text-lp-highlight transition-colors`}>
-      すべての記事 <span>→</span>
-    </a>
+    <!-- blog -->
+    <div>
+      <SectionTitle en="Blog" ja="記事" href="/blog" linkLabel="すべて見る" />
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+        {
+          featuredArticle && (
+            <a href={`/blog/${featuredArticle.id}`} class={`${featured} lg:order-2`} style="--cut: 28px">
+              <div class="aspect-video relative overflow-hidden bg-lp-bg">
+                <CoverImage
+                  src={featuredArticle.data.image ?? coverUrl('articles', featuredArticle.id)}
+                  alt={featuredArticle.data.title}
+                  class="image-hover-effect w-full h-full object-cover"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="label-tech">Featured post</span>
+                <span class="font-mono text-xs text-lp-muted">{formatShortDateJP(featuredArticle.data.date)}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl leading-tight text-lp-text">{featuredArticle.data.title}</h3>
+              <p class="text-sm text-lp-muted leading-relaxed line-clamp-2">{featuredArticle.data.description}</p>
+            </a>
+          )
+        }
+        <div class={rows}>
+          {
+            restArticles.map((article) => (
+              <a href={`/blog/${article.id}`} class={row}>
+                <span class="font-mono text-xs text-lp-muted">{formatShortDateJP(article.data.date)}</span>
+                <h4 class="font-display text-lg leading-snug text-lp-text group-hover:text-lp-highlight transition-colors">
+                  {article.data.title}
+                </h4>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
 
     <!-- timeline strip -->
-    <div class={`sm:col-span-2 lg:col-span-12 ${flat} lg:py-9`}>
-      <p class="text-xs text-lp-subtle mb-6">Timeline</p>
+    <div>
+      <SectionTitle en="Timeline" ja="経歴" />
       <Timeline variant="horizontal" />
     </div>
   </div>

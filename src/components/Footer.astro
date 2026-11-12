@@ -19,10 +19,11 @@ const navItems = [
 ---
 
 <footer class="w-full bg-lp-dark">
+  <div class="hazard h-2 w-full" aria-hidden="true"></div>
   <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-12 md:py-16">
     <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
       <div class="max-w-xl">
-        <p class="font-display text-4xl md:text-6xl leading-none tracking-tight text-lp-dark-text">
+        <p class="font-display text-4xl md:text-6xl leading-none tracking-[0.04em] text-lp-dark-text">
           MIKAN<span class="text-lp-highlight">-919</span>
         </p>
         <p class="mt-5 text-sm text-lp-dark-muted leading-relaxed">
@@ -30,7 +31,7 @@ const navItems = [
         </p>
       </div>
 
-      <nav class="grid grid-cols-2 gap-x-12 gap-y-1 text-sm" aria-label="フッターナビゲーション">
+      <nav class="grid grid-cols-2 gap-x-12 gap-y-1 font-tech text-sm font-medium uppercase tracking-[0.14em]" aria-label="フッターナビゲーション">
         {
           navItems.map(({ href, label, external }) => (
             <a
@@ -47,7 +48,7 @@ const navItems = [
       </nav>
     </div>
 
-    <div class="mt-12 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+    <div class="mt-12 pt-5 border-t border-lp-dark-muted/30 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
       <p class="font-mono text-[11px] text-lp-dark-muted">&copy; {new Date().getFullYear()} mikan-919.</p>
       <p class="font-mono text-[11px] text-lp-dark-muted">Last updated {formatShortDateJP(lastUpdated)}</p>
       <p class="font-mono text-[11px] text-lp-dark-muted">
