@@ -1,11 +1,13 @@
 // HTML-in-Canvas(Chrome 157+)。[data-fx] の中身を実DOMのまま WebGL テクスチャにし、
 // 奥行きの違う板(レイヤー)として3D空間に並べて描く。
-// - 起動: 各レイヤーが奥から回転しながら跳ね起き、横スライスと走査線が揃う
-// - ポインター: 板が傾き、動かしている間は周辺が粒子に分解されて弾かれる
+// - 起動: 各レイヤーが奥から回転しながら跳ね起き、横スライスが揃う。上から1本の走査線が全レイヤーを描き出す
+// - ポインター: 板が傾き、動かしている間は奥のレイヤー(z < 0)だけが周辺から粒子に分解されて弾かれる。
+//   文字のレイヤーは崩さない(読む邪魔にならないように)
 // - クリック: 波紋が広がり、板が奥へ押されて戻る
 // - 数秒おきに短いグリッチ
 // 中身の [data-fx-layer="<z>"] は別レイヤーになる(z は CSS px、正が手前)。
 // レイヤーは border box で切り取られるので、はみ出す字形には padding を取る。
+// 傾けると板の縁が見えるので、縁まで届く奥のレイヤーは中身の端をぼかしておく。
 // 非対応環境では何もしない(通常の HTML が表示される)。
 
 type DrawableCanvas = HTMLCanvasElement & {
@@ -44,8 +46,8 @@ void main() {
 const FRAGMENT = `#version 300 es
 precision highp float;
 uniform sampler2D T;
-uniform vec2 S, P, V, C; // texture / pointer / pointer の速度 / クリック位置
-uniform float B, L, D, G, K, O; // boot / lens / dpr / glitch / 波紋の進行 / 不透明度
+uniform vec2 S, P, V, C, W; // texture / pointer / pointer の速度 / クリック位置 / canvas(CSS px)
+uniform float B, L, D, G, K, O, Y; // boot / lens / dpr / glitch / 波紋の進行 / 不透明度 / 走査線の高さ(CSS px)
 uniform vec3 A; // accent
 in vec2 uv;
 out vec4 o;
@@ -91,10 +93,10 @@ void main() {
     c = mix(c, grain, smoothstep(0., .2, f));
   }
 
-  // 走査線より下はまだ描かない。
-  float scan = B * 1.2 * S.y;
-  c *= step(p.y, scan);
-  c += vec4(A, 1) * step(abs(p.y - scan), D) * step(B, .99) * (1. - c.a);
+  // 走査線より下はまだ描かない。線は画面上の高さで全レイヤー共通にし、1本に見せる。
+  float y = W.y - gl_FragCoord.y / D;
+  c *= step(y, Y);
+  c += vec4(A, 1) * step(abs(y - Y), 1.) * step(Y, W.y) * (1. - c.a);
   o = c * O;
 }`
 
@@ -172,7 +174,7 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
   gl.useProgram(program)
   gl.enable(gl.BLEND)
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
-  const u = Object.fromEntries('MQWSPVCBLDGKOA'.split('').map(name => [name, gl.getUniformLocation(program, name)]))
+  const u = Object.fromEntries('MQWSPVCBLDGKOAY'.split('').map(name => [name, gl.getUniformLocation(program, name)]))
 
   // 奥から順に並べる。ルート(z=0)も1枚のレイヤー。
   const layers: Layer[] = [content, ...content.querySelectorAll<HTMLElement>('[data-fx-layer]')]
@@ -220,10 +222,10 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
     gl.clear(gl.COLOR_BUFFER_BIT)
     gl.uniform2f(u.W, width, height)
     gl.uniform2f(u.V, velocity[0] * dpr, velocity[1] * dpr)
-    gl.uniform1f(u.L, lens)
     gl.uniform1f(u.D, dpr)
     gl.uniform1f(u.G, glitch)
     gl.uniform1f(u.K, ripple)
+    gl.uniform1f(u.Y, boot * 1.2 * height)
     for (const [index, layer] of layers.entries()) {
       if (!layer.width) continue
       const t = clamp(boot * span - index * STAGGER)
@@ -248,6 +250,7 @@ const mount = (host: HTMLElement): (() => void) | undefined => {
       gl.uniform2f(u.C, cx * dpr, cy * dpr)
       gl.uniform1f(u.B, t)
       gl.uniform1f(u.O, clamp(t * 4))
+      gl.uniform1f(u.L, layer.z < 0 ? lens : 0)
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       // 描いた位置へヒットテストと読み上げ位置を合わせる(後に更新した要素が手前になる)。
       canvas.updateElementGeometry(layer.el, { canvasTransform: matrix })

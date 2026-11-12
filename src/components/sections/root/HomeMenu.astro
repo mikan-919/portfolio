@@ -14,7 +14,8 @@ const featuredWork = pickFeatured(works)
 const latestArticle = articles[0]
 const pad = (value: number) => String(value).padStart(2, '0')
 
-// ホーム右側のメニュー。PC では奥へ傾けた面にタイルを並べる。ホバーで左へ寄り、下端に柿色のバーが伸びる。
+// ホーム右側のメニュー。PC では奥へ傾けた面にタイルを並べ、ポインターの方向へばねで傾ける(視差は下の <style>)。
+// ホバーで左へ寄り、下端に柿色のバーが伸びる。
 const tile =
   'menu-tile chamfer group relative flex min-h-0 flex-col justify-between gap-2 overflow-hidden p-4 sm:p-5 transition-[translate] duration-300 hover:-translate-x-2 focus-visible:-translate-x-2 after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-lp-highlight after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:after:scale-x-100'
 const word = 'font-display uppercase leading-none tracking-[0.04em]'
@@ -25,75 +26,148 @@ const count = 'font-display text-[min(8vw,2.25rem)] leading-none tabular-nums lg
 const info = 'min-w-0 max-lg:hidden'
 ---
 
-<nav
-  aria-label="メニュー"
-  class="grid min-h-56 grid-cols-2 auto-rows-fr gap-2 px-5 pb-5 sm:gap-3 sm:px-8 md:px-16 lg:origin-right lg:[transform:perspective(1600px)_rotateY(-9deg)] lg:grid-rows-[3fr_2fr_1.3fr] lg:py-10 lg:pl-0 lg:pr-12 xl:pr-[7.5rem]"
->
-  <a href="/works" class={`${tile} lg:col-span-2 bg-lp-dark text-lp-dark-text`} style="--i: 0; --cut: 24px">
-    {
-      featuredWork && (
-        <CoverImage
-          src={featuredWork.data.image ?? coverUrl('works', featuredWork.id)}
-          alt=""
-          class="absolute inset-0 size-full object-cover opacity-30 transition duration-500 group-hover:scale-105 group-hover:opacity-45"
-        />
-      )
-    }
-    <span class="absolute inset-0 bg-linear-to-t from-lp-dark via-lp-dark/70 to-lp-dark/10" aria-hidden="true"></span>
-    <div class="relative flex items-start justify-end gap-4 lg:justify-between">
+<div data-parallax class="flex min-h-0 flex-col px-5 pb-5 sm:px-8 md:px-16 lg:py-10 lg:pl-0 lg:pr-12 xl:pr-[7.5rem]">
+  <nav aria-label="メニュー" class="menu-panel grid min-h-56 flex-1 grid-cols-2 auto-rows-fr gap-2 sm:gap-3 lg:grid-rows-[3fr_2fr_1.3fr]">
+    <a href="/works" class={`${tile} lg:col-span-2 bg-lp-dark text-lp-dark-text`} style="--i: 0; --cut: 24px; --z: 64px">
       {
         featuredWork && (
-          <p class={info}>
-            <span class="label-tech block text-lp-dark-muted">Featured</span>
-            <span class="mt-1 block truncate font-display text-sm sm:text-base">{featuredWork.data.title}</span>
-          </p>
+          <div class="back absolute -inset-4">
+            <CoverImage
+              src={featuredWork.data.image ?? coverUrl('works', featuredWork.id)}
+              alt=""
+              class="size-full object-cover opacity-30 transition duration-500 group-hover:scale-105 group-hover:opacity-45"
+            />
+          </div>
         )
       }
-      <span class={count}>{pad(works.length)}</span>
-    </div>
-    <p class="relative">
-      <span class={`${word} ${big} block`}>Works</span>
-      <span class="mt-1 block text-xs text-lp-dark-muted">制作実績</span>
-    </p>
-  </a>
+      <span class="absolute inset-0 bg-linear-to-t from-lp-dark via-lp-dark/70 to-lp-dark/10" aria-hidden="true"></span>
+      <div class="front relative flex items-start justify-end gap-4 lg:justify-between">
+        {
+          featuredWork && (
+            <p class={info}>
+              <span class="label-tech block text-lp-dark-muted">Featured</span>
+              <span class="mt-1 block truncate font-display text-sm sm:text-base">{featuredWork.data.title}</span>
+            </p>
+          )
+        }
+        <span class={count}>{pad(works.length)}</span>
+      </div>
+      <p class="front relative">
+        <span class={`${word} ${big} block`}>Works</span>
+        <span class="mt-1 block text-xs text-lp-dark-muted">制作実績</span>
+      </p>
+    </a>
 
-  <a href="/blog" class={`${tile} lg:col-span-2 bg-lp-surface text-lp-text`} style="--i: 1">
-    <div class="flex items-start justify-end gap-4 lg:justify-between">
-      {
-        latestArticle && (
-          <p class={info}>
-            <span class="label-tech block">Latest · {formatShortDateJP(latestArticle.data.date)}</span>
-            <span class="mt-1 block truncate font-display text-sm sm:text-base">{latestArticle.data.title}</span>
-          </p>
-        )
+    <a href="/blog" class={`${tile} lg:col-span-2 bg-lp-surface text-lp-text`} style="--i: 1; --z: 36px">
+      <div class="front flex items-start justify-end gap-4 lg:justify-between">
+        {
+          latestArticle && (
+            <p class={info}>
+              <span class="label-tech block">Latest · {formatShortDateJP(latestArticle.data.date)}</span>
+              <span class="mt-1 block truncate font-display text-sm sm:text-base">{latestArticle.data.title}</span>
+            </p>
+          )
+        }
+        <span class={count}>{pad(articles.length)}</span>
+      </div>
+      <p class="front">
+        <span class={`${word} ${big} block`}>Blog</span>
+        <span class="mt-1 block text-xs text-lp-subtle">記事</span>
+      </p>
+    </a>
+
+    <a href="/about" class={`${tile} bg-lp-surface-sunken text-lp-text`} style="--i: 2; --z: 12px">
+      <span class="front label-tech max-lg:hidden">Profile</span>
+      <p class="front mt-auto">
+        <span class={`${word} ${small} block`}>About</span>
+        <span class="mt-1 block text-xs text-lp-subtle">人物</span>
+      </p>
+    </a>
+
+    <a
+      href="https://github.com/mikan-919"
+      target="_blank"
+      rel="noopener noreferrer"
+      class={`${tile} bg-lp-accent text-lp-accent-on`}
+      style="--i: 3; --z: 24px"
+    >
+      <span class="front label-tech text-current/70 max-lg:hidden">External ↗</span>
+      <p class="front mt-auto">
+        <span class={`${word} ${small} block`}>GitHub</span>
+        <span class="mt-1 block text-xs text-current/70">コード</span>
+      </p>
+    </a>
+  </nav>
+</div>
+
+<style>
+  @media (min-width: 64rem) {
+    /* 面はポインターから --px / --py(-1〜1)を受けて傾く。ホーム左側の fx と同じく、指した側が奥へ下がる */
+    .menu-panel {
+      transform-origin: right;
+      transform-style: preserve-3d;
+      transform: perspective(1600px) rotateY(calc(-9deg + var(--px, 0) * 8deg)) rotateX(calc(var(--py, 0) * -5deg));
+    }
+    /* タイルを奥行きの違う位置に置き、面が傾くとタイル同士がずれて見えるようにする */
+    .menu-panel > a {
+      transform: translateZ(var(--z, 0px));
+    }
+    /* タイルの中でも、画像は奥へ、文字は手前へずらす */
+    .back {
+      translate: calc(var(--px, 0) * -14px) calc(var(--py, 0) * -10px);
+    }
+    .front {
+      translate: calc(var(--px, 0) * 6px) calc(var(--py, 0) * 4px);
+    }
+  }
+</style>
+
+<script>
+  // ポインターの位置を --px / --py としてばねで追わせる(ばねの強さはホーム左側の fx と同じ)。
+  // 動かすのをやめて 1.4 秒たつか、外へ出ると正面へ戻る。
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)')
+
+  document.addEventListener('astro:page-load', () => {
+    const root = document.querySelector<HTMLElement>('[data-parallax]')
+    if (!root || reduce.matches) return
+    const target = [0, 0]
+    const position = [0, 0]
+    const velocity = [0, 0]
+    let frame = 0
+    let last = 0
+    let idle = 0
+
+    const tick = (now: number) => {
+      const dt = Math.min((now - last) / 1000, 0.05)
+      last = now
+      let moving = false
+      for (const axis of [0, 1]) {
+        velocity[axis] += (90 * (target[axis] - position[axis]) - 9 * velocity[axis]) * dt
+        position[axis] += velocity[axis] * dt
+        moving ||= Math.abs(target[axis] - position[axis]) > 0.001 || Math.abs(velocity[axis]) > 0.001
       }
-      <span class={count}>{pad(articles.length)}</span>
-    </div>
-    <p>
-      <span class={`${word} ${big} block`}>Blog</span>
-      <span class="mt-1 block text-xs text-lp-subtle">記事</span>
-    </p>
-  </a>
+      root.style.setProperty('--px', position[0].toFixed(4))
+      root.style.setProperty('--py', position[1].toFixed(4))
+      frame = moving ? requestAnimationFrame(tick) : 0
+    }
+    const aim = (x: number, y: number) => {
+      target[0] = x
+      target[1] = y
+      if (frame) return
+      last = performance.now()
+      frame = requestAnimationFrame(tick)
+    }
 
-  <a href="/about" class={`${tile} bg-lp-surface-sunken text-lp-text`} style="--i: 2">
-    <span class="label-tech max-lg:hidden">Profile</span>
-    <p class="mt-auto">
-      <span class={`${word} ${small} block`}>About</span>
-      <span class="mt-1 block text-xs text-lp-subtle">人物</span>
-    </p>
-  </a>
-
-  <a
-    href="https://github.com/mikan-919"
-    target="_blank"
-    rel="noopener noreferrer"
-    class={`${tile} bg-lp-accent text-lp-accent-on`}
-    style="--i: 3"
-  >
-    <span class="label-tech text-current/70 max-lg:hidden">External ↗</span>
-    <p class="mt-auto">
-      <span class={`${word} ${small} block`}>GitHub</span>
-      <span class="mt-1 block text-xs text-current/70">コード</span>
-    </p>
-  </a>
-</nav>
+    root.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse') return
+      const rect = root.getBoundingClientRect()
+      aim(((event.clientX - rect.left) / rect.width) * 2 - 1, ((event.clientY - rect.top) / rect.height) * 2 - 1)
+      clearTimeout(idle)
+      idle = window.setTimeout(() => aim(0, 0), 1400)
+    })
+    root.addEventListener('pointerleave', () => {
+      clearTimeout(idle)
+      aim(0, 0)
+    })
+  })
+</script>
