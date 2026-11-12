@@ -236,22 +236,97 @@
   }
 }
 
-/* View Transitions: 斜めのワイプ(Layout.astro の transition:animate から参照) */
+/* View Transitions(Layout.astro の transition:animate から参照)。
+   旧ページは暗くなりながら奥へ回り、新ページは右から回り込みつつ斜めのワイプで現れる。 */
+::view-transition {
+  background: var(--color-lp-dark);
+}
 ::view-transition-new(root) {
   mix-blend-mode: normal;
 }
-@keyframes ak-hold {
-  from,
+@keyframes ak-out {
   to {
-    opacity: 1;
+    transform: perspective(1400px) translateX(-10%) rotateY(24deg) scale(0.86);
+    filter: brightness(0.35);
   }
 }
 @keyframes ak-wipe {
   from {
-    clip-path: polygon(0 0, 0 0, -20% 100%, 0 100%);
+    clip-path: polygon(120% 0, 100% 0, 100% 100%, 100% 100%);
+    transform: perspective(1400px) translateX(16%) rotateY(-24deg) scale(1.08);
   }
   to {
-    clip-path: polygon(0 0, 120% 0, 100% 100%, 0 100%);
+    clip-path: polygon(-20% 0, 100% 0, 100% 100%, 0 100%);
+    transform: none;
+  }
+}
+
+/* スクロール連動の出入り(CSS scroll-driven animations)。
+   画面に入るときに奥から起き上がり、上へ抜けるときに奥へ倒れる。非対応環境では静止表示。 */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* ショートハンドにすると Lightning CSS が animation-timeline を併合して無効な宣言になるため個別指定 */
+    .reveal,
+    .reveal-l,
+    .reveal-r {
+      animation-name: ak-flip;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+    }
+    .reveal-l {
+      animation-name: ak-swing-l;
+    }
+    .reveal-r {
+      animation-name: ak-swing-r;
+    }
+  }
+}
+@keyframes ak-flip {
+  entry 0% {
+    opacity: 0;
+    transform: perspective(1000px) translateY(110px) rotateX(-55deg) scale(0.9);
+  }
+  entry 100%,
+  exit 0% {
+    opacity: 1;
+    transform: none;
+  }
+  exit 100% {
+    opacity: 0.15;
+    transform: perspective(1000px) translateY(-70px) rotateX(40deg) scale(0.94);
+  }
+}
+@keyframes ak-swing-l {
+  entry 0% {
+    opacity: 0;
+    transform: perspective(1000px) translateX(-140px) rotateY(50deg)
+      rotateZ(-4deg);
+  }
+  entry 100%,
+  exit 0% {
+    opacity: 1;
+    transform: none;
+  }
+  exit 100% {
+    opacity: 0.15;
+    transform: perspective(1000px) translateX(-80px) rotateY(30deg);
+  }
+}
+@keyframes ak-swing-r {
+  entry 0% {
+    opacity: 0;
+    transform: perspective(1000px) translateX(140px) rotateY(-50deg)
+      rotateZ(4deg);
+  }
+  entry 100%,
+  exit 0% {
+    opacity: 1;
+    transform: none;
+  }
+  exit 100% {
+    opacity: 0.15;
+    transform: perspective(1000px) translateX(80px) rotateY(-30deg);
   }
 }
 
@@ -262,6 +337,7 @@
   width: 100%;
 }
 [data-fx] > canvas > .fx-content {
+  position: relative; /* レイヤー位置(offsetParent)の基準 */
   width: 100%;
 }
 .fx-on [data-fx]:not([data-fx-ready]) > .fx-content {

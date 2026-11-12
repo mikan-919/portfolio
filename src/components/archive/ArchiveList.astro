@@ -13,7 +13,7 @@ const { items, emptyLabel }: Props = Astro.props
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {
       items.map((item) => (
-        <div class="archive-item h-full" data-filter-keys={JSON.stringify(item.filterKeys)}>
+        <div class="archive-item reveal h-full" data-filter-keys={JSON.stringify(item.filterKeys)}>
           <ArchiveCard data={item} />
         </div>
       ))

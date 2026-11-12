@@ -12,7 +12,7 @@ const formattedDate = formatShortDateJP(entry.data.date)
 const image = entry.data.image ?? coverUrl(kind === 'work' ? 'works' : 'articles', entry.id)
 ---
 
-<div class="chamfer bg-lp-accent-subtle overflow-hidden" style="--cut: 28px">
+<div class="reveal chamfer bg-lp-accent-subtle overflow-hidden" style="--cut: 28px">
   <div class="px-6 pt-5 flex justify-between items-center">
     <span class="label-tech text-lp-accent-strong">
       {kind === 'work' ? 'Featured project' : 'Featured article'}

@@ -17,14 +17,13 @@ const specs = [
 
 <FxCanvas>
   <div class="relative w-full overflow-hidden">
-    <!-- backdrop -->
-    <div class="grid-dots absolute inset-y-0 right-0 w-2/3 [mask-image:linear-gradient(to_right,transparent,black)] opacity-60" aria-hidden="true"></div>
-    <span
-      class="absolute -right-4 -bottom-14 sm:-bottom-20 lg:-bottom-28 font-display text-[15rem] sm:text-[22rem] lg:text-[30rem] leading-none tracking-tighter text-lp-surface-sunken select-none pointer-events-none"
-      aria-hidden="true"
-    >
-      919
-    </span>
+    <!-- backdrop: 奥のレイヤー -->
+    <div data-fx-layer="-320" class="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+      <div class="grid-dots absolute inset-y-0 right-0 w-2/3 [mask-image:linear-gradient(to_right,transparent,black)] opacity-60"></div>
+      <span class="absolute -right-4 -bottom-14 sm:-bottom-20 lg:-bottom-28 font-display text-[15rem] sm:text-[22rem] lg:text-[30rem] leading-none tracking-tighter text-lp-surface-sunken">
+        919
+      </span>
+    </div>
 
     <div class="relative max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] pt-10 sm:pt-14 pb-14 sm:pb-20">
       <div class="flex items-center gap-4">
@@ -35,17 +34,20 @@ const specs = [
         <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
       </div>
 
-      <h1
-        class="font-display text-[52px] min-[360px]:text-[60px] sm:text-[88px] lg:text-[120px] leading-none font-bold tracking-[0.02em] text-lp-text mt-12 sm:mt-16 mb-0"
-        style="overflow-wrap: anywhere;"
-      >
-        摘果みかん
-      </h1>
-      <p class="font-tech font-medium uppercase text-sm sm:text-base tracking-[0.5em] text-lp-highlight mt-4" aria-hidden="true">
-        Tekka Mikan
-      </p>
+      <!-- 名前: 手前のレイヤー。字形が切れないよう上下に padding を取る -->
+      <div data-fx-layer="120" class="mt-8 sm:mt-12 py-4">
+        <h1
+          class="font-display text-[52px] min-[360px]:text-[60px] sm:text-[88px] lg:text-[120px] leading-none font-bold tracking-[0.02em] text-lp-text m-0"
+          style="overflow-wrap: anywhere;"
+        >
+          摘果みかん
+        </h1>
+        <p class="font-tech font-medium uppercase text-sm sm:text-base tracking-[0.5em] text-lp-highlight mt-4" aria-hidden="true">
+          Tekka Mikan
+        </p>
+      </div>
 
-      <dl class="mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-sm">
+      <dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-sm">
         <dt class="label-tech self-center">Class</dt>
         <dd class="text-lp-text">Student Developer</dd>
         <dt class="label-tech self-center">Field</dt>

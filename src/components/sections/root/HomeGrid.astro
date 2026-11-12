@@ -24,6 +24,7 @@ const restWorks = works.filter((work) => work.id !== featuredWork?.id).slice(0, 
 const restArticles = articles.filter((article) => article.id !== featuredArticle?.id).slice(0, 3)
 
 const featured = 'card-cut group flex flex-col gap-4 p-5 md:p-7 lg:col-span-7'
+// Works は左から、Blog は右から(Featured と行リストが逆方向から入る)。
 const rows = 'lg:col-span-5 flex flex-col border-t border-lp-border-subtle'
 // 行リスト。ホバーで左端に柿色のバーが立つ。
 const row =
@@ -38,7 +39,7 @@ const row =
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
         {
           Object.entries(skills).map(([category, tags]) => (
-            <div class="border-l border-lp-border pl-4">
+            <div class="reveal border-l border-lp-border pl-4">
               <p class="label-tech mb-3">{category}</p>
               <div class="flex flex-wrap gap-1.5">
                 {tags.map((tag) => (
@@ -57,7 +58,7 @@ const row =
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
         {
           featuredWork && (
-            <a href={featuredWork.data.isComingSoon ? undefined : `/works/${featuredWork.id}`} class={featured} style="--cut: 28px">
+            <a href={featuredWork.data.isComingSoon ? undefined : `/works/${featuredWork.id}`} class={`${featured} reveal-l`} style="--cut: 28px">
               <div class="aspect-video relative overflow-hidden bg-lp-bg">
                 <CoverImage
                   src={featuredWork.data.image ?? coverUrl('works', featuredWork.id)}
@@ -77,7 +78,7 @@ const row =
         <div class={rows}>
           {
             restWorks.map((work) => (
-              <a href={work.data.isComingSoon ? undefined : `/works/${work.id}`} class={row}>
+              <a href={work.data.isComingSoon ? undefined : `/works/${work.id}`} class={`${row} reveal-r`}>
                 <div class="flex items-center justify-between">
                   <span class="label-tech">{work.data.category}</span>
                   <span class="font-mono text-xs text-lp-muted">{work.data.date.getFullYear()}</span>
@@ -99,7 +100,7 @@ const row =
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
         {
           featuredArticle && (
-            <a href={`/blog/${featuredArticle.id}`} class={`${featured} lg:order-2`} style="--cut: 28px">
+            <a href={`/blog/${featuredArticle.id}`} class={`${featured} reveal-r lg:order-2`} style="--cut: 28px">
               <div class="aspect-video relative overflow-hidden bg-lp-bg">
                 <CoverImage
                   src={featuredArticle.data.image ?? coverUrl('articles', featuredArticle.id)}
@@ -119,7 +120,7 @@ const row =
         <div class={rows}>
           {
             restArticles.map((article) => (
-              <a href={`/blog/${article.id}`} class={row}>
+              <a href={`/blog/${article.id}`} class={`${row} reveal-l`}>
                 <span class="font-mono text-xs text-lp-muted">{formatShortDateJP(article.data.date)}</span>
                 <h4 class="font-display text-lg leading-snug text-lp-text group-hover:text-lp-highlight transition-colors">
                   {article.data.title}
@@ -134,7 +135,9 @@ const row =
     <!-- timeline strip -->
     <div>
       <SectionTitle en="Timeline" ja="経歴" />
-      <Timeline variant="horizontal" />
+      <div class="reveal">
+        <Timeline variant="horizontal" />
+      </div>
     </div>
   </div>
 </section>

@@ -28,10 +28,10 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href
 const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).href
 const jsonLd = structuredData ? JSON.stringify(structuredData).replace(/</g, '\\u003c') : null
 
-// ページ遷移は斜めのワイプ(keyframes は global.css)。
+// ページ遷移は3D回転つきの斜めワイプ(keyframes は global.css)。
 const wipe = {
-  old: { name: 'ak-hold', duration: '0.5s', easing: 'linear', fillMode: 'both' },
-  new: { name: 'ak-wipe', duration: '0.5s', easing: 'cubic-bezier(0.7, 0, 0.2, 1)', fillMode: 'both' },
+  old: { name: 'ak-out', duration: '0.7s', easing: 'cubic-bezier(0.7, 0, 0.2, 1)', fillMode: 'both' },
+  new: { name: 'ak-wipe', duration: '0.7s', easing: 'cubic-bezier(0.7, 0, 0.2, 1)', fillMode: 'both' },
 }
 ---
 

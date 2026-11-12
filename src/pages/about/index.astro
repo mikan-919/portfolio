@@ -37,9 +37,11 @@ const cell = 'p-6 md:p-8'
                 <span class="h-px flex-1 bg-lp-border-subtle" aria-hidden="true"></span>
                 <span class="hazard h-2 w-12 sm:w-20" aria-hidden="true"></span>
             </div>
-            <h1 class="font-display text-5xl sm:text-6xl md:text-8xl uppercase leading-none tracking-[0.02em] text-lp-text" style="overflow-wrap: anywhere;">
-                About
-            </h1>
+            <div data-fx-layer="120" class="py-3 -my-3">
+                <h1 class="font-display text-5xl sm:text-6xl md:text-8xl uppercase leading-none tracking-[0.02em] text-lp-text" style="overflow-wrap: anywhere;">
+                    About
+                </h1>
+            </div>
         </div>
     </FxCanvas>
 
@@ -47,7 +49,7 @@ const cell = 'p-6 md:p-8'
     <section class="w-full bg-lp-bg">
         <div class="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-16 lg:px-[7.5rem] py-14 md:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 sm:[grid-auto-flow:dense]">
             <!-- profile / bio -->
-            <div class={`${cell} sm:col-span-2 lg:row-span-2 flex flex-col gap-4`}>
+            <div class={`${cell} reveal-l sm:col-span-2 lg:row-span-2 flex flex-col gap-4`}>
                 <h2 class="font-display text-2xl md:text-3xl leading-tight text-lp-text">{profile.name}</h2>
                 <p class="font-mono text-xs text-lp-muted -mt-2">{profile.handle}</p>
                 <p class="text-sm text-lp-muted leading-relaxed" set:html={profile.bio.replace(/\n/g, '<br />')} />
@@ -55,16 +57,16 @@ const cell = 'p-6 md:p-8'
             </div>
 
             <!-- values -->
-            <div class={`${cell} sm:col-span-2 lg:col-span-2 lg:row-span-2`}>
+            <div class={`${cell} reveal-r sm:col-span-2 lg:col-span-2 lg:row-span-2`}>
                 <Values />
             </div>
 
             <!-- github / learning / interests -->
             <div class="sm:col-span-2 lg:col-span-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-                <div class={cell}>
+                <div class={`${cell} reveal-l`}>
                     <Github />
                 </div>
-                <div class={cell}>
+                <div class={`${cell} reveal-r`}>
                     <InfoGrid />
                 </div>
             </div>
