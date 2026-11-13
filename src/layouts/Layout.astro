@@ -75,6 +75,17 @@ const jsonLd = structuredData ? JSON.stringify(structuredData).replace(/</g, '\\
         document.addEventListener('astro:after-swap', apply)
       })()
     </script>
+    {
+      /* Cloudflare Web Analytics。本番だけで読み込む。ページ遷移後の閲覧は、計測スクリプトが history の変化を見て数える */
+      import.meta.env.PROD && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "3d2dee7037a34e269e8baa75cea9d7cf"}'
+        ></script>
+      )
+    }
   </head>
   <body class="font-sans bg-lp-bg h-dvh overflow-hidden grid grid-rows-[auto_minmax(0,1fr)_auto]" id="root">
     <a href="#main-content" class="skip-link">本文へ移動</a>
