@@ -10,6 +10,6 @@ export function sortByDateAscending<T extends SortableCollectionEntry>(entries: 
   return [...entries].sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
 }
 
-export function pickFeatured<T extends SortableCollectionEntry>(entries: T[]): T | undefined {
-  return entries.find(entry => entry.data.image) ?? entries[0]
+export function pickFeatured(entries: CollectionEntry<'works'>[]): CollectionEntry<'works'> | undefined {
+  return entries.find(entry => entry.data.featured) ?? entries.find(entry => entry.data.image) ?? entries[0]
 }

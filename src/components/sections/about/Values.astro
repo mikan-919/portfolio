@@ -1,25 +1,43 @@
 ---
 import Flame from "@lucide/astro/icons/flame";
+import NotebookPen from "@lucide/astro/icons/notebook-pen";
 import Palette from "@lucide/astro/icons/palette";
+import ShieldCheck from "@lucide/astro/icons/shield-check";
+
+const values = [
+    {
+        icon: Flame,
+        title: "Measure First",
+        body: "最適化は測ってから採否を決めます。irisoutでは差が95%区間で確定しない変更を採用せず、OrielではDurable Objectsの読み取り行数を処理ごとに測り、実行中の確認の読み取りを約66%減らしました。",
+    },
+    {
+        icon: ShieldCheck,
+        title: "Explicit Boundaries",
+        body: "AIエージェントに任せる範囲を、仕組みで区切ります。Orielでは計画の作成を読み取り専用にし、コードの変更には人の承認とリポジトリ側の実行許可の両方を必要にしています。",
+    },
+    {
+        icon: NotebookPen,
+        title: "Record Decisions",
+        body: "設計の判断は、理由と一緒にADRとして残します。irisout、hypharness、Rhodoliteなどで、なぜその設計にしたかを後から説明できるようにしています。",
+    },
+    {
+        icon: Palette,
+        title: "Attention to Detail",
+        body: "細部の質が全体の印象を決めると考えています。このサイトでは、ページ遷移、ページ送り、生成カバーまで自分で設計しています。",
+    },
+];
 ---
 
-<div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
-    <div>
-        <h3 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2 lg:text-2xl">
-            <Flame class="inline-block size-5 text-lp-accent" />
-            Performance
-        </h3>
-        <p class="text-sm text-lp-muted leading-relaxed lg:text-base lg:leading-[1.9]">
-            コードはなるべく高速に。低スペックのためという面もありますが、今後の拡張の幅を広げるためにも基本的にコードの最適化をなるべくするようにしています。
-        </p>
-    </div>
-    <div>
-        <h3 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2 lg:text-2xl">
-            <Palette class="inline-block size-5 text-lp-accent" />
-            Attention to Detail
-        </h3>
-        <p class="text-sm text-lp-muted leading-relaxed lg:text-base lg:leading-[1.9]">
-            細部へのこだわりが全体の質を高めると信じています。ピクセル単位の調整や、マイクロインタラクションを大切にしています。
-        </p>
-    </div>
+<div class="grid gap-8 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-10">
+    {
+        values.map(({ icon: Icon, title, body }) => (
+            <div>
+                <h3 class="font-display text-lg text-lp-text mb-2 flex items-center gap-2 lg:text-2xl">
+                    <Icon class="inline-block size-5 text-lp-accent" />
+                    {title}
+                </h3>
+                <p class="text-sm text-lp-muted leading-relaxed lg:text-base lg:leading-[1.9]">{body}</p>
+            </div>
+        ))
+    }
 </div>

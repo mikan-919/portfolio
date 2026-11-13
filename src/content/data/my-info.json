@@ -2,17 +2,18 @@
   "profile": {
     "name": "摘果みかん",
     "handle": "@mikan-919",
-    "bio": "学校の勉強と並行して、個人開発を続けている学生。\nWebフロントエンドから始め、現在はRustによる言語処理系や、AIエージェントを支えるCLI・TUIの設計と実装にも取り組んでいる。\n動くものを作るだけでなく、設計判断を言葉にして残し、自分の手で中核を実装することを大切にしている。\n将来は、プロダクトと技術の両方に向き合えるエンジニアを目指している。",
-    "lastUpdated": "2026.08.29"
+    "bio": "言語処理系とAIエージェントの実行基盤を、設計から中核の実装まで作っている学生エンジニア。\nRustで静的型付け言語とコンパイラを書き、TypeScriptとCloudflare Workersで、エージェントを実際の開発に組み込むツールを作って運用している。\n変更は計測してから採否を決め、判断の背景はADR（設計判断の記録）に残している。\nインターン・就職の機会を探している。",
+    "lastUpdated": "2026.11.13"
   },
   "learning": {
     "title": "LEARNING",
-    "subtitle": "学習中・触ったことがある",
+    "subtitle": "使っている技術",
     "items": [
-      "HTML / CSS",
-      "JavaScript / TypeScript",
-      "Astro / Next.js / React",
+      "TypeScript / JavaScript",
       "Rust",
+      "Astro / React / SolidJS",
+      "Bun / Node.js",
+      "Cloudflare Workers / Durable Objects",
       "Compiler / WebAssembly"
     ]
   },
@@ -21,8 +22,9 @@
     "subtitle": "興味・好きなこと",
     "items": [
       "Programming Languages",
-      "Developer Tools",
+      "Type Systems",
       "AI Agents",
+      "Developer Tools",
       "Web Design",
       "Music"
     ]

@@ -34,6 +34,7 @@ const worksCollection = defineCollection({
       github: z.url().optional(),
       githubVisibility: z.enum(['public', 'private']).optional(),
       isComingSoon: z.boolean().default(false),
+      featured: z.boolean().default(false),
       date: z.date(),
     }),
 })
