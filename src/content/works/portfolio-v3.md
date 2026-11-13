@@ -15,7 +15,7 @@ tags:
     - "View Transitions"
 github: "https://github.com/mikan-919/portfolio"
 githubVisibility: "public"
-link: "https://tekka-mikan.pages.dev"
+link: "https://portfolio.mikan-919.workers.dev"
 date: 2026-11-12
 isComingSoon: false
 ---

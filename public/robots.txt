@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tekka-mikan.pages.dev/sitemap-index.xml
+Sitemap: https://portfolio.mikan-919.workers.dev/sitemap-index.xml

@@ -9,7 +9,7 @@ import { defineConfig, fontProviders } from 'astro/config'
 
 // https://astro.build/config
 const config = defineConfig({
-  site: 'https://tekka-mikan.pages.dev',
+  site: 'https://portfolio.mikan-919.workers.dev',
   fonts: [
     {
       provider: fontProviders.google(),
