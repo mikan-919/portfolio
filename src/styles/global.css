@@ -406,6 +406,27 @@ html:active-view-transition-type(page-prev)::view-transition-new(pager) {
   visibility: hidden;
 }
 
+/* Typography の prose-neutral は明るい背景向けの固定色で、ダークモードでは箇条書き・表・太字が
+   背景に溶ける。配色の変数をサイトの配色トークンに差し替え、両方のモードで切り替わるようにする。
+   コードブロックの色は Shiki が決めるので触らない。@layer外の素の規則にして prose-neutral より優先させる。 */
+.prose {
+  --tw-prose-body: var(--color-lp-muted);
+  --tw-prose-headings: var(--color-lp-text);
+  --tw-prose-lead: var(--color-lp-muted);
+  --tw-prose-links: var(--color-lp-highlight);
+  --tw-prose-bold: var(--color-lp-text);
+  --tw-prose-counters: var(--color-lp-subtle);
+  --tw-prose-bullets: var(--color-lp-subtle);
+  --tw-prose-hr: var(--color-lp-border-subtle);
+  --tw-prose-quotes: var(--color-lp-text);
+  --tw-prose-quote-borders: var(--color-lp-border);
+  --tw-prose-captions: var(--color-lp-subtle);
+  --tw-prose-kbd: var(--color-lp-text);
+  --tw-prose-code: var(--color-lp-accent);
+  --tw-prose-th-borders: var(--color-lp-border);
+  --tw-prose-td-borders: var(--color-lp-border-subtle);
+}
+
 /* prose-code:* はインラインコード用の装飾だが .prose code 全体(fenced code block 内の
    Shiki トークンを含む <code> も)に掛かってしまうため、コードブロック側は明示的に
    打ち消す。@layer外の素の規則にして utilities レイヤーより優先させる。 */
