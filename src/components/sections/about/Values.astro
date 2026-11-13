@@ -1,14 +1,15 @@
 ---
+import BadgeCheck from "@lucide/astro/icons/badge-check";
 import Flame from "@lucide/astro/icons/flame";
-import NotebookPen from "@lucide/astro/icons/notebook-pen";
-import Palette from "@lucide/astro/icons/palette";
+import OctagonPause from "@lucide/astro/icons/octagon-pause";
 import ShieldCheck from "@lucide/astro/icons/shield-check";
 
+// 「確かめられるものを作る」を、型・権限・計測・止める判断の4つで示す
 const values = [
     {
-        icon: Flame,
-        title: "Measure First",
-        body: "最適化は測ってから採否を決めます。irisoutでは差が95%区間で確定しない変更を採用せず、OrielではDurable Objectsの読み取り行数を処理ごとに測り、実行中の確認の読み取りを約66%減らしました。",
+        icon: BadgeCheck,
+        title: "Prove with Types",
+        body: "守りたい条件は、実行する前に型で証明します。hibanaでは、値が正であることや添字が範囲内にあることを細分化型で書き、コンパイル時にZ3で証明します。",
     },
     {
         icon: ShieldCheck,
@@ -16,14 +17,14 @@ const values = [
         body: "AIエージェントに任せる範囲を、仕組みで区切ります。Orielでは計画の作成を読み取り専用にし、コードの変更には人の承認とリポジトリ側の実行許可の両方を必要にしています。",
     },
     {
-        icon: NotebookPen,
-        title: "Record Decisions",
-        body: "設計の判断は、理由と一緒にADRとして残します。irisout、hypharness、Rhodoliteなどで、なぜその設計にしたかを後から説明できるようにしています。",
+        icon: Flame,
+        title: "Measure First",
+        body: "最適化は測ってから採否を決めます。irisoutでは差が95%区間で確定しない変更を採用せず、OrielではDurable Objectsの読み取り行数を処理ごとに測り、実行中の確認の読み取りを約66%減らしました。",
     },
     {
-        icon: Palette,
-        title: "Attention to Detail",
-        body: "細部の質が全体の印象を決めると考えています。このサイトでは、ページ遷移、ページ送り、生成カバーまで自分で設計しています。",
+        icon: OctagonPause,
+        title: "Know When to Stop",
+        body: "効果を確かめられない仕組みは続けません。hypharnessは、自己改良の効果を測れなかったことなどから10日で止めました。止めた理由は記事に、設計の判断はADRに残しています。",
     },
 ];
 ---
