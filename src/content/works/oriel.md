@@ -6,6 +6,7 @@ description: "ローカルのCodexをブラウザーから操作し、GitHub Iss
 techStack:
     - "rust"
     - "typescript"
+image: "../../assets/images/works/oriel.webp"
 tags:
     - "Developer Tools"
     - "AI Agent"
