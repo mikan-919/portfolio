@@ -46,5 +46,35 @@
     "date": "2026-08-29",
     "title": "MAZE MAZE",
     "desc": "同じ迷路を先に解いた方が勝つ、リアルタイム1v1ブラウザゲームを公開。"
+  },
+  {
+    "id": "9",
+    "date": "2026-10-05",
+    "title": "Oriel",
+    "desc": "ローカルのCodexをブラウザーから操作し、GitHub IssueとLinearで開発を進めるツールをRustとCloudflare Workersで開発。"
+  },
+  {
+    "id": "10",
+    "date": "2026-10-15",
+    "title": "hibana",
+    "desc": "依存型・Z3で証明する細分化型・代数的効果を持つ静的型付け言語をRustで開発。JavaScriptとCのバックエンドを実装。"
+  },
+  {
+    "id": "11",
+    "date": "2026-10-29",
+    "title": "hypharness",
+    "desc": "最終目的を課題に分解し、複数のエージェントがDeLM方式で解いて自己改良するハーネスを開発。"
+  },
+  {
+    "id": "12",
+    "date": "2026-11-04",
+    "title": "arbit",
+    "desc": "Discordの口論を要約し、合意点と対立点を並べるスラッシュコマンドをCloudflare Workersで公開。"
+  },
+  {
+    "id": "13",
+    "date": "2026-11-09",
+    "title": "shiro",
+    "desc": "最大4体のエージェントが非同期に会話へ参加する、Bun製のローカルAIチャット／コーディングエージェントを開発。"
   }
 ]
