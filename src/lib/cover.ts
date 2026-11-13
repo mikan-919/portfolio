@@ -3,10 +3,16 @@ export type CoverKind = 'works' | 'articles'
 const PAPER = '#f4f4f3'
 const INK = '#1e1e1c'
 const GRAY = '#c9c9c5'
-const FAINT = '#e4e4e1'
+const FAINT = '#e6e6e3'
 const ACCENT = '#b05224'
 const W = 1280
 const H = 720
+
+type Palette = { fg: string; sub: string; bg: string }
+type Motif = (random: () => number) => (palette: Palette) => string
+
+const LIGHT: Palette = { fg: INK, sub: GRAY, bg: PAPER }
+const DARK: Palette = { fg: PAPER, sub: '#5c5c58', bg: INK }
 
 const hashString = (value: string): number => {
   let hash = 2166136261
@@ -29,152 +35,234 @@ const createRandom = (seed: number): (() => number) => {
 
 const r = (value: number): number => Math.round(value * 10) / 10
 const range = (count: number): number[] => Array.from({ length: count }, (_, index) => index)
+const escapeXml = (value: string): string => value.replace(/[&<>"]/g, c => `&#${c.charCodeAt(0)};`)
 const line = (x1: number, y1: number, x2: number, y2: number, stroke: string, width = 1): string =>
   `<line x1="${r(x1)}" y1="${r(y1)}" x2="${r(x2)}" y2="${r(y2)}" stroke="${stroke}" stroke-width="${width}"/>`
 const text = (x: number, y: number, body: string, size: number, fill: string, anchor = 'start'): string =>
-  `<text x="${r(x)}" y="${r(y)}" font-family="UDEV Gothic HSLG" font-size="${size}" letter-spacing="${r(size * 0.14)}" fill="${fill}" text-anchor="${anchor}">${body}</text>`
+  `<text x="${r(x)}" y="${r(y)}" font-family="UDEV Gothic HSLG" font-size="${size}" letter-spacing="${r(size * 0.14)}" fill="${fill}" text-anchor="${anchor}">${escapeXml(body)}</text>`
+const polyline = (points: [number, number][]): string => points.map(([x, y]) => `${r(x)} ${r(y)}`).join(' L ')
 
-// 方眼・トンボ・目盛り・ラベル。全バリアント共通の枠
-const frame = (kind: string, code: string, random: () => number): string => {
-  const grid = [
-    ...range(W / 40 + 1).map(i => line(i * 40, 0, i * 40, H, FAINT)),
-    ...range(H / 40 + 1).map(i => line(0, i * 40, W, i * 40, FAINT)),
-  ]
-  const crop = [
-    [64, 64, 1, 1],
-    [W - 64, 64, -1, 1],
-    [64, H - 64, 1, -1],
-    [W - 64, H - 64, -1, -1],
-  ].flatMap(([x, y, dx, dy]) => [line(x, y, x + 28 * dx, y, INK, 1.5), line(x, y, x, y + 28 * dy, INK, 1.5)])
-  const ticks = range(49).map(i => line(160 + i * 20, H - 64, 160 + i * 20, H - 64 - (i % 4 === 0 ? 14 : 6), INK))
-  const coord = `${(random() * 90).toFixed(3)}N / ${(random() * 180).toFixed(3)}E`
-  return [
-    ...grid,
-    ...crop,
-    line(160, H - 64, 1120, H - 64, INK),
-    ...ticks,
-    text(104, 88, `${kind.toUpperCase()} // ${code}`, 15, INK),
-    text(W - 104, 88, 'MIKAN-919', 15, INK, 'end'),
-    text(W - 104, H - 84, coord, 13, INK, 'end'),
-  ].join('')
+// 稜線: 奥から手前へ重ねた尾根の断面。手前の面が奥の線を隠す
+const ridges: Motif = random => {
+  const center = 460 + random() * 360
+  const peaks = range(3).map(() => ({
+    x: center + (random() - 0.5) * 360,
+    width: 60 + random() * 120,
+    height: 50 + random() * 90,
+  }))
+  const phase = random() * 10
+  const rows = range(34).map(k => {
+    const base = 210 + k * 13
+    const points = range(141).map((step): [number, number] => {
+      const x = 60 + step * 8.3
+      const envelope = peaks.reduce((sum, p) => sum + p.height * Math.exp(-(((x - p.x) / p.width) ** 2)), 0)
+      const noise = Math.sin(x * 0.031 + phase + k * 0.7) * Math.sin(x * 0.013 - k * 0.3) * 0.5 + 0.5
+      return [x, base - envelope * (0.35 + noise * 0.65) * Math.min(1, k / 6 + 0.3)]
+    })
+    return { k, points }
+  })
+  const marker = rows[20].points[Math.floor(random() * 60) + 40]
+  return ({ fg, bg }) =>
+    [
+      ...rows.map(
+        ({ k, points }) =>
+          `<path d="M ${polyline(points)} L ${W} ${H} L 0 ${H} Z" fill="${bg}" stroke="none"/><path d="M ${polyline(points)}" fill="none" stroke="${fg}" stroke-width="${k % 6 === 0 ? 2 : 1}" stroke-linejoin="round"/>`,
+      ),
+      `<circle cx="${r(marker[0])}" cy="${r(marker[1] - 22)}" r="9" fill="${ACCENT}"/>`,
+      line(marker[0], marker[1] - 12, marker[0], marker[1], fg, 1.5),
+    ].join('')
 }
 
-// 等高線: 中心のまわりに歪んだ輪を重ねる
-const contour = (random: () => number): string => {
+// 流線: ベクトル場に沿って短い線を流す
+const flow: Motif = random => {
+  const f = 0.0035 + random() * 0.003
+  const p = random() * 10
+  const angle = (x: number, y: number): number =>
+    (Math.sin(x * f + p) + Math.cos(y * f * 1.4 - p) + Math.sin((x - y) * f * 0.5)) * 1.3
+  const trace = (x0: number, y0: number): [number, number][] =>
+    range(36).reduce<[number, number][]>(
+      points => {
+        const [x, y] = points[points.length - 1]
+        const a = angle(x, y)
+        return [...points, [x + Math.cos(a) * 7, y + Math.sin(a) * 7]]
+      },
+      [[x0, y0]],
+    )
+  const seeds = range(26 * 15).map(i => [((i % 26) + random()) * 50 - 10, (Math.floor(i / 26) + random()) * 50 - 10])
+  const strokes = seeds.map(([x, y]) => ({ points: trace(x, y), strong: random() < 0.12 }))
+  const accent = strokes[Math.floor(strokes.length / 2)].points[18]
+  return ({ fg, sub }) =>
+    [
+      ...strokes.map(
+        ({ points, strong }) =>
+          `<path d="M ${polyline(points)}" fill="none" stroke="${strong ? fg : sub}" stroke-width="${strong ? 1.8 : 1.1}" stroke-linecap="round"/>`,
+      ),
+      `<circle cx="${r(accent[0])}" cy="${r(accent[1])}" r="10" fill="${ACCENT}"/>`,
+    ].join('')
+}
+
+// 等高線: 中心のまわりに歪んだ輪を重ね、高いほど濃く塗る
+const contour: Motif = random => {
   const cx = 520 + random() * 240
   const cy = 300 + random() * 120
   const phases = range(3).map(() => random() * Math.PI * 2)
-  const ring = (radius: number, k: number): string => {
-    const points = range(121).map(step => {
-      const t = (step / 120) * Math.PI * 2
-      const wobble =
-        Math.sin(t * 2 + phases[0] + k * 0.15) * 0.12 +
-        Math.sin(t * 3 + phases[1]) * 0.07 +
-        Math.sin(t * 5 + phases[2] - k * 0.2) * 0.03
-      const radiusAt = radius * (1 + wobble)
-      return `${r(cx + Math.cos(t) * radiusAt * 1.35)} ${r(cy + Math.sin(t) * radiusAt)}`
+  const rings = range(15)
+    .reverse()
+    .map(k => {
+      const radius = 40 + k * 24
+      const points = range(121).map((step): [number, number] => {
+        const t = (step / 120) * Math.PI * 2
+        const wobble =
+          Math.sin(t * 2 + phases[0] + k * 0.15) * 0.12 +
+          Math.sin(t * 3 + phases[1]) * 0.07 +
+          Math.sin(t * 5 + phases[2] - k * 0.2) * 0.03
+        return [cx + Math.cos(t) * radius * (1 + wobble) * 1.4, cy + Math.sin(t) * radius * (1 + wobble)]
+      })
+      return { k, d: `M ${polyline(points)} Z` }
     })
-    return `<path d="M ${points.join(' L ')} Z" fill="none" stroke="${k % 5 === 0 ? INK : GRAY}" stroke-width="${k % 5 === 0 ? 2 : 1.2}"/>`
-  }
-  const rings = range(13).map(k => ring(56 + k * 20, k))
   const peak = random() * Math.PI * 2
-  return [
-    ...rings,
-    `<circle cx="${r(cx + Math.cos(peak) * 120)}" cy="${r(cy + Math.sin(peak) * 90)}" r="11" fill="${ACCENT}"/>`,
-    line(cx - 40, cy, cx + 40, cy, INK, 1.5),
-    line(cx, cy - 40, cx, cy + 40, INK, 1.5),
-  ].join('')
+  return ({ fg, sub, bg }) =>
+    [
+      ...rings.map(
+        ({ k, d }) =>
+          `<path d="${d}" fill="${k < 3 ? sub : bg}" stroke="${k % 4 === 0 ? fg : sub}" stroke-width="${k % 4 === 0 ? 2 : 1.2}"/>`,
+      ),
+      `<circle cx="${r(cx + Math.cos(peak) * 150)}" cy="${r(cy + Math.sin(peak) * 100)}" r="10" fill="${ACCENT}"/>`,
+      line(cx - 30, cy, cx + 30, cy, fg, 1.5),
+      line(cx, cy - 30, cx, cy + 30, fg, 1.5),
+    ].join('')
 }
 
-// 計器: 目盛り付きの円盤と扇形
-const dial = (random: () => number): string => {
+// 計器: 目盛り付きの円盤を2重に重ねる
+const dial: Motif = random => {
   const cx = 560 + random() * 160
   const cy = 360
-  const radius = 230
   const start = random() * 360
-  const sweep = 50 + random() * 70
+  const sweep = 50 + random() * 90
   const polar = (deg: number, rad: number): [number, number] => [
     cx + Math.cos((deg * Math.PI) / 180) * rad,
     cy + Math.sin((deg * Math.PI) / 180) * rad,
   ]
-  const ticks = range(120).map(i => {
-    const [x1, y1] = polar(i * 3, radius)
-    const [x2, y2] = polar(i * 3, radius - (i % 10 === 0 ? 26 : i % 5 === 0 ? 16 : 8))
-    return line(x1, y1, x2, y2, INK, i % 10 === 0 ? 2 : 1)
-  })
-  const [sx, sy] = polar(start, radius - 34)
-  const [ex, ey] = polar(start + sweep, radius - 34)
-  const [nx, ny] = polar(start + sweep, radius + 18)
-  return [
-    `<path d="M ${r(cx)} ${r(cy)} L ${r(sx)} ${r(sy)} A ${radius - 34} ${radius - 34} 0 0 1 ${r(ex)} ${r(ey)} Z" fill="${GRAY}" fill-opacity="0.55"/>`,
-    `<circle cx="${r(cx)}" cy="${r(cy)}" r="${radius}" fill="none" stroke="${INK}" stroke-width="2"/>`,
-    `<circle cx="${r(cx)}" cy="${r(cy)}" r="${radius + 40}" fill="none" stroke="${GRAY}" stroke-dasharray="2 8"/>`,
-    `<circle cx="${r(cx)}" cy="${r(cy)}" r="${radius * 0.42}" fill="none" stroke="${GRAY}"/>`,
-    ...ticks,
-    line(cx - radius - 70, cy, cx + radius + 70, cy, GRAY),
-    line(cx, cy - radius - 70, cx, cy + radius + 70, GRAY),
-    line(cx, cy, ex, ey, INK, 2),
-    `<circle cx="${r(cx)}" cy="${r(cy)}" r="5" fill="${INK}"/>`,
-    `<circle cx="${r(nx)}" cy="${r(ny)}" r="10" fill="${ACCENT}"/>`,
-    text(cx + radius + 56, cy - 12, `${Math.round(sweep)}°`, 22, INK),
-  ].join('')
+  return ({ fg, sub }) => {
+    const ring = (radius: number, count: number, offset: number): string =>
+      range(count)
+        .map(i => {
+          const deg = (i * 360) / count + offset
+          const long = i % 10 === 0
+          const [x1, y1] = polar(deg, radius)
+          const [x2, y2] = polar(deg, radius - (long ? 24 : i % 5 === 0 ? 14 : 7))
+          return line(x1, y1, x2, y2, fg, long ? 2 : 1)
+        })
+        .join('')
+    const [sx, sy] = polar(start, 196)
+    const [ex, ey] = polar(start + sweep, 196)
+    const [nx, ny] = polar(start + sweep, 290)
+    return [
+      `<path d="M ${r(cx)} ${r(cy)} L ${r(sx)} ${r(sy)} A 196 196 0 0 1 ${r(ex)} ${r(ey)} Z" fill="${sub}" fill-opacity="0.6"/>`,
+      `<circle cx="${r(cx)}" cy="${r(cy)}" r="270" fill="none" stroke="${fg}" stroke-width="2"/>`,
+      ring(270, 120, 0),
+      `<circle cx="${r(cx)}" cy="${r(cy)}" r="196" fill="none" stroke="${sub}"/>`,
+      ring(196, 60, start),
+      `<circle cx="${r(cx)}" cy="${r(cy)}" r="80" fill="none" stroke="${sub}" stroke-dasharray="3 6"/>`,
+      line(cx - 340, cy, cx + 340, cy, sub),
+      line(cx, cy - 340, cx, cy + 340, sub),
+      line(cx, cy, ex, ey, fg, 2),
+      `<circle cx="${r(cx)}" cy="${r(cy)}" r="6" fill="${fg}"/>`,
+      `<circle cx="${r(nx)}" cy="${r(ny)}" r="10" fill="${ACCENT}"/>`,
+      text(cx + 300, cy - 14, `${Math.round(sweep)}°`, 24, fg),
+    ].join('')
+  }
 }
 
-// 網点: 滑らかな場で大きさを変えたドットの格子
-const halftone = (random: () => number): string => {
-  const fx = 0.01 + random() * 0.01
+// 網点: 焦点から離れるほど小さくなるドットの格子
+const halftone: Motif = random => {
   const p = random() * 10
-  const focus = [300 + random() * 680, 200 + random() * 320]
-  const step = 24
-  const cols = range(Math.floor((W - 200) / step))
-  const rows = range(Math.floor((H - 260) / step))
-  const accent = [Math.floor(random() * cols.length), Math.floor(random() * rows.length)]
+  const focus = [380 + random() * 520, 240 + random() * 240]
+  const step = 22
+  const cols = range(Math.floor((W - 120) / step))
+  const rows = range(Math.floor((H - 240) / step))
   const dots = rows.flatMap(j =>
     cols.map(i => {
-      const x = 100 + i * step + step / 2
-      const y = 130 + j * step + step / 2
-      const distance = Math.hypot(x - focus[0], y - focus[1]) / 520
-      const field = 1 - distance + Math.sin(x * fx + p) * Math.cos(y * fx - p) * 0.12
-      const size = Math.max(1.2, Math.min(1, Math.max(0, field)) ** 1.4 * (step * 0.46))
-      if (i === accent[0] && j === accent[1]) {
-        return `<circle cx="${r(x)}" cy="${r(y)}" r="${r(step * 0.42)}" fill="${ACCENT}"/>`
-      }
-      return `<circle cx="${r(x)}" cy="${r(y)}" r="${r(size)}" fill="${INK}"/>`
+      const x = 60 + i * step + step / 2
+      const y = 120 + j * step + step / 2
+      const distance = Math.hypot((x - focus[0]) * 0.8, y - focus[1]) / 420
+      const field = 1 - distance + Math.sin(x * 0.02 + p) * Math.cos(y * 0.02 - p) * 0.15
+      return [x, y, Math.max(1, Math.min(1, Math.max(0, field)) ** 1.3 * (step * 0.5))]
     }),
   )
-  return dots.join('')
+  return ({ fg }) =>
+    [
+      ...dots.map(([x, y, size]) => `<circle cx="${r(x)}" cy="${r(y)}" r="${r(size)}" fill="${fg}"/>`),
+      `<circle cx="${r(focus[0])}" cy="${r(focus[1])}" r="${step * 0.62}" fill="${ACCENT}"/>`,
+    ].join('')
 }
 
-// ハザード: 斜線の帯、面取りしたブロック、輪郭だけの巨大数字
-const hazard = (random: () => number, seedHash: number): string => {
-  const top = 200 + random() * 120
-  const height = 96
-  const stripes = range(Math.ceil((W + height) / 32)).map(i =>
-    line(i * 32 - height, top + height, i * 32, top, INK, 10),
-  )
-  const bx = 420 + random() * 200
-  const by = top + height + 36
-  const cut = 36
-  const number = String(seedHash % 1000).padStart(3, '0')
-  return [
-    `<text x="${r(bx - 40)}" y="${r(top - 20)}" font-family="UDEV Gothic HSLG" font-size="220" fill="none" stroke="${GRAY}" stroke-width="2">${number}</text>`,
-    `<clipPath id="band"><rect x="0" y="${r(top)}" width="${W}" height="${height}"/></clipPath>`,
-    `<g clip-path="url(#band)">${stripes.join('')}</g>`,
-    `<path d="M ${r(bx)} ${r(by)} H ${r(bx + 420)} V ${r(by + 140 - cut)} L ${r(bx + 420 - cut)} ${r(by + 140)} H ${r(bx)} Z" fill="${INK}"/>`,
-    `<rect x="${r(bx + 24)}" y="${r(by + 24)}" width="14" height="14" fill="${ACCENT}"/>`,
-    text(bx + 52, by + 37, 'CAUTION / 注意', 15, PAPER),
-    ...range(4).map(i => line(bx + 24, by + 70 + i * 14, bx + 24 + (300 - i * 60), by + 70 + i * 14, '#6b6b67', 4)),
-  ].join('')
-}
+const motifs: [string, Motif][] = [
+  ['RIDGE', ridges],
+  ['FLOW', flow],
+  ['CONTOUR', contour],
+  ['DIAL', dial],
+  ['HALFTONE', halftone],
+]
 
 export const coverUrl = (kind: CoverKind, id: string): string => `/covers/${kind}/${id}.png`
 
 export const renderCoverSvg = (seed: string): string => {
   const seedHash = hashString(seed)
   const random = createRandom(seedHash)
-  const [kind = 'cover'] = seed.split('/')
+  const [kind = 'cover', ...rest] = seed.split('/')
+  const id = rest.join('/') || seed
   const code = `0x${seedHash.toString(16).toUpperCase().padStart(8, '0').slice(0, 6)}`
-  const variants = [contour, dial, halftone, (rand: () => number) => hazard(rand, seedHash)]
-  const body = variants[seedHash % variants.length](random)
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="${PAPER}"/>${frame(kind, code, random)}${body}</svg>`
+  const motifIndex = seedHash % motifs.length
+  const [name, motif] = motifs[motifIndex]
+  const draw = motif(random)
+
+  // 図柄を白黒反転して見せる面取りの帯。縦長カードの切り出しに入るよう中央寄り
+  const bandWidth = 220 + random() * 160
+  const bandX = 380 + random() * (520 - bandWidth)
+  const bandTop = 96
+  const bandBottom = H - 120
+  const cut = 40
+  const band = `M ${r(bandX)} ${bandTop} H ${r(bandX + bandWidth)} V ${bandBottom - cut} L ${r(bandX + bandWidth - cut)} ${bandBottom} H ${r(bandX)} Z`
+
+  const grid = [
+    ...range(W / 40 + 1).map(i => line(i * 40, 0, i * 40, H, FAINT)),
+    ...range(H / 40 + 1).map(i => line(0, i * 40, W, i * 40, FAINT)),
+  ]
+  const crop = [
+    [56, 56, 1, 1],
+    [W - 56, 56, -1, 1],
+    [56, H - 56, 1, -1],
+    [W - 56, H - 56, -1, -1],
+  ].flatMap(([x, y, dx, dy]) => [line(x, y, x + 24 * dx, y, INK, 1.5), line(x, y, x, y + 24 * dy, INK, 1.5)])
+  const ticks = range(49).map(i => line(160 + i * 20, H - 56, 160 + i * 20, H - 56 - (i % 4 === 0 ? 12 : 5), INK))
+  const hazard = range(14).map(i => line(bandX + i * 14 - 20, bandBottom + 22, bandX + i * 14, bandBottom + 8, INK, 5))
+  const giant = id.toUpperCase().replace(/-/g, '.')
+
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">`,
+    '<defs>',
+    `<clipPath id="band"><path d="${band}"/></clipPath>`,
+    `<clipPath id="hz"><rect x="${r(bandX)}" y="${bandBottom + 8}" width="${r(Math.min(bandWidth, 160))}" height="14"/></clipPath>`,
+    `<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="${seedHash % 997}"/><feColorMatrix type="saturate" values="0"/></filter>`,
+    '</defs>',
+    `<rect width="${W}" height="${H}" fill="${PAPER}"/>`,
+    ...grid,
+    `<text x="-12" y="${H + 46}" font-family="UDEV Gothic HSLG" font-size="300" fill="${FAINT}" letter-spacing="-12">${escapeXml(giant)}</text>`,
+    draw(LIGHT),
+    `<path d="${band}" fill="${INK}"/>`,
+    `<g clip-path="url(#band)">${draw(DARK)}</g>`,
+    `<rect x="${r(bandX)}" y="${bandTop}" width="112" height="68" fill="${INK}"/>`,
+    text(bandX + 20, bandTop + 34, `FIG.${String(motifIndex + 1).padStart(2, '0')}`, 13, PAPER),
+    text(bandX + 20, bandTop + 54, name, 13, '#8a8a86'),
+    `<g clip-path="url(#hz)">${hazard.join('')}</g>`,
+    ...crop,
+    line(160, H - 56, 1120, H - 56, INK),
+    ...ticks,
+    text(96, 82, `${kind.toUpperCase()} // ${code}`, 14, INK),
+    text(W - 96, 82, 'MIKAN-919', 14, INK, 'end'),
+    text(W - 96, H - 76, `${(random() * 90).toFixed(3)}N / ${(random() * 180).toFixed(3)}E`, 12, INK, 'end'),
+    `<rect width="${W}" height="${H}" filter="url(#grain)" opacity="0.07"/>`,
+    '</svg>',
+  ].join('')
 }
