@@ -58,6 +58,7 @@ const config = defineConfig({
   output: 'static',
   session: false,
   integrations: [solidJs(), sitemap()],
-  adapter: cloudflare({ imageService: 'cloudflare', prerenderEnvironment: 'node' }),
+  // workers.dev では /cdn-cgi/image の画像変換が使えないため、ビルド時に変換して自分で配る
+  adapter: cloudflare({ imageService: 'compile', prerenderEnvironment: 'node' }),
 })
 export default config
