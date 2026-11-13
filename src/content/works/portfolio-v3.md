@@ -8,6 +8,7 @@ techStack:
     - "solidjs"
     - "tailwind-css"
     - "typescript"
+image: "../../assets/images/works/portfolio-v3.webp"
 tags:
     - "UI"
     - "Design"
